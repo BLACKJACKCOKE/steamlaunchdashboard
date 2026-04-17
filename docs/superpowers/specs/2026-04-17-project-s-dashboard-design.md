@@ -96,7 +96,9 @@
 | `--green` / `--red` / `--amber` / `--purple` / `--teal` | `#16a34a` / `#ef4444` / `#d97706` / `#7c3aed` / `#0f766e` | 시맨틱 |
 | `--radius` | `12px` | 라운드 |
 | `--shadow` | `0 1px 4px rgba(0,0,0,.08)` | 쉐도우 |
-| 폰트 | `Pretendard, 'Apple SD Gothic Neo', 'Segoe UI', system-ui` | 본문 |
+| 폰트 스택 | `Pretendard, 'Apple SD Gothic Neo', 'Segoe UI', system-ui, sans-serif` | 본문 |
+
+**Pretendard 로드 전략**: 별도 CDN 주입 없이 **system font fallback**만 사용. Pretendard가 기기에 설치돼 있으면 자동 활용, 없으면 `Apple SD Gothic Neo`(macOS) / `Segoe UI`(Windows) / system-ui로 자연스레 폴백. 근거: ① 외부 CDN 의존 제거로 CSP·성능·오프라인 모두 단순화, ② 임원진 기기 대부분 위 3개 폰트 중 하나는 보유. CDN 임포트가 필요해질 경우 CSP `style-src`에 `https://cdn.jsdelivr.net` 추가 후 `@font-face` 로드.
 | 숫자 | `font-variant-numeric: tabular-nums` | 표/KPI |
 | 차트 팔레트 (6색) | `#4f46e5, #0891b2, #16a34a, #d97706, #ef4444, #7c3aed` | 그래프 |
 
@@ -116,7 +118,7 @@
 
 기존 CSS/JS/DOM은 일체 수정 금지. `body.embed` 셀렉터로 상단 헤더·nav·legend-bar 숨김 처리는 `theme.css`가 담당.
 
-**예외 — `steam_russia.html`**: Playfair/Source Serif/Recharts 사용 중. 폰트는 의도된 세리프 톤이라 보존. `theme.css` 주입 시 색 토큰만 인디고 액센트로 수렴(제목·링크·차트 팔레트). 레이아웃은 불가침.
+**예외 — `steam_russia.html`**: Playfair/Source Serif/Recharts 사용 중. 폰트는 의도된 세리프 톤이라 보존. `theme.css` 주입 시 색 토큰만 인디고 액센트로 수렴(제목·링크·차트 팔레트). 레이아웃은 불가침. 3줄 주입 규칙은 동일하게 적용하되, 색 수렴은 `body.embed` 셀렉터 한정 CSS 오버라이드로 `theme.css`에서 처리(러시아 원본 HTML 인라인 수정 없음). 필요 시 `!important`로 Recharts 인라인 스타일 덮어씀.
 
 ## 6. 환율 브로드캐스트
 
@@ -198,7 +200,7 @@ body.embed .kpi-row { overflow-wrap:anywhere; }
   X-Frame-Options: SAMEORIGIN
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
-  Content-Security-Policy: frame-src 'self' https://project-s-dashboard.pages.dev https://pub-4710a252be1249c58617eed8ea869738.r2.dev https://fps-dashboard.misty-haze-7fc4.workers.dev; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com
+  Content-Security-Policy: default-src 'self'; frame-src 'self' https://project-s-dashboard.pages.dev https://pub-4710a252be1249c58617eed8ea869738.r2.dev https://fps-dashboard.misty-haze-7fc4.workers.dev; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'
 ```
 
 ### 10.2 배포 절차
