@@ -881,7 +881,7 @@ Chart.register(outerLabelPlugin);
       {label:'콘솔 매출',data:conRev,borderColor:'#2563eb',backgroundColor:'rgba(37,99,235,.07)',borderWidth:3,pointRadius:6,pointBackgroundColor:'#2563eb',pointBorderColor:'#fff',pointBorderWidth:2,fill:true,tension:.3,
         datalabels:{align:ctx=>conAligns[ctx.dataIndex],anchor:'start',offset:ctx=>conOffsets[ctx.dataIndex],color:'#2563eb',font:{size:10.5,weight:'bold'},formatter:val=>`$${val}B (${shortKRW(val)})`,backgroundColor:'rgba(255,255,255,0.88)',borderRadius:4,padding:{top:3,bottom:3,left:5,right:5}}}
     ]},
-    options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:56,bottom:36,left:10,right:20}},
+    options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:56,bottom:36,left:10,right:64}},
       plugins:{legend:{position:'bottom',align:'center'},datalabels:{display:true},tooltip:{callbacks:{label:ctx=>` ${ctx.dataset.label}: $${ctx.parsed.y}B (${formatKRW(ctx.parsed.y)})`}}},
       scales:{x:{grid:{display:false}},y:{ticks:{callback:v=>'$'+v+'B'},grid:{color:'#e5e7eb',borderDash:[4,4]}}}}
   });
