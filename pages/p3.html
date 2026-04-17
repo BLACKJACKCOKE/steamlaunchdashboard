@@ -1,4 +1,4 @@
-호<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
@@ -1419,7 +1419,7 @@ Chart.register(ChartDataLabels);
     options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,layout:{padding:{right:20,left:8,top:8,bottom:8}},
       plugins:{
         legend:{position:'top',labels:{font:{size:11},usePointStyle:true,pointStyle:'rect'}},
-        datalabels:{formatter:v=>v>=1000000?(v/1000000).toFixed(1)+'M':(v/1000).toFixed(0)+'K',color:'#ffffff',font:{size:10,weight:'bold'},anchor:'start',align:'end',offset:6,clip:false,textStrokeColor:'rgba(0,0,0,0.35)',textStrokeWidth:2},
+        datalabels:{formatter:v=>v>=1000000?(v/1000000).toFixed(1)+'M':(v/1000).toFixed(0)+'K',color:'#ffffff',font:{size:11,weight:'bold'},anchor:'end',align:'start',offset:8,clip:true,textStrokeColor:'rgba(0,0,0,0.6)',textStrokeWidth:3},
         tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.raw.toLocaleString()}}
       },
       scales:{
