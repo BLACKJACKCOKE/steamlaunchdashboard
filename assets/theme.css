@@ -63,13 +63,32 @@ body.embed .tw { overflow-x:auto; }
 body.embed .kpi-row { overflow-wrap:anywhere; }
 body.embed table { font-variant-numeric: tabular-nums; }
 
-/* ─── RUSSIA-SPECIFIC color convergence (steam_russia.html) ─── */
-/* Russia uses Playfair + Recharts with its own palette. Keep layout/fonts,
-   shift primary accents to the indigo system so it blends with other pages. */
+/* ─── RUSSIA unification: force Pretendard + indigo palette ─── */
+body.embed[data-page="russia"],
+body.embed[data-page="russia"] * {
+  font-family: Pretendard, 'Apple SD Gothic Neo', 'Segoe UI', system-ui, sans-serif !important;
+}
 body.embed[data-page="russia"] h1,
 body.embed[data-page="russia"] h2,
-body.embed[data-page="russia"] h3 { color: var(--text-h) !important; }
-body.embed[data-page="russia"] a { color: var(--accent) !important; }
-body.embed[data-page="russia"] .recharts-default-legend *,
-body.embed[data-page="russia"] [class*="accent"],
-body.embed[data-page="russia"] [class*="primary"] { --primary: var(--accent); }
+body.embed[data-page="russia"] h3,
+body.embed[data-page="russia"] h4 {
+  color: var(--text-h) !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.01em !important;
+}
+body.embed[data-page="russia"] p,
+body.embed[data-page="russia"] li,
+body.embed[data-page="russia"] td,
+body.embed[data-page="russia"] span { color: var(--text-sub1); }
+body.embed[data-page="russia"] a { color: var(--accent) !important; text-decoration: none; }
+body.embed[data-page="russia"] a:hover { text-decoration: underline; }
+/* Recharts palette override (targets common Recharts class patterns) */
+body.embed[data-page="russia"] .recharts-default-legend * { color: var(--text-sub1) !important; }
+body.embed[data-page="russia"] .recharts-cartesian-axis-tick text { fill: var(--text-sub2) !important; font-size: 11px !important; }
+body.embed[data-page="russia"] .recharts-tooltip-wrapper { font-size: 12px !important; }
+
+/* ─── CHINA gentle alignment ─── */
+body.embed[data-page="china"] h1,
+body.embed[data-page="china"] h2,
+body.embed[data-page="china"] h3 { color: var(--text-h) !important; }
+body.embed[data-page="china"] a { color: var(--accent) !important; }
