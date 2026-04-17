@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "enabledPlugins": {
+    "superpowers@claude-plugins-official": true
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -rn '{systemMessage: \"Superpowers integration active. If `/plugin list` does not show superpowers, run `/plugin install superpowers@claude-plugins-official`. Reminder: always ask the user before invoking any skill.\"}'"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Skill",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -rn '{hookSpecificOutput: {hookEventName: \"PreToolUse\", permissionDecision: \"ask\", permissionDecisionReason: \"Ask the user for explicit approval before invoking this skill. The user wants to confirm every skill use.\"}}'"
+          }
+        ]
+      }
+    ]
+  }
+}
