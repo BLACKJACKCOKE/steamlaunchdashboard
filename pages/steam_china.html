@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Steam 중국 결제 방식 — Renewed Dashboard</title>
+  <style>
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:#ffffff;
+      --page:#f7f9fc;
+      --card-bg:#f3f4f6;
+      --card-bg2:#f9fafb;
+      --border:#e5e7eb;
+      --text-h:#111827;
+      --text-sub1:#374151;
+      --text-sub2:#6b7280;
+      --text-src:#9ca3af;
+      --accent:#4f46e5;
+      --accent-2:#2dd4bf;
+      --blue:#3b82f6;
+      --green:#16a34a;
+      --red:#ef4444;
+      --amber:#f59e0b;
+      --navy:#1a1a2e;
+      --radius:12px;
+      --shadow:0 1px 4px rgba(0,0,0,.08);
+      --shadow-lg:0 16px 40px rgba(17,24,39,.08);
+    }
+    html { scroll-behavior:smooth; }
+    body {
+      font-family:'Segoe UI','Apple SD Gothic Neo','Pretendard','Malgun Gothic','Noto Sans KR',sans-serif;
+      background:linear-gradient(180deg,#ffffff 0%, #f7f9fc 100%);
+      color:var(--text-h);
+      line-height:1.65;
+    }
+    a { color:var(--accent); }
+    .rp {
+      position:fixed; top:0; left:0; height:3px; width:0;
+      background:linear-gradient(90deg,var(--accent),var(--accent-2));
+      z-index:300;
+      transition:width .1s;
+    }
+    header.topbar {
+      position:sticky; top:0; z-index:250;
+      background:rgba(255,255,255,.95); backdrop-filter:blur(12px);
+      border-bottom:1px solid var(--border);
+      padding:0 32px; min-height:64px;
+      display:flex; align-items:center; justify-content:space-between; gap:18px;
+    }
+    .topbar-left { display:flex; align-items:center; gap:12px; }
+    .topbar-badge { background:var(--accent); color:#fff; font-size:11px; font-weight:800; padding:4px 10px; border-radius:999px; letter-spacing:.08em; }
+    .topbar-titlebox { display:flex; flex-direction:column; gap:1px; }
+    .topbar-title { font-size:14px; font-weight:800; color:var(--text-h); line-height:1.2; }
+    .topbar-sub { font-size:11px; color:var(--accent); font-weight:600; letter-spacing:.02em; }
+    .topbar nav { display:flex; gap:4px; flex-wrap:wrap; justify-content:flex-end; }
+    .topbar nav a {
+      font-size:12px; color:var(--text-sub2); text-decoration:none;
+      padding:5px 10px; border-radius:8px; transition:.2s ease;
+    }
+    .topbar nav a:hover, .topbar nav a.active {
+      background:var(--card-bg); color:var(--text-h);
+    }
+    .sec-wrap { padding: 0 0 64px; }
+    .wrap { max-width: 1280px; margin: 0 auto; padding: 0 32px; }
+    .page-hero {
+      max-width:1280px; margin:0 auto; padding:48px 32px 26px;
+    }
+    .hero-card {
+      background:linear-gradient(135deg,#f0f4ff 0%,#fafcff 55%,#f5fffd 100%);
+      border:1px solid #dbe3ff; border-radius:20px; padding:32px 34px;
+      box-shadow:var(--shadow-lg); position:relative; overflow:hidden;
+    }
+    .hero-card::after {
+      content:''; position:absolute; inset:auto -60px -60px auto; width:220px; height:220px;
+      background:radial-gradient(circle at center, rgba(79,70,229,.18), rgba(45,212,191,0));
+      pointer-events:none;
+    }
+    .hero-eyebrow { font-size:11px; font-weight:800; letter-spacing:.18em; color:var(--accent); text-transform:uppercase; margin-bottom:10px; }
+    .hero-title { font-size:clamp(28px, 4vw, 42px); line-height:1.15; font-weight:900; color:var(--text-h); margin-bottom:10px; }
+    .hero-sub { max-width:760px; color:var(--text-sub2); font-size:14px; }
+    .section { padding: 48px 0; }
+    .section + .section { border-top:1px solid var(--border); }
+    .section-number { font-size:11px; font-weight:700; letter-spacing:2px; color:var(--accent); text-transform:uppercase; margin-bottom:6px; }
+    .section-title {
+      font-size:24px; font-weight:800; color:var(--text-h); margin-bottom:6px; line-height:1.3;
+      display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+    }
+    .section-subtitle { font-size:12px; color:var(--text-sub2); margin-bottom:26px; }
+    .section-content > * { margin-bottom:20px; }
+    .section-content > *:last-child { margin-bottom:0; }
+    .sub-title {
+      font-size:24px; font-weight:800; color:var(--text-h); margin:0; padding:0; border:none;
+    }
+    .sub-title::before { content:none; }
+    .banner, .hl, .card, .tbl-outer, .plat, .price-grid, .icon-chip {
+      box-shadow:var(--shadow);
+    }
+    .banner {
+      border:1px solid var(--border); border-radius:var(--radius); padding:16px 18px; margin-bottom:0;
+      display:flex; gap:14px; align-items:flex-start; background:var(--card-bg2);
+    }
+    .banner.info { border-left:4px solid var(--accent); background:#f5f7ff; }
+    .banner.warn { border-left:4px solid var(--amber); background:#fff8eb; }
+    .banner.danger { border-left:4px solid var(--red); background:#fff5f5; }
+    .banner.success { border-left:4px solid var(--green); background:#f3fcf7; }
+    .banner-ico { font-size:20px; line-height:1; margin-top:2px; }
+    .banner-body strong { display:block; font-size:13px; color:var(--text-h); margin-bottom:4px; }
+    .banner-body p { font-size:13px; color:var(--text-sub1); margin:0; }
+    .platform-compare, .g2, .g3 { display:grid; gap:18px; }
+    .platform-compare, .g2 { grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .g3 { grid-template-columns:repeat(3,minmax(0,1fr)); }
+    .plat, .card {
+      background:#fff; border:1px solid var(--border); border-radius:var(--radius); padding:22px;
+      transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    }
+    .plat:hover, .card:hover { transform:translateY(-2px); box-shadow:var(--shadow-lg); border-color:#c7d2fe; }
+    .plat.global { border-top:4px solid var(--blue); }
+    .plat.china { border-top:4px solid var(--amber); background:linear-gradient(180deg,#fffdfa 0%, #fff 100%); }
+    .plat-head { display:flex; gap:14px; align-items:flex-start; margin-bottom:16px; }
+    .plat-icon {
+      width:48px; height:48px; border-radius:12px; display:flex; align-items:center; justify-content:center;
+      background:var(--card-bg); font-size:22px; flex-shrink:0;
+    }
+    .plat-name, .card h4 { font-size:16px; font-weight:800; color:var(--text-h); margin-bottom:3px; }
+    .plat-url { font-size:12px; color:var(--text-sub2); word-break:break-all; }
+    .plat-rows { border-top:1px solid var(--border); padding-top:14px; }
+    .plat-row {
+      display:grid; grid-template-columns:120px 1fr; gap:12px; padding:9px 0; border-bottom:1px solid var(--border);
+      font-size:13px;
+    }
+    .plat-row:last-child { border-bottom:none; }
+    .plat-key { font-size:12px; color:var(--text-sub2); font-weight:700; }
+    .plat-val, .card p { font-size:13px; color:var(--text-sub1); }
+    .icon-intro {
+      background:#f6f8ff;
+      border:1px solid var(--border);
+      border-left:4px solid var(--accent);
+      border-radius:0 var(--radius) var(--radius) 0;
+      padding:16px 18px;
+      margin-bottom:18px;
+      box-shadow:var(--shadow);
+      color:var(--text-sub1);
+      line-height:1.75;
+      font-size:15px;
+    }
+    .icon-intro strong { color:var(--text-h); }
+    .icon-row { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:0; }
+    .icon-chip {
+      background:#fff; border:1px solid var(--border); border-radius:10px; padding:10px 14px;
+      font-size:13px; font-weight:700; color:var(--text-sub1);
+    }
+    .icon-chip .ic { font-size:17px; }
+    .tbl-outer {
+      background:#fff; border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; margin-bottom:0;
+    }
+    .tbl-head-row {
+      background:var(--navy); color:#fff; display:grid; padding:10px 14px; gap:12px;
+    }
+    .tbl-col { font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:rgba(255,255,255,.86); }
+    .tbl-row {
+      display:grid; padding:14px; gap:12px; border-bottom:1px solid var(--border); align-items:start; transition:background .15s ease;
+    }
+    .tbl-row:last-child { border-bottom:none; }
+    .tbl-row:hover { background:#f8fafc; }
+    .tbl-cell { font-size:13px; color:var(--text-sub1); line-height:1.6; }
+    .tbl-cell strong { color:var(--text-h); }
+    .tbl-cell .sub { display:block; font-size:11px; color:var(--text-sub2); margin-top:2px; }
+    .pill {
+      display:inline-block; padding:3px 8px; border-radius:999px; font-size:11px; font-weight:800; line-height:1.3;
+    }
+    .pill-g  { background:#dcfce7; color:#166534; }
+    .pill-a  { background:#fef3c7; color:#92400e; }
+    .pill-r  { background:#fee2e2; color:#991b1b; }
+    .pill-n  { background:#e0e7ff; color:#3730a3; }
+    .pill-gr { background:#e5e7eb; color:#4b5563; }
+    .hl {
+      padding:16px 18px; border-radius:0 var(--radius) var(--radius) 0; border-left:4px solid var(--accent); background:#f6f8ff; margin-bottom:0;
+    }
+    .hl.gold { border-left-color:var(--amber); background:#fff8eb; }
+    .hl.navy { border-left-color:var(--blue); background:#f4f8ff; }
+    .hl.green { border-left-color:var(--green); background:#f3fcf7; }
+    .hl strong { color:var(--text-h); }
+    .hl ul { margin:10px 0 0 18px; color:var(--text-sub1); }
+    .hl li { margin-bottom:8px; font-size:13px; }
+    .price-grid {
+      display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:1px;
+      background:var(--border); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden;
+    }
+    .price-cell { background:#fff; padding:14px 12px; text-align:center; }
+    .price-cell.head { background:var(--navy); color:#fff; font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; }
+    .price-cell.highlight { background:#fff8eb; }
+    .price-val { font-size:20px; font-weight:800; color:var(--text-h); }
+    .price-cell.highlight .price-val { color:#b45309; }
+    .price-label { font-size:11px; color:var(--text-sub2); margin-top:4px; }
+    .step-list { list-style:none; padding:0; margin:0; }
+    .step-list li {
+      display:flex; gap:14px; align-items:flex-start; padding:14px 0; border-bottom:1px solid var(--border);
+    }
+    .step-list li:last-child { border-bottom:none; }
+    .step-num {
+      width:32px; height:32px; border-radius:50%; background:var(--accent); color:#fff; display:flex; align-items:center; justify-content:center;
+      font-size:12px; font-weight:800; flex-shrink:0;
+    }
+    .step-body strong { display:block; font-size:14px; color:var(--text-h); margin-bottom:4px; }
+    .step-body p { font-size:13px; color:var(--text-sub1); margin:0; }
+    .divider { display:flex; align-items:center; gap:16px; margin:6px 0 14px; }
+    .divider::before, .divider::after { content:''; flex:1; height:1px; background:var(--border); }
+    .divider-gem { width:8px; height:8px; background:var(--accent); transform:rotate(45deg); }
+    .src-tag {
+      display:inline-block; margin-left:2px; padding:0 4px; border-radius:4px; font-size:10px; font-weight:800; line-height:1.5;
+      background:#eef2ff; color:#4338ca; text-decoration:none; vertical-align:super;
+    }
+    .src-tag:hover { background:#dfe7ff; }
+    .sources {
+      background:var(--navy); color:#cbd5e1; padding:36px 0; margin-top:0; border-top:1px solid rgba(255,255,255,.08);
+    }
+    .sources h3 { color:#fff; font-size:22px; font-weight:800; margin-bottom:18px; }
+    .src-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; }
+    .src-card {
+      background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08); border-radius:12px; padding:16px 18px;
+      transition:.2s ease;
+    }
+    .src-card:hover { background:rgba(255,255,255,.08); transform:translateY(-2px); }
+    .src-num { font-size:11px; color:#a5b4fc; font-weight:800; letter-spacing:.08em; margin-bottom:5px; }
+    .src-title { font-size:14px; font-weight:700; color:#f8fafc; margin-bottom:4px; }
+    .src-pub { font-size:12px; color:#94a3b8; margin-bottom:8px; }
+    .src-link { font-size:12px; color:#93c5fd; text-decoration:none; word-break:break-all; }
+    .src-link:hover { text-decoration:underline; }
+    footer.page-footer {
+      background:#0f172a; color:#94a3b8; padding:22px 32px; display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap;
+      font-size:12px;
+    }
+    .footer-logo { font-size:14px; font-weight:800; color:#c7d2fe; }
+    .fi { opacity:0; transform:translateY(18px); }
+    .fi.visible { opacity:1; transform:translateY(0); transition:opacity .55s ease, transform .55s ease; }
+    @media (max-width: 960px) {
+      header.topbar { padding:10px 16px; align-items:flex-start; }
+      .topbar { flex-direction:column; }
+      .topbar nav { width:100%; justify-content:flex-start; overflow:auto; }
+      .wrap, .page-hero { padding-left:16px; padding-right:16px; }
+      .platform-compare, .g2, .g3, .src-grid { grid-template-columns:1fr; }
+      .price-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+    }
+    @media (max-width: 768px) {
+      .tbl-head-row { display:none !important; }
+      .tbl-row, .plat-row { grid-template-columns:1fr !important; }
+      .tbl-cell::before, .plat-row .plat-val::before {
+        content:attr(data-label);
+      }
+      .tbl-cell::before {
+        display:block; font-size:10px; font-weight:800; color:var(--text-sub2); letter-spacing:.06em; text-transform:uppercase; margin-bottom:3px;
+      }
+      .price-grid { grid-template-columns:1fr; }
+    }
+
+  </style>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-left">
+    <span class="topbar-badge">PROJECT S</span>
+    <div class="topbar-titlebox">
+      <div class="topbar-title">Steam 중국 결제 방식</div>
+    </div>
+  </div>
+</header>
+<div class="rp" id="rp"></div>
+
+<div class="sec-wrap">
+<div class="wrap">
+
+    <!-- ── 섹션 헤더 ── -->
+    <div class="fi">
+        <h1 class="sec-title">중국 플레이어의 결제 방식</h1>
+    </div>
+
+    <!-- ════════════════════════════════
+         A. 두 플랫폼 구조
+    ════════════════════════════════ -->
+
+    <div class="banner info fi">
+        <div class="banner-ico">🏗️</div>
+        <div class="banner-body">
+        <strong>계정은 공유, 결제는 완전 분리</strong>
+            <p>중국에는 Steam이 두 개의 완전히 다른 플랫폼으로 운영됩니다.<p><p> 계정(Steam ID)은 공유되지만 지갑·구매 게임·결제 시스템은 완전히 별개입니다. 어느 플랫폼을 통해 수익을 얻을 것인지에 따라 개발자의 출시 전략이 달라집니다.<p>
+        </div>
+    </div>
+
+    <div class="platform-compare fi">
+        <!-- Steam 글로벌 중국 -->
+        <div class="plat global">
+            <div class="plat-head">
+                <div class="plat-icon">🌐</div>
+                <div>
+                    <div class="plat-name">Steam 글로벌 마켓 (중국 접속)</div>
+                    <div class="plat-url">store.steampowered.com</div>
+                </div>
+            </div>
+            <div class="plat-rows">
+                <div class="plat-row">
+                    <div class="plat-key">운영사</div>
+                    <div class="plat-val">Valve Corporation (미국)</div>
+                </div>
+                <div class="plat-row">
+                    <div class="plat-key">접속 방법</div>
+                    <div class="plat-val">게임 가속기(网游加速器) 또는 VPN 필요. 만리방화벽(GFW) 영향</div>
+                </div>
+                <div class="plat-row">
+                    <div class="plat-key">게임 수</div>
+                    <div class="plat-val"><strong>12만 개 이상</strong> — 정부 심의 없이 접근 가능</div>
+                </div>
+                <div class="plat-row">
+                    <div class="plat-key">결제 통화</div>
+                    <div class="plat-val">CNY (위안화) — 개발자가 CNY 가격 설정 시</div>
+                </div>
+                <div class="plat-row">
+                    <div class="plat-key">지갑</div>
+                    <div class="plat-val">Steam 글로벌 지갑 (蒸汽平台 지갑과 <strong>완전히 분리</strong>)</div>
+                </div>
+                <div class="plat-row">
+                    <div class="plat-key">중국 수익원</div>
+                    <div class="plat-val">✅ <strong>대부분의 중국 Steam 수익이 이 경로에서 발생</strong></div>
+                </div>
+                <div class="plat-row">
+                    <div class="plat-key">출시 조건</div>
+                    <div class="plat-val">별도 정부 허가 불필요. CNY 가격 설정으로 중국에서 판매가능<a class="src-tag" href="#s1">[1]</a></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Steam China 蒸汽平台 -->
+        <div class="plat china">
+            <div class="plat-head">
+                <div class="plat-icon">🏮</div>
+                <div>
+                    <div class="plat-name">Steam China — 蒸汽平台</div>
+                    <div class="plat-url">store.steamchina.com</div>
+                </div>
+            </div>
+            <div class="plat-rows">
+                <div class="plat-row">
+                    <div class="plat-key">운영사</div>
+                    <div class="plat-val">완미세계 (Perfect World, 完美世界)<a class="src-tag" href="#s2">[2]</a></div>
+                </div>
+                <div class="plat-row">
+                    <div class="plat-key">접속 방법</div>
+                    <div class="plat-val">중국 내 직접 접속 가능. VPN 불필요.</div>
+                </div>
+                <div class="plat-row">
+                    <div class="plat-key">게임 수</div>
+                    <div class="plat-val"><strong>제한된 수의 게임</strong> — 중국 정부 판호 허가 게임만<a class="src-tag" href="#s3">[3]</a></div>
+                </div>
+                <div class="plat-row">
+                    <div class="plat-key">결제 통화</div>
+                    <div class="plat-val">CNY (위안화) — Perfect World가 관리하는 별도 결제 시스템</div>
+                </div>
+                <div class="plat-row">
+                    <div class="plat-key">지갑</div>
+                    <div class="plat-val"><strong>蒸汽平台</strong> — 글로벌 Steam 지갑과 완전히 분리. 이전·공유 불가</div>
+                </div>
+                <div class="plat-row">
+                    <div class="plat-key">중국 수익원</div>
+                    <div class="plat-val">⚠️ 허가 게임만 수익 발생. 대부분의 외국 게임은 미허가 상태</div>
+                </div>
+                <div class="plat-row">
+                    <div class="plat-key">출시 조건</div>
+                    <div class="plat-val">중국 정부 <strong>판호 허가 필수</strong>. 중국 퍼블리셔 파트너 필요.<a class="src-tag" href="#s2">[2]</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════
+         B. 결제 수단 — Steam 글로벌 (중국)
+    ════════════════════════════════ -->
+    <div class="divider fi"><div class="divider-gem"></div></div>
+    <div class="sub-title fi">Steam 글로벌 결제 수단 (중국 지역)</div>
+
+    <div class="icon-intro fi">
+        중국 플레이어가 <strong>Steam 글로벌에서</strong> 사용하는 결제 수단입니다. Alipay·WeChat Pay·UnionPay는 2015~2016년부터 Steam 공식 지원을 받고 있습니다.<a class="src-tag" href="#s5">[5]</a>
+    </div>
+
+    <div class="icon-row fi">
+        <div class="icon-chip"><span class="ic">💙</span> Alipay (支付宝)</div>
+        <div class="icon-chip"><span class="ic">💚</span> WeChat Pay (微信支付)</div>
+        <div class="icon-chip"><span class="ic">🔴</span> UnionPay (银联)</div>
+        <div class="icon-chip"><span class="ic">🎁</span> Steam 기프트 카드 (중국판)</div>
+        <div class="icon-chip"><span class="ic">🛒</span> VPN 지역 우회</div>
+        <div class="icon-chip"><span class="ic">🔑</span> 그레이 마켓 키</div>
+    </div>
+
+    <div class="tbl-outer fi">
+        <div class="tbl-head-row" style="grid-template-columns:2fr 1fr 2fr 80px;">
+            <div class="tbl-col">결제 방식</div>
+            <div class="tbl-col">수수료</div>
+            <div class="tbl-col">특이사항</div>
+            <div class="tbl-col">개발자</div>
+        </div>
+
+        <!-- Alipay -->
+        <div class="tbl-row" style="grid-template-columns:2fr 1fr 2fr 80px;">
+            <div class="tbl-cell" data-label="결제 방식">
+                <strong>💙 Alipay (支付宝)</strong>
+                <span class="sub">알리바바 Ant Group · Steam 공식 지원 (2015~)</span>
+            </div>
+            <div class="tbl-cell" data-label="수수료">
+                없음<br>
+            </div>
+            <div class="tbl-cell" data-label="특이사항">
+                Steam 공식 지원 현지 결제수단입니다.<a class="src-tag" href="#s5">[5]</a>
+            </div>
+            <div class="tbl-cell" data-label="개발자 영향">
+                <span class="pill pill-g">최적</span>
+            </div>
+        </div>
+
+        <!-- WeChat Pay -->
+        <div class="tbl-row" style="grid-template-columns:2fr 1fr 2fr 80px;">
+            <div class="tbl-cell" data-label="결제 방식">
+                <strong>💚 WeChat Pay (微信支付)</strong>
+                <span class="sub">텐센트 · Steam 공식 지원 (2016~)</span>
+            </div>
+            <div class="tbl-cell" data-label="수수료">
+                없음<br>
+            </div>
+            <div class="tbl-cell" data-label="특이사항">
+                Steam 공식 지원 현지 결제수단입니다.<a class="src-tag" href="#s5">[5]</a>
+            </div>
+            <div class="tbl-cell" data-label="개발자 영향">
+                <span class="pill pill-g">최적</span>
+            </div>
+        </div>
+
+        <!-- UnionPay -->
+        <div class="tbl-row" style="grid-template-columns:2fr 1fr 2fr 80px;">
+            <div class="tbl-cell" data-label="결제 방식">
+                <strong>🔴 UnionPay (银联)</strong>
+                <span class="sub">중국 국영 은행카드 네트워크 · Steam 공식 지원</span>
+            </div>
+            <div class="tbl-cell" data-label="수수료">없음</div>
+            <div class="tbl-cell" data-label="특이사항">
+                Steam 공식 지원 은행카드 기반 결제수단입니다.<a class="src-tag" href="#s5">[5]</a>
+            </div>
+            <div class="tbl-cell" data-label="개발자 영향">
+                <span class="pill pill-g">좋음</span>
+            </div>
+        </div>
+
+        <!-- Steam 기프트 카드 -->
+        <div class="tbl-row" style="grid-template-columns:2fr 1fr 2fr 80px;">
+            <div class="tbl-cell" data-label="결제 방식">
+                <strong>🎁 Steam 기프트 카드 (충전형)</strong>
+                <span class="sub">중국 지역 전용 카드 · 온·오프라인 판매</span>
+            </div>
+            <div class="tbl-cell" data-label="수수료">없음</div>
+            <div class="tbl-cell" data-label="특이사항">
+                ⚠️ <strong>지역 제한 있음</strong>. 중국 지역에서 유통되는 일부 Steam 기프트 카드/지갑 코드는 계정 지역 및 통화 조건에 따라 사용이 제한될 수 있음.<a class="src-tag" href="#s6">[6]</a>
+            </div>
+            <div class="tbl-cell" data-label="개발자 영향">
+                <span class="pill pill-n">일반</span>
+            </div>
+        </div>
+
+        <!-- PayPal -->
+        <div class="tbl-row" style="grid-template-columns:2fr 1fr 2fr 80px;background:#fff9f9;">
+            <div class="tbl-cell" data-label="결제 방식">
+                <strong>🚫 PayPal</strong>
+                <span class="sub">중국 지역 Steam 스토어에서 미제공</span>
+            </div>
+            <div class="tbl-cell" data-label="수수료">해당 없음</div>
+            <div class="tbl-cell" data-label="특이사항">
+                ❌ <strong>Steam 커뮤니티 기준 중국(CN) 지역 Steam 스토어에서는 PayPal 옵션이 표시되지 않는 사례가 확인됩니다.</strong><a class="src-tag" href="#s7">[7]</a>
+            </div>
+            <div class="tbl-cell" data-label="개발자 영향">
+                <span class="pill pill-r">중국 미지원</span>
+            </div>
+        </div>
+
+        <!-- 그레이 마켓 -->
+        <div class="tbl-row" style="grid-template-columns:2fr 1fr 2fr 80px;">
+            <div class="tbl-cell" data-label="결제 방식">
+                <strong>🔑 그레이 마켓 / 게임 키</strong>
+                <span class="sub">외부 유통 키 및 개인 간 거래</span>
+            </div>
+            <div class="tbl-cell" data-label="수수료">
+                플랫폼별 상이<br>
+                <span class="sub">재판매 마진</span>
+            </div>
+            <div class="tbl-cell" data-label="특이사항">
+                Steam 키는 외부 스토어 판매에도 사용될 수 있으나, 출처가 불명확하거나 사기성으로 유통된 키는 비활성화될 수 있습니다. 지역 제한이 있는 키는 중국 계정에서 활성화되지 않을 수 있습니다.<a class="src-tag" href="#s17">[17]</a><a class="src-tag" href="#s18">[18]</a>
+            </div>
+            <div class="tbl-cell" data-label="개발자 영향">
+                <span class="pill pill-a">주의</span>
+            </div>
+        </div>
+
+    </div><!-- /tbl-outer -->
+
+    <!-- 핵심 결론 박스 -->
+    <div class="hl navy fi">
+        <strong>결제 수단 핵심 정리</strong>
+        <ul>
+            <li><strong>직접 결제 핵심 수단:</strong> Alipay + WeChat Pay + UnionPay는 모두 Steam 공식 지원 수단입니다.</li>
+            <li><strong>PayPal 관련:</strong> 사용자 보고 기준 중국 계정에서는 PayPal 옵션이 표시되지 않는 사례가 확인됩니다.</li>
+            <li><strong>기프트 카드는 지역 제한이 있습니다:</strong> 중국 플레이어는 반드시 중국 지역 발행 Steam 기프트 카드만 사용 가능합니다. 해외 카드(미국·한국 등)는 중국 계정에 적용 불가합니다.</li>
+        </ul>
+    </div>
+
+    <div class="divider"><div class="divider-gem"></div></div>
+
+
+    <!-- ════════════════════════════════
+         D. 제3자 결제 대행 (게임 내 직접 결제)
+    ════════════════════════════════ -->
+    <div class="sub-title fi">제3자 결제 대행 — 게임 내 직접 결제 구축 시</div>
+
+    <!-- 개념 정리 배너 -->
+    <div class="banner warn fi">
+        <div class="banner-ico">📌</div>
+        <div class="banner-body">
+            <strong>실무 검토 방향</strong>
+            <p>Steam 외부 웹샵·인앱 결제를 구축하려면 Xsolla 같은 결제 애그리게이터나 Alipay·WeChat 직접 연동 방식을 검토할 수 있습니다.<a class="src-tag" href="#s12">[12]</a><a class="src-tag" href="#s14">[14]</a><a class="src-tag" href="#s15">[15]</a></p>
+        </div>
+    </div>
+
+    <!-- 제3자 결제 대행 비교 테이블 -->
+    <div class="tbl-outer fi">
+        <div class="tbl-head-row" style="grid-template-columns:1.8fr 1fr 1fr 2fr 80px;">
+            <div class="tbl-col">솔루션</div>
+            <div class="tbl-col">중국 결제 지원</div>
+            <div class="tbl-col">수수료</div>
+            <div class="tbl-col">특이사항</div>
+            <div class="tbl-col">추천</div>
+        </div>
+
+        <!-- Xsolla -->
+        <div class="tbl-row" style="grid-template-columns:1.8fr 1fr 1fr 2fr 80px;">
+            <div class="tbl-cell" data-label="솔루션">
+                <strong>🟦 Xsolla Pay Station</strong>
+                <span class="sub">게임 특화 결제 애그리게이터 · 2005년 설립 · 베이징 오피스 운영</span>
+            </div>
+            <div class="tbl-cell" data-label="중국 결제 지원">
+                Alipay+를 포함한 다양한 현지 결제수단 지원<a class="src-tag" href="#s12">[12]</a><a class="src-tag" href="#s13">[13]</a><br>
+            </div>
+            <div class="tbl-cell" data-label="수수료">
+                계약 및 채널 비용에 따라 상이<br>
+            </div>
+            <div class="tbl-cell" data-label="특이사항">
+                다양한 현지 결제수단을 통합 제공하는 게임 특화 결제 솔루션입니다. Alipay+ 협업 사례가 있으며, 웹샵·앱 내 별도 결제 구축에 적합합니다.<a class="src-tag" href="#s12">[12]</a><a class="src-tag" href="#s13">[13]</a>
+            </div>
+            <div class="tbl-cell" data-label="추천">
+                <span class="pill pill-g">추천</span>
+            </div>
+        </div>
+
+        <!-- Alipay 직접 SDK -->
+        <div class="tbl-row" style="grid-template-columns:1.8fr 1fr 1fr 2fr 80px;">
+            <div class="tbl-cell" data-label="솔루션">
+                <strong>💙 Alipay 직접 SDK</strong>
+                <span class="sub">Ant Group 공식 오픈 플랫폼 · 직접 통합</span>
+            </div>
+            <div class="tbl-cell" data-label="중국 결제 지원">
+                Alipay 단독<br>
+            </div>
+            <div class="tbl-cell" data-label="수수료">
+                채널 및 운영 구조에 따라 상이<br>
+                <span class="sub">직접 통합</span>
+            </div>
+            <div class="tbl-cell" data-label="특이사항">
+                Alipay 플랫폼을 통한 직접 연동 방식입니다. 사업자·정산·파트너 구조 검토가 필요하며, 애그리게이터를 거치지 않는 직접 운영형 결제 구성에 적합합니다.<a class="src-tag" href="#s14">[14]</a>
+            </div>
+            <div class="tbl-cell" data-label="추천">
+                <span class="pill pill-a">검토 필요</span>
+            </div>
+        </div>
+
+        <!-- WeChat Pay 직접 SDK -->
+        <div class="tbl-row" style="grid-template-columns:1.8fr 1fr 1fr 2fr 80px;">
+            <div class="tbl-cell" data-label="솔루션">
+                <strong>💚 WeChat Pay 직접 SDK</strong>
+                <span class="sub">텐센트 WeChat Pay 오픈 플랫폼 · 직접 통합</span>
+            </div>
+            <div class="tbl-cell" data-label="중국 결제 지원">
+                WeChat Pay 단독<br>
+            </div>
+            <div class="tbl-cell" data-label="수수료">
+                채널 및 운영 구조에 따라 상이<br>
+                <span class="sub">직접 통합</span>
+            </div>
+            <div class="tbl-cell" data-label="특이사항">
+                WeChat Pay 공식 접입 가이드를 통한 직접 연동 방식입니다. 사업자 인증, AppID/상점·앱 등 시나리오별 계정 바인딩과 심사 절차가 필요하며, 미니프로그램·공식계정·앱·웹 등 위챗 생태계와 연계할 수 있습니다.<a class="src-tag" href="#s15">[15]</a>
+            </div>
+            <div class="tbl-cell" data-label="추천">
+                <span class="pill pill-a">검토 필요</span>
+            </div>
+        </div>
+
+    <!-- 선택 기준 카드 -->
+    <div class="g2 fi">
+        <div class="card">
+            <h4>🏗️ 상황별 솔루션</h4>
+            <p><strong>Steam Store:</strong> Steam의 Alipay·WeChat·UnionPay 직접 결제로 충분합니다.</p>
+            <p><strong>자체 웹샵:</strong> <strong>Xsolla</strong> 같은 결제 애그리게이터가 실무 검토 대상이 됩니다.</p>
+            <p><strong>직접 통합:</strong> Alipay·WeChat Pay SDK는 사업자·정산·계정 구조 검토가 선행되어야 합니다.</a></p>
+        </div>
+        <div class="card">
+            <h4>💰 수수료 구조</h4>
+            <p><strong>Steam:</strong> 일부 매출 구간에 따라 차등 수익배분이 적용됩니다.<a class="src-tag" href="#s16">[16]</a></p>
+            <p><strong>Xsolla:</strong> 수수료 체계는 계약 및 채널별로 달라질 수 있습니다.<a class="src-tag" href="#s12">[12]</a></p>
+            <p><strong>Alipay·WeChat 직접 SDK:</strong> 채널 수수료 외에 개발·운영 비용이 추가로 발생할 수 있습니다.</p>
+        </div>
+    </div>
+
+
+    <div class="divider"><div class="divider-gem"></div></div>
+
+    <!-- ════════════════════════════════
+         E. CNY 가격 설정 — 개발자 가이드
+    ════════════════════════════════ -->
+    <div class="sub-title fi">Steam 글로벌 중국 — CNY 가격 참고 자료</div>
+
+    <div class="banner success fi">
+        <div class="banner-ico">💡</div>
+        <div class="banner-body">
+            <strong>CNY로 결제받으려면 CNY 가격 설정이 필수</strong>
+            <p>중국 플레이어가 위안화로 게임을 구매하려면 개발자가 Steamworks에서 CNY 가격을 명시적으로 설정해야 합니다.<a class="src-tag" href="#s8">[8]</a></p>
+        </div>
+    </div>
+
+    <!-- 가격 예시 -->
+    <p style="margin-bottom:1rem;font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',Arial,sans-serif;font-size:.85rem;color:#888;font-weight:600;text-transform:uppercase;letter-spacing:.06em;" class="fi">💰 가격 예시 — $29.99 USD 게임 기준</p>
+    <div class="price-grid fi">
+        <div class="price-cell head">USD 정가</div>
+        <div class="price-cell head">단순 환율 기반</div>
+        <div class="price-cell head">구매력 기준 환산</div>
+        <div class="price-cell head">실제 시장 적용가 ✓</div>
+
+        <div class="price-cell">
+            <div class="price-val">$29.99</div>
+            <div class="price-label">미국 기준가</div>
+        </div>
+        <div class="price-cell">
+            <div class="price-val">¥211</div>
+            <div class="price-label">Steam 환율 기반 변환환</div>
+        </div>
+        <div class="price-cell">
+            <div class="price-val">¥108</div>
+            <div class="price-label">구매력 기반 변환</div>
+        </div>
+        <div class="price-cell highlight">
+            <div class="price-val">¥199</div>
+            <div class="price-label">AAA급 게임 가격 적용 사례<a class="src-tag" href="#s10">[10]</a></div>
+        </div>
+    </div>
+
+    <!-- CNY 설정 단계 -->
+    <div class="card fi" style="margin-bottom:1.75rem;">
+        <h4>🛠️ Steamworks CNY 가격 설정</h4>
+        <ol class="step-list">
+            <li>
+                <div class="step-num">1</div>
+                <div class="step-body">
+                    <strong>Steamworks 파트너 대시보드 접속</strong>
+                    <p>partner.steamgames.com → 앱 선택 → Store → Pricing 메뉴로 이동합니다.</p>
+                </div>
+            </li>
+            <li>
+                <div class="step-num">2</div>
+                <div class="step-body">
+                    <strong>통화 설정에서 CNY 선택</strong>
+                    <p>Steam은 지원 통화 목록에 CNY를 포함하고 있으며, 해당 통화가 설정된 경우 중국 플레이어에게 위안화 기준 가격을 표시할 수 있습니다.</p>
+                </div>
+            </li>
+            <li>
+                <div class="step-num">3</div>
+                <div class="step-body">
+                    <strong>3가지 가격 환산 방식 중 선택</strong>
+                    <p>Steam 가격 도구는 세 가지 가격 환산 방식을 제공합니다<a class="src-tag" href="#s11">[11]</a> <strong>① 환율 기반 환산</strong><strong>② 구매력 기반 환산</strong><strong>③ 다변수 환산</strong></p>
+                </div>
+            </li>
+            <li>
+                <div class="step-num">4</div>
+                <div class="step-body">
+                    <strong>권장 가격 범위 참고</strong>
+                    <p>중국 시장에서는 USD 대비 30~55% 낮은 가격대로 CNY를 설정하는 사례가 자주 관찰됩니다.<a class="src-tag" href="#s9">[9]</a></p>
+                </div>
+            </li>
+        </ol>
+    </div>
+    <!-- ════════════════════════════════
+     출처 섹션
+════════════════════════════════ -->
+<div class="sources">
+    <div class="wrap">
+        <h3>📚 참고 출처</h3>
+        <div class="src-grid">
+
+            <div class="src-card" id="s1">
+                <div class="src-num">[1]</div>
+                <div class="src-title">Steam games in China: Making the most of a lucrative opportunity</div>
+                <div class="src-pub">Game Developer · 2023년 10월</div>
+                <a class="src-link" href="https://www.gamedeveloper.com/audio/steam-games-in-china-making-the-most-of-a-lucrative-opportunity" target="_blank">gamedeveloper.com</a>
+            </div>
+
+            <div class="src-card" id="s2">
+                <div class="src-num">[2]</div>
+                <div class="src-title">Steam China (Steamworks 공식 문서)</div>
+                <div class="src-pub">Valve Corporation (Steamworks Documentation)</div>
+                <a class="src-link" href="https://partner.steamgames.com/doc/store/china" target="_blank">partner.steamgames.com/doc/store/china</a>
+            </div>
+
+            <div class="src-card" id="s3">
+                <div class="src-num">[3]</div>
+                <div class="src-title">Is Steam usable in China? — Steam China game library</div>
+                <div class="src-pub">Games Learning Society · 2025년 3월</div>
+                <a class="src-link" href="https://www.gameslearningsociety.org/wiki/is-steam-usable-in-china/" target="_blank">gameslearningsociety.org</a>
+            </div>
+
+            <div class="src-card" id="s4">
+                <div class="src-num">[4]</div>
+                <div class="src-title">Steam China (蒸汽平台) officially launched — 계정 공유, 지갑 분리 구조</div>
+                <div class="src-pub">SteamDB Blog · 2021년 2월</div>
+                <a class="src-link" href="https://steamdb.info/blog/steam-china-launched/" target="_blank">steamdb.info/blog/steam-china-launched/</a>
+            </div>
+
+            <div class="src-card" id="s5">
+                <div class="src-num">[5]</div>
+                <div class="src-title">Steam Powers On in China — Alipay, UnionPay, WeChat Pay 공식 지원 역사</div>
+                <div class="src-pub">Game Developer · 2016년</div>
+                <a class="src-link" href="https://www.gamedeveloper.com/business/steam-powers-on-in-china-to-provide-standalone-games-and-dota-2-for-a-price" target="_blank">gamedeveloper.com</a>
+            </div>
+
+            <div class="src-card" id="s6">
+                <div class="src-num">[6]</div>
+                <div class="src-title">Steam 스팀 지역 제한</div>
+                <div class="src-pub">Steam Community Discussions</div>
+                <a class="src-link" href="https://help.steampowered.com/en/faqs/view/58D3-B80D-2943-3CC6?utm_source=chatgpt.com" target="_blank">steamcommunity.com/discussions/forum/7/2996547001729905381/</a>
+            </div>
+
+            <div class="src-card" id="s7">
+                <div class="src-num">[7]</div>
+                <div class="src-title">Steam 커뮤니티 PayPal 중국 Steam 미지원 확인</div>
+                <div class="src-pub">Steam Community Discussions</div>
+                <a class="src-link" href="https://steamcommunity.com/discussions/forum/0/2953754543765367311/" target="_blank">steamcommunity.com/discussions/forum/0/2953754543765367311/</a>
+            </div>
+
+            <div class="src-card" id="s8">
+                <div class="src-num">[8]</div>
+                <div class="src-title">Supported Currencies (Steamworks 공식 문서)</div>
+                <div class="src-pub">Valve Corporation (Steamworks Documentation)</div>
+                <a class="src-link" href="https://partner.steamgames.com/doc/store/pricing/currencies" target="_blank">partner.steamgames.com/doc/store/pricing/currencies</a>
+            </div>
+
+            <div class="src-card" id="s9">
+                <div class="src-num">[9]</div>
+                <div class="src-title">Regional Pricing Study — China</div>
+                <div class="src-pub">Evolve PR · 2025년 5월</div>
+                <a class="src-link" href="https://www.evolve-pr.com/2025/05/27/regional-pricing-study-china/" target="_blank">evolve-pr.com/2025/05/27/regional-pricing-study-china/</a>
+            </div>
+
+            <div class="src-card" id="s10">
+                <div class="src-num">[10]</div>
+                <div class="src-title">Steam games in China — 인디 게임 실제 적용 범위</div>
+                <div class="src-pub">Game Developer · 2023년 10월</div>
+                <a class="src-link" href="https://www.gamedeveloper.com/audio/steam-games-in-china-making-the-most-of-a-lucrative-opportunity" target="_blank">gamedeveloper.com</a>
+            </div>
+
+            <div class="src-card" id="s11">
+                <div class="src-num">[11]</div>
+                <div class="src-title">Pricing (Steamworks Documentation) — 지역 가격 변환 방식</div>
+                <div class="src-pub">Valve Corporation (Steamworks Documentation)</div>
+                <a class="src-link" href="https://partner.steamgames.com/pricing/explorer" target="_blank">partner.steamgames.com/doc/store/pricing</a>
+            </div>
+
+            <div class="src-card" id="s12">
+                <div class="src-num">[12]</div>
+                <div class="src-title">Unlocking the Chinese Gaming Market — Xsolla</div>
+                <div class="src-pub">Xsolla Blog · 2024년 10월</div>
+                <a class="src-link" href="https://xsolla.com/blog/unlocking-the-chinese-gaming-market" target="_blank">xsolla.com/blog/unlocking-the-chinese-gaming-market</a>
+            </div>
+
+            <div class="src-card" id="s13">
+                <div class="src-num">[13]</div>
+                <div class="src-title">Xsolla Partners With Alipay+</div>
+                <div class="src-pub">BusinessWire · 2022년 10월</div>
+                <a class="src-link" href="https://www.businesswire.com/news/home/20221019005124/en/Xsolla-Partners-With-Alipay-to-Extend-Global-Reach-in-Asia-by-Bringing-Games-to-New-Markets" target="_blank">businesswire.com</a>
+            </div>
+
+            <div class="src-card" id="s14">
+                <div class="src-num">[14]</div>
+                <div class="src-title">Alipay Global Partner / Merchant Platform</div>
+                <div class="src-pub">Alipay Global</div>
+                <a class="src-link" href="https://global.alipay.com/platform/site/partner" target="_blank">global.alipay.com/platform/site/partner</a>
+            </div>
+
+            <div class="src-card" id="s15">
+                <div class="src-num">[15]</div>
+                <div class="src-title">WeChat Pay 접입 가이드</div>
+                <div class="src-pub">WeChat Pay</div>
+                <a class="src-link" href="https://pay.wechatpay.cn/static/applyment_guide/applyment_index.shtml" target="_blank">pay.wechatpay.cn/static/applyment_guide/applyment_index.shtml</a>
+            </div>
+
+            <div class="src-card" id="s16">
+                <div class="src-num">[16]</div>
+                <div class="src-title">New Revenue Share Tiers and other updates</div>
+                <div class="src-pub">Steamworks Development Announcement</div>
+                <a class="src-link" href="https://steamcommunity.com/groups/steamworks/announcements/detail/1697191267930157838" target="_blank">steamcommunity.com/groups/steamworks/announcements/detail/1697191267930157838</a>
+            </div>
+
+
+            <div class="src-card" id="s17">
+                <div class="src-num">[17]</div>
+                <div class="src-title">Steam Keys (Steamworks Documentation)</div>
+                <div class="src-pub">Valve Corporation (Steamworks Documentation)</div>
+                <a class="src-link" href="https://partner.steamgames.com/doc/features/keys" target="_blank">partner.steamgames.com/doc/features/keys</a>
+            </div>
+
+            <div class="src-card" id="s18">
+                <div class="src-num">[18]</div>
+                <div class="src-title">Region Restrictions on Steam</div>
+                <div class="src-pub">Steam Support</div>
+                <a class="src-link" href="https://help.steampowered.com/en/faqs/view/58D3-B80D-2943-3CC6" target="_blank">help.steampowered.com/en/faqs/view/58D3-B80D-2943-3CC6</a>
+            </div>
+
+        </div></div>
+    </div>
+</div>
+
+<script>
+(function(){
+  const nav = document.getElementById('autoNav');
+  const progress = document.getElementById('rp');
+  const contentWrap = document.querySelector('.sec-wrap > .wrap');
+  const sources = document.querySelector('.sources');
+
+  if (nav && contentWrap) {
+    nav.innerHTML = '';
+    const titles = Array.from(contentWrap.querySelectorAll('.sub-title.fi, .sub-title'));
+    titles.forEach((titleEl, idx) => {
+      titleEl.id = 'section-' + (idx + 1);
+      const a = document.createElement('a');
+      a.href = '#' + titleEl.id;
+      a.textContent = titleEl.textContent.trim();
+      nav.appendChild(a);
+    });
+  }
+
+  const onScroll = () => {
+    const total = document.documentElement.scrollHeight - innerHeight;
+    if (progress) progress.style.width = (scrollY / Math.max(total,1) * 100) + '%';
+  };
+  window.addEventListener('scroll', onScroll);
+  onScroll();
+
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.fi').forEach(el => obs.observe(el));
+
+  document.querySelectorAll('.src-tag').forEach(tag => {
+    tag.addEventListener('click', e => {
+      e.preventDefault();
+      const t = document.querySelector(tag.getAttribute('href'));
+      if (!t) return;
+      t.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      t.style.transition = 'background .3s';
+      t.style.background = 'rgba(99,102,241,.22)';
+      setTimeout(() => { t.style.background = ''; }, 2200);
+    });
+  });
+
+  const navLinks = Array.from(document.querySelectorAll('#autoNav a'));
+  const sections = Array.from(document.querySelectorAll('.sub-title'));
+  const setActive = () => {
+    let active = sections[0];
+    const offset = scrollY + 120;
+    sections.forEach(sec => { if (sec.offsetTop <= offset) active = sec; });
+    navLinks.forEach(link => link.classList.toggle('active', active && link.getAttribute('href') === '#' + active.id));
+  };
+  window.addEventListener('scroll', setActive);
+  setActive();
+
+  if (sources) {
+    const footer = document.querySelector('footer.page-footer');
+    if (footer && sources.previousElementSibling !== footer) footer.before(sources);
+  }
+})();
+</script>
+
+</body>
+</html>
