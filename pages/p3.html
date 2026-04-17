@@ -162,9 +162,9 @@ header{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.97);backdr
 .df-title{font-size:12px;font-weight:800;margin-bottom:4px;text-align:center;padding:4px 8px;border-radius:6px}
 .df-sub{font-size:10px;color:var(--text-sub2);text-align:center;margin-bottom:12px;line-height:1.4}
 .df-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
-.df-bar-wrap{flex:1;display:flex;align-items:center;gap:8px}
-.df-bar{height:24px;border-radius:4px;min-width:24px;transition:width .6s;flex-shrink:0}
-.df-val{font-size:11px;font-weight:800;color:var(--text-h);white-space:nowrap;font-family:monospace;flex-shrink:0}
+.df-bar-wrap{flex:1;display:grid;grid-template-columns:1fr 76px;align-items:center;gap:8px;min-width:0}
+.df-bar{height:24px;border-radius:4px;min-width:24px;transition:width .6s;max-width:100%}
+.df-val{font-size:11px;font-weight:800;color:var(--text-h);white-space:nowrap;font-family:monospace;text-align:right}
 .df-label{font-size:10px;color:var(--text-sub2);min-width:90px;text-align:right;flex-shrink:0}
 .df-note{font-size:10px;background:var(--card-bg2);border-left:3px solid;border-radius:0 6px 6px 0;padding:8px 10px;margin-top:10px;line-height:1.55;color:var(--text-sub1)}
 .df-note strong{color:var(--text-h)}
