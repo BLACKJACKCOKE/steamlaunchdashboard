@@ -10,30 +10,28 @@
 <body>
 <aside class="sidebar" aria-label="페이지 네비게이션">
   <div class="sidebar-head">
-    <div class="sidebar-brand">
-      <span class="brand-badge">Project S</span>
-      <span>Steam 론칭 대시보드</span>
-    </div>
-    <button id="sidebar-toggle" class="sidebar-toggle" type="button" aria-label="사이드바 토글">☰</button>
+    <div class="brand-line1">Project S</div>
+    <div class="brand-line2">Steam 론칭 대시보드</div>
   </div>
+  <button id="sidebar-toggle" class="sidebar-toggle" type="button" aria-label="사이드바 토글"></button>
   <nav class="nav">
-    <a class="nav-item" href="#p1"       data-route="p1"><span class="nav-num">P1</span><span class="nav-label">글로벌 게임 마켓</span></a>
-    <a class="nav-item" href="#p2"       data-route="p2"><span class="nav-num">P2</span><span class="nav-label">스팀 마켓</span></a>
-    <a class="nav-item" href="#p3"       data-route="p3"><span class="nav-num">P3</span><span class="nav-label">마일스톤</span></a>
-    <a class="nav-item" href="#p4"       data-route="p4"><span class="nav-num">P4</span><span class="nav-label">스팀 정책 & 리스크</span></a>
-    <a class="nav-item" href="#p5"       data-route="p5"><span class="nav-num">P5</span><span class="nav-label">Pain Point 분석</span></a>
-    <a class="nav-item" href="#p6"       data-route="p6"><span class="nav-num">P6</span><span class="nav-label">BM 분석</span></a>
-    <a class="nav-item" href="#p7"       data-route="p7"><span class="nav-num">P7</span><span class="nav-label">경쟁작 캘린더</span></a>
-    <a class="nav-item" href="#appendix" data-route="appendix"><span class="nav-num">APX</span><span class="nav-label">CCU 계산기</span></a>
+    <a class="nav-item" href="#p0"       data-route="p0"       data-short="P0"><span class="nav-label">Flywheel</span></a>
+    <a class="nav-item" href="#p1"       data-route="p1"       data-short="P1"><span class="nav-label">글로벌 게임 마켓</span></a>
+    <a class="nav-item" href="#p2"       data-route="p2"       data-short="P2"><span class="nav-label">스팀 마켓</span></a>
+    <a class="nav-item" href="#p3"       data-route="p3"       data-short="P3"><span class="nav-label">마일스톤</span></a>
+    <a class="nav-item" href="#p4"       data-route="p4"       data-short="P4"><span class="nav-label">스팀 정책 & 리스크</span></a>
+    <a class="nav-item" href="#p5"       data-route="p5"       data-short="P5"><span class="nav-label">Pain Point 분석</span></a>
+    <a class="nav-item" href="#p6"       data-route="p6"       data-short="P6"><span class="nav-label">BM 분석</span></a>
+    <a class="nav-item" href="#p7"       data-route="p7"       data-short="P7"><span class="nav-label">경쟁작 캘린더</span></a>
+    <a class="nav-item" href="#appendix" data-route="appendix" data-short="APX"><span class="nav-label">CCU 계산기</span></a>
   </nav>
   <div class="sidebar-foot">
     <div class="rate-box">
       <div class="rate-label">USD → KRW</div>
       <div class="rate-row">
-        <input id="rate-input" class="rate-input" type="number" min="1" step="0.01" value="1400" />
+        <input id="rate-input" class="rate-input" type="number" min="1" step="0.01" value="1500" />
         <button id="rate-apply" class="rate-btn" type="button">적용</button>
       </div>
-      <div class="rate-meta">※ 수동 입력 · 2026-04-17 기준 기본값 1400</div>
     </div>
   </div>
 </aside>
@@ -41,8 +39,7 @@
 <main class="main">
   <header class="header">
     <div class="header-title">
-      <span id="hdr-num" class="header-num">P1</span>
-      <span id="hdr-text" class="header-text">글로벌 게임 마켓</span>
+      <span id="hdr-text" class="header-text">Flywheel</span>
     </div>
     <div class="header-meta">
       <span class="live-dot" aria-hidden="true"></span>
