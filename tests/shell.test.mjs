@@ -5,6 +5,7 @@ import { readFileSync } from 'node:fs';
 const source = readFileSync(new URL('../assets/shell.js', import.meta.url), 'utf8');
 
 test('shell.js exports routing table mapping hashes to page configs', () => {
+  assert.match(source, /p0/);
   assert.match(source, /p1/);
   assert.match(source, /p2/);
   assert.match(source, /p3/);

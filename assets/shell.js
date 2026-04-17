@@ -4,20 +4,21 @@
 
   const RATE_KEY = 'projectS.rate';
   const SIDEBAR_KEY = 'projectS.sidebar';
-  const DEFAULT_RATE = 1400;
+  const DEFAULT_RATE = 1500;
 
   const ROUTES = {
-    p1:       { title: 'P1 · 글로벌 게임 마켓',        src: 'pages/p1.html',       internal: true,  num: 'P1' },
-    p2:       { title: 'P2 · 스팀 마켓',               src: 'pages/p2.html',       internal: true,  num: 'P2' },
-    p3:       { title: 'P3 · 마일스톤',                src: 'pages/p3.html',       internal: true,  num: 'P3' },
-    p4:       { title: 'P4 · 스팀 정책 & 리스크',       src: 'pages/p4.html',       internal: true,  num: 'P4' },
-    p5:       { title: 'P5 · Pain Point 분석',         src: 'https://project-s-dashboard.pages.dev/', internal: false, num: 'P5' },
-    p6:       { title: 'P6 · BM 분석',                 src: 'https://pub-4710a252be1249c58617eed8ea869738.r2.dev/images/p6_projectsdashboard_BM.html', internal: false, num: 'P6' },
-    p7:       { title: 'P7 · 경쟁작 캘린더',           src: 'https://fps-dashboard.misty-haze-7fc4.workers.dev/', internal: false, num: 'P7' },
-    appendix: { title: '매치메이킹 CCU 계산기',        src: 'pages/appendix.html', internal: true,  num: 'APX' },
+    p0:       { title: 'Flywheel',                     src: 'pages/p0.html',       internal: true,  num: 'P0' },
+    p1:       { title: '글로벌 게임 마켓',              src: 'pages/p1.html',       internal: true,  num: 'P1' },
+    p2:       { title: '스팀 마켓',                     src: 'pages/p2.html',       internal: true,  num: 'P2' },
+    p3:       { title: '마일스톤',                      src: 'pages/p3.html',       internal: true,  num: 'P3' },
+    p4:       { title: '스팀 정책 & 리스크',             src: 'pages/p4.html',       internal: true,  num: 'P4' },
+    p5:       { title: 'Pain Point 분석',              src: 'https://project-s-dashboard.pages.dev/', internal: false, num: 'P5' },
+    p6:       { title: 'BM 분석',                       src: 'https://pub-4710a252be1249c58617eed8ea869738.r2.dev/images/p6_projectsdashboard_BM.html', internal: false, num: 'P6' },
+    p7:       { title: '경쟁작 캘린더',                 src: 'https://fps-dashboard.misty-haze-7fc4.workers.dev/', internal: false, num: 'P7' },
+    appendix: { title: '매치메이킹 CCU 계산기',          src: 'pages/appendix.html', internal: true,  num: 'APX' },
   };
 
-  const DEFAULT_ROUTE = 'p1';
+  const DEFAULT_ROUTE = 'p0';
 
   function loadRate() {
     const raw = parseFloat(localStorage.getItem(RATE_KEY));
@@ -47,7 +48,6 @@
       frame.dataset.src = route.src;
       frame.src = route.src;
     }
-    document.getElementById('hdr-num').textContent = route.num;
     document.getElementById('hdr-text').textContent = route.title;
     document.querySelectorAll('.nav-item').forEach((el) => {
       el.classList.toggle('active', el.dataset.route === key);
