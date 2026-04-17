@@ -17,9 +17,9 @@ body { font-family:'Apple SD Gothic Neo','Segoe UI',system-ui,sans-serif; backgr
 .sec-num { font-size:11px; font-weight:700; letter-spacing:2px; color:var(--accent); text-transform:uppercase; margin-bottom:4px; }
 .sec-title { font-size:22px; font-weight:800; color:var(--text-h); margin-bottom:2px; }
 .sec-sub { font-size:12px; color:var(--text-sub2); margin-bottom:20px; }
-.flywheel-hero { display:flex; justify-content:center; margin:20px 0 28px; }
-.flywheel-hero img { max-width:480px; max-height:480px; width:auto; height:auto; border-radius:var(--radius); box-shadow:var(--shadow); }
-@media(max-width:1024px){ .flywheel-hero img { max-width:360px; max-height:360px; } }
+.flywheel-hero { display:flex; justify-content:center; margin:24px 0 32px; }
+.flywheel-hero img { max-width:640px; max-height:640px; width:auto; height:auto; border-radius:var(--radius); box-shadow:var(--shadow); }
+@media(max-width:1024px){ .flywheel-hero img { max-width:480px; max-height:480px; } }
 .insights { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:24px; }
 .insight-card { background:var(--card-bg); border:1px solid var(--border); border-left:4px solid var(--accent); border-radius:var(--radius); padding:16px 18px; }
 .insight-kicker { font-size:10px; font-weight:700; letter-spacing:1.5px; color:var(--accent); text-transform:uppercase; margin-bottom:6px; }
@@ -35,12 +35,7 @@ body { font-family:'Apple SD Gothic Neo','Segoe UI',system-ui,sans-serif; backgr
 .summary h3 { font-size:13px; font-weight:800; color:var(--accent); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:10px; }
 .summary p { font-size:14px; color:var(--text-h); line-height:1.7; }
 .summary p strong { color:var(--accent); }
-.phase-row { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:32px; }
-.phase { background:#fff; border:1px solid var(--border); border-radius:var(--radius); padding:16px 18px; position:relative; }
-.phase-num { position:absolute; top:-12px; left:16px; background:var(--accent); color:#fff; width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; }
-.phase-title { font-size:13px; font-weight:800; color:var(--text-h); margin-top:6px; margin-bottom:6px; }
-.phase-body { font-size:12px; color:var(--text-sub1); line-height:1.55; }
-@media(max-width:1024px){.insights,.phase-row{grid-template-columns:1fr}}
+@media(max-width:1024px){.insights{grid-template-columns:1fr}}
 </style>
 <link rel="stylesheet" href="../assets/theme.css">
 </head>
@@ -69,29 +64,6 @@ body { font-family:'Apple SD Gothic Neo','Segoe UI',system-ui,sans-serif; backgr
       <div class="insight-kicker">🔁 실행 — Flywheel</div>
       <div class="insight-title">WL→Review→Purchase 선순환 설계</div>
       <div class="insight-body">Pain Point(매칭·밸런스·시즌 속도)가 <strong>허브</strong>, BM 선택이 <strong>순환 속도</strong>. 단일 결정이 아닌 <strong>Phase별 분기 설계</strong>가 장기 복리를 만든다 (→ 04 마일스톤 · 06 Pain Point · 07 BM).</div>
-    </div>
-  </div>
-
-  <div class="phase-row">
-    <div class="phase">
-      <div class="phase-num">1</div>
-      <div class="phase-title">Pre-Launch Build-up</div>
-      <div class="phase-body">WL 확보 · CBT 피드백 · 빌더 커뮤니티 형성</div>
-    </div>
-    <div class="phase">
-      <div class="phase-num">2</div>
-      <div class="phase-title">Launch Window</div>
-      <div class="phase-body">Launch PCCU 확보 · Top 10 진입 · 초기 리뷰 스코어</div>
-    </div>
-    <div class="phase">
-      <div class="phase-num">3</div>
-      <div class="phase-title">Early Retention</div>
-      <div class="phase-body">시즌 1 콘텐츠 · 매칭 개선 · Pain Point 대응</div>
-    </div>
-    <div class="phase">
-      <div class="phase-num">4</div>
-      <div class="phase-title">Compound Growth</div>
-      <div class="phase-body">BM 수익 · 글로벌 확대 · 2nd Wave 마케팅</div>
     </div>
   </div>
 </div>
