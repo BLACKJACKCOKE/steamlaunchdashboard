@@ -55,10 +55,8 @@ body.embed > .legend-bar { display:none !important; }
 body.embed { padding-top:0 !important; }
 
 /* ─── EMBED MODE: chart overflow + label safety ─── */
-body.embed .chart-wrap,
-body.embed .chart-card canvas,
-body.embed .cd canvas { max-width:100%; height:auto !important; }
-body.embed canvas { display:block; max-width:100%; }
+body.embed .chart-wrap { max-width: 100%; }
+body.embed canvas { display: block; max-width: 100%; }
 body.embed .chart-2col,
 body.embed .g2 { overflow:hidden; }
 body.embed .tw { overflow-x:auto; }
