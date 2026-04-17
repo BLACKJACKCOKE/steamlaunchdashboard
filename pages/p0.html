@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project S Flywheel</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin:0; padding:0; }
+:root {
+  --bg:#ffffff; --card-bg:#f3f4f6; --border:#e5e7eb;
+  --text-h:#111827; --text-sub1:#374151; --text-sub2:#6b7280;
+  --accent:#4f46e5; --green:#16a34a; --amber:#d97706; --purple:#7c3aed;
+  --radius:12px; --shadow:0 1px 4px rgba(0,0,0,.08);
+}
+body { font-family:'Apple SD Gothic Neo','Segoe UI',system-ui,sans-serif; background:var(--bg); color:var(--text-h); line-height:1.6; }
+.page-wrap { max-width:1280px; margin:0 auto; padding:40px 40px 80px; }
+.sec-num { font-size:11px; font-weight:700; letter-spacing:2px; color:var(--accent); text-transform:uppercase; margin-bottom:6px; }
+.sec-title { font-size:24px; font-weight:800; color:var(--text-h); margin-bottom:4px; }
+.sec-sub { font-size:13px; color:var(--text-sub2); margin-bottom:32px; }
+.flywheel-hero { display:flex; justify-content:center; margin:24px 0 40px; }
+.flywheel-hero img { max-width:100%; height:auto; border-radius:var(--radius); box-shadow:var(--shadow); }
+.insights { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:32px; }
+.insight-card { background:var(--card-bg); border:1px solid var(--border); border-left:4px solid var(--accent); border-radius:var(--radius); padding:20px 22px; }
+.insight-kicker { font-size:10px; font-weight:700; letter-spacing:1.5px; color:var(--accent); text-transform:uppercase; margin-bottom:6px; }
+.insight-title { font-size:15px; font-weight:800; color:var(--text-h); margin-bottom:8px; line-height:1.3; }
+.insight-body { font-size:13px; color:var(--text-sub1); line-height:1.6; }
+.insight-card.green { border-left-color:var(--green); }
+.insight-card.green .insight-kicker { color:var(--green); }
+.insight-card.amber { border-left-color:var(--amber); }
+.insight-card.amber .insight-kicker { color:var(--amber); }
+.insight-card.purple { border-left-color:var(--purple); }
+.insight-card.purple .insight-kicker { color:var(--purple); }
+.summary { background:linear-gradient(135deg,#f0f4ff,#fafbff); border:1px solid #c7d2fe; border-radius:var(--radius); padding:20px 24px; margin-bottom:24px; }
+.summary h3 { font-size:13px; font-weight:800; color:var(--accent); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:10px; }
+.summary p { font-size:14px; color:var(--text-h); line-height:1.7; }
+.summary p strong { color:var(--accent); }
+.phase-row { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:32px; }
+.phase { background:#fff; border:1px solid var(--border); border-radius:var(--radius); padding:16px 18px; position:relative; }
+.phase-num { position:absolute; top:-12px; left:16px; background:var(--accent); color:#fff; width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; }
+.phase-title { font-size:13px; font-weight:800; color:var(--text-h); margin-top:6px; margin-bottom:6px; }
+.phase-body { font-size:12px; color:var(--text-sub1); line-height:1.55; }
+@media(max-width:1024px){.insights,.phase-row{grid-template-columns:1fr}}
+</style>
+<link rel="stylesheet" href="../assets/theme.css">
+</head>
+<body class="embed">
+<div class="page-wrap">
+  <div class="sec-num">P0 · Executive Overview</div>
+  <h1 class="sec-title">Project S Flywheel</h1>
+  <p class="sec-sub">전체 대시보드 데이터를 관통하는 Project S 론칭 성장 동력 구조</p>
+
+  <div class="flywheel-hero">
+    <img src="../assets/flywheel.png" alt="Project S Flywheel Diagram" />
+  </div>
+
+  <div class="summary">
+    <h3>🎯 핵심 인사이트</h3>
+    <p>Project S의 성장은 <strong>강한 론칭 모멘텀 → 지속적 콘텐츠 업데이트 → 커뮤니티 확산 → WL·CCU 증가 → 재투자</strong>로 이어지는 선순환 구조입니다. 임원진 의사결정 포인트는 각 단계가 서로를 가속하는 구간을 언제 어떻게 만들 것인가에 있습니다.</p>
+  </div>
+
+  <div class="insights">
+    <div class="insight-card">
+      <div class="insight-kicker">Market Scale</div>
+      <div class="insight-title">PC 플랫폼 CAGR +6.6%, 2028F $52B 역전</div>
+      <div class="insight-body">글로벌 PC 게임 매출이 2028년 콘솔을 역전하는 구조 전환기. 스팀 플랫폼 중심의 PC 론칭은 장기 성장 트렌드 위에 위치 (P1 참조).</div>
+    </div>
+    <div class="insight-card green">
+      <div class="insight-kicker">Steam Leadership</div>
+      <div class="insight-title">Shooter 카테고리 $1M+ 타이틀 29개</div>
+      <div class="insight-body">택티컬·아레나 단독 19%, 익스트랙션 24.6% 모멘텀. 서브장르 포지셔닝이 Project S 차별화의 핵심 (P2 참조).</div>
+    </div>
+    <div class="insight-card amber">
+      <div class="insight-kicker">Launch Readiness</div>
+      <div class="insight-title">WL 누적 목표 1.6M (P) / 2.4M (F2P)</div>
+      <div class="insight-body">CBT(2027 Q2) 이후 분기별 2배 성장 필요. Premium vs F2P BM 분기 시점에 따라 Launch PCCU 전환율이 달라짐 (P3 참조).</div>
+    </div>
+    <div class="insight-card purple">
+      <div class="insight-kicker">Policy & Risk</div>
+      <div class="insight-title">Revenue Share 30% → 25% → 20% 티어</div>
+      <div class="insight-body">$10M / $50M 누적 매출 돌파 시점에 수수료 절감 효과. 중국·러시아 지역 리스크는 별도 상세 리뷰 필요 (P4 참조).</div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-kicker">Pain Points</div>
+      <div class="insight-title">유저 이탈 Top 3 요인 식별</div>
+      <div class="insight-body">초기 매칭 대기시간, 매치메이킹 밸런스, 시즌 콘텐츠 공급 속도. 각각에 대응하는 KPI 및 조직 책임 라인 정의 (P5 참조).</div>
+    </div>
+    <div class="insight-card green">
+      <div class="insight-kicker">Business Model</div>
+      <div class="insight-title">Premium 안정 vs F2P 장기 상한</div>
+      <div class="insight-body">초기 ROI는 Premium이 빠르고, 장기 총매출 상한은 F2P가 높음. 출시 전 BM 결정 vs 2-track 운영의 트레이드오프 (P6 참조).</div>
+    </div>
+  </div>
+
+  <div class="phase-row">
+    <div class="phase">
+      <div class="phase-num">1</div>
+      <div class="phase-title">Pre-Launch Build-up</div>
+      <div class="phase-body">WL 확보 · CBT 피드백 · 빌더 커뮤니티 형성</div>
+    </div>
+    <div class="phase">
+      <div class="phase-num">2</div>
+      <div class="phase-title">Launch Window</div>
+      <div class="phase-body">Launch PCCU 확보 · Top 10 진입 · 초기 리뷰 스코어</div>
+    </div>
+    <div class="phase">
+      <div class="phase-num">3</div>
+      <div class="phase-title">Early Retention</div>
+      <div class="phase-body">시즌 1 콘텐츠 · 매칭 개선 · Pain Point 대응</div>
+    </div>
+    <div class="phase">
+      <div class="phase-num">4</div>
+      <div class="phase-title">Compound Growth</div>
+      <div class="phase-body">BM 수익 · 글로벌 확대 · 2nd Wave 마케팅</div>
+    </div>
+  </div>
+</div>
+<script src="../assets/embed.js"></script>
+</body>
+</html>
