@@ -440,8 +440,9 @@ footer{background:#1a1a2e;color:#64748b;padding:24px 40px;font-size:11px;display
   .cl-items{grid-template-columns:1fr}
 }
 </style>
+  <link rel="stylesheet" href="../assets/theme.css">
 </head>
-<body>
+<body class="embed">
 
 <!-- HEADER -->
 <header>
@@ -1579,5 +1580,6 @@ document.querySelectorAll('.section').forEach(s=>new IntersectionObserver(entrie
   entries.forEach(e=>{if(e.isIntersecting)pnis.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+e.target.id));});
 },{rootMargin:'-116px 0px -40% 0px',threshold:0}).observe(s));
 </script>
+<script src="../assets/embed.js"></script>
 </body>
 </html>

@@ -293,8 +293,9 @@ tbody td { padding:8px 11px; vertical-align:middle; line-height:1.5; color:var(-
   .news-card { flex-direction:column; }
 }
 </style>
+  <link rel="stylesheet" href="../assets/theme.css">
 </head>
-<body>
+<body class="embed">
 
 <!-- ══ GLOBAL TOOLTIP ══ -->
 <div id="g-tip">
@@ -1371,5 +1372,6 @@ const barObs = new IntersectionObserver((entries) => {
 }, { threshold:0.5 });
 barFills.forEach(b => barObs.observe(b));
 </script>
+<script src="../assets/embed.js"></script>
 </body>
 </html>

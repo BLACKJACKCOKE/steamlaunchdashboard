@@ -209,8 +209,9 @@ input.s7-range::-moz-range-thumb { width:13px; height:13px; border-radius:50%; b
   .grid2,.grid3,.kv-grid { grid-template-columns:1fr; }
 }
 </style>
+  <link rel="stylesheet" href="../assets/theme.css">
 </head>
-<body>
+<body class="embed">
 
 <!-- HEADER -->
 <header class="top-header">
@@ -937,5 +938,6 @@ var obs=new IntersectionObserver(function(entries){
 },{rootMargin:'-110px 0px -40% 0px',threshold:0});
 sections.forEach(function(s){obs.observe(s);});
 </script>
+<script src="../assets/embed.js"></script>
 </body>
 </html>
