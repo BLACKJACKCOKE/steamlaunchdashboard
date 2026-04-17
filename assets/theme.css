@@ -47,12 +47,19 @@ table, .num, .kv, .kpi-value, tbody td, thead th {
   font-variant-numeric: tabular-nums;
 }
 
-/* ─── EMBED MODE: hide each original's own top chrome ─── */
+/* ─── EMBED MODE: hide each original's own top chrome + footer ─── */
 body.embed > header,
 body.embed > .top-header,
 body.embed > .page-nav,
-body.embed > .legend-bar { display:none !important; }
+body.embed > .legend-bar,
+body.embed footer { display:none !important; }
 body.embed { padding-top:0 !important; }
+
+/* ─── EMBED MODE: center chart caption text (CAGR/YoY etc) ─── */
+body.embed .chart-card-sub,
+body.embed .chart-card-subtitle,
+body.embed .cs,
+body.embed .s3-subcap { text-align: center !important; }
 
 /* ─── EMBED MODE: chart overflow + label safety ─── */
 body.embed .chart-wrap { max-width: 100%; }
