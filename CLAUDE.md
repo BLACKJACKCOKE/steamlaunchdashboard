@@ -8,12 +8,14 @@ This repo ships Codespaces + Claude Code integration. `.devcontainer/devcontaine
 
 **Always ask the user before invoking any skill.** A `PreToolUse` hook in `.claude/settings.json` (matcher `Skill`) already forces a permission prompt before every skill call — do not bypass it. If the user has not explicitly approved a specific skill for the task at hand, stop and ask first.
 
-## Superpowers plugin
+## Enabled plugins
 
-The `superpowers@claude-plugins-official` plugin is pre-enabled via `enabledPlugins` in `.claude/settings.json`. On a fresh Codespace or new machine, if `/plugin list` does not show it, install once with:
+Both plugins are pre-enabled via `enabledPlugins` in `.claude/settings.json` so new Codespaces and new terminals integrate automatically. On a fresh environment (first time only), if `/plugin list` does not show them, install:
 
 ```
 /plugin install superpowers@claude-plugins-official
+/plugin marketplace add zarazhangrui/frontend-slides
+/plugin install frontend-slides@frontend-slides
 ```
 
-A `SessionStart` hook surfaces this reminder automatically.
+`frontend-slides` is registered via `extraKnownMarketplaces`. A `SessionStart` hook surfaces the install reminder automatically. Skill-use confirmation policy above applies to all of these.

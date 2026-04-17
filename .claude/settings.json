@@ -1,7 +1,17 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "extraKnownMarketplaces": {
+    "frontend-slides": {
+      "source": {
+        "source": "github",
+        "repo": "zarazhangrui/frontend-slides"
+      },
+      "autoUpdate": true
+    }
+  },
   "enabledPlugins": {
-    "superpowers@claude-plugins-official": true
+    "superpowers@claude-plugins-official": true,
+    "frontend-slides@frontend-slides": true
   },
   "hooks": {
     "SessionStart": [
@@ -9,7 +19,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "jq -rn '{systemMessage: \"Superpowers integration active. If `/plugin list` does not show superpowers, run `/plugin install superpowers@claude-plugins-official`. Reminder: always ask the user before invoking any skill.\"}'"
+            "command": "jq -rn '{systemMessage: \"Plugins enabled: superpowers, frontend-slides. If `/plugin list` is missing either, run: `/plugin install superpowers@claude-plugins-official` and/or `/plugin marketplace add zarazhangrui/frontend-slides && /plugin install frontend-slides@frontend-slides`. Reminder: always ask the user before invoking any skill — use only when explicitly told to.\"}'"
           }
         ]
       }
@@ -20,7 +30,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "jq -rn '{hookSpecificOutput: {hookEventName: \"PreToolUse\", permissionDecision: \"ask\", permissionDecisionReason: \"Ask the user for explicit approval before invoking this skill. The user wants to confirm every skill use.\"}}'"
+            "command": "jq -rn '{hookSpecificOutput: {hookEventName: \"PreToolUse\", permissionDecision: \"ask\", permissionDecisionReason: \"Ask the user for explicit approval before invoking this skill. The user wants to confirm every skill use and only run skills when explicitly told to.\"}}'"
           }
         ]
       }
