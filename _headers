@@ -1,0 +1,5 @@
+/*
+  X-Frame-Options: SAMEORIGIN
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Content-Security-Policy: default-src 'self'; frame-src 'self' https://project-s-dashboard.pages.dev https://pub-4710a252be1249c58617eed8ea869738.r2.dev https://fps-dashboard.misty-haze-7fc4.workers.dev; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'

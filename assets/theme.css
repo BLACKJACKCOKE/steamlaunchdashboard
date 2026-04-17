@@ -1,0 +1,101 @@
+/* assets/theme.css — common design tokens + embed mode overrides */
+:root {
+  /* Base palette (locked to existing originals) */
+  --bg:#ffffff;
+  --card-bg:#f3f4f6;
+  --card-bg2:#f9fafb;
+  --border:#e5e7eb;
+  --text-h:#111827;
+  --text-sub1:#374151;
+  --text-sub2:#6b7280;
+  --text-src:#9ca3af;
+  --accent:#4f46e5;
+  --green:#16a34a;
+  --red:#ef4444;
+  --amber:#d97706;
+  --purple:#7c3aed;
+  --teal:#0f766e;
+  --radius:12px;
+  --shadow:0 1px 4px rgba(0,0,0,.08);
+
+  /* P2-shorthand aliases (so P2's own :root overrides still work) */
+  --c1:var(--card-bg);
+  --c2:var(--card-bg2);
+  --bd:var(--border);
+  --h:var(--text-h);
+  --s1:var(--text-sub1);
+  --s2:var(--text-sub2);
+  --sc:var(--text-src);
+  --g:var(--green);
+  --r:var(--red);
+  --a:var(--accent);
+
+  /* Chart palette (fixed order) */
+  --chart-1:#4f46e5;
+  --chart-2:#0891b2;
+  --chart-3:#16a34a;
+  --chart-4:#d97706;
+  --chart-5:#ef4444;
+  --chart-6:#7c3aed;
+}
+
+/* Base typography */
+body {
+  font-family: Pretendard, 'Apple SD Gothic Neo', 'Segoe UI', system-ui, sans-serif;
+}
+table, .num, .kv, .kpi-value, tbody td, thead th {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ─── EMBED MODE: hide each original's own top chrome + footer ─── */
+body.embed > header,
+body.embed > .top-header,
+body.embed > .page-nav,
+body.embed > .legend-bar,
+body.embed footer { display:none !important; }
+body.embed { padding-top:0 !important; }
+
+/* ─── EMBED MODE: center chart caption text (CAGR/YoY etc) ─── */
+body.embed .chart-card-sub,
+body.embed .chart-card-subtitle,
+body.embed .cs,
+body.embed .s3-subcap { text-align: center !important; }
+
+/* ─── EMBED MODE: chart overflow + label safety ─── */
+body.embed .chart-wrap { max-width: 100%; }
+body.embed canvas { display: block; max-width: 100%; }
+body.embed .chart-2col,
+body.embed .g2 { overflow:hidden; }
+body.embed .tw { overflow-x:auto; }
+body.embed .kpi-row { overflow-wrap:anywhere; }
+body.embed table { font-variant-numeric: tabular-nums; }
+
+/* ─── RUSSIA unification: force Pretendard + indigo palette ─── */
+body.embed[data-page="russia"],
+body.embed[data-page="russia"] * {
+  font-family: Pretendard, 'Apple SD Gothic Neo', 'Segoe UI', system-ui, sans-serif !important;
+}
+body.embed[data-page="russia"] h1,
+body.embed[data-page="russia"] h2,
+body.embed[data-page="russia"] h3,
+body.embed[data-page="russia"] h4 {
+  color: var(--text-h) !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.01em !important;
+}
+body.embed[data-page="russia"] p,
+body.embed[data-page="russia"] li,
+body.embed[data-page="russia"] td,
+body.embed[data-page="russia"] span { color: var(--text-sub1); }
+body.embed[data-page="russia"] a { color: var(--accent) !important; text-decoration: none; }
+body.embed[data-page="russia"] a:hover { text-decoration: underline; }
+/* Recharts palette override (targets common Recharts class patterns) */
+body.embed[data-page="russia"] .recharts-default-legend * { color: var(--text-sub1) !important; }
+body.embed[data-page="russia"] .recharts-cartesian-axis-tick text { fill: var(--text-sub2) !important; font-size: 11px !important; }
+body.embed[data-page="russia"] .recharts-tooltip-wrapper { font-size: 12px !important; }
+
+/* ─── CHINA gentle alignment ─── */
+body.embed[data-page="china"] h1,
+body.embed[data-page="china"] h2,
+body.embed[data-page="china"] h3 { color: var(--text-h) !important; }
+body.embed[data-page="china"] a { color: var(--accent) !important; }

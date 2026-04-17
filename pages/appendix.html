@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FPS 매치메이킹 CCU 볼륨 — Project S</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg:#ffffff; --card-bg:#f3f4f6; --card-bg2:#f9fafb;
+  --border:#e5e7eb; --text-h:#111827; --text-sub1:#374151;
+  --text-sub2:#6b7280; --text-src:#9ca3af;
+  --green:#16a34a; --red:#ef4444; --accent:#4f46e5;
+  --amber:#d97706; --amber-bg:#fef3c7; --amber-border:#fde68a;
+  --green-bg:#dcfce7; --green-border:#86efac;
+  --red-bg:#fee2e2; --red-border:#fca5a5;
+  --blue-bg:#eff6ff; --blue-border:#bfdbfe;
+  --purple:#7c3aed; --purple-bg:#ede9fe; --purple-border:#c4b5fd;
+  --teal:#0f766e; --teal-bg:#f0fdfa; --teal-border:#99f6e4;
+  --radius:12px;
+}
+html { scroll-behavior:smooth; }
+body { font-family:'Segoe UI','Apple SD Gothic Neo',sans-serif; background:var(--bg); color:var(--text-h); line-height:1.6; }
+a { color:var(--accent); text-decoration:none; } a:hover { text-decoration:underline; }
+::-webkit-scrollbar { width:6px; } ::-webkit-scrollbar-track { background:var(--card-bg); } ::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
+
+/* ══ HEADER ══ */
+.top-header { position:sticky; top:0; z-index:200; background:rgba(255,255,255,.97); backdrop-filter:blur(10px); border-bottom:1px solid var(--border); padding:0 32px; display:flex; align-items:center; justify-content:space-between; height:56px; }
+.header-badge { background:#4f46e5; color:#fff; font-size:10px; font-weight:700; padding:3px 8px; border-radius:20px; letter-spacing:.5px; }
+.header-left { display:flex; align-items:center; gap:10px; }
+.header-main { font-size:13px; font-weight:800; color:var(--text-h); }
+.header-sub { font-size:10px; font-weight:500; color:var(--accent); letter-spacing:.3px; }
+.meta-live { display:flex; align-items:center; gap:6px; font-size:10px; color:var(--text-sub2); }
+.live-dot { width:6px; height:6px; border-radius:50%; background:var(--green); box-shadow:0 0 6px var(--green); animation:pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1}50%{opacity:.5} }
+
+/* ══ PAGE-NAV ══ */
+.page-nav { position:sticky; top:56px; z-index:150; background:rgba(249,250,251,.97); backdrop-filter:blur(8px); border-bottom:1px solid var(--border); padding:0 32px; display:flex; align-items:stretch; height:44px; overflow-x:auto; white-space:nowrap; }
+.page-nav::-webkit-scrollbar { height:0; }
+.pnav-item { display:flex; align-items:center; gap:6px; padding:0 14px; font-size:12px; font-weight:600; color:var(--text-sub2); border-bottom:2px solid transparent; cursor:pointer; text-decoration:none; transition:all .2s; white-space:nowrap; }
+.pnav-item:hover { color:var(--text-h); border-color:var(--border); }
+.pnav-item.active { color:var(--accent); border-color:var(--accent); background:rgba(79,70,229,.04); }
+.pnav-num { font-size:10px; font-weight:700; color:var(--accent); font-family:monospace; }
+.pnav-div { width:1px; background:var(--border); margin:10px 0; flex-shrink:0; }
+
+/* ══ CONTENT ══ */
+.content { max-width:1100px; margin:0 auto; padding:28px 40px 80px; }
+
+/* ══ SECTION ══ */
+.section { margin-bottom:8px; scroll-margin-top:110px; }
+.section-header { display:flex; align-items:center; gap:12px; padding:14px 18px; background:var(--card-bg); border:1px solid var(--border); border-radius:var(--radius); cursor:pointer; transition:all .2s; user-select:none; }
+.section-header:hover { background:#e9ebf0; }
+.section-header.open { border-color:#c7d2fe; background:linear-gradient(90deg,#f0f4ff 0%,var(--card-bg) 100%); border-radius:var(--radius) var(--radius) 0 0; }
+.section-num { font-size:11px; font-weight:700; color:var(--accent); min-width:22px; font-family:monospace; }
+.sec-title { font-size:15px; font-weight:700; color:var(--text-h); flex:1; }
+.sec-sub { font-size:11px; color:var(--text-sub2); }
+.sec-badge { font-size:10px; font-weight:700; padding:2px 8px; border-radius:4px; letter-spacing:.05em; white-space:nowrap; }
+.badge-blue { background:#e0e7ff; color:var(--accent); border:1px solid #c7d2fe; }
+.badge-amber { background:var(--amber-bg); color:var(--amber); border:1px solid var(--amber-border); }
+.badge-green { background:var(--green-bg); color:var(--green); border:1px solid var(--green-border); }
+.badge-red { background:var(--red-bg); color:var(--red); border:1px solid var(--red-border); }
+.badge-purple { background:var(--purple-bg); color:var(--purple); border:1px solid var(--purple-border); }
+.chevron { font-size:11px; color:var(--text-src); transition:transform .25s; margin-left:4px; }
+.section-header.open .chevron { transform:rotate(90deg); color:var(--accent); }
+.section-body { display:none; border:1px solid var(--border); border-top:none; border-radius:0 0 var(--radius) var(--radius); background:#fff; overflow:hidden; }
+.section-body.open { display:block; }
+
+/* ══ SUBSECTION ══ */
+.subsection { border-bottom:1px solid var(--border); }
+.subsection:last-child { border-bottom:none; }
+.subsection-header { display:flex; align-items:center; gap:10px; padding:11px 20px; cursor:pointer; transition:background .2s; user-select:none; }
+.subsection-header:hover { background:var(--card-bg2); }
+.subsection-header.open { background:#f0f4ff; }
+.subsub-num { font-size:11px; color:var(--text-src); min-width:18px; font-weight:700; }
+.subsection-header.open .subsub-num { color:var(--accent); }
+.sub-title { font-size:13px; color:var(--text-sub1); flex:1; font-weight:500; }
+.subsection-header.open .sub-title { color:var(--text-h); }
+.sub-chevron { font-size:10px; color:var(--text-src); transition:transform .25s; }
+.subsection-header.open .sub-chevron { transform:rotate(90deg); color:var(--accent); }
+.subsection-body { display:none; padding:18px 20px 22px; border-top:1px solid var(--border); }
+.subsection-body.open { display:block; }
+
+/* ══ SUBSEC LABEL ══ */
+.subsec-label { font-size:10px; font-weight:700; color:var(--accent); text-transform:uppercase; letter-spacing:.12em; margin-bottom:10px; margin-top:4px; display:flex; align-items:center; gap:8px; }
+.subsec-label::after { content:''; flex:1; height:1px; background:linear-gradient(90deg,var(--border),transparent); }
+
+/* ══ TABLE ══ */
+.table-wrap { overflow-x:auto; margin-bottom:14px; border-radius:var(--radius); border:1px solid var(--border); }
+table { width:100%; border-collapse:collapse; font-size:12px; }
+thead tr { background:#1a1a2e; color:#fff; }
+thead th { padding:9px 11px; text-align:left; font-weight:600; font-size:11px; white-space:nowrap; }
+tbody tr { border-bottom:1px solid var(--border); }
+tbody tr:nth-child(even) { background:var(--card-bg2); }
+tbody tr:hover { background:#eff6ff; }
+tbody td { padding:8px 11px; vertical-align:top; line-height:1.5; color:var(--text-sub1); font-size:12px; }
+tbody tr:last-child td { border-bottom:none; }
+.td-bold { font-weight:600; color:var(--text-h); }
+.td-mono { font-family:monospace; font-size:11px; }
+.td-green { color:var(--green); font-weight:600; } .td-amber { color:var(--amber); font-weight:600; }
+.td-red { color:var(--red); font-weight:600; } .td-blue { color:var(--accent); font-weight:600; }
+.cat-hdr td { background:#1a1a2e !important; color:#a5b4fc !important; font-weight:700; font-size:11px; letter-spacing:.5px; padding:7px 11px; }
+
+/* ══ PILLS ══ */
+.pill { display:inline-block; padding:2px 7px; border-radius:12px; font-size:10px; font-weight:700; white-space:nowrap; }
+.pill-green { background:var(--green-bg); color:var(--green); border:1px solid var(--green-border); }
+.pill-amber { background:var(--amber-bg); color:var(--amber); border:1px solid var(--amber-border); }
+.pill-red { background:var(--red-bg); color:var(--red); border:1px solid var(--red-border); }
+.pill-blue { background:#e0e7ff; color:var(--accent); border:1px solid #c7d2fe; }
+.pill-gray { background:var(--card-bg); color:var(--text-sub2); border:1px solid var(--border); }
+.pill-purple { background:var(--purple-bg); color:var(--purple); border:1px solid var(--purple-border); }
+
+/* ══ CARDS ══ */
+.grid2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:10px 0; }
+.grid3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin:10px 0; }
+.info-card { background:var(--card-bg); border-radius:var(--radius); padding:13px 15px; border:1px solid var(--border); }
+.info-card.highlight { background:var(--blue-bg); border-color:var(--blue-border); }
+.info-card.warn { background:var(--amber-bg); border-color:var(--amber-border); }
+.info-card.danger { background:var(--red-bg); border-color:var(--red-border); }
+.info-card.success { background:var(--green-bg); border-color:var(--green-border); }
+.info-card.teal { background:var(--teal-bg); border-color:var(--teal-border); }
+.card-title { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--accent); margin-bottom:7px; }
+.card-title.warn { color:var(--amber); } .card-title.danger { color:var(--red); } .card-title.success { color:var(--green); } .card-title.teal { color:var(--teal); }
+.card-body { font-size:12px; color:var(--text-sub1); line-height:1.65; }
+.card-body strong { color:var(--text-h); }
+
+/* ══ STAT CARDS ══ */
+.stat-card { background:var(--card-bg); border:1px solid var(--border); border-radius:var(--radius); padding:13px 15px; border-left:4px solid var(--accent); }
+.stat-val { font-size:22px; font-weight:800; color:var(--accent); line-height:1; margin:4px 0; font-family:monospace; }
+.stat-val.green { color:var(--green); } .stat-val.amber { color:var(--amber); } .stat-val.red { color:var(--red); }
+.stat-label { font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:.05em; color:var(--text-sub2); }
+.stat-desc { font-size:11px; color:var(--text-sub2); margin-top:3px; }
+
+/* ══ CALLOUT ══ */
+.callout { background:var(--card-bg2); border-left:4px solid var(--accent); border-radius:0 var(--radius) var(--radius) 0; padding:11px 14px; margin:10px 0; font-size:12px; color:var(--text-sub1); }
+.callout.warn { border-left-color:var(--amber); background:var(--amber-bg); }
+.callout.danger { border-left-color:var(--red); background:var(--red-bg); }
+.callout.success { border-left-color:var(--green); background:var(--green-bg); }
+.callout strong { color:var(--text-h); }
+
+/* ══ TIMELINE ══ */
+.timeline { margin:8px 0; }
+.tl-item { display:flex; gap:10px; padding:6px 0; }
+.tl-dot { width:7px; height:7px; border-radius:50%; background:var(--accent); flex-shrink:0; margin-top:5px; }
+.tl-dot.amber { background:var(--amber); } .tl-dot.green { background:var(--green); } .tl-dot.red { background:var(--red); }
+.tl-content { font-size:12px; color:var(--text-sub1); line-height:1.55; }
+.tl-content strong { color:var(--text-h); }
+
+/* ══ SECTION INSIGHT ══ */
+.section-insight { background:linear-gradient(135deg,#f0f4ff 0%,#fafbff 100%); border:1px solid #c7d2fe; border-radius:var(--radius); padding:13px 16px; margin-bottom:14px; }
+.section-insight h3 { font-size:10px; font-weight:800; color:var(--accent); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:8px; }
+.section-insight ul { list-style:none; display:flex; flex-wrap:wrap; gap:8px; }
+.section-insight li { background:#fff; border:1px solid #e0e7ff; border-radius:8px; padding:6px 12px; font-size:12px; color:var(--text-sub1); line-height:1.5; flex:1 1 240px; }
+.section-insight li strong { color:var(--text-h); }
+
+/* ══ SRC LINE ══ */
+.src-line { font-size:10px; color:var(--text-src); margin-top:12px; padding-top:10px; border-top:1px solid var(--border); line-height:1.8; }
+.src-line a { color:var(--accent); text-decoration:underline; font-size:10px; }
+
+/* ══ CALC (scoped s7) ══ */
+.s7-src { font-size:10px; font-weight:700; color:var(--text-src); letter-spacing:.08em; text-transform:uppercase; margin-bottom:8px; }
+.s7-formula { font-family:monospace; font-size:14px; font-weight:600; line-height:2.4; color:var(--text-h); }
+.s7-formula .fv { color:var(--accent); }
+.s7-formula .fo { color:var(--text-sub2); }
+.s7-fnote { font-size:11px; color:var(--text-sub2); margin-top:6px; padding-top:8px; border-top:1px solid var(--border); line-height:1.6; }
+.s7-calc-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin:14px 0; }
+@media(max-width:700px){ .s7-calc-grid { grid-template-columns:1fr 1fr; } }
+.s7-input { background:var(--card-bg2); border:1px solid var(--border); border-radius:8px; padding:10px 12px; transition:border-color .15s; }
+.s7-input:hover { border-color:#c7d2fe; }
+.s7-ilabel { display:flex; justify-content:space-between; align-items:center; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--text-src); margin-bottom:4px; }
+.s7-ilabel .iv { color:var(--accent); font-family:monospace; }
+.s7-ival { font-family:monospace; font-size:18px; font-weight:800; color:var(--text-h); margin-bottom:6px; line-height:1; }
+input.s7-range { width:100%; -webkit-appearance:none; appearance:none; height:4px; background:var(--border); border-radius:2px; outline:none; cursor:pointer; }
+input.s7-range::-webkit-slider-thumb { -webkit-appearance:none; width:13px; height:13px; border-radius:50%; background:var(--accent); cursor:pointer; transition:transform .1s; }
+input.s7-range::-webkit-slider-thumb:hover { transform:scale(1.25); }
+input.s7-range::-moz-range-thumb { width:13px; height:13px; border-radius:50%; background:var(--accent); border:none; }
+.s7-rlabels { display:flex; justify-content:space-between; font-size:9px; color:var(--text-src); font-family:monospace; margin-top:3px; }
+.s7-results { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:14px 0; }
+.s7-rcard { background:var(--card-bg); border:1px solid var(--border); border-radius:10px; padding:12px 14px; border-left:4px solid var(--border); }
+.s7-rcard.primary { border-left-color:var(--accent); background:var(--blue-bg); border-color:var(--blue-border); }
+.s7-rlabel { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:var(--text-sub2); margin-bottom:4px; font-family:monospace; }
+.s7-rval { font-size:24px; font-weight:800; color:var(--text-h); font-family:monospace; line-height:1.1; }
+.s7-rcard.primary .s7-rval { color:var(--accent); }
+.s7-rsub { font-size:10px; color:var(--text-sub2); margin-top:3px; }
+.s7-status { border-radius:8px; padding:9px 13px; font-size:12px; font-weight:500; display:flex; align-items:center; gap:7px; margin-top:4px; }
+.s7-status.ok  { background:var(--green-bg); color:var(--green); border:1px solid var(--green-border); }
+.s7-status.warn{ background:var(--amber-bg); color:var(--amber); border:1px solid var(--amber-border); }
+.s7-status.bad { background:var(--red-bg); color:var(--red); border:1px solid var(--red-border); }
+.s7-sdot { width:7px; height:7px; border-radius:50%; background:currentColor; flex-shrink:0; }
+
+/* ══ THREAT CASE ══ */
+.threat-card { border-radius:var(--radius); border:1px solid var(--border); overflow:hidden; margin-bottom:12px; }
+.threat-header { display:flex; align-items:center; gap:12px; padding:13px 16px; background:var(--card-bg); border-bottom:1px solid var(--border); }
+.threat-icon { font-size:20px; flex-shrink:0; }
+.threat-title { font-size:13px; font-weight:700; color:var(--text-h); }
+.threat-subtitle { font-size:11px; color:var(--text-sub2); margin-top:1px; }
+.threat-verdict { margin-left:auto; flex-shrink:0; }
+.threat-body { padding:14px 16px; background:#fff; }
+.kv-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin:10px 0; }
+.kv-item { background:var(--card-bg2); border-radius:8px; padding:9px 11px; border:1px solid var(--border); }
+.kv-label { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.07em; color:var(--text-src); margin-bottom:3px; }
+.kv-val { font-size:14px; font-weight:800; font-family:monospace; color:var(--text-h); }
+.kv-val.red { color:var(--red); } .kv-val.amber { color:var(--amber); } .kv-val.green { color:var(--green); } .kv-val.blue { color:var(--accent); }
+.lesson-box { background:linear-gradient(135deg,#f0f4ff,#fafbff); border:1px solid #c7d2fe; border-radius:8px; padding:10px 13px; margin-top:10px; font-size:11px; color:var(--text-sub1); line-height:1.6; }
+.lesson-box strong { color:var(--accent); }
+
+@media(max-width:900px) {
+  .page-nav { padding:0 16px; }
+  .content { padding:16px 20px 60px; }
+  .grid2,.grid3,.kv-grid { grid-template-columns:1fr; }
+}
+</style>
+  <link rel="stylesheet" href="../assets/theme.css">
+</head>
+<body class="embed">
+
+<!-- HEADER -->
+<header class="top-header">
+  <div class="header-left">
+    <div class="header-badge">PROJECT S</div>
+    <div>
+      <div class="header-main">07. FPS 매치메이킹 CCU 볼륨</div>
+      <div class="header-sub">매치메이킹 공식 · MS Research 논문 · 인사이트 · 서버 클러스터 · 위협 사례</div>
+    </div>
+  </div>
+  <div class="meta-live">
+    <div class="live-dot"></div>
+    <span>2026.04 기준 &nbsp;·&nbsp; 5 SECTIONS &nbsp;·&nbsp; 출처 6개 통합</span>
+  </div>
+</header>
+
+<!-- PAGE-NAV -->
+<nav class="page-nav" id="pageNav">
+  <a class="pnav-item" href="#sec1"><span class="pnav-num">01</span> 핵심 공식 계산기</a>
+  <div class="pnav-div"></div>
+  <a class="pnav-item" href="#sec2"><span class="pnav-num">02</span> MS Research 논문 요약</a>
+  <div class="pnav-div"></div>
+  <a class="pnav-item" href="#sec3"><span class="pnav-num">03</span> 인사이트</a>
+  <div class="pnav-div"></div>
+  <a class="pnav-item" href="#sec4"><span class="pnav-num">04</span> 서버 클러스터</a>
+  <div class="pnav-div"></div>
+  <a class="pnav-item" href="#sec5"><span class="pnav-num">05</span> 위협 사례</a>
+</nav>
+
+<div class="content">
+
+<!-- ════════════════════════
+     01. 핵심 공식 계산기
+════════════════════════ -->
+<div class="section" id="sec1">
+  <div class="section-header open" onclick="toggleSection(this)">
+    <span class="section-num">01</span>
+    <span class="sec-title">핵심 공식 계산기</span>
+    <span class="sec-sub">Microsoft Research 원문 공식 기반 · 인터랙티브</span>
+    <span class="sec-badge badge-blue">FORMULA</span>
+    <span class="chevron">▶</span>
+  </div>
+  <div class="section-body open">
+
+    <!-- ㄱ. 공식 & 계산기 -->
+    <div class="subsection">
+      <div class="subsection-header open" onclick="toggleSub(this)">
+        <span class="subsub-num">ㄱ</span>
+        <span class="sub-title">공식 및 계산기</span>
+        <span class="sub-chevron">▶</span>
+      </div>
+      <div class="subsection-body open">
+        <div class="info-card highlight" style="margin-bottom:14px;">
+          <div class="s7-src">SOURCE · Microsoft Research — Graepel &amp; Herbrich (2006) · Game Developer Magazine</div>
+          <div class="s7-formula">
+            T<sub>Wait</sub> <span class="fo">=</span>
+            <span class="fv">N<sub>Modes</sub></span> <span class="fo">×</span>
+            <span class="fv">T<sub>Match</sub></span> <span class="fo">×</span>
+            <span class="fv">N<sub>Players</sub></span> <span class="fo">×</span>
+            <span class="fv">N<sub>Skills</sub></span> <span class="fo">÷</span>
+            <span class="fv">N<sub>Online</sub></span>
+            <br>
+            <span style="color:var(--text-src);font-size:.8em">→&nbsp;</span>
+            <span class="fv">N<sub>Online</sub></span> <span class="fo">=</span>
+            <span class="fv">N<sub>Modes</sub></span> <span class="fo">×</span>
+            <span class="fv">T<sub>Match</sub></span> <span class="fo">×</span>
+            <span class="fv">N<sub>Players</sub></span> <span class="fo">×</span>
+            <span class="fv">N<sub>Skills</sub></span> <span class="fo">÷</span>
+            <span class="fv">T<sub>Wait</sub></span>
+          </div>
+          <div class="s7-fnote">N<sub>Online</sub> = 큐 대기 중인 플레이어만 계산 · 게임 중 인원 미포함 · 극단 스킬 버킷 희박·시간대 변동·지역 분산 미반영 → 이론적 하한선. <em>※ 논문 원문 표기: N<sub>Participants</sub> (본 계산기에서는 N<sub>Players</sub>로 통일)</em></div>
+        </div>
+
+        <div class="s7-calc-grid">
+          <div class="s7-input">
+            <div class="s7-ilabel"><span>게임 모드 수</span><span class="iv">N<sub>Modes</sub></span></div>
+            <div class="s7-ival" id="s7_v_modes">2</div>
+            <input class="s7-range" type="range" id="s7_modes" min="1" max="10" value="2" step="1">
+            <div class="s7-rlabels"><span>1</span><span>10</span></div>
+          </div>
+          <div class="s7-input">
+            <div class="s7-ilabel"><span>평균 경기 시간</span><span class="iv">T<sub>Match</sub></span></div>
+            <div class="s7-ival" id="s7_v_tmatch">15분</div>
+            <input class="s7-range" type="range" id="s7_tmatch" min="3" max="40" value="15" step="1">
+            <div class="s7-rlabels"><span>3분</span><span>40분</span></div>
+          </div>
+          <div class="s7-input">
+            <div class="s7-ilabel"><span>매치당 총 플레이어</span><span class="iv">N<sub>Players</sub></span></div>
+            <div class="s7-ival" id="s7_v_players">10명</div>
+            <input class="s7-range" type="range" id="s7_players" min="2" max="100" value="10" step="1">
+            <div class="s7-rlabels"><span>2명</span><span>100명</span></div>
+          </div>
+          <div class="s7-input">
+            <div class="s7-ilabel"><span>스킬 버킷 수</span><span class="iv">N<sub>Skills</sub></span></div>
+            <div class="s7-ival" id="s7_v_skills">5</div>
+            <input class="s7-range" type="range" id="s7_skills" min="1" max="10" value="5" step="1">
+            <div class="s7-rlabels"><span>1</span><span>10</span></div>
+          </div>
+          <div class="s7-input">
+            <div class="s7-ilabel"><span>허용 대기 시간</span><span class="iv">T<sub>Wait</sub></span></div>
+            <div class="s7-ival" id="s7_v_twait">1분</div>
+            <input class="s7-range" type="range" id="s7_twait" min="0.25" max="5" value="1" step="0.25">
+            <div class="s7-rlabels"><span>15초</span><span>5분</span></div>
+          </div>
+        </div>
+
+        <div class="s7-results">
+          <div class="s7-rcard primary">
+            <div class="s7-rlabel">큐 대기 최소 CCU</div>
+            <div class="s7-rval" id="s7_r_queue">—</div>
+            <div class="s7-rsub">대기열 인원 · 공식 직접 계산값</div>
+          </div>
+          <div class="s7-rcard">
+            <div class="s7-rlabel">최소 CCU</div>
+            <div class="s7-rval" id="s7_r_total" style="color:var(--amber)">—</div>
+            <div class="s7-rsub">대기 + 게임 중 인원 합산</div>
+          </div>
+        </div>
+        <div class="s7-status ok" id="s7_status"><span class="s7-sdot"></span><span id="s7_status_text">계산 중…</span></div>
+
+        <div class="src-line" style="margin-top:14px;">
+          📎 <a href="https://www.microsoft.com/en-us/research/wp-content/uploads/2006/10/Game-Developer-Feature-Article-Graepel-Herbrich.pdf" target="_blank">Microsoft Research — Ranking and Matchmaking (2006)</a> ·
+          <a href="https://mas-bandwidth.com/creating-a-matchmaker-for-your-multiplayer-game/" target="_blank">mas-bandwidth — Creating a Matchmaker (Glenn Fiedler, 2024)</a> ·
+          <a href="https://accelbyte.io/blog/scaling-matchmaking-to-one-million-players" target="_blank">AccelByte — Scaling to 1M CCU (2024)</a> ·
+          <a href="https://partner.steamgames.com/doc/features/multiplayer/matchmaking" target="_blank">Steamworks — Matchmaking &amp; Lobbies</a> ·
+          <a href="https://true-bots.com/matchmaking-research" target="_blank">True Bots — Matchmaking Research</a> ·
+          <a href="https://scopemagazine.in/how-many-players-does-a-live-service-game-like-concord-need-to-survive/" target="_blank">Scope Magazine — Concord 생존 임계값</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════
+     02. MS Research 논문 요약
+════════════════════════ -->
+<div class="section" id="sec2">
+  <div class="section-header" onclick="toggleSection(this)">
+    <span class="section-num">02</span>
+    <span class="sec-title">MS Research 논문 요약</span>
+    <span class="sec-sub">Ranking and Matchmaking — Graepel &amp; Herbrich (2006)</span>
+    <span class="sec-badge badge-blue">PAPER</span>
+    <span class="chevron">▶</span>
+  </div>
+  <div class="section-body">
+
+    <!-- ㄱ. 논문 개요 -->
+    <div class="subsection">
+      <div class="subsection-header open" onclick="toggleSub(this)">
+        <span class="subsub-num">ㄱ</span>
+        <span class="sub-title">논문 개요 및 배경</span>
+        <span class="sub-chevron">▶</span>
+      </div>
+      <div class="subsection-body open">
+        <div class="grid2">
+          <div class="info-card highlight">
+            <div class="card-title">논문 정보</div>
+            <div class="card-body">
+              <strong>제목:</strong> Ranking and Matchmaking<br>
+              <strong>저자:</strong> Thore Graepel · Ralf Herbrich (Microsoft Research Cambridge)<br>
+              <strong>발행:</strong> Game Developer Magazine, 2006<br>
+              <strong>핵심 기여:</strong> Xbox 360 Live의 TrueSkill™ 시스템 설계 이론 및 온라인 게임 매치메이킹의 수학적 기반 제공
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="card-title">논문이 다루는 3가지 질문</div>
+            <div class="card-body">
+              <div class="timeline">
+                <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><strong>랭킹·매치메이킹 시스템</strong> — Elo와 TrueSkill은 어떻게 동작하며, 수치는 무엇을 의미하는가</div></div>
+                <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><strong>랭크 게임 모드 설계</strong> — 충분한 플레이어를 확보하면서 스킬 측정을 의미 있게 만들려면 어떻게 구성해야 하는가</div></div>
+                <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><strong>스킬 표시 설계</strong> — 언제, 어떻게 스킬 수치를 보여줘야 게임 경험이 향상되는가</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ㄴ. Elo와 TrueSkill -->
+    <div class="subsection">
+      <div class="subsection-header" onclick="toggleSub(this)">
+        <span class="subsub-num">ㄴ</span>
+        <span class="sub-title">Elo · TrueSkill 시스템 비교</span>
+        <span class="sub-chevron">▶</span>
+      </div>
+      <div class="subsection-body">
+        <div class="grid2">
+          <div class="info-card">
+            <div class="card-title">Elo 시스템</div>
+            <div class="card-body">
+              1959년 체스에서 고안된 시스템. 승패 결과만을 반영해 레이팅을 업데이트한다. 수렴 속도는 K 파라미터로 조절하며, <strong>K가 클수록 빠르게 수렴하지만 단일 경기 영향이 커진다.</strong><br><br>
+              팀 게임에는 <strong>듀얼링 휴리스틱</strong>을 적용한다. K명의 플레이어가 있을 때 K×(K-1)쌍의 가상 1대1 결과로 치환해 각자의 Elo 업데이트를 산출하고 평균을 취한다.
+            </div>
+          </div>
+          <div class="info-card highlight">
+            <div class="card-title">TrueSkill™ (Xbox 360 Live)</div>
+            <div class="card-body">
+              Elo의 일반화 버전. 베이지안 추론 기반으로 <strong>스킬 추정값(μ)과 불확실성(σ)</strong>을 함께 관리한다. 새 플레이어는 불확실성이 높아 레이팅이 빠르게 수렴하고, 경기가 쌓일수록 σ가 줄며 안정화된다.<br><br>
+              <strong>Halo 2 Beta 데이터</strong>에서 TrueSkill이 Elo 대비 훨씬 빠르게 실제 스킬 수준에 수렴함이 검증됐다. 승패만 반영하는 이유는 점수 차(킬 수 등)를 반영하면 플레이어가 스코어에 집중해 팀워크가 무너지기 때문이다.
+            </div>
+          </div>
+        </div>
+        <div class="callout" style="margin-top:4px;">
+          <strong>정보량 관점:</strong> 64,000명 플레이어의 완전한 랭킹을 학습하려면 약 100만 비트의 정보가 필요하다. 8인 게임 1판은 최대 24비트를 제공하므로, 이론적으로 플레이어당 약 5게임이면 정확한 랭킹이 가능하다. TrueSkill은 이 정보이론적 상한에 근접한다.
+        </div>
+      </div>
+    </div>
+
+    <!-- ㄷ. 매치메이킹과 대기시간 공식 -->
+    <div class="subsection">
+      <div class="subsection-header" onclick="toggleSub(this)">
+        <span class="subsub-num">ㄷ</span>
+        <span class="sub-title">매치메이킹과 대기시간 공식</span>
+        <span class="sub-chevron">▶</span>
+      </div>
+      <div class="subsection-body">
+        <div class="subsec-label">논문 원문 박스: "You Can't Have It All — Match Quality and Waiting Time"</div>
+        <div class="info-card" style="margin-bottom:12px;">
+          <div class="card-body" style="font-family:monospace;font-size:13px;line-height:2.2;color:var(--text-h);">
+            T<sub style="font-size:.75em">Wait</sub>
+            <span style="color:var(--text-sub2);">=</span>
+            <span style="color:var(--accent);">N<sub style="font-size:.75em">Modes</sub></span>
+            <span style="color:var(--text-sub2);">×</span>
+            <span style="color:var(--accent);">T<sub style="font-size:.75em">Match</sub></span>
+            <span style="color:var(--text-sub2);">×</span>
+            <span style="color:var(--accent);">N<sub style="font-size:.75em">Participants</sub></span>
+            <span style="color:var(--text-sub2);">×</span>
+            <span style="color:var(--accent);">N<sub style="font-size:.75em">Skills</sub></span>
+            <span style="color:var(--text-sub2);">÷</span>
+            <span style="color:var(--accent);">N<sub style="font-size:.75em">Online</sub></span>
+          </div>
+          <div style="font-size:11px;color:var(--text-sub2);margin-top:8px;padding-top:8px;border-top:1px solid var(--border);">
+            원문 예시: N<sub>Modes</sub>=10, T<sub>Match</sub>=10분, N<sub>Participants</sub>=8, N<sub>Skills</sub>=10 → 대기 1분 이내 위해 <strong style="color:var(--text-h);">N<sub>Online</sub> ≥ 8,000명</strong> 필요
+          </div>
+        </div>
+        <div class="grid2">
+          <div class="info-card warn">
+            <div class="card-title warn">대기시간을 늘리는 요인 (공식 분자)</div>
+            <div class="card-body">
+              <div class="timeline">
+                <div class="tl-item"><div class="tl-dot amber"></div><div class="tl-content"><strong>긴 경기</strong> — 플레이어가 오래 매칭풀을 이탈해 있음</div></div>
+                <div class="tl-item"><div class="tl-dot amber"></div><div class="tl-content"><strong>많은 참여 인원</strong> — 동시에 확보해야 할 플레이어 수 증가</div></div>
+                <div class="tl-item"><div class="tl-dot amber"></div><div class="tl-content"><strong>많은 게임 모드</strong> — 각 모드별로 풀이 분산</div></div>
+                <div class="tl-item"><div class="tl-dot amber"></div><div class="tl-content"><strong>촘촘한 스킬 버킷</strong> — 같은 버킷 내 인원이 줄어 매칭 어려워짐</div></div>
+              </div>
+            </div>
+          </div>
+          <div class="info-card success">
+            <div class="card-title success">대기시간을 줄이는 설계 원칙</div>
+            <div class="card-body">
+              <div class="timeline">
+                <div class="tl-item"><div class="tl-dot green"></div><div class="tl-content"><strong>게임 모드 수 최소화</strong> — 유사한 스킬을 요구하는 모드만 분리</div></div>
+                <div class="tl-item"><div class="tl-dot green"></div><div class="tl-content"><strong>스킬 버킷 통합</strong> — 인구 희박 구간은 넓은 범위로 묶기</div></div>
+                <div class="tl-item"><div class="tl-dot green"></div><div class="tl-content"><strong>경기 시간 단축</strong> — 유입 주기 단축으로 큐 회전 속도 향상</div></div>
+                <div class="tl-item"><div class="tl-dot green"></div><div class="tl-content"><strong>CCU 확보</strong> — 온라인 인원 자체가 가장 강력한 대기시간 단축 수단</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ㄹ. 게임 모드 & 공정성 설계 -->
+    <div class="subsection">
+      <div class="subsection-header" onclick="toggleSub(this)">
+        <span class="subsub-num">ㄹ</span>
+        <span class="sub-title">게임 모드 설계 및 공정성 원칙</span>
+        <span class="sub-chevron">▶</span>
+      </div>
+      <div class="subsection-body">
+        <div class="grid2">
+          <div class="info-card">
+            <div class="card-title">모드 분리 원칙</div>
+            <div class="card-body">
+              스킬 측정의 일관성을 위해 <strong>동일한 스킬 셋이 요구되는 모드끼리만 묶어야 한다.</strong> FPS에서 팀 데스매치와 Free-For-All을 같은 풀로 매칭하면 스킬 추정이 왜곡된다. 레이싱 게임도 차종(저출력/고출력)별로 분리하는 것이 권장된다.
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="card-title">팀 구성 방법</div>
+            <div class="card-body">
+              플레이어를 스킬순으로 정렬 후 <strong>지그재그 방식으로 팀을 배정</strong>한다. 1위→팀A, 2위→팀B, ... 그 이후 각 팀에서 총합이 낮은 팀에 다음 플레이어를 배정해 팀 스킬 합이 균형을 이루도록 한다.
+            </div>
+          </div>
+        </div>
+        <div class="grid2" style="margin-top:8px;">
+          <div class="info-card warn">
+            <div class="card-title warn">시스템 조작 위험 (Gaming the System)</div>
+            <div class="card-body">
+              <strong>스탯 부스팅:</strong> 지인과 짜고 승패를 조작하거나 타인 계정 대리 플레이.<br>
+              <strong>디레벨링:</strong> 고의 패배나 게임 이탈로 레이팅을 낮춰 쉬운 상대를 만남. 새 계정(스머프) 생성이 가장 빠른 방법. 논문은 이를 방지할 설계 원칙(고의 이탈 패널티, 계정 연령 가중치 등)을 권고한다.
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="card-title">스킬 표시 설계 원칙</div>
+            <div class="card-body">
+              <strong>로비 표시:</strong> 경기 전 자신의 랭킹과 상대의 강도를 보여주면 목표 설정에 도움. 경기 후 스킬 변화와 이전 랭킹 대비 비교가 가장 선호된다.<br><br>
+              <strong>독성 유저 분리:</strong> LoL처럼 독성 행동 이력 플레이어를 별도 풀로 분리해 일반 커뮤니티를 보호하는 방식도 소개된다.
+            </div>
+          </div>
+        </div>
+        <div class="src-line">📎 <a href="https://www.microsoft.com/en-us/research/wp-content/uploads/2006/10/Game-Developer-Feature-Article-Graepel-Herbrich.pdf" target="_blank">원문 PDF — Microsoft Research, Graepel &amp; Herbrich (2006)</a></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════
+     03. 인사이트
+════════════════════════ -->
+<div class="section" id="sec3">
+  <div class="section-header" onclick="toggleSection(this)">
+    <span class="section-num">03</span>
+    <span class="sec-title">인사이트</span>
+    <span class="sec-sub">공식 해석 · 실무 설계</span>
+    <span class="sec-badge badge-purple">INSIGHT</span>
+    <span class="chevron">▶</span>
+  </div>
+  <div class="section-body">
+
+    <!-- ㄱ. 공식 해석 -->
+    <div class="subsection">
+      <div class="subsection-header open" onclick="toggleSub(this)">
+        <span class="subsub-num">ㄱ</span>
+        <span class="sub-title">공식 해석</span>
+        <span class="sub-chevron">▶</span>
+      </div>
+      <div class="subsection-body open">
+        <div class="grid2">
+          <div class="info-card highlight">
+            <div class="card-title">대기시간은 4개 변수의 곱에 비례한다</div>
+            <div class="card-body">게임 모드 수, 경기 시간, 참여 인원, 스킬 버킷 수 중 <strong>어느 하나를 2배로 늘리면 동일 CCU에서 대기시간이 정확히 2배</strong>가 된다. 반대로 모드를 줄이거나 스킬 버킷을 통합하면 같은 인원으로 대기시간을 절반으로 단축할 수 있다.</div>
+            <div class="callout" style="margin-top:10px;font-size:11px;">원문 예시: N<sub>Modes</sub>=10, T<sub>Match</sub>=10분, N<sub>Players</sub>=8, N<sub>Skills</sub>=10 → 대기 1분 이내에 <strong>최소 8,000명</strong> 필요.</div>
+          </div>
+          <div class="info-card">
+            <div class="card-title">공식은 이론적 하한선이다</div>
+            <div class="card-body">무시하는 3가지: ① 상·하위 극단 스킬 버킷의 인구 희박, ② 시간대·지역별 CCU 변동, ③ 파티 구성 불균형.<br><br>게임 중 인원 포함 실질 CCU는 계산값에 <strong>× (1 + T<sub>Match</sub>/T<sub>Wait</sub>)</strong> 적용 — 우측 결과 카드 "최소 CCU"가 이 값.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ㄴ. 실무 설계 -->
+    <div class="subsection">
+      <div class="subsection-header" onclick="toggleSub(this)">
+        <span class="subsub-num">ㄴ</span>
+        <span class="sub-title">실무 설계</span>
+        <span class="sub-chevron">▶</span>
+      </div>
+      <div class="subsection-body">
+
+        <div class="subsec-label">3단계 레이턴시 폴백 구조 (mas-bandwidth · Glenn Fiedler, 2024)</div>
+        <div class="info-card" style="margin-bottom:12px;">
+          <div class="card-title">왜 이 구조가 필요한가</div>
+          <div class="card-body">
+            매치메이킹에는 두 가지 상충하는 목표가 있다. <strong>① 매치 품질</strong>(낮은 핑, 공정한 스킬 매칭)과 <strong>② 짧은 대기시간</strong>. 조건을 엄격하게 유지하면 품질은 좋지만 매치가 안 잡히고, 조건을 처음부터 느슨하게 풀면 품질이 나빠진다.<br><br>
+            3단계 폴백 구조는 이 딜레마를 <strong>"처음엔 엄격하게, 시간이 지날수록 점진적으로 완화"</strong>하는 방식으로 해결한다. 각 단계는 10초의 타임아웃을 가지며, 타임아웃이 지나면 자동으로 다음 단계로 전환된다. Glenn Fiedler의 실제 시뮬레이션 결과 이 구조로 <strong>평균 매칭 시간 2초, 평균 RTT 30~40ms</strong>를 달성했다.
+          </div>
+        </div>
+
+        <div class="grid3" style="margin-bottom:14px;">
+          <div class="info-card success">
+            <div class="card-title success">① IDEAL  ·  0~10초</div>
+            <div class="card-body" style="font-size:12px;">
+              <strong>조건:</strong> RTT ≤ 50ms인 데이터센터만 탐색.<br>
+              <strong>의미:</strong> 게임이 설계상 0~50ms에서는 지연감 없이 동일하게 동작하도록 설계됐을 때, 이 범위 안에서만 매치를 구성한다.<br>
+              <strong>결과:</strong> 대부분의 플레이어는 여기서 바로 매칭된다. 10초 안에 매치가 없으면 EXPAND로 전환.
+            </div>
+          </div>
+          <div class="info-card warn">
+            <div class="card-title warn">② EXPAND  ·  10~20초</div>
+            <div class="card-body" style="font-size:12px;">
+              <strong>조건:</strong> RTT ≤ 100ms로 탐색 범위 확장.<br>
+              <strong>의미:</strong> 50~100ms 구간은 게임플레이에 영향을 주기 시작하지만 여전히 허용 범위. IDEAL 탐색 실패 시 더 멀리 있는 서버까지 범위를 넓혀 매칭 가능성을 높인다.<br>
+              <strong>결과:</strong> 한적한 지역·비수기 플레이어 대부분이 이 단계에서 매칭. 10초 후에도 없으면 WARMBODY.
+            </div>
+          </div>
+          <div class="info-card danger">
+            <div class="card-title danger">③ WARMBODY  ·  20초~</div>
+            <div class="card-body" style="font-size:12px;">
+              <strong>조건:</strong> 레이턴시 무관, 진행 중인 모든 매치에 자신을 "기증".<br>
+              <strong>의미:</strong> 더 이상 좋은 매치를 기다리지 않는다. 인원이 부족한 진행 중 매치에 합류하거나, 10초 추가 후에도 실패하면 <strong>봇으로 대체</strong>한다. 매치 품질을 포기하는 대신 플레이어가 아무것도 못 하는 상황을 방지한다.
+            </div>
+          </div>
+        </div>
+
+        <div class="callout success" style="margin-bottom:14px;">
+          <strong>핵심 인사이트 — 재매칭율과 "섬" 문제:</strong> 경기 종료 후 플레이어를 즉시 큐에 복귀시키지 않으면 <strong>소규모 섬(island)</strong>이 형성된다. 각 섬은 내부적으로 매치를 반복하지만 새로운 플레이어와 교류하지 못한다. CCU가 하락하는 시점에 이 섬들이 고립되면 신규 유저는 매치를 전혀 찾을 수 없게 된다. Fiedler는 이를 <strong>"피크 CCU는 재매칭율에 극도로 민감하다"</strong>고 표현했다.
+        </div>
+
+        <div class="subsec-label">저 CCU 대응 전략 3가지</div>
+        <div class="grid3">
+          <div class="info-card">
+            <div class="card-title">① 봇 채우기</div>
+            <div class="card-body">WARMBODY 단계의 최후 수단. Fortnite·Clash Royale처럼 AI 봇으로 빈 자리를 채워 경기가 성립되도록 한다. 신규 유저에게는 패배 경험 없이 게임에 적응하는 기회가 된다.</div>
+          </div>
+          <div class="info-card">
+            <div class="card-title">② MMR Flex</div>
+            <div class="card-body">대기시간이 길어질수록 허용 MMR 범위를 점진적으로 확대한다. 30초 → 1분 → 3분 경과 시 각각 더 넓은 스킬 구간과 매칭되도록 설정해 공정성과 대기시간 간 균형을 동적으로 조절한다.</div>
+          </div>
+          <div class="info-card warn">
+            <div class="card-title warn">③ 리전 통합 (주의 필요)</div>
+            <div class="card-body">핑 허용 범위를 EXPAND처럼 확장해 다른 지역 플레이어와도 매칭한다. 매칭풀은 늘지만, RTT가 높은 지역 플레이어는 체감 품질이 떨어져 <strong>오히려 이탈을 가속</strong>할 수 있다. 임시방편이며 근본 해결책이 아님.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════
+     04. 서버 클러스터 운영 사례
+════════════════════════ -->
+<div class="section" id="sec4">
+  <div class="section-header" onclick="toggleSection(this)">
+    <span class="section-num">04</span>
+    <span class="sec-title">서버 클러스터 운영 사례</span>
+    <span class="sec-sub">매치메이킹 단위 기준 · 공식 확인 4개 · 미발표 병기</span>
+    <span class="sec-badge badge-green">INFRA</span>
+    <span class="chevron">▶</span>
+  </div>
+  <div class="section-body">
+    <div class="subsection">
+      <div class="subsection-header open" onclick="toggleSub(this)">
+        <span class="subsub-num">ㄱ</span>
+        <span class="sub-title">규모별 분류 표</span>
+        <span class="sub-chevron">▶</span>
+      </div>
+      <div class="subsection-body open">
+        <div class="section-insight" style="margin-bottom:14px;">
+          <h3>🌐 규모별 서버 인프라 특성</h3>
+          <ul>
+            <li><strong>20개+ (도시 세분화):</strong> Valorant(25 도시), CS2(~20 DC) — 도시 단위 선택으로 세밀한 매치메이킹 풀 분리</li>
+            <li><strong>10~19개 (DC 단위):</strong> R6 Siege(13 DC), Apex(10 DC), CoD Warzone(~10 DC) — 개별 데이터센터가 독립 매치메이킹 풀</li>
+            <li><strong>6~9개 (리전 단위):</strong> Fortnite(8 리전), 이터널 리턴(6 서버) — 권역별 풀 분리</li>
+            <li><strong>4~5개 (광역 리전):</strong> PUBG(4, 2024 병합 후), Battlefield 2042 등 — CCU 부족 시 리전 병합으로 대응</li>
+          </ul>
+        </div>
+        <div class="callout" style="margin-bottom:12px;">
+          <strong>집계 기준:</strong> 플레이어가 선택하거나 배정되는 가장 작은 매치메이킹 단위. 도시·DC 단위 선택이 가능한 게임은 도시 수로, 리전 단위로만 운영되는 게임은 리전 수로 표기합니다.
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>게임</th><th>인프라</th><th>서버 수</th><th>단위</th><th>기준</th><th>비고</th></tr></thead>
+            <tbody>
+              <tr class="cat-hdr"><td colspan="6">20개+ — 도시 단위 세분화</td></tr>
+              <tr>
+                <td class="td-bold">Valorant<br><span style="font-size:10px;color:var(--text-sub2);font-weight:400;">5v5 · 매치 10명</span></td>
+                <td><span class="pill pill-green">Riot 자체 인프라</span></td>
+                <td class="td-mono td-blue">25</td>
+                <td><span class="pill pill-gray">도시</span></td>
+                <td><span class="pill pill-green">공식 확인</span></td>
+                <td>NA 6(Oregon·N.Cal·N.Virginia·Texas·Illinois·Georgia) · LATAM 3 · BR 1 · EU 8(Frankfurt·Paris·Stockholm·Istanbul·London·Warsaw·Madrid·Bahrain) · KR 1 · AP 6(HK·Tokyo·Singapore·Sydney·Mumbai·Manila) — 계정 리전 6개, 리전 내 도시 선택</td>
+              </tr>
+              <tr>
+                <td class="td-bold">CS2<br><span style="font-size:10px;color:var(--text-sub2);font-weight:400;">5v5 · 매치 10명</span></td>
+                <td><span class="pill pill-green">Valve 자체 서버</span></td>
+                <td class="td-mono td-blue">~20</td>
+                <td><span class="pill pill-gray">DC</span></td>
+                <td><span class="pill pill-amber">미발표</span></td>
+                <td>Valve 공식 미발표 · CS:GO IP 기록 기반 커뮤니티 추정 — EU 8+(Luxembourg·Vienna·Stockholm·Madrid·Warsaw·Cape Town·Johannesburg·Dubai) · NA 4+(Seattle·Sterling·Atlanta·California) · AP(Singapore·HK·Tokyo·Mumbai·Sydney) · SA(Santiago·São Paulo)</td>
+              </tr>
+              <tr class="cat-hdr"><td colspan="6">10~19개 — DC 단위 운영</td></tr>
+              <tr>
+                <td class="td-bold">Rainbow Six Siege<br><span style="font-size:10px;color:var(--text-sub2);font-weight:400;">5v5 · 매치 10명</span></td>
+                <td><span class="pill pill-gray">Ubisoft 자체</span></td>
+                <td class="td-mono td-green">13</td>
+                <td><span class="pill pill-gray">DC</span></td>
+                <td><span class="pill pill-green">공식 확인</span></td>
+                <td>NA(East US·West US·Central US) · SA(Brazil) · EU(WEU·EEU·Turkey) · Asia(Japan East·Asia East·Asia SE) · Africa·ME(UAE North·South Africa North)</td>
+              </tr>
+              <tr>
+                <td class="td-bold">Apex Legends<br><span style="font-size:10px;color:var(--text-sub2);font-weight:400;">배틀로얄 (3인 스쿼드) · 매치 60명</span></td>
+                <td><span class="pill pill-amber">AWS</span></td>
+                <td class="td-mono td-green">10</td>
+                <td><span class="pill pill-gray">DC</span></td>
+                <td><span class="pill pill-green">인게임 확인</span></td>
+                <td>Virginia · Ohio · Oregon · Frankfurt · São Paulo · Tokyo · Bahrain · Sydney · Hong Kong · Singapore</td>
+              </tr>
+              <tr>
+                <td class="td-bold">Call of Duty: Warzone<br><span style="font-size:10px;color:var(--text-sub2);font-weight:400;">배틀로얄 · 매치 150명</span></td>
+                <td><span class="pill pill-gray">Activision 자체</span> <span class="pill pill-blue">Azure</span></td>
+                <td class="td-mono td-green">~10</td>
+                <td><span class="pill pill-gray">DC</span></td>
+                <td><span class="pill pill-amber">미발표</span></td>
+                <td>공식 미발표 · NA(LA·Chicago·Dallas·Miami) · EU(London·Frankfurt·Amsterdam·Paris) · Asia(Tokyo·Singapore) · SA(São Paulo) 등</td>
+              </tr>
+              <tr class="cat-hdr"><td colspan="6">6~9개 — 리전 단위 운영</td></tr>
+              <tr>
+                <td class="td-bold">Fortnite<br><span style="font-size:10px;color:var(--text-sub2);font-weight:400;">배틀로얄 · 매치 100명</span></td>
+                <td><span class="pill pill-amber">AWS</span></td>
+                <td class="td-mono td-green">8</td>
+                <td><span class="pill pill-gray">리전</span></td>
+                <td><span class="pill pill-green">공식 확인</span></td>
+                <td>NA East · NA West · NA Central · Europe · Brazil · Asia · Oceania · Middle East — Epic 공식</td>
+              </tr>
+              <tr>
+                <td class="td-bold">이터널 리턴<br><span style="font-size:10px;color:var(--text-sub2);font-weight:400;">MOBA · 매치 24명</span></td>
+                <td><span class="pill pill-amber">AWS</span></td>
+                <td class="td-mono td-green">6</td>
+                <td><span class="pill pill-gray">서버</span></td>
+                <td><span class="pill pill-green">인게임 확인</span></td>
+                <td>아시아1 · 아시아2 · 아시아3 · 북미 · 유럽 · 남미</td>
+              </tr>
+              <tr class="cat-hdr"><td colspan="6">4~5개 — 광역 리전 단위</td></tr>
+              <tr>
+                <td class="td-bold">PUBG<br><span style="font-size:10px;color:var(--text-sub2);font-weight:400;">배틀로얄 · 매치 100명</span></td>
+                <td><span class="pill pill-amber">AWS</span></td>
+                <td class="td-mono td-amber">4</td>
+                <td><span class="pill pill-gray">리전</span></td>
+                <td><span class="pill pill-green">공식 확인</span></td>
+                <td>AS · SEA · AMER · EU — 2024.10 병합 전 7개, CCU 하락으로 통합</td>
+              </tr>
+              <tr>
+                <td class="td-bold">Battlefield 2042<br><span style="font-size:10px;color:var(--text-sub2);font-weight:400;">팀 TDM · 매치 64~128명</span></td>
+                <td><span class="pill pill-gray">EA 자체</span> <span class="pill pill-amber">AWS</span></td>
+                <td class="td-mono td-amber">~5</td>
+                <td><span class="pill pill-gray">리전</span></td>
+                <td><span class="pill pill-amber">미발표</span></td>
+                <td>CCU 5K~15K — 매치메이킹 위험 수준. 공식 미발표</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout" style="red-bottom:12px;">
+          <strong>택티컬 PvP:</strong> TTK(Time-To-Kill)이 짧은 정통 택티컬 PvP에 가까울수록 서버를 보다 촘촘하게 구축하는 경향이 있는 것으로 확인
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════
+     05. 위협 사례
+════════════════════════ -->
+<div class="section" id="sec5">
+  <div class="section-header" onclick="toggleSection(this)">
+    <span class="section-num">05</span>
+    <span class="sec-title">위협 사례</span>
+    <span class="sec-sub">CCU 붕괴 · PvE 전환 · 캐주얼화 실험</span>
+    <span class="sec-badge badge-red">THREAT CASES</span>
+    <span class="chevron">▶</span>
+  </div>
+  <div class="section-body">
+
+    <!-- ㄱ. 스페셜 포스 리마스터 -->
+    <div class="subsection">
+      <div class="subsection-header open" onclick="toggleSub(this)">
+        <span class="subsub-num">ㄱ</span>
+        <span class="sub-title">스페셜 포스 리마스터 — CCU 임계값 붕괴</span>
+        <span class="sub-chevron">▶</span>
+      </div>
+      <div class="subsection-body open">
+        <div class="threat-card">
+          <div class="threat-header">
+            <div class="threat-icon">🎮</div>
+            <div>
+              <div class="threat-title">스페셜 포스 리마스터 (드래곤플라이, 2026)</div>
+              <div class="threat-subtitle">UE5 기반 리마스터 · 스팀 + 에픽 동시 출시 · 2026.03.25 얼리 액세스 오픈</div>
+            </div>
+            <div class="threat-verdict"><span class="pill pill-red">매칭 불가 위험</span></div>
+          </div>
+          <div class="threat-body">
+            <div class="kv-grid">
+              <div class="kv-item"><div class="kv-label">원작 출시</div><div class="kv-val blue">2004</div></div>
+              <div class="kv-item"><div class="kv-label">리마스터 출시</div><div class="kv-val blue">2026.03.25</div></div>
+              <div class="kv-item"><div class="kv-label">CCU 위험 임계값</div><div class="kv-val red">&lt;100명</div></div>
+            </div>
+            <div class="card-body" style="margin:10px 0;">
+              한국 대표 FPS IP '스페셜 포스'가 언리얼 엔진 5 기반으로 리마스터돼 스팀 출시됐다. 원작은 2004년 국내 FPS 시장을 개척했으나, 후속작 스페셜포스2가 <strong>동접자 운영불가 수준</strong>까지 추락한 뒤 2025년 8월 29일 서비스를 종료했다. 리마스터는 SBMM 티어 시스템과 빠른 매칭을 내세웠지만, 전임 타이틀의 흥행 실패가 신규 유저 유입에 구조적 장벽으로 작용했다.
+              <br><br>
+              CCU 100명 미만 상황에서는 <strong>티어 시스템을 적용하면 사실상 매칭 불가 상태</strong>가 된다. 5v5 기준으로 단 1개 스킬 버킷만 가정해도 대기 1분 이내를 위해 최소 50명이 큐에 있어야 하며, 여기에 게임 중 인원을 포함한 실질 필요 CCU는 수백 명 수준으로 오른다.
+            </div>
+            <div class="lesson-box">
+              <strong>시사점:</strong> 리마스터·리런치 전략은 기존 팬층 재유입에는 효과적일 수 있지만, 신규 유저 풀이 충분하지 않으면 출시 직후 CCU가 매칭 임계값 아래로 떨어져 악순환이 시작된다. 초기 CCU 확보를 위한 F2P 전환, 무료 주말, 글로벌 동시 출시 전략이 병행되어야 한다.
+            </div>
+          </div>
+        </div>
+        <div class="src-line">📎 <a href="https://sfr.dfl.co.kr/" target="_blank">스페셜포스 리마스터 공식 사이트</a> · <a href="https://namu.wiki/w/%EC%8A%A4%ED%8E%98%EC%85%9C%ED%8F%AC%EC%8A%A4%202" target="_blank">나무위키 — 스페셜포스2 문서</a></div>
+      </div>
+    </div>
+
+    <!-- ㄴ. PUBG 제노 포인트 -->
+    <div class="subsection">
+      <div class="subsection-header" onclick="toggleSub(this)">
+        <span class="subsub-num">ㄴ</span>
+        <span class="sub-title">PUBG 제노 포인트 — PvE 도입으로 유저 인입 비용 절감</span>
+        <span class="sub-chevron">▶</span>
+      </div>
+      <div class="subsection-body">
+        <div class="threat-card">
+          <div class="threat-header">
+            <div class="threat-icon">👾</div>
+            <div>
+              <div class="threat-title">PUBG: 배틀그라운드 — Xeno Point (크래프톤, 2026.04.08)</div>
+              <div class="threat-subtitle">4인 협동 PvE 로그라이트 · 배틀로얄 장르 탈피 · 기간 한정(~5월 6일)</div>
+            </div>
+            <div class="threat-verdict"><span class="pill pill-green">CCU +26% 성과</span></div>
+          </div>
+          <div class="threat-body">
+            <div class="kv-grid">
+              <div class="kv-item"><div class="kv-label">출시 전 CCU</div><div class="kv-val blue">~77만</div></div>
+              <div class="kv-item"><div class="kv-label">출시 당일 CCU</div><div class="kv-val green">~96만</div></div>
+              <div class="kv-item"><div class="kv-label">24시간 성장률</div><div class="kv-val green">+26%</div></div>
+            </div>
+            <div class="card-body" style="margin:10px 0;">
+              배틀그라운드가 서비스 9주년을 맞아 외계인 침공을 막는 <strong>4인 협동 PvE 로그라이트 모드 '제노 포인트'</strong>를 선보였다. 배틀로얄의 극도로 높은 진입장벽(숙련도 격차)을 우회해, 신규 유저가 친구와 함께 가볍게 입문할 수 있는 별도 경로를 만드는 전략이다.
+              <br><br>
+              출시 하루 만에 동접자가 <strong>약 20만명 급증(+26%)</strong>했으며, 크래프톤은 이를 "배틀로얄 플랫폼에서 종합 슈팅 플랫폼으로의 도약"으로 정의했다. 스웨덴 Starbreeze와 협동 개발 중인 'PAYDAY 강도 모드'도 추가 예정이다.
+              <br><br>
+              다만 <strong>기간 한정 모드</strong>라는 한계로 반복 플레이 유인이 부족하고, 이탈 유저가 발생 시 잔류 팀의 연쇄 이탈로 이어지는 구조적 약점이 리뷰에서 지적됐다.
+            </div>
+            <div class="lesson-box">
+              <strong>시사점:</strong> PvE 모드는 PvP 매칭 부담 없이 유저를 IP에 진입시키는 효과적인 저비용 유입 경로다. 다만 PvP 전환율을 높이려면 PvE에서 쌓은 성장 요소(스킬, 무기 친숙도)가 PvP 모드로 자연스럽게 연결되는 설계가 필요하다.
+            </div>
+          </div>
+        </div>
+        <div class="src-line">📎 <a href="https://pubg.com/ko/news/9844" target="_blank">PUBG 공식 — 제노 포인트 모드 소개</a> · <a href="https://zdnet.co.kr/view/?no=20260414110125" target="_blank">ZDNet Korea — 제노 포인트 체험기</a> · <a href="https://www.inven.co.kr/webzine/news/?news=315312" target="_blank">인벤 — 슈팅 플랫폼 확장 체험기</a></div>
+      </div>
+    </div>
+
+    <!-- ㄷ. 마라톤 캐주얼화 -->
+    <div class="subsection">
+      <div class="subsection-header" onclick="toggleSub(this)">
+        <span class="subsub-num">ㄷ</span>
+        <span class="sub-title">마라톤 캐주얼화 업데이트 — 신규·기존 유저 격차 해소 실험</span>
+        <span class="sub-chevron">▶</span>
+      </div>
+      <div class="subsection-body">
+        <div class="threat-card">
+          <div class="threat-header">
+            <div class="threat-icon">🏃</div>
+            <div>
+              <div class="threat-title">Marathon (Bungie, 2026.03 출시)</div>
+              <div class="threat-subtitle">추출 FPS · 트리오 기반 · 중시즌 업데이트로 솔로 강화 및 실험 모드 도입</div>
+            </div>
+            <div class="threat-verdict"><span class="pill pill-amber">CCU 급감 대응 중</span></div>
+          </div>
+          <div class="threat-body">
+            <div class="kv-grid">
+              <div class="kv-item"><div class="kv-label">출시 피크 CCU</div><div class="kv-val blue">88,000</div></div>
+              <div class="kv-item"><div class="kv-label">업데이트 시점 CCU</div><div class="kv-val red">~28,000</div></div>
+              <div class="kv-item"><div class="kv-label">1개월 하락률</div><div class="kv-val red">-68%</div></div>
+            </div>
+            <div class="card-body" style="margin:10px 0;">
+              Bungie가 의도적으로 설계한 고난이도 추출 FPS였으나, 신규 유저 진입장벽이 너무 높아 <strong>출시(2026.03) 약 한 달 만에 CCU가 약 68% 하락</strong>했다. Bungie는 2026년 4월 중시즌 업데이트를 통해 다음 조치를 단행했다.
+            </div>
+            <div class="timeline">
+              <div class="tl-item"><div class="tl-dot green"></div><div class="tl-content"><strong>솔로 셀프 리바이브 무료화</strong> — 솔로 플레이어의 생존 기회 확대로 진입 부담 완화</div></div>
+              <div class="tl-item"><div class="tl-dot green"></div><div class="tl-content"><strong>Dire Marsh Sponsored 실험 모드</strong> (4월 15~29일) — 모든 플레이어가 동일 장비로 시작해 숙련도 격차를 최소화. 신규·기존 유저 간 공정 경쟁 환경 테스트</div></div>
+              <div class="tl-item"><div class="tl-dot green"></div><div class="tl-content"><strong>솔로 전용 비기너 맵</strong> (레벨 12 달성 전까지) — 초보자 학습 구간 분리로 조기 이탈 방지</div></div>
+              <div class="tl-item"><div class="tl-dot amber"></div><div class="tl-content"><strong>듀오 모드 실험</strong> (3월 18일~2주) — 커뮤니티 요구에 따른 2인 큐 테스트. 단, 이미 6개 풀로 분리된 큐를 추가 분리하는 것에 대한 매칭풀 희박 우려도 병존</div></div>
+              <div class="tl-item"><div class="tl-dot amber"></div><div class="tl-content"><strong>Stay Together</strong> — 성공적으로 탈출한 팀이 다음 매치에서도 유지되는 실험 기능. 재매칭율 향상 시도</div></div>
+            </div>
+            <div class="lesson-box" style="margin-top:10px;">
+              <strong>시사점:</strong> 하드코어 추출 FPS는 장르 특성상 신규 유저와 기존 유저의 숙련도 격차가 극단적으로 벌어진다. 큐를 추가 분리할수록 대기시간이 길어지는 매칭풀 희박 문제가 동시에 발생하므로, 실험 모드를 통한 데이터 수집 후 시즌 2에 반영하는 신중한 접근이 필요하다.
+            </div>
+          </div>
+        </div>
+        <div class="src-line">📎 <a href="https://www.gamesradar.com/games/fps/bungie-makes-marathon-less-vicious-as-players-keep-leaving-update-adds-free-solo-self-revives-a-way-to-revive-enemy-runners-and-a-stay-together-option-for-good-teammates/" target="_blank">GamesRadar — Marathon mid-season update</a> · <a href="https://www.gamespot.com/articles/marathon-pushes-players-to-be-more-friendly-in-new-update/1100-6539393/" target="_blank">GameSpot — Dire Marsh Sponsored 모드</a> · <a href="https://www.pcgamer.com/games/fps/bungie-is-adding-an-experimental-duos-mode-to-marathon-for-a-few-weeks-some-things-will-be-a-bit-jank/" target="_blank">PC Gamer — 듀오 모드 실험</a></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div style="margin-top:48px;padding-top:16px;border-top:1px solid var(--border);font-size:10px;color:var(--text-src);font-family:monospace;line-height:2;display:flex;gap:16px;flex-wrap:wrap;align-items:center;">
+  <span style="color:var(--accent);font-weight:700;">Project S — FPS 매치메이킹 CCU 볼륨</span>
+  <span>·</span><span>5 SECTIONS · 출처 6개 통합</span>
+  <span>·</span><span>최종 업데이트: 2026.04</span>
+  <span>·</span><span style="color:var(--amber);">⚠️ 위협 사례 일부 공개 데이터 기반 — 공식 CCU 미발표 항목 포함</span>
+</div>
+
+</div><!-- /content -->
+
+<script>
+function toggleSection(hdr) {
+  var isOpen = hdr.classList.contains('open');
+  document.querySelectorAll('.section-header.open').forEach(function(h) {
+    h.classList.remove('open'); h.nextElementSibling.classList.remove('open');
+  });
+  if (!isOpen) { hdr.classList.add('open'); hdr.nextElementSibling.classList.add('open'); }
+}
+function toggleSub(hdr) { hdr.classList.toggle('open'); hdr.nextElementSibling.classList.toggle('open'); }
+
+// Calculator
+(function(){
+  function fmt(n){ if(n>=1e6) return (n/1e6).toFixed(1)+'M'; if(n>=1000) return (n/1000).toFixed(0)+'K'; return Math.round(n).toLocaleString(); }
+  function calc(){
+    var modes=+document.getElementById('s7_modes').value, tmatch=+document.getElementById('s7_tmatch').value,
+        players=+document.getElementById('s7_players').value, skills=+document.getElementById('s7_skills').value,
+        twait=+document.getElementById('s7_twait').value;
+    document.getElementById('s7_v_modes').textContent=modes;
+    document.getElementById('s7_v_tmatch').textContent=tmatch+'분';
+    document.getElementById('s7_v_players').textContent=players+'명';
+    document.getElementById('s7_v_skills').textContent=skills;
+    document.getElementById('s7_v_twait').textContent=twait<1?Math.round(twait*60)+'초':twait+'분';
+    var q=Math.round(modes*tmatch*players*skills/twait), t=Math.round(q*(1+tmatch/twait));
+    document.getElementById('s7_r_queue').textContent=fmt(q)+'명';
+    document.getElementById('s7_r_total').textContent=fmt(t)+'명';
+    var s=twait*60, sb=document.getElementById('s7_status'), st=document.getElementById('s7_status_text');
+    if(s<=30)     {sb.className='s7-status ok';  st.textContent='✓  대기 '+Math.round(s)+'초 · 우수 — 즉각적인 매칭 경험';}
+    else if(s<=60){sb.className='s7-status ok';  st.textContent='✓  대기 '+Math.round(s)+'초 · 양호 — 허용 가능한 수준';}
+    else if(s<=120){sb.className='s7-status warn';st.textContent='⚠  대기 '+Math.round(s)+'초 · 주의 — 플레이어 이탈 위험';}
+    else if(s<=180){sb.className='s7-status warn';st.textContent='⚠  대기 '+Math.round(s)+'초 · 경고 — EXPAND 전환 검토';}
+    else           {sb.className='s7-status bad'; st.textContent='✕  대기 '+Math.round(s)+'초 · 위험 — 모드/티어 감축 필요';}
+  }
+  ['s7_modes','s7_tmatch','s7_players','s7_skills','s7_twait'].forEach(function(id){
+    document.getElementById(id).addEventListener('input',calc);
+  });
+  calc();
+})();
+
+// Nav highlight
+var pnavItems=document.querySelectorAll('.pnav-item'), sections=document.querySelectorAll('.section');
+var obs=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting) pnavItems.forEach(function(a){ a.classList.toggle('active',a.getAttribute('href')==='#'+e.target.id); });
+  });
+},{rootMargin:'-110px 0px -40% 0px',threshold:0});
+sections.forEach(function(s){obs.observe(s);});
+</script>
+<script src="../assets/embed.js"></script>
+</body>
+</html>

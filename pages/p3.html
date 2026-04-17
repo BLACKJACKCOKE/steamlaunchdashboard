@@ -1,0 +1,1585 @@
+호<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project S 스팀 론칭 대시보드 — 마일스톤 & 론칭 플래닝</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#fff;--card-bg:#f3f4f6;--card-bg2:#f9fafb;
+  --border:#e5e7eb;--text-h:#111827;--text-sub1:#374151;--text-sub2:#6b7280;--text-src:#9ca3af;
+  --accent:#4f46e5;--green:#16a34a;--red:#ef4444;--amber:#d97706;
+  --amber-bg:#fef3c7;--amber-bdr:#fde68a;
+  --green-bg:#dcfce7;--green-bdr:#86efac;
+  --red-bg:#fee2e2;--red-bdr:#fca5a5;
+  --blue-bg:#eff6ff;--blue-bdr:#bfdbfe;
+  --purple:#7c3aed;--purple-bg:#ede9fe;--purple-bdr:#c4b5fd;
+  /* Premium = Indigo */
+  --p:#4f46e5;--p-bg:#eff6ff;--p-bdr:#c7d2fe;--p-dark:#3730a3;
+  /* F2P = Cyan */
+  --f2p:#0891b2;--f2p-bg:#ecfeff;--f2p-bdr:#a5f3fc;--f2p-dark:#0e7490;
+  /* Option A = Orange */
+  --opt-a:#ea580c;--opt-a-bg:#fff7ed;--opt-a-bdr:#fed7aa;--opt-a-dark:#c2410c;
+  /* Option B = Green */
+  --opt-b:#16a34a;--opt-b-bg:#f0fdf4;--opt-b-bdr:#86efac;--opt-b-dark:#15803d;
+  --radius:12px;--shadow:0 1px 4px rgba(0,0,0,.08);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Segoe UI','Apple SD Gothic Neo',sans-serif;background:var(--bg);color:var(--text-h);line-height:1.6}
+a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:var(--card-bg)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+
+/* HEADER */
+header{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.97);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:0 40px;display:flex;align-items:center;justify-content:space-between;height:60px}
+.header-left{display:flex;align-items:center;gap:12px}
+.header-badge{background:var(--accent);color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:.5px}
+.header-main{font-size:14px;font-weight:800;color:var(--text-h);line-height:1.2}
+.header-sub{font-size:11px;font-weight:500;color:var(--accent)}
+.header-right{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-sub2)}
+.live-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+
+/* LEGEND BAR */
+.legend-bar{background:linear-gradient(90deg,#f5f3ff,#ecfeff,#f0fdf4);border-bottom:1px solid var(--border);padding:0 40px;height:36px;display:flex;align-items:center;gap:20px;font-size:11px;flex-wrap:nowrap;overflow-x:auto;position:sticky;top:60px;z-index:195}
+.legend-bar::-webkit-scrollbar{height:0}
+.lb-item{display:flex;align-items:center;gap:6px;font-weight:600;color:var(--text-sub1);white-space:nowrap}
+.lb-div{width:1px;height:18px;background:var(--border);flex-shrink:0}
+.lb-chip{display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;padding:2px 9px;border-radius:12px;flex-shrink:0}
+.lb-p{background:var(--p);color:#fff}.lb-f{background:var(--f2p);color:#fff}
+.lb-a{background:var(--opt-a);color:#fff}.lb-b{background:var(--opt-b);color:#fff}
+
+/* PAGE NAV */
+.page-nav{position:sticky;top:96px;z-index:150;background:rgba(249,250,251,.97);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);padding:0 40px;display:flex;align-items:stretch;height:46px;overflow-x:auto;white-space:nowrap}
+.page-nav::-webkit-scrollbar{height:0}
+.pnav-item{display:flex;align-items:center;gap:6px;padding:0 16px;font-size:12px;font-weight:600;color:var(--text-sub2);border-bottom:2px solid transparent;cursor:pointer;text-decoration:none;transition:all .2s;white-space:nowrap}
+.pnav-item:hover{color:var(--text-h);border-color:var(--border);text-decoration:none}
+.pnav-item.active{color:var(--accent);border-color:var(--accent);background:rgba(79,70,229,.04)}
+.pnav-num{font-size:10px;font-weight:700;color:var(--accent);font-family:monospace}
+.pnav-div{width:1px;background:var(--border);margin:12px 0;flex-shrink:0}
+
+/* LAYOUT */
+.page-wrap{max-width:1280px;margin:0 auto}
+.section{padding:52px 40px;border-bottom:1px solid var(--border);scroll-margin-top:142px}
+.sec-num{font-size:11px;font-weight:700;letter-spacing:2px;color:var(--accent);text-transform:uppercase;margin-bottom:5px}
+.sec-title{font-size:22px;font-weight:800;color:var(--text-h);margin-bottom:4px;line-height:1.3}
+.sec-sub{font-size:12px;color:var(--text-sub2);margin-bottom:28px}
+
+/* INSIGHT */
+.insight{background:linear-gradient(135deg,#f0f4ff,#fafbff);border:1px solid #c7d2fe;border-radius:var(--radius);padding:14px 20px;margin-bottom:24px}
+.insight h3{font-size:11px;font-weight:800;color:var(--accent);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px}
+.insight ul{list-style:none;display:flex;flex-wrap:wrap;gap:8px}
+.insight li{background:#fff;border:1px solid #e0e7ff;border-radius:8px;padding:7px 14px;font-size:12px;color:var(--text-sub1);line-height:1.5;flex:1 1 220px}
+.insight li strong{color:var(--text-h)}
+
+/* GRIDS */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:20px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
+
+/* PHASE FLOW */
+.phase-flow{display:flex;align-items:stretch;gap:0;margin-bottom:6px;overflow-x:auto}
+.phase-card{flex:1;min-width:120px;border:2px solid var(--border);border-radius:10px;padding:12px 10px;background:var(--card-bg);position:relative;transition:all .2s}
+.phase-card.cur{border-color:var(--accent);background:linear-gradient(135deg,#f0f4ff,#fff);box-shadow:0 4px 20px rgba(79,70,229,.15)}
+.phase-card.snf{border-color:var(--purple);background:linear-gradient(135deg,var(--purple-bg),#fff)}
+.ph-arr{display:flex;align-items:center;justify-content:center;width:22px;flex-shrink:0;color:var(--text-src);font-size:13px}
+.ph-status{display:inline-block;font-size:9px;font-weight:700;padding:2px 6px;border-radius:8px;text-transform:uppercase;margin-bottom:4px}
+.ps-cur{background:#e0e7ff;color:#4338ca}.ps-plan{background:var(--card-bg);color:var(--text-sub2)}.ps-snf{background:var(--purple-bg);color:var(--purple)}
+.ph-num{font-size:9px;font-weight:700;color:var(--text-src);font-family:monospace}
+.ph-name{font-size:11px;font-weight:700;color:var(--text-h);margin-bottom:3px;line-height:1.3}
+.ph-date{font-size:9px;color:var(--text-sub2);margin-bottom:5px}
+.ph-wl-p{font-size:11px;font-weight:800;font-family:monospace;color:var(--p)}
+.ph-wl-f{font-size:11px;font-weight:800;font-family:monospace;color:var(--f2p)}
+.ph-wl-l{font-size:9px;color:var(--text-src)}
+
+/* P/F2P CHIPS */
+.chip-p{display:inline-block;background:var(--p-bg);color:var(--p);border:1px solid var(--p-bdr);border-radius:6px;font-size:10px;font-weight:700;padding:2px 7px}
+.chip-f{display:inline-block;background:var(--f2p-bg);color:var(--f2p);border:1px solid var(--f2p-bdr);border-radius:6px;font-size:10px;font-weight:700;padding:2px 7px}
+
+/* DECISION POINT */
+.decision-box{display:flex;align-items:center;justify-content:center;padding:10px;margin:8px 0}
+.decision-inner{background:linear-gradient(135deg,var(--purple-bg),#fff);border:2px solid var(--purple-bdr);border-radius:10px;padding:10px 20px;text-align:center}
+.decision-label{font-size:11px;font-weight:800;color:var(--purple);margin-bottom:3px}
+.decision-sub{font-size:11px;color:var(--text-sub1);line-height:1.5}
+
+/* FORK ARROWS + BRANCH */
+.fork-arrows{display:flex;justify-content:space-between;padding:0 60px;margin-bottom:8px}
+.fork-arrow-a{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:var(--opt-a)}
+.fork-arrow-b{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:var(--opt-b)}
+.fork-branches{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}
+.branch-col{border:2px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.branch-col.col-a{border-color:var(--opt-a)}
+.branch-col.col-b{border-color:var(--opt-b)}
+.branch-head{padding:9px 14px;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:8px;text-align:center}
+.branch-head.a{background:var(--opt-a);color:#fff}
+.branch-head.b{background:var(--opt-b);color:#fff}
+.branch-phases{display:flex;align-items:center;gap:0;padding:10px 12px;overflow-x:auto}
+.bph{flex-shrink:0;border-radius:8px;padding:8px 10px;font-size:11px;font-weight:700;text-align:center;min-width:100px}
+.bph.a{background:var(--opt-a-bg);border:1px solid var(--opt-a-bdr);color:var(--opt-a)}
+.bph.b{background:var(--opt-b-bg);border:1px solid var(--opt-b-bdr);color:var(--opt-b)}
+.bph.la{background:var(--opt-a);color:#fff}
+.bph.lb{background:var(--opt-b);color:#fff}
+.bph-arr{font-size:12px;color:var(--text-src);padding:0 4px;flex-shrink:0}
+.bph-name{font-size:10px;font-weight:600;line-height:1.3}
+.bph-date{font-size:9px;font-weight:400;margin-top:2px;opacity:.85}
+
+/* ══ CALENDAR 3-ROW GRID (이미지 기준 A/공통/B) ══ */
+.c3-wrapper{overflow-x:auto;margin-bottom:12px}
+.c3-grid{display:grid;grid-template-columns:64px repeat(11,1fr) repeat(6,1fr);gap:2px;min-width:860px}
+.c3-a-lbl{background:var(--opt-a);color:#fff;font-size:9px;font-weight:800;display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.3;border-radius:6px;padding:4px 3px}
+.c3-cm-lbl{background:var(--card-bg);color:var(--text-sub2);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;border-radius:6px;padding:4px 3px}
+.c3-b-lbl{background:var(--opt-b);color:#fff;font-size:9px;font-weight:800;display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.3;border-radius:6px;padding:4px 3px}
+.c3-empty{background:transparent}
+.c3-invis{background:transparent;border:none;opacity:0;pointer-events:none}
+.c3-m{border-radius:4px;padding:4px 3px;border:1px solid var(--border);background:#fff;min-height:50px}
+.c3-m.c3-cm{background:#fff;border-color:var(--border)}
+.c3-m.c3-snf{background:linear-gradient(135deg,var(--purple-bg),#fff);border-color:var(--purple-bdr)}
+.c3-m.c3-a{background:var(--opt-a-bg);border-color:var(--opt-a-bdr)}
+.c3-m.c3-b{background:var(--opt-b-bg);border-color:var(--opt-b-bdr)}
+.c3-mn{font-size:9px;font-weight:700;color:var(--text-sub2);text-align:center;margin-bottom:2px}
+.c3-a .c3-mn,.c3-m.c3-a .c3-mn{color:var(--opt-a)}
+.c3-b .c3-mn,.c3-m.c3-b .c3-mn{color:var(--opt-b)}
+.c3-snf .c3-mn{color:var(--purple);font-weight:900}
+.c3-evs{display:flex;flex-direction:column;gap:2px}
+.c3-ev{font-size:8px;font-weight:700;padding:1px 2px;border-radius:3px;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.c3-bar{height:4px;border-radius:2px;margin-top:3px}
+
+/* ══ ARROW CONNECTOR ══ */
+.arrow-down{display:flex;justify-content:center;margin:5px 0}
+.arrow-down-inner{display:flex;flex-direction:column;align-items:center;gap:0}
+.arrow-vert{width:2px;height:14px}
+.arrow-tri{width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent}
+.fork-svg-wrap{width:100%;overflow:hidden;margin:2px 0}
+
+/* ══ DUAL FUNNEL ══ */
+.dual-funnel{display:grid;grid-template-columns:1fr 1fr;gap:0;background:var(--card-bg);border-radius:var(--radius);padding:16px;margin-bottom:20px;border:1px solid var(--border)}
+.df-col{padding:0 8px}
+.df-col+.df-col{border-left:1px solid var(--border)}
+.df-title{font-size:12px;font-weight:800;margin-bottom:4px;text-align:center;padding:4px 8px;border-radius:6px}
+.df-sub{font-size:10px;color:var(--text-sub2);text-align:center;margin-bottom:12px;line-height:1.4}
+.df-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.df-bar-wrap{flex:1;display:flex;align-items:center;gap:8px}
+.df-bar{height:24px;border-radius:4px;min-width:24px;transition:width .6s;flex-shrink:0}
+.df-val{font-size:11px;font-weight:800;color:var(--text-h);white-space:nowrap;font-family:monospace;flex-shrink:0}
+.df-label{font-size:10px;color:var(--text-sub2);min-width:90px;text-align:right;flex-shrink:0}
+.df-note{font-size:10px;background:var(--card-bg2);border-left:3px solid;border-radius:0 6px 6px 0;padding:8px 10px;margin-top:10px;line-height:1.55;color:var(--text-sub1)}
+.df-note strong{color:var(--text-h)}
+
+.cal-wrapper{overflow-x:auto;margin-bottom:12px}
+.cal-block{min-width:960px}
+.cal-row{display:flex;align-items:stretch;margin-bottom:4px}
+.cal-row-label{width:52px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;border-radius:8px;margin-right:4px;padding:0 4px}
+.cal-row-label.common{background:var(--card-bg);color:var(--text-sub2)}
+.cal-row-label.opt-a{background:var(--opt-a);color:#fff}
+.cal-row-label.opt-b{background:var(--opt-b);color:#fff}
+.cal-months-wrap{flex:1;display:flex;gap:0}
+.cal-month{flex:1;border:1px solid var(--border);border-right:none;padding:5px 4px 6px;background:#fff;min-width:52px}
+.cal-month:last-child{border-right:1px solid var(--border)}
+.cal-month.first{border-radius:6px 0 0 6px}
+.cal-month.last{border-radius:0 6px 6px 0;border-right:1px solid var(--border)}
+.cal-mn{font-size:9px;font-weight:700;color:var(--text-sub2);text-align:center;margin-bottom:3px}
+.cal-evs{display:flex;flex-direction:column;gap:2px;min-height:18px}
+.cal-ev{font-size:9px;font-weight:700;padding:1px 3px;border-radius:3px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ce-now{background:var(--red-bg);color:var(--red)}
+.ce-ph{background:var(--amber-bg);color:#b45309}
+.ce-snf{background:var(--purple-bg);color:var(--purple)}
+.ce-sale{background:#dbeafe;color:#1d4ed8}
+.ce-a{background:var(--opt-a-bg);color:var(--opt-a)}
+.ce-b{background:var(--opt-b-bg);color:var(--opt-b)}
+.ce-ok{background:var(--green-bg);color:var(--green)}
+.cal-bar{height:4px;border-radius:2px;margin-top:4px}
+.cb-gray{background:#d1d5db}
+.cb-blue{background:linear-gradient(90deg,#4f46e5,#818cf8)}
+.cb-teal{background:linear-gradient(90deg,#0f766e,#2dd4bf)}
+.cb-purple{background:linear-gradient(90deg,#7c3aed,#c4b5fd)}
+.cb-snf{background:linear-gradient(90deg,var(--purple),#c4b5fd)}
+.cb-a{background:linear-gradient(90deg,var(--opt-a),#fb923c)}
+.cb-b{background:linear-gradient(90deg,var(--opt-b),#4ade80)}
+.cal-fork-row{display:flex;margin-bottom:2px}
+.cal-fork-spacer{width:52px;flex-shrink:0;margin-right:4px}
+.cal-fork-line{flex:1;display:flex;align-items:flex-start;padding-top:0}
+.cal-fork-inner{width:100%;height:24px;display:flex;align-items:center;gap:8px;font-size:10px;font-weight:700}
+.fork-badge-a{background:var(--opt-a);color:#fff;padding:2px 8px;border-radius:6px;font-size:9px}
+.fork-badge-b{background:var(--opt-b);color:#fff;padding:2px 8px;border-radius:6px;font-size:9px}
+.cal-legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.cal-leg-i{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text-sub2)}
+.cld{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+
+/* KPI CARDS */
+.kpi-card{background:var(--card-bg);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow);border-left:4px solid var(--accent)}
+.kpi-card.gn{border-left-color:var(--green)}.kpi-card.pp{border-left-color:var(--purple)}
+.kpi-card.p-card{border-left-color:var(--p)}.kpi-card.f-card{border-left-color:var(--f2p)}
+.kl{font-size:10px;color:var(--text-sub2);font-weight:600;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px}
+.kv{font-size:22px;font-weight:800;line-height:1;margin-bottom:3px}
+.ks{font-size:10px;color:var(--text-sub2);margin-top:2px}
+.kb{display:inline-block;margin-top:5px;font-size:10px;font-weight:700;padding:2px 8px;border-radius:14px}
+.kb-p{background:var(--p-bg);color:var(--p)}.kb-f{background:var(--f2p-bg);color:var(--f2p)}
+.kb-up{background:var(--green-bg);color:var(--green)}.kb-nu{background:#e0e7ff;color:var(--accent)}
+
+/* CHART */
+.chart-card{background:var(--card-bg);border-radius:var(--radius);padding:22px 24px;box-shadow:var(--shadow);margin-bottom:20px}
+.ct{font-size:14px;font-weight:700;color:var(--text-sub1);margin-bottom:2px}
+.cs{font-size:11px;color:var(--text-sub2);margin-bottom:16px}
+.cw{position:relative;width:100%}
+
+/* SIMULATOR */
+.sim-box{background:linear-gradient(135deg,#1a1a2e,#16213e);border-radius:var(--radius);padding:24px 28px;color:#e2e8f0}
+.sim-title{font-size:16px;font-weight:800;color:#fff;margin-bottom:4px}
+.sim-sub{font-size:12px;color:#94a3b8;margin-bottom:20px}
+.sim-ctrls{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;margin-bottom:24px}
+.sim-lbl{font-size:11px;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+.sim-val{font-size:20px;font-weight:800;color:#a5b4fc;font-family:monospace;margin-bottom:8px}
+.sim-slider{width:100%;appearance:none;height:5px;border-radius:3px;background:#374151;outline:none;cursor:pointer}
+.sim-slider::-webkit-slider-thumb{appearance:none;width:16px;height:16px;border-radius:50%;background:var(--accent);cursor:pointer}
+.sim-res{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.sim-r{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:14px 16px}
+.sim-r.acc{border-color:var(--accent);background:rgba(79,70,229,.15)}
+.sim-rl{font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+.sim-rv{font-size:20px;font-weight:800;color:#fff;font-family:monospace}
+.sim-rs{font-size:10px;color:#64748b;margin-top:2px}
+.sim-r.acc .sim-rv{color:#a5b4fc}
+
+/* ══ PHASE TRACK (Section 03) ══ */
+.pt-card{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:10px}
+.pt-header{display:flex;align-items:center;gap:14px;padding:14px 18px;background:var(--card-bg);cursor:pointer;user-select:none;transition:background .2s}
+.pt-header:hover{background:#e9ebf0}
+.pt-header.open{background:linear-gradient(90deg,#f0f4ff,var(--card-bg));border-bottom:1px solid var(--border)}
+.pt-bar{width:5px;height:44px;border-radius:3px;flex-shrink:0}
+.pt-phase-info{flex:1}
+.pt-phase-name{font-size:14px;font-weight:700;color:var(--text-h);margin-bottom:2px}
+.pt-phase-date{font-size:11px;color:var(--text-sub2)}
+.pt-wl-tags{display:flex;gap:6px;align-items:center}
+.pt-chevron{font-size:11px;color:var(--text-src);transition:transform .25s;flex-shrink:0}
+.pt-header.open .pt-chevron{transform:rotate(90deg);color:var(--accent)}
+.pt-body{display:none;padding:20px 22px 22px;background:#fff}
+.pt-body.open{display:block}
+.pt-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.pt-col-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text-sub2);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.pt-actions{display:flex;flex-direction:column;gap:6px}
+.pt-action{display:flex;align-items:flex-start;gap:8px;padding:7px 10px;background:var(--card-bg2);border-radius:7px;border:1px solid var(--border);font-size:12px;color:var(--text-sub1);line-height:1.45}
+.pt-action.critical{background:var(--red-bg);border-color:var(--red-bdr)}
+.pt-action.highlight{background:var(--amber-bg);border-color:var(--amber-bdr)}
+.pt-action.ok{background:var(--green-bg);border-color:var(--green-bdr)}
+.pt-action-icon{font-size:13px;flex-shrink:0;margin-top:1px}
+.pt-action-text{flex:1}
+.pt-action-text strong{color:var(--text-h)}
+.tc-wrap{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.tc{display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px}
+.tc-pm{background:#dbeafe;color:#1e40af}.tc-biz{background:var(--purple-bg);color:#6d28d9}
+.tc-cm{background:var(--green-bg);color:#065f46}.tc-dev{background:var(--amber-bg);color:#92400e}
+.tc-bd{background:var(--red-bg);color:#991b1b}
+.pt-mkt{display:flex;flex-direction:column;gap:6px}
+.pt-mkt-item{display:flex;align-items:flex-start;gap:8px;padding:7px 10px;border-radius:7px;border-left:3px solid var(--border);background:var(--card-bg2);font-size:12px;color:var(--text-sub1);line-height:1.45}
+.pt-mkt-item.mkt-a{border-left-color:var(--opt-a);background:var(--opt-a-bg)}
+.pt-mkt-item.mkt-b{border-left-color:var(--opt-b);background:var(--opt-b-bg)}
+
+/* CALLOUT */
+.co{background:var(--card-bg2);border-left:4px solid var(--accent);border-radius:0 var(--radius) var(--radius) 0;padding:11px 16px;margin:10px 0;font-size:12px;color:var(--text-sub1)}
+.co.warn{border-left-color:var(--amber);background:var(--amber-bg)}
+.co.ok{border-left-color:var(--green);background:var(--green-bg)}
+.co.danger{border-left-color:var(--red);background:var(--red-bg)}
+.co strong{color:var(--text-h)}
+
+/* PILLS */
+.pill{display:inline-block;padding:2px 8px;border-radius:12px;font-size:10px;font-weight:700;white-space:nowrap}
+.pg{background:var(--green-bg);color:var(--green);border:1px solid var(--green-bdr)}
+.pa{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-bdr)}
+.pb{background:#e0e7ff;color:var(--accent);border:1px solid #c7d2fe}
+.pr{background:var(--red-bg);color:var(--red);border:1px solid var(--red-bdr)}
+.pgr{background:var(--card-bg);color:var(--text-sub2);border:1px solid var(--border)}
+
+/* CHECKLIST */
+.cl-overall{background:#1a1a2e;border-radius:var(--radius);padding:20px 24px;color:#e2e8f0;margin-bottom:24px}
+.cl-overall-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.cl-overall-title{font-size:14px;font-weight:700;color:#fff}
+.cl-overall-pct{font-size:28px;font-weight:800;color:#a5b4fc;font-family:monospace}
+.cl-overall-bar-wrap{height:8px;background:#374151;border-radius:4px;overflow:hidden;margin-bottom:6px}
+.cl-overall-bar{height:100%;background:linear-gradient(90deg,#4f46e5,#818cf8);border-radius:4px;transition:width .6s ease}
+.cl-overall-sub{font-size:11px;color:#64748b}
+.cl-reset-btn{background:#374151;color:#94a3b8;border:none;border-radius:6px;padding:5px 12px;font-size:11px;cursor:pointer;transition:all .2s}
+.cl-reset-btn:hover{background:var(--accent);color:#fff}
+.cl-category{margin-bottom:22px}
+.cl-cat-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.cl-cat-title{font-size:13px;font-weight:700;color:var(--text-h);display:flex;align-items:center;gap:8px}
+.cl-cat-count{font-size:11px;color:var(--text-sub2);font-family:monospace}
+.cl-progress-wrap{height:5px;background:var(--border);border-radius:3px;overflow:hidden;margin-bottom:10px}
+.cl-progress-bar{height:100%;border-radius:3px;transition:width .4s ease}
+.cl-items{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.cl-item{display:flex;align-items:flex-start;gap:8px;padding:8px 12px;background:var(--card-bg2);border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:all .15s}
+.cl-item:hover{background:var(--blue-bg);border-color:var(--blue-bdr)}
+.cl-item.done{background:var(--green-bg);border-color:var(--green-bdr)}
+.cl-item.done .cl-label{text-decoration:line-through;color:var(--text-sub2)}
+.cl-check{width:16px;height:16px;border:2px solid var(--border);border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;margin-top:1px;transition:all .15s}
+.cl-item.done .cl-check{background:var(--green);border-color:var(--green)}
+.cl-check-mark{color:#fff;font-size:10px;display:none}
+.cl-item.done .cl-check-mark{display:block}
+.cl-label{font-size:11px;color:var(--text-sub1);line-height:1.4}
+.cl-note{font-size:10px;color:var(--text-src);margin-top:3px;line-height:1.4}
+.cl-priority{display:inline-block;font-size:9px;font-weight:700;padding:1px 5px;border-radius:4px;flex-shrink:0;margin-top:2px;white-space:nowrap}
+.cl-p-high{background:var(--red-bg);color:var(--red)}.cl-p-med{background:var(--amber-bg);color:var(--amber)}.cl-p-low{background:var(--card-bg);color:var(--text-sub2)}
+
+/* PLANNER */
+.planner-input{display:flex;align-items:center;gap:16px;margin-bottom:24px;flex-wrap:wrap}
+.planner-input label{font-size:13px;font-weight:600;color:var(--text-h);white-space:nowrap}
+.planner-date-input{padding:8px 14px;border:2px solid var(--border);border-radius:8px;font-size:14px;font-weight:600;font-family:'Segoe UI',sans-serif;color:var(--text-h);outline:none;width:200px;transition:border-color .2s}
+.planner-date-input:focus{border-color:var(--accent)}
+.planner-btn{background:var(--accent);color:#fff;border:none;border-radius:8px;padding:8px 20px;font-size:13px;font-weight:700;cursor:pointer;transition:background .2s}
+.planner-btn:hover{background:#4338ca}
+.planner-row{display:flex;align-items:stretch;gap:0;margin-bottom:5px;border-radius:8px;overflow:hidden;border:1px solid var(--border);transition:all .2s}
+.planner-row:hover{border-color:#c7d2fe}
+.planner-row.pl-target{border-color:var(--green);background:var(--green-bg)}
+.planner-row.pl-a{border-color:var(--opt-a-bdr);background:var(--opt-a-bg)}
+.planner-row.pl-b{border-color:var(--opt-b-bdr);background:var(--opt-b-bg)}
+.planner-row.pl-warn{border-color:var(--amber)}
+.planner-row.pl-a{border-color:var(--opt-a-bdr);background:var(--opt-a-bg)}
+.planner-row.pl-b{border-color:var(--opt-b-bdr);background:var(--opt-b-bg)}
+.planner-time{background:#1a1a2e;color:#a5b4fc;font-size:11px;font-weight:700;font-family:monospace;padding:10px 12px;min-width:75px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.planner-date{background:var(--card-bg);padding:10px 12px;font-size:12px;font-weight:700;color:var(--text-h);font-family:monospace;min-width:105px;display:flex;align-items:center;flex-shrink:0;border-right:1px solid var(--border)}
+.planner-action{padding:10px 14px;font-size:12px;color:var(--text-sub1);flex:1;display:flex;align-items:center}
+.planner-badge{padding:10px 12px;display:flex;align-items:center;min-width:80px;justify-content:flex-end}
+
+/* SUBSEC LABEL */
+.sl{font-size:10px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.12em;margin:14px 0 8px;display:flex;align-items:center;gap:8px}
+.sl::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent)}
+
+/* SRC LINE */
+.src-line{font-size:10px;color:var(--text-src);margin-top:12px;padding-top:10px;border-top:1px solid var(--border);line-height:1.8}
+.src-line a{color:var(--accent);text-decoration:underline}
+
+/* ══ PART 2 ══ */
+.part2-wrapper{background:linear-gradient(135deg,#f8faff,#fff);border-top:3px solid var(--accent)}
+.part2-toggle{width:100%;display:flex;align-items:center;justify-content:space-between;padding:22px 40px;background:none;border:none;cursor:pointer;text-align:left;transition:background .2s}
+.part2-toggle:hover{background:rgba(79,70,229,.03)}
+.part2-toggle-left{display:flex;align-items:center;gap:14px}
+.part2-toggle-icon{width:36px;height:36px;background:var(--accent);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.part2-toggle-title{font-size:18px;font-weight:800;color:var(--text-h)}
+.part2-toggle-sub{font-size:12px;color:var(--text-sub2);margin-top:2px}
+.part2-toggle-arr{font-size:20px;color:var(--accent);font-weight:700;transition:transform .3s;flex-shrink:0}
+.part2-toggle.open .part2-toggle-arr{transform:rotate(180deg)}
+.part2-body{display:none;padding:0 40px 52px}
+.part2-body.open{display:block}
+.part2-section-label{font-size:16px;font-weight:800;color:var(--text-h);padding:24px 0 12px;border-bottom:1px solid var(--border);margin-bottom:16px;display:flex;align-items:center;gap:10px}
+
+/* Part 2 Phase Detail Cards */
+.p2-card{border-radius:var(--radius);overflow:hidden;margin-bottom:10px;border:1px solid var(--border)}
+.p2-header{display:flex;align-items:center;gap:12px;padding:13px 18px;cursor:pointer;user-select:none;transition:background .2s}
+.p2-header:hover{filter:brightness(.97)}
+.p2-header.open-h{border-bottom:1px solid var(--border)}
+.p2-header.common-h{background:linear-gradient(90deg,#f0f4ff,var(--card-bg))}
+.p2-header.opt-a-h{background:linear-gradient(90deg,var(--opt-a-bg),#fff);border-color:var(--opt-a-bdr)}
+.p2-header.opt-b-h{background:linear-gradient(90deg,var(--opt-b-bg),#fff);border-color:var(--opt-b-bdr)}
+.p2-label{font-size:10px;font-weight:700;padding:3px 9px;border-radius:10px;white-space:nowrap}
+.p2l-common{background:#e0e7ff;color:var(--accent)}
+.p2l-a{background:var(--opt-a);color:#fff}
+.p2l-b{background:var(--opt-b);color:#fff}
+.p2-title{font-size:14px;font-weight:700;color:var(--text-h);flex:1}
+.p2-date{font-size:11px;color:var(--text-sub2)}
+.p2-chev{font-size:11px;color:var(--text-src);transition:transform .25s}
+.p2-header.open-h .p2-chev{transform:rotate(90deg)}
+.p2-body{display:none;background:#fff;padding:20px 22px 22px}
+.p2-body.open{display:block}
+.p2-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:14px}
+
+/* Milestone status box */
+.ms-box{border-radius:10px;padding:12px 16px;margin-top:10px;border:1px solid}
+.ms-go{background:var(--green-bg);border-color:var(--green-bdr)}
+.ms-hold{background:var(--amber-bg);border-color:var(--amber-bdr)}
+.ms-pivot{background:var(--red-bg);border-color:var(--red-bdr)}
+.ms-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px}
+.ms-title.go{color:var(--green)}.ms-title.hold{color:var(--amber)}.ms-title.pivot{color:var(--red)}
+.ms-content{font-size:12px;color:var(--text-sub1);line-height:1.6}
+.ms-content strong{color:var(--text-h)}
+
+/* A/B Block distinction inside part2 */
+.block-a{background:var(--opt-a-bg);border:1px solid var(--opt-a-bdr);border-radius:10px;padding:12px 16px;margin-bottom:8px}
+.block-b{background:var(--opt-b-bg);border:1px solid var(--opt-b-bdr);border-radius:10px;padding:12px 16px;margin-bottom:8px}
+.block-a-title{font-size:11px;font-weight:800;color:var(--opt-a);margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em}
+.block-b-title{font-size:11px;font-weight:800;color:var(--opt-b);margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em}
+.block-content{font-size:12px;color:var(--text-sub1);line-height:1.6}
+.block-content strong{color:var(--text-h)}
+
+/* TABLE */
+.tw{overflow-x:auto;margin-bottom:12px;border-radius:var(--radius);border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:12px}
+thead tr{background:#1a1a2e;color:#fff}
+thead th{padding:9px 12px;text-align:left;font-weight:600;font-size:11px;white-space:nowrap}
+tbody tr{border-bottom:1px solid var(--border);transition:background .15s}
+tbody tr:nth-child(even){background:var(--card-bg2)}
+tbody tr:hover{background:#eff6ff}
+tbody tr:last-child td{border-bottom:none}
+tbody td{padding:8px 12px;font-size:12px;color:var(--text-sub1);vertical-align:middle}
+.td-b{font-weight:600;color:var(--text-h)}.td-g{color:var(--green);font-weight:600}
+.td-a{color:var(--amber);font-weight:600}.td-r{color:var(--red);font-weight:600}
+.td-p{color:var(--p);font-weight:600}.td-f{color:var(--f2p);font-weight:600}
+
+/* IC */
+.ic{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px}
+.ic.hi{background:var(--blue-bg);border-color:var(--blue-bdr)}
+.ic.warn{background:var(--amber-bg);border-color:var(--amber-bdr)}
+.ic.ok{background:var(--green-bg);border-color:var(--green-bdr)}
+.ic-t{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin-bottom:7px}
+.ic-t.warn{color:var(--amber)}.ic-t.ok{color:var(--green)}
+.ic-body{font-size:12px;color:var(--text-sub1);line-height:1.65}
+.ic-body strong{color:var(--text-h)}
+
+/* FOOTER */
+footer{background:#1a1a2e;color:#64748b;padding:24px 40px;font-size:11px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.fl{font-size:13px;font-weight:800;color:#a5b4fc}
+
+@media(max-width:960px){
+  header{padding:0 20px;height:auto;min-height:56px;padding-top:8px;padding-bottom:8px;flex-wrap:wrap}
+  .section,.part2-body,.part2-toggle{padding-left:20px;padding-right:20px}
+  .page-nav{padding:0 20px}
+  .g2,.g3,.g4,.pt-grid,.p2-grid,.fork-branches{grid-template-columns:1fr}
+  .sim-ctrls{grid-template-columns:1fr}
+  .sim-res{grid-template-columns:1fr 1fr}
+  .cl-items{grid-template-columns:1fr}
+}
+</style>
+  <link rel="stylesheet" href="../assets/theme.css">
+</head>
+<body class="embed">
+
+<!-- HEADER -->
+<header>
+  <div class="header-left">
+    <div class="header-badge">PROJECT S</div>
+    <div>
+      <div class="header-main">마일스톤 &amp; 론칭 플래닝</div>
+      <div class="header-sub">Steam Shooter Top 5 진입 목표 · Phase 0~8 공통 → SNF 후 경로 분기 · 2026.05 ~ 2028.03</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="live-dot"></div>
+    <span>2026.04 기준 &nbsp;·&nbsp; 전사테스트 준비 중 &nbsp;·&nbsp; Page 3 / 8</span>
+  </div>
+</header>
+
+<!-- LEGEND BAR -->
+<div class="legend-bar">
+  <div class="lb-item"><span class="lb-chip lb-p">P</span>&nbsp;= Premium (유료 구매)</div>
+  <div class="lb-div"></div>
+  <div class="lb-item"><span class="lb-chip lb-f">F2P</span>&nbsp;= Free to Play (무료 플레이, 인앱 결제)</div>
+  <div class="lb-div"></div>
+  <div class="lb-item"><span class="lb-chip lb-a">◼</span>&nbsp;EA 론칭 경로 — SNF 후 8~9개월, 정식 LAUNCH 2028.Q1</div>
+  <div class="lb-div"></div>
+  <div class="lb-item"><span class="lb-chip lb-b">◼</span>&nbsp;직행 론칭 경로 — SNF 후 4~5개월, 정식 LAUNCH 2027.11</div>
+</div>
+<nav class="page-nav">
+  <a class="pnav-item" href="#sec1"><span class="pnav-num">01</span> 전체 타임라인</a>
+  <div class="pnav-div"></div>
+  <a class="pnav-item" href="#sec2"><span class="pnav-num">02</span> WL KPI &amp; 시뮬레이터</a>
+  <div class="pnav-div"></div>
+  <a class="pnav-item" href="#sec3"><span class="pnav-num">03</span> 단계별 액션 &amp; 마케팅</a>
+  <div class="pnav-div"></div>
+  <a class="pnav-item" href="#sec4"><span class="pnav-num">04</span> 체크리스트</a>
+  <div class="pnav-div"></div>
+  <a class="pnav-item" href="#sec5"><span class="pnav-num">05</span> 역산 플래너</a>
+  <div class="pnav-div"></div>
+  <a class="pnav-item" href="#part2"><span class="pnav-num">↓</span> 상세 Phase 플랜</a>
+</nav>
+
+<div class="page-wrap">
+
+<!-- ══════════════════════════════
+     SEC 1: 전체 론칭 타임라인
+══════════════════════════════ -->
+<div class="section" id="sec1">
+  <div class="sec-num">Section 01</div>
+  <div class="sec-title">전체 론칭 타임라인</div>
+  <div class="sec-sub">전사테스트 → FGT → Coming Soon → CLA → CBT → SNF Jun 2027 공통 경로 후 경로 분기 · 목표: Steam Shooter 장르 Top 5</div>
+
+  <div class="insight">
+    <h3>📋 핵심 3줄 요약</h3>
+    <ul>
+      <li><strong>공통 경로:</strong> 전사테스트(2026.05) → FGT 2회(2026.06~10) → Coming Soon(2026.11) → CLA → CBT → SNF Jun 2027. SNF 결과로 두 경로 분기.</li>
+      <li><strong><span style="color:var(--opt-a)">◼ EA 론칭 경로</span>:</strong> SNF 위시 목표 70~100% + 빌드 완성도 80% 수준. EA로 피드백 추가 수집 후 정식 론칭. SNF~LAUNCH 갭 8~9개월, 정식 LAUNCH 2028.Q1.</li>
+      <li><strong><span style="color:var(--opt-b)">◼ 직행 론칭 경로</span>:</strong> SNF 위시 목표 달성·초과 + 빌드 완성도 90%+. 서버 부하 최종 검증 후 즉시 정식 론칭. SNF~LAUNCH 갭 4~5개월, 정식 LAUNCH 2027.11.</li>
+    </ul>
+  </div>
+
+  <!-- 공통 Phase Flow -->
+  <div class="sl">공통 경로 (전사테스트 → SNF)</div>
+  <div class="phase-flow" style="margin-bottom:8px">
+    <div class="phase-card cur">
+      <span class="ph-status ps-cur">● 현재</span>
+      <div class="ph-num">PHASE 0</div>
+      <div class="ph-name">전사테스트<br>장르 확정</div>
+      <div class="ph-date">2026.05</div>
+    </div>
+    <div class="ph-arr">→</div>
+    <div class="phase-card">
+      <span class="ph-status ps-plan">▷</span>
+      <div class="ph-num">PHASE 1</div>
+      <div class="ph-name">FGT 1차·2차<br>외부 검증</div>
+      <div class="ph-date">2026.06~10</div>
+    </div>
+    <div class="ph-arr">→</div>
+    <div class="phase-card">
+      <span class="ph-status ps-plan">▷</span>
+      <div class="ph-num">PHASE 2~3</div>
+      <div class="ph-name">Coming Soon<br>WL 수집</div>
+      <div class="ph-date">2026.10~12</div>
+      <div class="ph-wl-p">50K+</div>
+      <div class="ph-wl-l"><span class="chip-p">P</span>&amp;<span class="chip-f">F2P</span> 8주 목표</div>
+    </div>
+    <div class="ph-arr">→</div>
+    <div class="phase-card">
+      <span class="ph-status ps-plan">▷</span>
+      <div class="ph-num">PHASE 4~5</div>
+      <div class="ph-name">CLA 1,000명+<br>결과 반영 패치</div>
+      <div class="ph-date">2027.01~03</div>
+      <div class="ph-wl-p">100K+</div>
+      <div class="ph-wl-l"><span class="chip-p">P</span>&amp;<span class="chip-f">F2P</span> 누적</div>
+    </div>
+    <div class="ph-arr">→</div>
+    <div class="phase-card">
+      <span class="ph-status ps-plan">▷</span>
+      <div class="ph-num">PHASE 6</div>
+      <div class="ph-name">CBT 10,000명+</div>
+      <div class="ph-date">2027.03~04</div>
+      <div class="ph-wl-p">200K+</div>
+      <div class="ph-wl-f">400K+</div>
+      <div class="ph-wl-l"><span class="chip-p">P</span> / <span class="chip-f">F2P</span> 분기</div>
+    </div>
+    <div class="ph-arr">→</div>
+    <div class="phase-card">
+      <span class="ph-status ps-plan">▷</span>
+      <div class="ph-num">PHASE 7</div>
+      <div class="ph-name">SNF Demo<br>준비</div>
+      <div class="ph-date">2027.05</div>
+      <div class="ph-wl-p">400K+</div>
+      <div class="ph-wl-f">600K+</div>
+      <div class="ph-wl-l"><span class="chip-p">P</span> / <span class="chip-f">F2P</span></div>
+    </div>
+    <div class="ph-arr">→</div>
+    <div class="phase-card snf">
+      <span class="ph-status ps-snf">★ SNF</span>
+      <div class="ph-num">PHASE 8</div>
+      <div class="ph-name">Steam Next Fest<br>Jun 2027 (7일)</div>
+      <div class="ph-date">2027.06</div>
+      <div class="ph-wl-p">800K+</div>
+      <div class="ph-wl-f">1.2M+</div>
+      <div class="ph-wl-l">SNF 후 누적 목표</div>
+    </div>
+  </div>
+
+  <!-- ▼ Arrow: SNF → 경영진 분기 결정 -->
+  <div class="arrow-down">
+    <div class="arrow-down-inner">
+      <div class="arrow-vert" style="background:var(--purple)"></div>
+      <div class="arrow-tri" style="border-top:9px solid var(--purple)"></div>
+    </div>
+  </div>
+
+  <!-- Decision Point -->
+  <div class="decision-box">
+    <div class="decision-inner">
+      <div class="decision-label">⚡ SNF 종료 후 2주 이내 — 경영진 경로 분기 결정</div>
+      <div class="decision-sub">
+        <span style="color:var(--opt-a);font-weight:700">◼ EA 론칭 경로</span>: 위시 목표 70~100% + 완성도 80%
+        &nbsp;|&nbsp;
+        <span style="color:var(--opt-b);font-weight:700">◼ 직행 론칭 경로</span>: 위시 달성·초과 + 완성도 90%+
+        &nbsp;|&nbsp;
+        <span style="color:var(--red);font-weight:700">재검토</span>: 위시 증분 50% 미만
+      </div>
+    </div>
+  </div>
+
+  <!-- ▼ SVG 분기 화살표: decision → A(orange) + B(green) -->
+  <div class="fork-svg-wrap" style="height:44px">
+    <svg width="100%" height="44" viewBox="0 0 800 44" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- center down line -->
+      <line x1="400" y1="0" x2="400" y2="16" stroke="#9ca3af" stroke-width="2"/>
+      <!-- split horizontal -->
+      <line x1="170" y1="16" x2="630" y2="16" stroke="#9ca3af" stroke-width="2"/>
+      <!-- A branch (left, orange) -->
+      <line x1="170" y1="16" x2="170" y2="34" stroke="#ea580c" stroke-width="2.5"/>
+      <polygon points="163,34 177,34 170,44" fill="#ea580c"/>
+      <!-- B branch (right, green) -->
+      <line x1="630" y1="16" x2="630" y2="34" stroke="#16a34a" stroke-width="2.5"/>
+      <polygon points="623,34 637,34 630,44" fill="#16a34a"/>
+      <!-- Labels -->
+      <text x="50" y="28" font-size="11" font-weight="700" fill="#ea580c">↙ EA 론칭 경로</text>
+      <text x="650" y="28" font-size="11" font-weight="700" fill="#16a34a">직행 론칭 경로 ↘</text>
+    </svg>
+  </div>
+
+  <!-- 분기 경로 카드 -->
+  <div class="fork-branches">
+    <div class="branch-col col-a">
+      <div class="branch-head a">◼ EA 론칭 경로 &nbsp;·&nbsp; SNF~LAUNCH 8~9개월 &nbsp;·&nbsp; 정식 LAUNCH 2028.02~03</div>
+      <div class="branch-phases">
+        <div class="bph a"><div class="bph-name">EA 준비</div><div class="bph-date">2027.07~09</div></div>
+        <div class="bph-arr">→</div>
+        <div class="bph a"><div class="bph-name">Early Access<br>론칭</div><div class="bph-date">2027.10</div></div>
+        <div class="bph-arr">→</div>
+        <div class="bph a"><div class="bph-name">EA 운영 +<br>LAUNCH 준비</div><div class="bph-date">2027.11~2028.01</div></div>
+        <div class="bph-arr">→</div>
+        <div class="bph la"><div class="bph-name" style="font-size:12px">🚀 LAUNCH</div><div class="bph-date" style="opacity:.9">2028.02~03</div></div>
+      </div>
+      <div style="padding:6px 14px 10px;font-size:11px;color:var(--opt-a)">리스크 낮음 · EA에서 Review 기반 구축 · 완성도 80% · 모멘텀 약화 우려</div>
+    </div>
+    <div class="branch-col col-b">
+      <div class="branch-head b">◼ 직행 론칭 경로 &nbsp;·&nbsp; SNF~LAUNCH 4~5개월 &nbsp;·&nbsp; 정식 LAUNCH 2027.11</div>
+      <div class="branch-phases">
+        <div class="bph b"><div class="bph-name">LAUNCH<br>준비</div><div class="bph-date">2027.07~08</div></div>
+        <div class="bph-arr">→</div>
+        <div class="bph b"><div class="bph-name">서버 부하<br>최종 검증</div><div class="bph-date">2027.09 (1~2주)</div></div>
+        <div class="bph-arr">→</div>
+        <div class="bph lb"><div class="bph-name" style="font-size:12px">🚀 LAUNCH</div><div class="bph-date" style="opacity:.9">2027.11</div></div>
+        <div class="bph-arr">→</div>
+        <div class="bph b"><div class="bph-name">Post-launch<br>Live Ops</div><div class="bph-date">2027.11~ 지속</div></div>
+      </div>
+      <div style="padding:6px 14px 10px;font-size:11px;color:var(--opt-b)">리스크 중간 · SNF 모멘텀 최대 활용 · 완성도 90%+ 필수 · Season 1 동시 필수</div>
+    </div>
+  </div>
+
+  <!-- ══ CALENDAR 3-ROW GRID ══ -->
+  <div class="sl">2026~2028 캘린더 앵커 — 공통 경로 → SNF 후 경로 분기</div>
+  <div class="c3-wrapper">
+    <div class="c3-grid">
+
+      <!-- ROW A: EA 론칭 경로 (top) -->
+      <div class="c3-empty" style="background:transparent"></div>
+      <div class="c3-invis c3-m"></div><div class="c3-invis c3-m"></div><div class="c3-invis c3-m"></div><div class="c3-invis c3-m"></div><div class="c3-invis c3-m"></div><div class="c3-invis c3-m"></div><div class="c3-invis c3-m"></div><div class="c3-invis c3-m"></div><div class="c3-invis c3-m"></div><div class="c3-invis c3-m"></div><div class="c3-invis c3-m"></div>
+      <div class="c3-m c3-a"><div class="c3-mn">Jul'27</div><div class="c3-evs"><div class="c3-ev" style="background:var(--opt-a);color:#fff;font-size:7px">EA 준비</div></div><div class="c3-bar cb-a"></div></div>
+      <div class="c3-m c3-a"><div class="c3-mn">Sep'27</div><div class="c3-evs"></div><div class="c3-bar cb-a"></div></div>
+      <div class="c3-m c3-a"><div class="c3-mn">Oct'27</div><div class="c3-evs"><div class="c3-ev ce-a">EA 론칭</div></div><div class="c3-bar cb-a"></div></div>
+      <div class="c3-m c3-a"><div class="c3-mn">Nov'27</div><div class="c3-evs"><div class="c3-ev ce-sale" style="font-size:7px">Autumn</div></div><div class="c3-bar cb-a"></div></div>
+      <div class="c3-m c3-a"><div class="c3-mn">Feb'28</div><div class="c3-evs"><div class="c3-ev" style="background:var(--opt-a);color:#fff;font-size:7px">🚀 LAUNCH</div></div><div class="c3-bar cb-a"></div></div>
+      <div class="c3-m c3-a"><div class="c3-mn">Mar'28~</div><div class="c3-evs"><div class="c3-ev ce-sale" style="font-size:7px">Spring</div></div><div class="c3-bar cb-a"></div></div>
+      <!-- ROW COMMON (middle) -->
+      <div class="c3-cm-lbl">공통</div>
+      <div class="c3-m c3-cm"><div class="c3-mn">May'26</div><div class="c3-evs"><div class="c3-ev ce-now">📍현재</div></div><div class="c3-bar cb-gray"></div></div>
+      <div class="c3-m c3-cm"><div class="c3-mn">Jun'26</div><div class="c3-evs"><div class="c3-ev ce-ph">FGT 1차</div></div><div class="c3-bar cb-blue"></div></div>
+      <div class="c3-m c3-cm"><div class="c3-mn">Aug'26</div><div class="c3-evs"><div class="c3-ev ce-ph">1차 결과반영</div></div><div class="c3-bar cb-blue"></div></div>
+      <div class="c3-m c3-cm"><div class="c3-mn">Oct'26</div><div class="c3-evs"><div class="c3-ev ce-ph">FGT 2차</div></div><div class="c3-bar cb-blue"></div></div>
+      <div class="c3-m c3-cm"><div class="c3-mn">Nov'26</div><div class="c3-evs"><div class="c3-ev ce-ph">CS 오픈</div></div><div class="c3-bar cb-teal"></div></div>
+      <div class="c3-m c3-cm"><div class="c3-mn">Dec'26</div><div class="c3-evs"><div class="c3-ev ce-sale" style="font-size:7px">Winter Sale</div></div><div class="c3-bar cb-teal"></div></div>
+      <div class="c3-m c3-cm"><div class="c3-mn">Jan'27</div><div class="c3-evs"><div class="c3-ev ce-ph">CLA 시작</div></div><div class="c3-bar cb-teal"></div></div>
+      <div class="c3-m c3-cm"><div class="c3-mn">Feb'27</div><div class="c3-evs"><div class="c3-ev ce-ph" style="font-size:7px">CLA 종료</div><div class="c3-ev ce-snf" style="font-size:7px">SNF</div></div><div class="c3-bar cb-teal"></div></div>
+      <div class="c3-m c3-cm"><div class="c3-mn">Mar'27</div><div class="c3-evs"><div class="c3-ev ce-ph">CBT 시작</div><div class="c3-ev ce-sale" style="font-size:7px">Spring</div></div><div class="c3-bar cb-purple"></div></div>
+      <div class="c3-m c3-cm"><div class="c3-mn">May'27</div><div class="c3-evs"><div class="c3-ev ce-ph">Demo 준비</div></div><div class="c3-bar cb-purple"></div></div>
+      <div class="c3-m c3-snf"><div class="c3-mn">Jun'27★</div><div class="c3-evs"><div class="c3-ev ce-snf">★ SNF!</div><div class="c3-ev" style="background:var(--purple);color:#fff;font-size:7px">경로 분기</div></div><div class="c3-bar cb-snf"></div></div>
+      <div class="c3-invis c3-m"></div><div class="c3-invis c3-m"></div><div class="c3-invis c3-m"></div><div class="c3-invis c3-m"></div><div class="c3-invis c3-m"></div><div class="c3-invis c3-m"></div>
+      <!-- ROW B: 직행 론칭 경로 (bottom) -->
+      <div class="c3-empty" style="background:transparent"></div>
+      <div class="c3-invis c3-m"></div><div class="c3-invis c3-m"></div><div class="c3-invis c3-m"></div><div class="c3-invis c3-m"></div><div class="c3-invis c3-m"></div><div class="c3-invis c3-m"></div><div class="c3-invis c3-m"></div><div class="c3-invis c3-m"></div><div class="c3-invis c3-m"></div><div class="c3-invis c3-m"></div><div class="c3-invis c3-m"></div>
+      <div class="c3-m c3-b"><div class="c3-mn">Jul'27</div><div class="c3-evs"><div class="c3-ev" style="background:var(--opt-b);color:#fff;font-size:7px">Launch 준비</div></div><div class="c3-bar cb-b"></div></div>
+      <div class="c3-m c3-b"><div class="c3-mn">Sep'27</div><div class="c3-evs"><div class="c3-ev ce-b">서버검증</div></div><div class="c3-bar cb-b"></div></div>
+      <div class="c3-m c3-b"><div class="c3-mn">Oct'27</div><div class="c3-evs"></div><div class="c3-bar cb-b"></div></div>
+      <div class="c3-m c3-b" style="border-color:var(--opt-b)"><div class="c3-mn" style="font-weight:900;color:var(--opt-b)">Nov'27★</div><div class="c3-evs"><div class="c3-ev" style="background:var(--opt-b);color:#fff;font-size:7px">🚀 LAUNCH</div><div class="c3-ev ce-sale" style="font-size:7px">Autumn</div></div><div class="c3-bar cb-b"></div></div>
+      <div class="c3-m c3-b"><div class="c3-mn">Dec'27</div><div class="c3-evs"><div class="c3-ev ce-b" style="font-size:7px">Live Ops</div><div class="c3-ev ce-sale" style="font-size:7px">Winter</div></div><div class="c3-bar cb-b"></div></div>
+      <div class="c3-m c3-b"><div class="c3-mn">Jan'28~</div><div class="c3-evs"><div class="c3-ev ce-b" style="font-size:7px">Season 2</div></div><div class="c3-bar cb-b"></div></div>
+
+    </div>
+  </div>
+
+  <div class="cal-legend">
+    <div class="cal-leg-i"><div class="cld" style="background:var(--purple)"></div>Steam Next Fest</div>
+    <div class="cal-leg-i"><div class="cld" style="background:#dbeafe"></div>Steam 대형 세일</div>
+    <div class="cal-leg-i"><div class="cld" style="background:var(--amber-bg)"></div>공통 Phase 이벤트</div>
+    <div class="cal-leg-i"><div class="cld" style="background:var(--opt-a)"></div>EA 론칭 경로</div>
+    <div class="cal-leg-i"><div class="cld" style="background:var(--opt-b)"></div>직행 론칭 경로</div>
+  </div>
+
+
+
+  <!-- KPI Snapshot -->
+  <div class="sl" style="margin-top:20px">Phase별 핵심 WL KPI 스냅샷</div>
+  <div class="g4">
+    <div class="kpi-card p-card">
+      <div class="kl">Coming Soon 8주 WL</div>
+      <div class="kv" style="color:var(--p)">50K+</div>
+      <div class="ks">공통 목표</div>
+      <div class="kb kb-p" style="margin-right:4px">P</div><div class="kb kb-f">F2P</div>
+    </div>
+    <div class="kpi-card pp">
+      <div class="kl">CBT 종료 — 분기 시작</div>
+      <div class="kv" style="color:var(--p);font-size:16px"><span class="chip-p">P</span> 200K</div>
+      <div class="kv" style="color:var(--f2p);font-size:16px;margin-top:2px"><span class="chip-f">F2P</span> 400K</div>
+      <div class="ks">2027.04 이후 목표 분기</div>
+    </div>
+    <div class="kpi-card" style="border-left-color:var(--purple)">
+      <div class="kl">SNF 종료 후 누적 WL</div>
+      <div class="kv" style="color:var(--p);font-size:16px"><span class="chip-p">P</span> 800K</div>
+      <div class="kv" style="color:var(--f2p);font-size:16px;margin-top:2px"><span class="chip-f">F2P</span> 1.2M</div>
+      <div class="ks">경로 분기 핵심 기준</div>
+    </div>
+    <div class="kpi-card gn">
+      <div class="kl">Launch 직전 누적 WL</div>
+      <div class="kv" style="color:var(--p);font-size:16px"><span class="chip-p">P</span> 1.6M</div>
+      <div class="kv" style="color:var(--f2p);font-size:16px;margin-top:2px"><span class="chip-f">F2P</span> 2.4M</div>
+      <div class="ks">PCCU 55K+ (Top 5 최소선)</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     SEC 2: WL KPI & 시뮬레이터
+══════════════════════════════ -->
+<div class="section" id="sec2">
+  <div class="sec-num">Section 02</div>
+  <div class="sec-title">WL 목표 KPI &amp; 전환 시뮬레이터</div>
+  <div class="sec-sub">3단계 Flywheel 작동 구조 · <span class="chip-p">P</span> Premium vs <span class="chip-f">F2P</span> WL 비교 차트 · Launch PCCU Top 5 진입 전환 시뮬레이션</div>
+
+  <!-- 3 Stage Flywheel -->
+  <div class="g3" style="margin-bottom:24px">
+    <div class="ic hi">
+      <div class="ic-t">Stage 1 — Pre-launch</div>
+      <div class="ic-body"><strong>Wishlist 최대화</strong> = 론칭 당일 이메일 발송 규모 결정.<br>WL N명 → 론칭 이메일 N건 발송 → D+1 CCU 결정 → Steam 알고리즘 초기 점수. WL이 없으면 론칭 이메일도, 알고리즘 점수도 없음.</div>
+    </div>
+    <div class="ic" style="background:var(--purple-bg);border-color:var(--purple-bdr)">
+      <div class="ic-t" style="color:var(--purple)">Stage 2 — 공개 단계</div>
+      <div class="ic-body"><strong>긍정 Review 최대화</strong> = 구매 전환 가속기.<br>리뷰 40% 미만 시 알고리즘 피처링 배제. 론칭 초기 72시간이 장기 포지션 결정. SNF Demo 긍정 반응 70%+ 목표.</div>
+    </div>
+    <div class="ic ok">
+      <div class="ic-t ok">Stage 3 — Post-launch</div>
+      <div class="ic-body"><strong>플레이·구매 최대화</strong> = 노출 가속기.<br>높은 CCU → Top 순위 유지 → 오가닉 유입 → Flywheel 가속. PCCU 55K+(Top 5 최소) / 67K+ 목표. The Finals 268K→11K 반면교사.</div>
+    </div>
+  </div>
+
+  <div class="g2">
+    <!-- WL Grouped Horizontal Bar Chart -->
+    <div class="chart-card">
+      <div class="ct">위시리스트 누적 목표 — <span style="color:var(--p)">■ Premium</span> vs <span style="color:var(--f2p)">■ F2P</span></div>
+      <div class="cs">CBT 단계(2027.04)부터 분기 · 누운 막대 그래프 · 엑셀 원본 데이터</div>
+      <div class="cw" style="height:380px"><canvas id="wlChart"></canvas></div>
+    </div>
+    <!-- Dual Funnel -->
+    <div class="chart-card">
+      <div class="ct">WL → Launch PCCU 전환 Funnel — <span class="chip-p">P</span> vs <span class="chip-f">F2P</span> BM별 비교</div>
+      <div class="cs">BM 구조 차이로 전환 경로가 다름 · 각 단계별 수치는 엑셀 기준 목표값</div>
+      <div class="dual-funnel">
+        <!-- Premium Funnel -->
+        <div class="df-col">
+          <div class="df-title" style="background:var(--p-bg);color:var(--p)">◼ Premium — 1.6M WL 기준</div>
+          <div class="df-sub">WL→구매 전환율 <strong>15%</strong><br>(유료 결제 결정 후 구매 = 높은 구매 의도)</div>
+          <div class="df-row"><div class="df-label">WL (론칭 직전)</div><div class="df-bar-wrap"><div class="df-bar" style="width:100%;background:var(--p)"></div><span class="df-val">1,600,000</span></div></div>
+          <div class="df-row"><div class="df-label">이메일 발송 70%</div><div class="df-bar-wrap"><div class="df-bar" style="width:70%;background:#818cf8"></div><span class="df-val">1,120,000</span></div></div>
+          <div class="df-row"><div class="df-label">스토어 방문</div><div class="df-bar-wrap"><div class="df-bar" style="width:30%;background:#a5b4fc"></div><span class="df-val">480,000</span></div></div>
+          <div class="df-row"><div class="df-label">구매 완료</div><div class="df-bar-wrap"><div class="df-bar" style="width:15%;background:#16a34a"></div><span class="df-val" style="color:var(--green);font-weight:900">240,000</span></div></div>
+          <div class="df-row"><div class="df-label">PCCU Peak ★</div><div class="df-bar-wrap"><div class="df-bar" style="width:4.2%;background:#d97706"></div><span class="df-val" style="color:var(--amber);font-weight:900">67,000</span></div></div>
+          <div class="df-note" style="border-left-color:var(--p)"><strong>Premium 전환 특성:</strong> 유료 결제 결정이 필요해 WL→구매 전환율 낮음(15%). 그러나 구매자는 구매 의도가 강해 <strong>D+7 리텐션 35%+</strong>로 높음. 인당 수익 높음.</div>
+        </div>
+        <!-- F2P Funnel -->
+        <div class="df-col">
+          <div class="df-title" style="background:var(--f2p-bg);color:var(--f2p)">◼ F2P — 2.4M WL 기준</div>
+          <div class="df-sub">WL→설치 전환율 <strong>~42%</strong><br>(무료이므로 결제 장벽 없음 → 설치 전환 높음)</div>
+          <div class="df-row"><div class="df-label">WL (론칭 직전)</div><div class="df-bar-wrap"><div class="df-bar" style="width:100%;background:var(--f2p)"></div><span class="df-val">2,400,000</span></div></div>
+          <div class="df-row"><div class="df-label">이메일 발송 70%</div><div class="df-bar-wrap"><div class="df-bar" style="width:70%;background:#22d3ee"></div><span class="df-val">1,680,000</span></div></div>
+          <div class="df-row"><div class="df-label">설치 완료 (무료)</div><div class="df-bar-wrap"><div class="df-bar" style="width:42%;background:#67e8f9"></div><span class="df-val">1,000,000</span></div></div>
+          <div class="df-row"><div class="df-label">D+7 활성 25%</div><div class="df-bar-wrap"><div class="df-bar" style="width:10.4%;background:#16a34a"></div><span class="df-val" style="color:var(--green);font-weight:900">250,000</span></div></div>
+          <div class="df-row"><div class="df-label">PCCU Peak ★</div><div class="df-bar-wrap"><div class="df-bar" style="width:2.4%;background:#d97706"></div><span class="df-val" style="color:var(--amber);font-weight:900">58,000</span></div></div>
+          <div class="df-note" style="border-left-color:var(--f2p)"><strong>F2P 전환 특성:</strong> 결제 장벽 없어 설치 전환율 높음(~42%). 단, 무료 유저는 이탈이 빠름 — <strong>D+7 리텐션 25%</strong>로 낮음. 수익은 과금 유저(~10%) IAP에서 발생.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sim-box">
+    <div class="sim-title">🎯 WL → PCCU / 판매 전환 시뮬레이터</div>
+    <div class="sim-sub">슬라이더로 다양한 시나리오 시뮬레이션 · Top 5 진입 기준: PCCU Peak 55K+ 최소선</div>
+    <div class="sim-ctrls">
+      <div>
+        <div class="sim-lbl">목표 WL (Launch 직전)</div>
+        <div class="sim-val" id="simWL">1,600,000</div>
+        <input class="sim-slider" type="range" id="sWL" min="100000" max="3000000" step="100000" value="1600000" oninput="updateSim()">
+        <div style="display:flex;justify-content:space-between;font-size:10px;color:#64748b;margin-top:4px"><span>100K</span><span>3M</span></div>
+      </div>
+      <div>
+        <div class="sim-lbl">Week1 WL→구매 전환율</div>
+        <div class="sim-val" id="simCVR">15.0%</div>
+        <input class="sim-slider" type="range" id="sCVR" min="5" max="30" step="0.5" value="15" oninput="updateSim()">
+        <div style="display:flex;justify-content:space-between;font-size:10px;color:#64748b;margin-top:4px"><span>5%</span><span>30%</span></div>
+      </div>
+      <div>
+        <div class="sim-lbl">게임 가격 (USD)</div>
+        <div class="sim-val" id="simPrice">$29.99</div>
+        <input class="sim-slider" type="range" id="sPrc" min="9.99" max="59.99" step="5" value="29.99" oninput="updateSim()">
+        <div style="display:flex;justify-content:space-between;font-size:10px;color:#64748b;margin-top:4px"><span>$9.99</span><span>$59.99</span></div>
+      </div>
+    </div>
+    <div class="sim-res">
+      <div class="sim-r acc"><div class="sim-rl">예상 판매량 (Week1)</div><div class="sim-rv" id="simSales">240,000</div><div class="sim-rs">목표: 200K+ units</div></div>
+      <div class="sim-r"><div class="sim-rl">총 수익 (Gross)</div><div class="sim-rv" id="simGross">$7.2M</div><div class="sim-rs">USD 기준</div></div>
+      <div class="sim-r"><div class="sim-rl">개발사 수익 (70%)</div><div class="sim-rv" id="simDev">$5.0M</div><div class="sim-rs">Steam 30% 차감 후</div></div>
+      <div class="sim-r"><div class="sim-rl">개발사 수익 (KRW)</div><div class="sim-rv" id="simKRW">₩69억</div><div class="sim-rs">환율 1,385원 기준</div></div>
+    </div>
+    <div style="margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,.1);font-size:11px;color:#64748b">
+      ⚠️ Top 5 진입 기준: <span class="chip-p">P</span> Launch +1주 PCCU 67K+ / <span class="chip-f">F2P</span> 58K+ / 최소선 55K+. 세금·지역별 가격차 미포함.
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     SEC 3: 단계별 액션 & 마케팅
+══════════════════════════════ -->
+<div class="section" id="sec3">
+  <div class="sec-num">Section 03</div>
+  <div class="sec-title">단계별 핵심 액션 &amp; 마케팅 캠페인</div>
+  <div class="sec-sub">각 Phase 핵심 액션 · 마케팅 캠페인 · 팀 책임 · 상세 내용은 하단 '상세 Phase별 액션 플랜' 참고</div>
+
+  <!-- Phase 0 -->
+  <div class="pt-card">
+    <div class="pt-header open" onclick="togglePT(this)">
+      <div class="pt-bar" style="background:linear-gradient(180deg,#ef4444,#f87171)"></div>
+      <div class="pt-phase-info">
+        <div class="pt-phase-name">전사테스트 → 세부 장르·메커닉 확정 &nbsp; <span style="font-size:11px;background:#e0e7ff;color:var(--accent);padding:2px 7px;border-radius:6px;font-weight:600">현재</span></div>
+        <div class="pt-phase-date">2026년 5월 (4주)</div>
+      </div>
+      <div class="pt-wl-tags"></div>
+      <div class="pt-chevron">▶</div>
+    </div>
+    <div class="pt-body open">
+      <div class="pt-grid">
+        <div>
+          <div class="pt-col-title">🔍 핵심 검증 & 액션</div>
+          <div class="pt-actions">
+            <div class="pt-action critical"><span class="pt-action-icon">🎮</span><div class="pt-action-text"><strong>세부 장르 공식 확정</strong> — Tactical/Arena, Extraction, Battle Royale, Hero, Military, Co-op 중 선택. 경쟁 타이틀 차별화 포인트 식별.</div></div>
+            <div class="pt-action"><span class="pt-action-icon">🔧</span><div class="pt-action-text"><strong>핵심 메커닉 우선순위</strong> — 가장 재미있는 메커닉 Top 3 / 즉시 수정 필요 치명 문제 Top 3</div></div>
+            <div class="pt-action"><span class="pt-action-icon">🏷️</span><div class="pt-action-text"><strong>Steam 태그 초안 작성</strong> — 태그 정확도 = WL 타겟 정확도 직결. 5~20개 우선순위 리스트</div></div>
+            <div class="pt-action"><span class="pt-action-icon">📋</span><div class="pt-action-text"><strong>FGT 1차 설계서 완성</strong> — 타겟 유저 프로파일 + 핵심 검증 질문 리스트</div></div>
+            <div class="pt-action highlight"><span class="pt-action-icon">⚠️</span><div class="pt-action-text"><strong>전사 참여율 50%+ (250명+)</strong> / 설문 제출률 75%+ (180명+) / 장르 확정·경영진 승인 완료</div></div>
+          </div>
+          <div class="tc-wrap"><span class="tc tc-pm">PM</span><span class="tc tc-dev">Dev</span><span class="tc tc-biz">Biz</span></div>
+        </div>
+        <div>
+          <div class="pt-col-title">📢 마케팅 & 준비 사항</div>
+          <div class="pt-mkt">
+            <div class="pt-mkt-item"><span>🚀</span><div>Steamworks 파트너 계정 생성 착수 — $100 deposit 납부 (30일 대기 역산 필수)</div></div>
+            <div class="pt-mkt-item"><span>📸</span><div>스토어 에셋 제작 계획 수립 — 캡슐 이미지 4종·트레일러·스크린샷 방향 확정</div></div>
+            <div class="pt-mkt-item"><span>🏷️</span><div>Steam 태그 경쟁 분석 — FPS 장르 Top 50게임 태그 매핑 분석</div></div>
+            <div class="pt-mkt-item"><span>📊</span><div>KPI 모니터링 체계 설계 — Steamworks Analytics 연동 계획</div></div>
+          </div>
+          <div class="co" style="margin-top:10px"><strong>산출물:</strong> 장르 확정 문서(경영진 승인) · 핵심 메커닉 우선순위 · Steam 태그 초안 · FGT 1차 설계서</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 1 -->
+  <div class="pt-card">
+    <div class="pt-header" onclick="togglePT(this)">
+      <div class="pt-bar" style="background:linear-gradient(180deg,#4f46e5,#818cf8)"></div>
+      <div class="pt-phase-info">
+        <div class="pt-phase-name">FGT 1차 (30명+) &amp; 2차 (60명+) 외부 유저 검증</div>
+        <div class="pt-phase-date">2026.06 ~ 2026.10 (5개월)</div>
+      </div>
+      <div class="pt-wl-tags"></div>
+      <div class="pt-chevron">▶</div>
+    </div>
+    <div class="pt-body">
+      <div class="pt-grid">
+        <div>
+          <div class="pt-col-title">🔍 FGT 운영 핵심</div>
+          <div class="pt-actions">
+            <div class="pt-action"><span class="pt-action-icon">👥</span><div class="pt-action-text"><strong>FGT 1차 (06~07월)</strong> — 외부 30명+ FPS 헤비 유저. 대면 플레이 1~2h + 인터뷰 45분. NDA 필수. 재플레이 7.0+, NPS 40+ 목표</div></div>
+            <div class="pt-action ok"><span class="pt-action-icon">🔧</span><div class="pt-action-text"><strong>1차 결과 반영 (08월)</strong> — 핵심 수정 집행 + Coming Soon 에셋 제작 착수 (트레일러 첫 5초 후킹 요소 집중)</div></div>
+            <div class="pt-action"><span class="pt-action-icon">🌏</span><div class="pt-action-text"><strong>FGT 2차 (09~10월)</strong> — 60명+ 캐주얼·코어·하드코어 세그먼트, 한국+북미+유럽 혼합. 재플레이 7.5+, NPS 50+, 장르 인지 일치율 70%+</div></div>
+            <div class="pt-action highlight"><span class="pt-action-icon">💼</span><div class="pt-action-text"><strong>BM 방향성 확정</strong> — Premium vs F2P 최종 결정 + 가격대·인앱결제 수용도 조사. FGT 2차 데이터 기반 경영진 승인</div></div>
+          </div>
+          <div class="tc-wrap"><span class="tc tc-pm">PM</span><span class="tc tc-biz">Biz</span><span class="tc tc-dev">Dev</span></div>
+        </div>
+        <div>
+          <div class="pt-col-title">📢 마케팅 준비 캠페인</div>
+          <div class="pt-mkt">
+            <div class="pt-mkt-item"><span>📱</span><div>공식 SNS 채널 개설 (X·YouTube·Discord 최소 3개) — 팔로워 베이스 선구축</div></div>
+            <div class="pt-mkt-item"><span>🎬</span><div>론칭 트레일러 초안 제작 — FGT 2차 확정 핵심 임팩트 구간 포함 의무</div></div>
+            <div class="pt-mkt-item"><span>👑</span><div>KOL 1차 리스트업 (FPS 전문 크리에이터 50명) — 구독자·장르·언어 매핑</div></div>
+            <div class="pt-mkt-item"><span>📝</span><div>SNF Jun 2027 등록 준비 시작 — 참가 조건 및 마감일 사전 확인</div></div>
+          </div>
+          <div class="co warn"><strong>⚠️ 중요:</strong> SNF는 게임당 생애 단 1회만 참가 가능. Jun 2027을 놓치면 재참가 불가. FGT 일정 지연은 전체 타임라인에 연쇄 영향.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 2~3 CS -->
+  <div class="pt-card">
+    <div class="pt-header" onclick="togglePT(this)">
+      <div class="pt-bar" style="background:linear-gradient(180deg,#0f766e,#2dd4bf)"></div>
+      <div class="pt-phase-info">
+        <div class="pt-phase-name">Coming Soon 세팅 + 공개 + WL 수집</div>
+        <div class="pt-phase-date">2026.10 ~ 2026.12 (3개월)</div>
+      </div>
+      <div class="pt-wl-tags"><span class="chip-p">P</span>&amp;<span class="chip-f">F2P</span>&nbsp;<strong style="font-size:12px;color:var(--p)">50K+</strong></div>
+      <div class="pt-chevron">▶</div>
+    </div>
+    <div class="pt-body">
+      <div class="pt-grid">
+        <div>
+          <div class="pt-col-title">⚙️ Steam 핵심 세팅 액션</div>
+          <div class="pt-actions">
+            <div class="pt-action critical"><span class="pt-action-icon">🏷️</span><div class="pt-action-text"><strong>스토어 에셋 최종화</strong> — 헤더(920×430) · 소형(462×174) · 메인(1232×706) · 수직(748×896) 캡슐 4종 + 라이브러리 에셋 3종 + 트레일러</div></div>
+            <div class="pt-action"><span class="pt-action-icon">🔧</span><div class="pt-action-text"><strong>Valve 검토 제출</strong> — 'Mark as Ready for Review' 클릭. CS 오픈 7 영업일 전 제출 필수. 검토 3~5 영업일 소요.</div></div>
+            <div class="pt-action"><span class="pt-action-icon">📱</span><div class="pt-action-text"><strong>Coming Soon 공개 (2026.11.01)</strong> — 위시리스트 버튼 즉시 활성화. SNS 동시 발표. 커뮤니티 허브 첫 공지.</div></div>
+            <div class="pt-action"><span class="pt-action-icon">📋</span><div class="pt-action-text"><strong>CLA 신청 폼 오픈</strong> — NDA 동의·플레이 환경·지역 정보 수집. 목표 참가자의 3배 이상 신청 목표</div></div>
+          </div>
+          <div class="tc-wrap"><span class="tc tc-pm">PM</span><span class="tc tc-cm">CM</span><span class="tc tc-biz">Biz</span></div>
+        </div>
+        <div>
+          <div class="pt-col-title">📢 WL 수집 마케팅</div>
+          <div class="pt-mkt">
+            <div class="pt-mkt-item"><span>🎬</span><div>론칭 트레일러 공개와 동시에 WL CTA 집중 노출</div></div>
+            <div class="pt-mkt-item"><span>👑</span><div>KOL 초기 키 배포 — Curator Connect 활용 (큐레이터당 최대 5카피)</div></div>
+            <div class="pt-mkt-item"><span>📅</span><div>개발 업데이트 포스트 월 1회 정기 운영 — 팔로워·위시 유지 핵심</div></div>
+            <div class="pt-mkt-item"><span>💬</span><div>Discord 서버 구조 설계·오픈 — 공지/개발 업데이트/피드백/커뮤니티 채널</div></div>
+          </div>
+          <div class="co" style="margin-top:10px"><strong>WL KPI:</strong> CS 4주 25K+ → CS 8주 50K+ / 주간 +3,000~5,000 목표 / Steam 팔로워 3,000+ / Discord 가입 5,000+</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 4~7 -->
+  <div class="pt-card">
+    <div class="pt-header" onclick="togglePT(this)">
+      <div class="pt-bar" style="background:linear-gradient(180deg,#7c3aed,#c4b5fd)"></div>
+      <div class="pt-phase-info">
+        <div class="pt-phase-name">CLA (1,000명+) → 패치 → CBT (10,000명+) → SNF Demo 준비</div>
+        <div class="pt-phase-date">2027.01 ~ 2027.05</div>
+      </div>
+      <div class="pt-wl-tags">
+        <span class="chip-p">P</span><strong style="font-size:12px;color:var(--p)">400K+</strong>&nbsp;
+        <span class="chip-f">F2P</span><strong style="font-size:12px;color:var(--f2p)">600K+</strong>
+      </div>
+      <div class="pt-chevron">▶</div>
+    </div>
+    <div class="pt-body">
+      <div class="pt-grid">
+        <div>
+          <div class="pt-col-title">🔬 단계별 핵심 액션</div>
+          <div class="pt-actions">
+            <div class="pt-action"><span class="pt-action-icon">🧪</span><div class="pt-action-text"><strong>CLA (2027.01~02)</strong> — Steam Playtest Child App, NDA 전면, 스트리밍 금지. D+7 리텐션 25%+, 크리티컬 버그 0건, 매치메이킹 90%+ 목표</div></div>
+            <div class="pt-action ok"><span class="pt-action-icon">🔧</span><div class="pt-action-text"><strong>결과 반영 패치 (02~03월)</strong> — 크리티컬→매치메이킹→밸런스→UI 순. CBT 빌드 분기. SNF Jun 2027 등록 완료 확인.</div></div>
+            <div class="pt-action"><span class="pt-action-icon">🎮</span><div class="pt-action-text"><strong>CBT (2027.03~04)</strong> — 10,000명+. 2주차 주말 스트리밍 NDA 해제 (바이럴 선점). 서버 다운타임 4h↓, D+7 30%+</div></div>
+            <div class="pt-action critical"><span class="pt-action-icon">🎯</span><div class="pt-action-text"><strong>SNF Demo 준비 (2027.05)</strong> — 온보딩 완료율 90%+. Demo 마지막 화면 WL CTA 필수. Press Preview -11일 배포. Twitch Drops 설정.</div></div>
+          </div>
+          <div class="tc-wrap"><span class="tc tc-dev">Dev</span><span class="tc tc-pm">PM</span><span class="tc tc-bd">BD</span></div>
+        </div>
+        <div>
+          <div class="pt-col-title">📢 WL 증폭 마케팅</div>
+          <div class="pt-mkt">
+            <div class="pt-mkt-item"><span>📣</span><div>CBT 스트리밍 허용일 활용 자연 바이럴 — 2주차 주말 NDA 해제 후 스트리머 동시 집중 배포</div></div>
+            <div class="pt-mkt-item"><span>🎬</span><div>스토어 페이지 업데이트 — 신규 스크린샷·GIF 추가. 커뮤니티 허브 CBT 현황 공지</div></div>
+            <div class="pt-mkt-item"><span>📱</span><div>SNF 예고 SNS 카운트다운 캠페인 시작 — Discord 공식 발표</div></div>
+            <div class="pt-mkt-item"><span>👑</span><div>Curator Connect 배포 리스트 확정 — FPS 큐레이터 30개+ / 스트리머 50명+</div></div>
+          </div>
+          <div class="co warn"><strong>⚠️ WL 이메일 쿨타임 체크:</strong> SNF Demo 이메일은 1회만 사용 가능 (D+1 수동 클릭). 이전에 이미 WL 이메일 사용 시 SNF 효과 반감.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 8 SNF -->
+  <div class="pt-card" style="border-color:var(--purple-bdr)">
+    <div class="pt-header" onclick="togglePT(this)" style="background:linear-gradient(90deg,var(--purple-bg),#fff)">
+      <div class="pt-bar" style="background:linear-gradient(180deg,#7c3aed,#4f46e5)"></div>
+      <div class="pt-phase-info">
+        <div class="pt-phase-name">★ Steam Next Fest Jun 2027 (7일간) — WL 최대화 클라이맥스 + 경로 분기 결정</div>
+        <div class="pt-phase-date">2027년 6월</div>
+      </div>
+      <div class="pt-wl-tags">
+        <span class="chip-p">P</span><strong style="font-size:12px;color:var(--p)">800K+</strong>&nbsp;
+        <span class="chip-f">F2P</span><strong style="font-size:12px;color:var(--f2p)">1.2M+</strong>
+      </div>
+      <div class="pt-chevron">▶</div>
+    </div>
+    <div class="pt-body">
+      <div class="pt-grid">
+        <div>
+          <div class="pt-col-title">⚡ 일별 실행 플랜</div>
+          <div class="pt-actions">
+            <div class="pt-action critical"><span class="pt-action-icon">🚨</span><div class="pt-action-text"><strong>D+1 절대 필수 — 이메일 버튼 수동 클릭!</strong> 위시리스터 전원 Demo 이메일 발송은 자동이 아님. 2주 이내 미클릭 시 기회 영구 소실. PM 캘린더 알람 사전 등록 필수.</div></div>
+            <div class="pt-action highlight"><span class="pt-action-icon">📡</span><div class="pt-action-text"><strong>D+1 동시</strong> — Curator Connect 전체 배포 즉시 실행 + 공식 SNS 동시 발행 + 커뮤니티 허브 SNF 시작 공지</div></div>
+            <div class="pt-action"><span class="pt-action-icon">🎥</span><div class="pt-action-text"><strong>D+2~D+3</strong> — FPS 전문 스트리머 라이브 집중. Press Preview 엠바고 해제. 개발팀 공식 라이브 2~3시간. Twitch Drops 운영.</div></div>
+            <div class="pt-action"><span class="pt-action-icon">📊</span><div class="pt-action-text"><strong>D+7 (마지막날)</strong> — 최종 WL 수치 확인. Demo 데이터 수집 마감. 경로 분기 결정 데이터 준비.</div></div>
+          </div>
+          <div class="tc-wrap"><span class="tc tc-pm">PM</span><span class="tc tc-cm">CM</span><span class="tc tc-bd">BD</span></div>
+        </div>
+        <div>
+          <div class="pt-col-title">🎯 SNF KPI & 경로 분기 기준</div>
+          <div class="pt-mkt">
+            <div class="pt-mkt-item"><span class="chip-p">P</span><div>SNF 후 누적 WL <strong>800K+</strong> / 증분 400K+</div></div>
+            <div class="pt-mkt-item"><span class="chip-f">F2P</span><div>SNF 후 누적 WL <strong>1.2M+</strong> / 증분 600K+</div></div>
+          </div>
+          <div style="height:8px"></div>
+          <div class="block-a">
+            <div class="block-a-title">◼ EA 론칭 경로 선택 기준</div>
+            <div class="block-content">WL 목표 70~100% 달성 + Demo D+7 리텐션 25~35% + 빌드 완성도 80% + 추가 보강 3~6개월 필요</div>
+          </div>
+          <div class="block-b">
+            <div class="block-b-title">◼ 직행 론칭 경로 선택 기준 (모두 충족 필수)</div>
+            <div class="block-content">WL 목표 달성·초과 + Demo D+7 35%+ + 빌드 완성도 90%+ + CBT 서버 검증 완료 + BM 확정 완료</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     SEC 4: 개발·퍼블리싱 체크리스트
+══════════════════════════════ -->
+<div class="section" id="sec4">
+  <div class="sec-num">Section 04</div>
+  <div class="sec-title">개발 &amp; 퍼블리싱 체크리스트</div>
+  <div class="sec-sub">Steamworks 공식 문서 기반 필수 항목 · 클릭하여 완료 처리 · 브라우저 재접속 시에도 상태 유지</div>
+
+  <div class="cl-overall">
+    <div class="cl-overall-header">
+      <div>
+        <div class="cl-overall-title">전체 체크리스트 진행률</div>
+        <div style="font-size:11px;color:#64748b;margin-top:2px" id="clOverallSub">0개 완료 / 총 52개 항목</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px">
+        <div class="cl-overall-pct" id="clPct">0%</div>
+        <button class="cl-reset-btn" onclick="resetAll()">초기화</button>
+      </div>
+    </div>
+    <div class="cl-overall-bar-wrap"><div class="cl-overall-bar" id="clOverallBar" style="width:0%"></div></div>
+    <div class="cl-overall-sub">💡 Steamworks 공식 문서 6개 출처 기반 검증 항목 · 클릭 완료 처리 · localStorage 상태 유지</div>
+  </div>
+
+  <!-- Cat 1: 계정 -->
+  <div class="cl-category" data-cat="account">
+    <div class="cl-cat-header"><div class="cl-cat-title"><span style="font-size:16px">⚙️</span> Steamworks 계정 &amp; 기초 설정<span class="pill pb">Phase 0 최우선</span></div><div class="cl-cat-count" id="count-account">0 / 8</div></div>
+    <div class="cl-progress-wrap"><div class="cl-progress-bar" id="bar-account" style="width:0%;background:linear-gradient(90deg,#4f46e5,#818cf8)"></div></div>
+    <div class="cl-items" id="items-account">
+      <div class="cl-item" data-cat="account" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">Steamworks 파트너 계정 생성 (partner.steamgames.com)</div><div class="cl-note">NDA + Steam Distribution Agreement(SDA) 서명 필수</div></div><span class="cl-priority cl-p-high">긴급</span></div>
+      <div class="cl-item" data-cat="account" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">앱 deposit 납부 ($100 USD per App ID, 환불 불가)</div><div class="cl-note">납부 후 30일 대기 기간 발생 — 출시 일정에 역산 필수</div></div><span class="cl-priority cl-p-high">긴급</span></div>
+      <div class="cl-item" data-cat="account" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">법인 정보 제출 (Company Name + Company Form)</div><div class="cl-note">예: "A Korean limited liability company"</div></div><span class="cl-priority cl-p-high">긴급</span></div>
+      <div class="cl-item" data-cat="account" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">세금 정보 제출 (한국 법인 → W-8BEN-E)</div><div class="cl-note">제3자 검증 2~7 영업일 소요. 추가 서류 요청 이메일 확인 필수</div></div><span class="cl-priority cl-p-high">긴급</span></div>
+      <div class="cl-item" data-cat="account" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">은행 계좌 연동 (USD 지급, SWIFT 코드 필요)</div></div><span class="cl-priority cl-p-high">긴급</span></div>
+      <div class="cl-item" data-cat="account" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">App ID 발급 (게임 본체)</div><div class="cl-note">DLC·대형 업데이트는 동일 App ID. $100 추가 불필요</div></div><span class="cl-priority cl-p-high">긴급</span></div>
+      <div class="cl-item" data-cat="account" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">팀 멤버 권한 설정 (Publish App Changes + Manage Pricing 권한 필수)</div><div class="cl-note">이 2개 권한 없으면 Coming Soon 공개 및 릴리즈 불가</div></div><span class="cl-priority cl-p-med">중간</span></div>
+      <div class="cl-item" data-cat="account" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">Steam Playtest Child App ID 생성 (CLA/CBT용 별도)</div><div class="cl-note">메인 앱과 분리. 스토어 페이지 Unlisted 처리. 종료 시 비활성화로 전원 즉시 차단</div></div><span class="cl-priority cl-p-med">중간</span></div>
+    </div>
+  </div>
+
+  <!-- Cat 2: 에셋 -->
+  <div class="cl-category" data-cat="asset">
+    <div class="cl-cat-header"><div class="cl-cat-title"><span style="font-size:16px">🎨</span> 스토어 &amp; 라이브러리 에셋 (Steamworks 2024.08 이후 규격)<span class="pill" style="background:var(--red-bg);color:var(--red);border:1px solid var(--red-bdr)">CS 전 완료</span></div><div class="cl-cat-count" id="count-asset">0 / 10</div></div>
+    <div class="cl-progress-wrap"><div class="cl-progress-bar" id="bar-asset" style="width:0%;background:linear-gradient(90deg,#d97706,#fbbf24)"></div></div>
+    <div class="cl-items" id="items-asset">
+      <div class="cl-item" data-cat="asset" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">헤더 캡슐 920 × 430px</div><div class="cl-note">스토어 페이지 상단. 로고+키아트만. 게임 제목 외 텍스트 금지</div></div><span class="cl-priority cl-p-high">필수</span></div>
+      <div class="cl-item" data-cat="asset" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">소형 캡슐 462 × 174px</div><div class="cl-note">검색·신규 출시 목록. 120×45px에서도 로고 가독성 필수. 자동 축소 생성</div></div><span class="cl-priority cl-p-high">필수</span></div>
+      <div class="cl-item" data-cat="asset" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">메인 캡슐 1232 × 706px</div><div class="cl-note">Steam 홈페이지 메인 배너. Daily Deal·프로모션 노출 시 사용</div></div><span class="cl-priority cl-p-high">필수</span></div>
+      <div class="cl-item" data-cat="asset" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">수직 캡슐 748 × 896px</div><div class="cl-note">세일·프로모션 세로 배너. 로고 가독성 필수</div></div><span class="cl-priority cl-p-high">필수</span></div>
+      <div class="cl-item" data-cat="asset" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">스크린샷 최소 5장 (1920 × 1080+, 16:9)</div><div class="cl-note">반드시 실제 게임플레이만. 컨셉아트·시네마틱·어워드·텍스트 금지 (Valve 거절 사유)</div></div><span class="cl-priority cl-p-high">필수</span></div>
+      <div class="cl-item" data-cat="asset" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">트레일러 (최대 1080p, H.264+AAC, .mov/.wmv/.mp4, 5000+Kbps)</div><div class="cl-note">16:9 권장. 게임플레이 중심. Steamworks Trailers 탭 업로드 및 순서 지정</div></div><span class="cl-priority cl-p-high">필수</span></div>
+      <div class="cl-item" data-cat="asset" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">라이브러리 캡슐 600 × 900px (게임 로고 반드시 포함)</div><div class="cl-note">스토어 캡슐과 별도 세트. 로고 외 텍스트 금지</div></div><span class="cl-priority cl-p-high">필수</span></div>
+      <div class="cl-item" data-cat="asset" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">라이브러리 히어로 3840 × 1240px (텍스트 전혀 없어야 함)</div><div class="cl-note">텍스트 포함 시 Valve 검토 거절 사유. 아트워크만 허용</div></div><span class="cl-priority cl-p-high">필수</span></div>
+      <div class="cl-item" data-cat="asset" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">라이브러리 로고 (게임 로고타입만, 별도 파일)</div><div class="cl-note">Library Hero 위에 배치. Steam 배치 도구 제공</div></div><span class="cl-priority cl-p-high">필수</span></div>
+      <div class="cl-item" data-cat="asset" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">게임 아이콘 .ico 포맷 (Steam 클라이언트·알림 표시용)</div></div><span class="cl-priority cl-p-med">중간</span></div>
+    </div>
+  </div>
+
+  <!-- Cat 3: 콘텐츠 -->
+  <div class="cl-category" data-cat="content">
+    <div class="cl-cat-header"><div class="cl-cat-title"><span style="font-size:16px">📝</span> 스토어 페이지 설명 콘텐츠<span class="pill" style="background:var(--red-bg);color:var(--red);border:1px solid var(--red-bdr)">Valve 검토 전 완료</span></div><div class="cl-cat-count" id="count-content">0 / 6</div></div>
+    <div class="cl-progress-wrap"><div class="cl-progress-bar" id="bar-content" style="width:0%;background:linear-gradient(90deg,#7c3aed,#a78bfa)"></div></div>
+    <div class="cl-items" id="items-content">
+      <div class="cl-item" data-cat="content" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">게임 명칭 확정 (영문 기준)</div></div><span class="cl-priority cl-p-high">필수</span></div>
+      <div class="cl-item" data-cat="content" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">Short Description 작성 (구매 버튼 옆 간결 설명)</div><div class="cl-note">외부 링크 삽입 금지 (2024.09 이후 자동 제거)</div></div><span class="cl-priority cl-p-high">필수</span></div>
+      <div class="cl-item" data-cat="content" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">About This Game 긴 설명 (HTML 지원)</div><div class="cl-note">외부 링크·타 게임 링크 금지. About·Short·Announcement·Awards 4섹션 URL 자동 제거</div></div><span class="cl-priority cl-p-high">필수</span></div>
+      <div class="cl-item" data-cat="content" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">시스템 요구사항 (최소/권장 사양)</div></div><span class="cl-priority cl-p-high">필수</span></div>
+      <div class="cl-item" data-cat="content" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">지원 언어 설정 (한국어·영어·중국어간체 포함 권장)</div><div class="cl-note">CNY 가격: Steam 자동 51% 할인 설정 수동 조정 확인 필수</div></div><span class="cl-priority cl-p-high">필수</span></div>
+      <div class="cl-item" data-cat="content" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">태그 최종 등록 (5~20개, 경쟁작 분석 선행)</div><div class="cl-note">초기 태그 설정이 장기 알고리즘 분류에 영향. 정확도 = WL 타겟 정확도</div></div><span class="cl-priority cl-p-high">필수</span></div>
+    </div>
+  </div>
+
+  <!-- Cat 4: 등급·법무 -->
+  <div class="cl-category" data-cat="legal">
+    <div class="cl-cat-header"><div class="cl-cat-title"><span style="font-size:16px">⚖️</span> 등급 심사 &amp; 법무</div><div class="cl-cat-count" id="count-legal">0 / 6</div></div>
+    <div class="cl-progress-wrap"><div class="cl-progress-bar" id="bar-legal" style="width:0%;background:linear-gradient(90deg,#ef4444,#f87171)"></div></div>
+    <div class="cl-items" id="items-legal">
+      <div class="cl-item" data-cat="legal" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">IARC 등급 분류 (Steamworks 내 무료, 온라인 설문 기반)</div><div class="cl-note">전 세계 주요 등급 자동 생성. Coming Soon 공개 전 완료 필수</div></div><span class="cl-priority cl-p-high">필수</span></div>
+      <div class="cl-item" data-cat="legal" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">GRB 한국 심의 신청 완료 (한국 서비스 법적 필수)</div><div class="cl-note">심의 기간 2~4주, 비용 발생. 청소년이용불가 여부 결정</div></div><span class="cl-priority cl-p-high">긴급</span></div>
+      <div class="cl-item" data-cat="legal" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">이용약관(ToS) / 개인정보처리방침 준비 및 Steam 페이지 연동</div></div><span class="cl-priority cl-p-high">필수</span></div>
+      <div class="cl-item" data-cat="legal" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">지적재산권 전수 확인 (BGM·에셋·폰트·미들웨어)</div></div><span class="cl-priority cl-p-high">필수</span></div>
+      <div class="cl-item" data-cat="legal" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">PEGI 2026 온라인 커뮤니티 등급 법무 검토</div><div class="cl-note">자유 채팅 기능(음성·텍스트) → PEGI 18 강제 위험. 유럽 서비스 시 사전 대응 필수</div></div><span class="cl-priority cl-p-med">중간</span></div>
+      <div class="cl-item" data-cat="legal" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">중국 판호(ISBN) 필요 여부 검토</div><div class="cl-note">글로벌 Steam 경유 시 불필요. HeyBox 전략 병행 검토</div></div><span class="cl-priority cl-p-low">검토</span></div>
+    </div>
+  </div>
+
+  <!-- Cat 5: Valve 검토 -->
+  <div class="cl-category" data-cat="review">
+    <div class="cl-cat-header"><div class="cl-cat-title"><span style="font-size:16px">🔍</span> Valve 검토 &amp; 릴리즈 프로세스 (공식 순서 필수 준수)</div><div class="cl-cat-count" id="count-review">0 / 6</div></div>
+    <div class="cl-progress-wrap"><div class="cl-progress-bar" id="bar-review" style="width:0%;background:linear-gradient(90deg,#0f766e,#2dd4bf)"></div></div>
+    <div class="cl-items" id="items-review">
+      <div class="cl-item" data-cat="review" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">스토어 체크리스트 100% → 'Mark as Ready for Review' 클릭</div><div class="cl-note">CS 오픈 최소 7 영업일 전 제출 권장. 검토 3~5 영업일 소요</div></div><span class="cl-priority cl-p-high">필수</span></div>
+      <div class="cl-item" data-cat="review" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">스토어 승인 후 'Post as Coming Soon' 버튼 클릭</div><div class="cl-note">최소 2주 Coming Soon 유지 후 정식 출시 가능. WL 수집 시작</div></div><span class="cl-priority cl-p-high">필수</span></div>
+      <div class="cl-item" data-cat="review" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">빌드 업로드 (default branch, 대부분 최종 상태)</div><div class="cl-note">스토어 승인 먼저 → 빌드 심사 순서 필수. 검토 후 빌드 업데이트 가능</div></div><span class="cl-priority cl-p-high">필수</span></div>
+      <div class="cl-item" data-cat="review" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">빌드 체크리스트 완료 후 빌드 'Mark as Ready for Review'</div><div class="cl-note">통과 후 'Release App' 녹색 버튼 활성화. 승인 타이틀은 자동 출시 아님 — 직접 클릭 필요</div></div><span class="cl-priority cl-p-high">필수</span></div>
+      <div class="cl-item" data-cat="review" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">가격 설정 완료 (지역별 + CNY 51% 자동 설정 수동 조정 확인)</div><div class="cl-note">가격 미설정 시 출시 불가. 패키지별 가격 별도 관리 가능</div></div><span class="cl-priority cl-p-high">필수</span></div>
+      <div class="cl-item" data-cat="review" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">Demo App ID 별도 생성 및 검토 완료 (SNF Demo용)</div><div class="cl-note">Base 게임 Coming Soon 공개 상태 필수 선행. Demo 전용 Valve 검토 별도 진행</div></div><span class="cl-priority cl-p-med">SNF 필수</span></div>
+    </div>
+  </div>
+
+  <!-- Cat 6: 기술 -->
+  <div class="cl-category" data-cat="tech">
+    <div class="cl-cat-header"><div class="cl-cat-title"><span style="font-size:16px">🔧</span> 기술 &amp; SDK 연동</div><div class="cl-cat-count" id="count-tech">0 / 8</div></div>
+    <div class="cl-progress-wrap"><div class="cl-progress-bar" id="bar-tech" style="width:0%;background:linear-gradient(90deg,#16a34a,#4ade80)"></div></div>
+    <div class="cl-items" id="items-tech">
+      <div class="cl-item" data-cat="tech" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">Steamworks SDK 연동</div><div class="cl-note">Unreal: DefaultEngine.ini OnlineSubsystemSteam 설정. SteamDevAppId 실제 값으로 교체</div></div><span class="cl-priority cl-p-high">필수</span></div>
+      <div class="cl-item" data-cat="tech" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">Steam Microtransaction API 구현 (F2P 인앱결제)</div><div class="cl-note">Steam 클라이언트 내 모든 인앱결제는 Steam Wallet API만 허용</div></div><span class="cl-priority cl-p-high">F2P 필수</span></div>
+      <div class="cl-item" data-cat="tech" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">Steam 업적(Achievements) 구현 (15~30개 권장)</div><div class="cl-note">진행도·스킬·수집·히든 업적 포함. Stats&Achievements 섹션 설정</div></div><span class="cl-priority cl-p-med">권장</span></div>
+      <div class="cl-item" data-cat="tech" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">Cloud Save (Steam Cloud) 구현</div><div class="cl-note">크로스 디바이스 플레이 지원. 플레이어 진행상황 손실 방지</div></div><span class="cl-priority cl-p-med">권장</span></div>
+      <div class="cl-item" data-cat="tech" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">Rich Presence 구현</div><div class="cl-note">예: "랭크 매치 진행 중 · 레벨 47" — 친구 피드 노출 강화</div></div><span class="cl-priority cl-p-low">선택</span></div>
+      <div class="cl-item" data-cat="tech" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">Steam Deck 호환성 검토 (Verified/Playable)</div><div class="cl-note">필수는 아니나 알고리즘 노출 가점 가능. 컨트롤러 지원 필수</div></div><span class="cl-priority cl-p-low">선택</span></div>
+      <div class="cl-item" data-cat="tech" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">Early Access 탭 설정 및 Q&amp;A 전체 답변 (EA 론칭 경로 해당 시)</div><div class="cl-note">1.0 예상 출시일 설정. EA 키 외부 배포 시 EA 브랜딩 명시 필수</div></div><span class="cl-priority cl-p-med">EA 경로</span></div>
+      <div class="cl-item" data-cat="tech" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">안티치트 시스템 연동 (VAC 또는 자체 솔루션)</div><div class="cl-note">멀티플레이어 FPS에서 리뷰 퀄리티에 직접 영향</div></div><span class="cl-priority cl-p-med">중간</span></div>
+    </div>
+  </div>
+  <div class="src-line">📎 출처: <a href="https://partner.steamgames.com/doc/store/releasing" target="_blank">Release Process</a> · <a href="https://partner.steamgames.com/doc/store/coming_soon" target="_blank">Coming Soon</a> · <a href="https://partner.steamgames.com/doc/store/assets/standard" target="_blank">Store Graphical Assets</a> · <a href="https://partner.steamgames.com/doc/store/assets/rules" target="_blank">Asset Rules</a> · <a href="https://partner.steamgames.com/doc/gettingstarted/onboarding" target="_blank">Onboarding</a> · <a href="https://partner.steamgames.com/doc/store/review_process" target="_blank">Review Process</a></div>
+</div>
+
+<!-- ══════════════════════════════
+     SEC 5: 역산 플래너
+══════════════════════════════ -->
+<div class="section" id="sec5">
+  <div class="sec-num">Section 05</div>
+  <div class="sec-title">역산 타임라인 플래너</div>
+  <div class="sec-sub">목표 론칭일 입력 → 경로 자동 감지 후 마일스톤 역산 · <span style="color:var(--opt-b);font-weight:700">2027년 이내</span> 입력 → 직행 론칭 경로 기준 · <span style="color:var(--opt-a);font-weight:700">2028년 이후</span> 입력 → EA 론칭 경로 기준</div>
+
+  <div class="planner-input">
+    <label>🎯 목표 정식 론칭일</label>
+    <input class="planner-date-input" type="date" id="plannerDate" value="2028-03-01">
+    <button class="planner-btn" onclick="calcPlan()">역산 계산</button>
+    <span style="font-size:11px;color:var(--text-sub2)">오늘 기준: 2026.04.16</span>
+  </div>
+  <div id="plannerResult"></div>
+</div>
+
+</div><!-- /page-wrap -->
+
+<!-- ══════════════════════════════════════
+     PART 2: 상세 Phase별 액션 플랜
+══════════════════════════════════════ -->
+<div class="part2-wrapper" id="part2">
+  <button class="part2-toggle" onclick="togglePart2(this)">
+    <div class="part2-toggle-left">
+      <div class="part2-toggle-icon">📋</div>
+      <div>
+        <div class="part2-toggle-title">상세 Phase별 액션 플랜</div>
+        <div class="part2-toggle-sub">단계별 GO/기준 · 공통 Phase → EA 론칭 경로 / 직행 론칭 경로 상세 액션 · 엑셀 원본 데이터</div>
+      </div>
+    </div>
+    <div class="part2-toggle-arr">▼</div>
+  </button>
+
+  <div class="part2-body" id="part2-body">
+    <div class="part2-section-label"><span style="background:#e0e7ff;color:var(--accent);padding:3px 10px;border-radius:8px;font-size:12px">공통</span> Phase 0~8 상세</div>
+
+    <!-- P0 Detail -->
+    <div class="p2-card"><div class="p2-header common-h" onclick="tp2(this)"><span class="p2-label p2l-common">전사테스트</span><span class="p2-title">세부 장르 확정 → FGT 설계서 완성</span><span class="p2-date">2026.05 (4주)</span><span class="p2-chev">▶</span></div>
+    <div class="p2-body"><div class="p2-grid">
+      <div>
+        <p style="font-size:12px;color:var(--text-sub1);margin-bottom:10px">전 임직원 대상 내부 플레이테스트. Coming Soon 태그·트레일러·WL 전략의 기준점.</p>
+        <div class="tw"><table><thead><tr><th>검증 항목</th><th>세부 내용</th></tr></thead><tbody>
+          <tr><td class="td-b">세부 장르 확정</td><td>6가지 서브 장르 중 선택. 경쟁 타이틀 차별화 포인트 식별. Steam 태그 우선순위 내부 합의.</td></tr>
+          <tr><td class="td-b">핵심 메커닉</td><td>가장 재미있는 메커닉 Top 3 / 즉시 수정 필요 치명 문제 Top 3 / 긍정 Review 유발 요소</td></tr>
+          <tr><td class="td-b">BM 방향성</td><td>Phase 1로 이관 — FGT 2차 데이터 기반 최종 결정 권장</td></tr>
+          <tr><td class="td-b">FGT 설계 기준</td><td>타겟 유저 프로파일 확정 / 핵심 검증 질문 리스트 완성</td></tr>
+        </tbody></table></div>
+      </div>
+      <div>
+        <div class="ms-box ms-go"><div class="ms-title go">전사테스트 GO 기준</div><div class="ms-content"><strong>GO</strong>: 내부 의견 일치율 70%+, 경영진 승인 → FGT 1차 진행<br><strong>NG</strong>: 추가 1~2주 수렴 → FGT 최대 2주 연기 가능</div></div>
+      </div>
+    </div></div></div>
+
+    <!-- P1 Detail -->
+    <div class="p2-card"><div class="p2-header common-h" onclick="tp2(this)"><span class="p2-label p2l-common">FGT</span><span class="p2-title">1차(30명+) &amp; 2차(60명+) — 외부 유저 검증 + BM 확정</span><span class="p2-date">2026.06~10 (5개월)</span><span class="p2-chev">▶</span></div>
+    <div class="p2-body"><div class="p2-grid">
+      <div>
+        <div class="sl">FGT 1차 (06~07월, 6주)</div>
+        <p style="font-size:12px;color:var(--text-sub1);margin-bottom:8px">외부 유저 30+명 FPS 헤비 유저. 대면 플레이 1~2h → 인터뷰 30~45분. NDA 필수 / Steam 외부 빌드</p>
+        <div class="tw"><table><thead><tr><th>KPI</th><th>목표</th></tr></thead><tbody>
+          <tr><td>참가자</td><td class="td-b">30+명</td></tr>
+          <tr><td>재플레이 의향</td><td class="td-b td-g">7.0/10+</td></tr>
+          <tr><td>NPS</td><td class="td-b td-g">40+</td></tr>
+          <tr><td>온보딩 완료율 (첫 10분)</td><td class="td-b">70%+</td></tr>
+        </tbody></table></div>
+        <div class="ms-box ms-hold"><div class="ms-title hold">FGT 1차 GO 기준</div><div class="ms-content"><strong>GO</strong>: 재플레이 7.0+, NPS 40+ → 1차 결과 반영 후 2차 진행<br><strong>PIVOT</strong>: 미달 → 장르·메커닉 재검토. FGT 2차 4~6주 연기</div></div>
+        <div class="sl" style="margin-top:12px">FGT 2차 (09~10월, 5~6주)</div>
+        <div class="tw"><table><thead><tr><th>KPI</th><th>목표</th></tr></thead><tbody>
+          <tr><td>재플레이 의향</td><td class="td-b td-g">7.5/10+</td></tr>
+          <tr><td>NPS</td><td class="td-b td-g">50+</td></tr>
+          <tr><td>온보딩 완료율</td><td class="td-b">80%+</td></tr>
+          <tr><td>1차 대비 개선</td><td class="td-b">전 항목 +10%+</td></tr>
+          <tr><td>장르 인지 일치율</td><td class="td-b">70%+</td></tr>
+        </tbody></table></div>
+      </div>
+      <div>
+        <div class="sl">BM 방향성 확정 (Phase 1 이관)</div>
+        <div class="co warn"><strong>BM 결정 시점:</strong> FGT 2차 데이터를 기반으로 Premium vs F2P 최종 결정. 가격대 선호도·인앱결제 수용도 조사 결과와 경쟁 타이틀 BM 분석을 종합해 경영진 승인.</div>
+        <div class="sl" style="margin-top:12px">FGT 2차 GO 기준</div>
+        <div class="ms-box ms-hold"><div class="ms-title hold">FGT 2차 분기 기준</div><div class="ms-content"><strong>GO</strong>: 재플레이 7.5+, NPS 50+ → Coming Soon 준비 진행<br><strong>HOLD</strong>: 1차 대비 개선 없음 → CS 연기 검토, SNF Jun 2027 재평가</div></div>
+        <div class="sl" style="margin-top:12px">1차 결과 반영 기간 (08월)</div>
+        <p style="font-size:12px;color:var(--text-sub1)">핵심 수정 집행 / FGT 2차 설계서 완성 / Coming Soon 에셋 제작 착수 (트레일러 첫 5초 후킹 요소 집중)</p>
+      </div>
+    </div></div></div>
+
+    <!-- Coming Soon -->
+    <div class="p2-card"><div class="p2-header common-h" onclick="tp2(this)"><span class="p2-label p2l-common">Coming Soon</span><span class="p2-title">사전 세팅 + 공개 + WL 수집</span><span class="p2-date">2026.10~12 (3개월)</span><span class="p2-chev">▶</span></div>
+    <div class="p2-body"><div class="p2-grid">
+      <div>
+        <div class="sl">Steam 에셋 규격표</div>
+        <div class="tw"><table><thead><tr><th>자산</th><th>해상도</th><th>주의사항</th></tr></thead><tbody>
+          <tr><td class="td-b">헤더 캡슐</td><td class="td-p">920×430px</td><td>텍스트 금지</td></tr>
+          <tr><td class="td-b">소형 캡슐</td><td class="td-p">462×174px</td><td>120×45에서 가독성</td></tr>
+          <tr><td class="td-b">메인 캡슐</td><td class="td-p">1232×706px</td><td>키아트+로고</td></tr>
+          <tr><td class="td-b">수직 캡슐</td><td class="td-p">748×896px</td><td>세일 배너</td></tr>
+          <tr><td class="td-b">스크린샷</td><td class="td-p">1920×1080+</td><td>게임플레이만</td></tr>
+          <tr><td class="td-b">트레일러</td><td>60~90초</td><td>H.264+AAC</td></tr>
+        </tbody></table></div>
+      </div>
+      <div>
+        <div class="tw"><table><thead><tr><th>WL KPI</th><th>목표</th></tr></thead><tbody>
+          <tr><td>CS 오픈 4주</td><td class="td-b td-g">25,000+ (<span class="chip-p">P</span>&<span class="chip-f">F2P</span>)</td></tr>
+          <tr><td>CS 오픈 8주</td><td class="td-b td-g">50,000+</td></tr>
+          <tr><td>주간 WL 성장률</td><td>+3,000~5,000/주</td></tr>
+          <tr><td>Steam 팔로워</td><td>3,000+</td></tr>
+          <tr><td>Discord 가입</td><td>5,000+</td></tr>
+        </tbody></table></div>
+        <div class="ms-box ms-hold"><div class="ms-title hold">CS 4주 기준</div><div class="ms-content"><strong>GO</strong>: WL 25K+ → CLA 일정 유지<br><strong>HOLD</strong>: 15K 미만 → 트레일러 교체·태그 재검토, CLA 연기</div></div>
+      </div>
+    </div></div></div>
+
+    <!-- CLA/CBT/SNF Demo -->
+    <div class="p2-card"><div class="p2-header common-h" onclick="tp2(this)"><span class="p2-label p2l-common">CLA→CBT→SNF</span><span class="p2-title">CLA (1,000명+) → CBT (10,000명+) → SNF Demo 준비 상세</span><span class="p2-date">2027.01~05</span><span class="p2-chev">▶</span></div>
+    <div class="p2-body"><div class="p2-grid">
+      <div>
+        <div class="sl">CLA (2027.01~02)</div>
+        <div class="tw"><table><thead><tr><th>CLA KPI</th><th>목표</th></tr></thead><tbody>
+          <tr><td>D+1 리텐션</td><td>40%+</td></tr>
+          <tr><td>D+7 리텐션</td><td class="td-b td-g">25%+</td></tr>
+          <tr><td>D+14 리텐션</td><td>15%+</td></tr>
+          <tr><td>평균 세션</td><td>30분+</td></tr>
+          <tr><td>크리티컬 버그</td><td class="td-b td-r">0건</td></tr>
+          <tr><td>매치메이킹 성공률</td><td>90%+</td></tr>
+        </tbody></table></div>
+        <div class="ms-box ms-hold"><div class="ms-title hold">CLA 기준</div><div class="ms-content"><strong>GO</strong>: D+7 25%+, 크리티컬 0건 → CBT 진행<br><strong>HOLD</strong>: 미달 → 소규모 CLA 재진행, SNF 재평가</div></div>
+      </div>
+      <div>
+        <div class="sl">CBT (2027.03~04, 6~8주)</div>
+        <div class="tw"><table><thead><tr><th>CBT KPI</th><th>목표</th></tr></thead><tbody>
+          <tr><td>D+7 리텐션</td><td class="td-b td-g">30%+</td></tr>
+          <tr><td>평균 세션</td><td>45분+</td></tr>
+          <tr><td>매치메이킹 대기</td><td>60초↓</td></tr>
+          <tr><td>서버 다운타임 (전 기간)</td><td>4시간↓</td></tr>
+          <tr><td>스트리밍 허용일 동시 시청</td><td>10,000+</td></tr>
+          <tr><td>CBT 기간 WL 증분</td><td class="td-p">+50,000+</td></tr>
+          <tr><td>누적 WL (P)</td><td class="td-p">200,000+</td></tr>
+          <tr><td>누적 WL (F2P)</td><td class="td-f">400,000+</td></tr>
+        </tbody></table></div>
+        <div class="ms-box ms-pivot"><div class="ms-title pivot">CBT 기준</div><div class="ms-content"><strong>GO</strong>: D+7 30%+, 긍정 65%+ → SNF Demo 준비<br><strong>HOLD</strong>: 리텐션 미달 → SNF Jun 포기, Oct 2027 전환 검토</div></div>
+      </div>
+    </div></div></div>
+
+    <!-- SNF Detail -->
+    <div class="p2-card"><div class="p2-header common-h" onclick="tp2(this)"><span class="p2-label p2l-common">★ SNF</span><span class="p2-title">Steam Next Fest Jun 2027 상세 + 경로 분기 결정</span><span class="p2-date">2027.06 (7일간)</span><span class="p2-chev">▶</span></div>
+    <div class="p2-body">
+      <div class="co danger"><strong>🚨 D+1 수동 버튼 클릭 절대 필수!</strong> SNF 시작 D+1에 Steamworks에 직접 접속해 위시리스터 전원 Demo 이메일 발송 버튼 클릭. 자동이 아님. 2주 이내 미클릭 시 기회 영구 소실. PM 캘린더 알람 D-30 사전 등록.</div>
+      <div class="p2-grid">
+        <div>
+          <div class="tw"><table><thead><tr><th>SNF KPI</th><th>목표</th></tr></thead><tbody>
+            <tr><td>Demo Downloads (P)</td><td class="td-p">100,000+</td></tr>
+            <tr><td>Demo Downloads (F2P)</td><td class="td-f">200,000+</td></tr>
+            <tr><td>WL 증분 (P)</td><td class="td-p">+400,000+</td></tr>
+            <tr><td>WL 증분 (F2P)</td><td class="td-f">+600,000+</td></tr>
+            <tr><td>SNF 후 누적 WL (P)</td><td class="td-p">800,000+</td></tr>
+            <tr><td>SNF 후 누적 WL (F2P)</td><td class="td-f">1,200,000+</td></tr>
+            <tr><td>Demo D+7 리텐션</td><td>30%+</td></tr>
+            <tr><td>Demo 긍정 반응</td><td>70%+</td></tr>
+            <tr><td>Twitch 최고 동시 시청자</td><td>20,000+</td></tr>
+          </tbody></table></div>
+        </div>
+        <div>
+          <div class="block-a">
+            <div class="block-a-title">◼ EA 론칭 경로 선택 기준</div>
+            <div class="block-content">
+              □ SNF 누적 WL <span style="color:var(--p)">목표의 70~100% 수준</span><br>
+              □ Demo D+7 리텐션 25~35%<br>
+              □ 빌드 완성도 80% 수준<br>
+              □ 추가 보강 3~6개월 필요 판단
+            </div>
+          </div>
+          <div class="block-b">
+            <div class="block-b-title">◼ 직행 론칭 경로 선택 기준 (모두 충족)</div>
+            <div class="block-content">
+              □ SNF 누적 WL <span style="color:var(--p)">P 800K+</span> / <span style="color:var(--f2p)">F2P 1.2M+</span> 달성·초과<br>
+              □ Demo D+7 리텐션 35%+<br>
+              □ 빌드 완성도 90%+<br>
+              □ CBT 서버 안정성 검증 완료<br>
+              □ BM 확정 완료
+            </div>
+          </div>
+          <div class="ms-box ms-pivot" style="margin-top:8px"><div class="ms-title pivot">재검토 조건</div><div class="ms-content">WL 증분 50% 미만 → BM 전환 검토 또는 Oct 2027 SNF 재참가. SNF는 생애 단 1회만 가능.</div></div>
+        </div>
+      </div>
+    </div></div>
+
+    <!-- EA 론칭 경로 -->
+    <div class="part2-section-label" style="margin-top:24px">
+      <span style="background:var(--opt-a);color:#fff;padding:3px 10px;border-radius:8px;font-size:12px">◼ EA 론칭 경로</span>
+      Early Access 론칭 → 정식 LAUNCH (2028.02~03)
+    </div>
+
+    <div class="p2-card" style="border-color:var(--opt-a-bdr)"><div class="p2-header opt-a-h" onclick="tp2(this)"><span class="p2-label p2l-a">EA 준비</span><span class="p2-title">SNF 분석 + Early Access 준비 (3개월)</span><span class="p2-date">2027.07~09</span><span class="p2-chev">▶</span></div>
+    <div class="p2-body"><div class="block-a" style="margin-bottom:12px"><div class="block-a-title">◼ EA 론칭 경로 — 준비 단계</div><div class="block-content">SNF KPI 전수 분석 / <strong>EA GO 경영진 공식 승인 (7월 내)</strong> / EA 가격·콘텐츠 범위 확정 / EA 론칭 트레일러 제작 / Season 1 로드맵 커뮤니티 공개 / CS·모더레이션 체계 구축 / 서버 인프라 EA 규모 점검 / <span style="color:var(--p)">P</span>&nbsp;<span style="color:var(--f2p)">F2P</span> 론칭 직전 WL 증폭 계획 (1.6M / 2.4M 목표)</div></div></div></div>
+
+    <div class="p2-card" style="border-color:var(--opt-a-bdr)"><div class="p2-header opt-a-h" onclick="tp2(this)"><span class="p2-label p2l-a">EA 론칭</span><span class="p2-title">Early Access 론칭 + Review 최대화</span><span class="p2-date">2027.10</span><span class="p2-chev">▶</span></div>
+    <div class="p2-body"><div class="block-a" style="margin-bottom:12px"><div class="block-a-title">◼ EA 론칭 경로 — Early Access 오픈</div><div class="block-content">EA 배너 활성화 / WL 전체 론칭 이메일 자동 발송 / EA 트레일러 공개 / Curator Connect 2차 배포 / Update Visibility Round 즉시 집행 / EA 오픈 후 24h 이내 리뷰 모니터링 / 부정 리뷰 48h 내 공식 답변</div></div>
+    <div class="tw"><table><thead><tr><th>EA 론칭 KPI</th><th>목표</th></tr></thead><tbody>
+      <tr><td>D+1 CCU Peak (<span class="chip-p">P</span>)</td><td class="td-p">15,000+</td></tr>
+      <tr><td>D+1 CCU Peak (<span class="chip-f">F2P</span>)</td><td class="td-f">50,000+</td></tr>
+      <tr><td>D+7 CCU 유지율</td><td>D+1 대비 35%+</td></tr>
+      <tr><td>EA 긍정 리뷰</td><td>Mostly Positive 70%+</td></tr>
+      <tr><td>EA D+7 리뷰</td><td>500+(<span class="chip-p">P</span>) / 2,000+(<span class="chip-f">F2P</span>)</td></tr>
+      <tr><td>서버 다운타임 (첫 48h)</td><td>2시간↓</td></tr>
+    </tbody></table></div>
+    <div class="ms-box ms-hold"><div class="ms-title hold">EA 론칭 기준</div><div class="ms-content"><strong>GO</strong>: D+7 리텐션 35%+, 긍정 70%+ → EA 운영 계속<br><strong>HOLD</strong>: 리뷰 Mixed 이하 → 긴급 패치 우선, LAUNCH 1~2개월 연기</div></div></div></div>
+
+    <div class="p2-card" style="border-color:var(--opt-a-bdr)"><div class="p2-header opt-a-h" onclick="tp2(this)"><span class="p2-label p2l-a">EA 운영+LAUNCH</span><span class="p2-title">EA 운영 + LAUNCH 준비 → 정식 LAUNCH</span><span class="p2-date">2027.11~2028.03</span><span class="p2-chev">▶</span></div>
+    <div class="p2-body"><div class="block-a" style="margin-bottom:12px"><div class="block-a-title">◼ EA 론칭 경로 — 운영 + 정식 LAUNCH</div><div class="block-content">EA 피드백 패치 (월 1회+) / Update Visibility Round 2차 / LAUNCH 트레일러·콘텐츠·가격·할인 전략 확정 / Season 1 공식 발표 / <span style="color:var(--p)">P 1.6M</span> / <span style="color:var(--f2p)">F2P 2.4M</span> WL 달성 점검 → 정식 LAUNCH (2028.02~03) · EA 졸업 → 1.0 출시 / LAUNCH 트레일러 공개 / Season 1 정식 시작 / Update Visibility Round 3차</div></div>
+    <div class="tw"><table><thead><tr><th>정식 LAUNCH KPI (Top 5 기준)</th><th>목표</th></tr></thead><tbody>
+      <tr><td>Launch 직전 누적 WL (<span class="chip-p">P</span>)</td><td class="td-p">1,600,000+</td></tr>
+      <tr><td>Launch 직전 누적 WL (<span class="chip-f">F2P</span>)</td><td class="td-f">2,400,000+</td></tr>
+      <tr><td>Launch +1주 PCCU (<span class="chip-p">P</span>)</td><td class="td-b td-g">67,000+ (최소 55K+)</td></tr>
+      <tr><td>판매 Week1 (<span class="chip-p">P</span>)</td><td>200,000+ units</td></tr>
+      <tr><td>WL Week1 전환율</td><td>15%+ (20%+ 시 상위)</td></tr>
+      <tr><td>리뷰 긍정 비율</td><td class="td-g">Very Positive 80%+</td></tr>
+    </tbody></table></div></div></div>
+
+    <!-- 직행 론칭 경로 -->
+    <div class="part2-section-label" style="margin-top:24px">
+      <span style="background:var(--opt-b);color:#fff;padding:3px 10px;border-radius:8px;font-size:12px">◼ 직행 론칭 경로</span>
+      서버 부하 최종 검증 → 정식 LAUNCH (2027.11)
+    </div>
+
+    <div class="p2-card" style="border-color:var(--opt-b-bdr)"><div class="p2-header opt-b-h" onclick="tp2(this)"><span class="p2-label p2l-b">LAUNCH 준비</span><span class="p2-title">SNF 분석 + 정식 LAUNCH 준비</span><span class="p2-date">2027.07~08 (2개월)</span><span class="p2-chev">▶</span></div>
+    <div class="p2-body"><div class="block-b" style="margin-bottom:12px"><div class="block-b-title">◼ 직행 론칭 경로 — 준비</div><div class="block-content"><strong>직행 GO 경영진 공식 승인 (7월 내)</strong> / LAUNCH 빌드 완성도 <strong>90%+ 필수</strong> (미달 시 EA 경로 전환) / LAUNCH 가격·BM 최종 확정 / LAUNCH 트레일러 착수 / <strong>Season 1 동시 론칭 계획 필수</strong> / CS·모더레이션 체계 구축 / 서버 인프라 LAUNCH 규모 최종 점검</div></div></div></div>
+
+    <div class="p2-card" style="border-color:var(--opt-b-bdr)"><div class="p2-header opt-b-h" onclick="tp2(this)"><span class="p2-label p2l-b">서버 부하 검증</span><span class="p2-title">대규모 서버 부하 최종 검증 (1~2주)</span><span class="p2-date">2027.09</span><span class="p2-chev">▶</span></div>
+    <div class="p2-body"><div class="block-b" style="margin-bottom:12px"><div class="block-b-title">◼ 직행 론칭 경로 — 서버 부하 최종 검증</div><div class="block-content">SNF Demo 참가자 자원자 + Discord 공개 모집 + CBT 재초청 / 기간: 2~3일(주말 포함) / 지정 시간대 동시 접속 유도 2~4시간 / <strong>NDA 없음 — 자유 스트리밍 허용 (사전 홍보 효과)</strong> / 개발팀 공식 스트리밍 병행 / 목표: LAUNCH 예상 피크 동시접속의 120~150% 달성</div></div>
+    <div class="tw"><table><thead><tr><th>서버 검증 KPI</th><th>목표</th></tr></thead><tbody>
+      <tr><td>목표 동시접속 달성</td><td class="td-b td-g">LAUNCH 피크의 120%+</td></tr>
+      <tr><td>서버 다운타임</td><td class="td-b td-g">30분↓</td></tr>
+      <tr><td>매치메이킹 대기 (피크)</td><td>90초↓</td></tr>
+      <tr><td>레이턴시</td><td>KR 50ms / NA 100ms</td></tr>
+      <tr><td>크리티컬 서버 이슈</td><td class="td-r td-b">0건</td></tr>
+      <tr><td>자연 스트리밍 발생</td><td>100채널+</td></tr>
+    </tbody></table></div>
+    <div class="ms-box ms-pivot"><div class="ms-title pivot">서버 검증 분기 기준</div><div class="ms-content"><strong>GO</strong>: 다운타임 30분↓, 크리티컬 0건 → LAUNCH 일정 확정<br><strong>DELAY</strong>: 경미한 이슈 → 1~2주 긴급 수정, LAUNCH 최대 6주 연기<br><strong>PIVOT</strong>: 치명적 서버 이슈 → EA 론칭 경로 전환, 경영진 긴급 결정</div></div></div></div>
+
+    <div class="p2-card" style="border-color:var(--opt-b-bdr)"><div class="p2-header opt-b-h" onclick="tp2(this)"><span class="p2-label p2l-b">정식 LAUNCH</span><span class="p2-title">정식 LAUNCH 2027.11 → Post-launch Live Ops</span><span class="p2-date">2027.11 ~ 지속</span><span class="p2-chev">▶</span></div>
+    <div class="p2-body"><div class="block-b" style="margin-bottom:12px"><div class="block-b-title">◼ 직행 론칭 경로 — 정식 LAUNCH + Live Ops</div><div class="block-content">정식 출시 / WL 전체 론칭 이메일 자동 발송 / LAUNCH 트레일러 공개 / Curator Connect 최종 배포 / Update Visibility Round 즉시 / <strong>Season 1 정식 시작 (동시 필수)</strong> / 서버 동시접속 실시간 모니터링 / 리뷰 72시간 워룸 운영 / 부정 리뷰 48h 공식 답변<br><br>【Live Ops】 Update Visibility Round 2차 (첫 패치) / Season 1 중간 업데이트 / Steam Genre Fest 참가 / 첫 시즌 세일 (LAUNCH 3~4개월 후) / Season 2 예고 (2~3개월 내)</div></div>
+    <div class="tw"><table><thead><tr><th>정식 LAUNCH KPI (Top 5 기준)</th><th>목표</th></tr></thead><tbody>
+      <tr><td>Launch 직전 누적 WL (<span class="chip-p">P</span>)</td><td class="td-p">1,600,000+</td></tr>
+      <tr><td>Launch 직전 누적 WL (<span class="chip-f">F2P</span>)</td><td class="td-f">2,400,000+</td></tr>
+      <tr><td>Launch +1주 PCCU (<span class="chip-f">F2P</span>)</td><td class="td-f">58,000+ (최소 55K+)</td></tr>
+      <tr><td>서버 다운타임 (첫 72h)</td><td>2시간↓</td></tr>
+      <tr><td>리뷰 긍정 비율</td><td class="td-g">Very Positive 80%+</td></tr>
+      <tr><td>판매 Week1 (<span class="chip-p">P</span>)</td><td>200,000+ units</td></tr>
+    </tbody></table></div>
+    <div class="ms-box ms-go"><div class="ms-title go">LAUNCH D+7 기준</div><div class="ms-content"><strong>GO</strong>: D+7 리텐션 35%+, 긍정 70%+ → Season 1 정상 집행, Flywheel 가속 단계<br><strong>HOLD</strong>: 리뷰 Mixed이하·리텐션 미달 → 커뮤니티 직접 소통 즉시 + 긴급 패치 우선</div></div></div></div>
+
+    <div class="co danger" style="margin-top:16px">⚠️ 모든 경로 분기 판단은 현장 PM 단독 결정 금지. 반드시 경영진 직접 개입 의사결정. 데이터 기반 48시간 이내 Go/No-Go 재검토 보고 필수.</div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="fl">Project S Steam Launch Dashboard</div>
+  <div>Page 3 / 8 &nbsp;·&nbsp; 마일스톤 &amp; 론칭 플래닝 &nbsp;·&nbsp; 2026.04 기준 &nbsp;·&nbsp; 전사테스트 준비 중</div>
+</footer>
+
+<script>
+Chart.register(ChartDataLabels);
+
+/* WL Grouped Horizontal Bar Chart */
+(function(){
+  const labels=['CS 4주','CS 8주','CLA 종료','CBT 종료','SNF 전','SNF 후','Launch 직전'];
+  const pData=[25000,50000,100000,200000,400000,800000,1600000];
+  const fData=[25000,50000,100000,400000,600000,1200000,2400000];
+  new Chart(document.getElementById('wlChart').getContext('2d'),{
+    type:'bar',
+    data:{labels,datasets:[
+      {label:'Premium (P)',data:pData,backgroundColor:'#4f46e5',borderRadius:4,borderSkipped:false},
+      {label:'F2P',data:fData,backgroundColor:'#0891b2',borderRadius:4,borderSkipped:false}
+    ]},
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,layout:{padding:{right:20,left:8,top:8,bottom:8}},
+      plugins:{
+        legend:{position:'top',labels:{font:{size:11},usePointStyle:true,pointStyle:'rect'}},
+        datalabels:{formatter:v=>v>=1000000?(v/1000000).toFixed(1)+'M':(v/1000).toFixed(0)+'K',color:'#ffffff',font:{size:10,weight:'bold'},anchor:'start',align:'end',offset:6,clip:false,textStrokeColor:'rgba(0,0,0,0.35)',textStrokeWidth:2},
+        tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.raw.toLocaleString()}}
+      },
+      scales:{
+        x:{type:'logarithmic',ticks:{callback:v=>{if(v>=1000000)return(v/1000000).toFixed(0)+'M';if(v>=1000)return(v/1000).toFixed(0)+'K';return v;},font:{size:9}},grid:{color:'rgba(0,0,0,.05)'}},
+        y:{grid:{display:false},ticks:{font:{size:10}}}
+      }
+    }
+  });
+})();
+
+/* Funnel: HTML-based dual funnel (P + F2P), no canvas needed */
+
+/* Simulator */
+const KRW=1385;
+function updateSim(){
+  const wl=parseInt(document.getElementById('sWL').value);
+  const cvr=parseFloat(document.getElementById('sCVR').value);
+  const prc=parseFloat(document.getElementById('sPrc').value);
+  document.getElementById('simWL').textContent=wl.toLocaleString();
+  document.getElementById('simCVR').textContent=cvr.toFixed(1)+'%';
+  document.getElementById('simPrice').textContent='$'+prc.toFixed(2);
+  const sales=Math.round(wl*cvr/100);
+  const gross=sales*prc;
+  const dev=gross*.7;
+  const krw=dev*KRW;
+  document.getElementById('simSales').textContent=sales.toLocaleString();
+  document.getElementById('simGross').textContent=gross>=1000000?'$'+(gross/1000000).toFixed(1)+'M':'$'+Math.round(gross).toLocaleString();
+  document.getElementById('simDev').textContent=dev>=1000000?'$'+(dev/1000000).toFixed(1)+'M':'$'+Math.round(dev).toLocaleString();
+  document.getElementById('simKRW').textContent='₩'+(krw/100000000).toFixed(1)+'억';
+}
+updateSim();
+
+/* Phase Track toggle */
+function togglePT(hdr){hdr.classList.toggle('open');hdr.nextElementSibling.classList.toggle('open')}
+
+/* Part 2 Phase card toggle */
+function tp2(hdr){hdr.classList.toggle('open-h');hdr.nextElementSibling.classList.toggle('open')}
+
+/* Part 2 toggle */
+function togglePart2(btn){btn.classList.toggle('open');document.getElementById('part2-body').classList.toggle('open')}
+
+/* Checklist */
+const STORAGE_KEY='ps_cl_v4';
+function loadStates(){try{return JSON.parse(localStorage.getItem(STORAGE_KEY)||'{}')}catch(e){return{}}}
+function saveStates(obj){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(obj))}catch(e){}}
+function toggleItem(el){
+  el.classList.toggle('done');
+  const states=loadStates();
+  const key=el.closest('.cl-category').dataset.cat+'_'+Array.from(el.parentNode.children).indexOf(el);
+  states[key]=el.classList.contains('done');
+  saveStates(states);
+  updateProgress();
+}
+function updateProgress(){
+  const cats=['account','asset','content','legal','review','tech'];
+  let td=0,ta=0;
+  cats.forEach(cat=>{
+    const items=document.querySelectorAll(`.cl-item[data-cat="${cat}"]`);
+    const done=document.querySelectorAll(`.cl-item[data-cat="${cat}"].done`);
+    const pct=items.length?Math.round(done.length/items.length*100):0;
+    document.getElementById('count-'+cat).textContent=done.length+' / '+items.length;
+    document.getElementById('bar-'+cat).style.width=pct+'%';
+    td+=done.length;ta+=items.length;
+  });
+  const overall=ta?Math.round(td/ta*100):0;
+  document.getElementById('clPct').textContent=overall+'%';
+  document.getElementById('clOverallBar').style.width=overall+'%';
+  document.getElementById('clOverallSub').textContent=td+'개 완료 / 총 '+ta+'개 항목';
+}
+function resetAll(){if(!confirm('모든 체크 상태를 초기화하시겠습니까?'))return;saveStates({});document.querySelectorAll('.cl-item.done').forEach(el=>el.classList.remove('done'));updateProgress();}
+(function(){
+  const states=loadStates();
+  ['account','asset','content','legal','review','tech'].forEach(cat=>{
+    document.querySelectorAll(`.cl-item[data-cat="${cat}"]`).forEach((el,i)=>{if(states[cat+'_'+i])el.classList.add('done')});
+  });
+  updateProgress();
+})();
+
+/* Reverse Planner — A/B 경로 자동 감지 */
+function calcPlan(){
+  const v=document.getElementById('plannerDate').value;
+  if(!v){alert('목표 론칭일을 선택해주세요.');return;}
+  const launch=new Date(v);
+  const today=new Date('2026-04-16');
+  const addM=(d,m)=>{const r=new Date(d);r.setMonth(r.getMonth()+m);return r};
+  const fmt=d=>`${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`;
+  const diffDays=(d1,d2)=>Math.floor((d1-d2)/(1000*60*60*24));
+  const yr=launch.getFullYear();
+  const isPathB=(yr<=2027); // 2027 이내 = 직행 론칭 경로, 2028+ = EA 론칭 경로
+
+  // 경로 배너
+  const pathBanner=isPathB
+    ? `<div style="background:var(--opt-b-bg);border:1px solid var(--opt-b-bdr);border-radius:8px;padding:10px 16px;margin-bottom:12px;font-size:12px;font-weight:700;color:var(--opt-b)">◼ 직행 론칭 경로 선택 — SNF → LAUNCH 4~5개월 · 서버 부하 최종 검증 필수 · Season 1 동시 론칭 필수</div>`
+    : `<div style="background:var(--opt-a-bg);border:1px solid var(--opt-a-bdr);border-radius:8px;padding:10px 16px;margin-bottom:12px;font-size:12px;font-weight:700;color:var(--opt-a)">◼ EA 론칭 경로 선택 — SNF → EA 론칭 → 정식 LAUNCH · 8~9개월 갭 · EA에서 Review 기반 구축</div>`;
+
+  // 직행 론칭 경로 (B) 마일스톤: T = LAUNCH 기준
+  const milestonesB=[
+    {offset:-19,label:'T-19m',action:'Steamworks 파트너 계정 생성 + 세금서류 제출 + $100 deposit 납부 (납부 후 30일 대기 역산 필수)','cls':'pl-warn'},
+    {offset:-17,label:'T-17m',action:'전사테스트 → 세부 장르·메커닉 공식 확정','cls':''},
+    {offset:-15,label:'T-15m',action:'FGT 1차 시작 (외부 30명+, NDA 필수) / 목표: 재플레이 의향 7.0+, NPS 40+','cls':''},
+    {offset:-13,label:'T-13m',action:'FGT 2차 시작 (60명+ 세그먼트·지역별) + BM Premium/F2P 최종 확정 + 에셋 제작 착수','cls':''},
+    {offset:-11,label:'T-11m',action:'Coming Soon 사전 세팅 완료 (캡슐 4종+트레일러+라이브러리 에셋 / Valve 검토 제출 CS 오픈 7 영업일 전)','cls':'pl-warn'},
+    {offset:-10,label:'T-10m',action:'Coming Soon 공개 + WL 수집 시작 / 목표: 4주 내 25K+, 8주 내 50K+','cls':''},
+    {offset:-8,label:'T-8m',action:'CLA 시작 (Steam Playtest, 1,000명+) / 목표: D+7 리텐션 25%+, 크리티컬 버그 0건','cls':''},
+    {offset:-7,label:'T-7m',action:'CLA 결과 반영 패치 완료 + SNF Jun 2027 등록 완료 확인','cls':'pl-warn'},
+    {offset:-5,label:'T-5m',action:'CBT 시작 (10,000명+, 2주차 주말 스트리밍 NDA 해제) / 목표: D+7 30%+, 서버 다운타임 4h↓','cls':''},
+    {offset:-4,label:'T-4m',action:'SNF Demo 준비 완료 — 온보딩 완료율 90%+, Demo 마지막 화면 WL CTA 필수','cls':'pl-warn'},
+    {offset:-3,label:'T-3m',action:'★ SNF Jun 2027 (D+1 이메일 수동 버튼 클릭 필수!) → 2주 이내 직행 론칭 경로 GO 경영진 승인','cls':'pl-b'},
+    {offset:-2,label:'T-2m',action:'◼ 직행 LAUNCH 준비 — 빌드 완성도 90%+ 확인, LAUNCH 트레일러 제작, Season 1 동시 론칭 준비 완료','cls':'pl-b'},
+    {offset:-1,label:'T-1m',action:'◼ 서버 부하 최종 검증 (1~2주간, 피크 120%+ 달성, 다운타임 30분↓, 크리티컬 0건) + LAUNCH 직전 최종 점검','cls':'pl-b'},
+    {offset:0,label:'T-0 🚀',action:'◼ 정식 LAUNCH (직행) · WL 론칭 이메일 자동 발송 · Season 1 동시 시작 · 72시간 워룸 운영','cls':'pl-target'},
+  ];
+
+  // EA 론칭 경로 (A) 마일스톤: T = 정식 LAUNCH 기준 (EA 포함 긴 타임라인)
+  const milestonesA=[
+    {offset:-24,label:'T-24m',action:'Steamworks 파트너 계정 생성 + 세금서류 제출 + $100 deposit 납부 (납부 후 30일 대기 역산 필수)','cls':'pl-warn'},
+    {offset:-22,label:'T-22m',action:'전사테스트 → 세부 장르·메커닉 공식 확정','cls':''},
+    {offset:-20,label:'T-20m',action:'FGT 1차 시작 (외부 30명+, NDA 필수) / 목표: 재플레이 의향 7.0+, NPS 40+','cls':''},
+    {offset:-18,label:'T-18m',action:'FGT 2차 시작 (60명+ 세그먼트·지역별) + BM Premium/F2P 최종 확정 + 에셋 제작 착수','cls':''},
+    {offset:-16,label:'T-16m',action:'Coming Soon 사전 세팅 완료 (캡슐 4종+트레일러+라이브러리 에셋 / Valve 검토 7 영업일 전 제출)','cls':'pl-warn'},
+    {offset:-15,label:'T-15m',action:'Coming Soon 공개 + WL 수집 시작 / 목표: 4주 내 25K+, 8주 내 50K+','cls':''},
+    {offset:-13,label:'T-13m',action:'CLA 시작 (Steam Playtest, 1,000명+) / 목표: D+7 리텐션 25%+, 크리티컬 버그 0건','cls':''},
+    {offset:-12,label:'T-12m',action:'CLA 결과 반영 패치 완료 + SNF Jun 2027 등록 완료 확인','cls':'pl-warn'},
+    {offset:-10,label:'T-10m',action:'CBT 시작 (10,000명+, 2주차 주말 스트리밍 NDA 해제) / 목표: D+7 30%+, 서버 다운타임 4h↓','cls':''},
+    {offset:-9,label:'T-9m',action:'SNF Demo 준비 완료 — 온보딩 완료율 90%+, Demo 마지막 화면 WL CTA 필수','cls':'pl-warn'},
+    {offset:-8,label:'T-8m',action:'★ SNF Jun 2027 (D+1 이메일 수동 버튼 클릭 필수!) → 2주 이내 EA 론칭 경로 GO 경영진 승인','cls':'pl-a'},
+    {offset:-6,label:'T-6m',action:'◼ EA 준비 완료 — EA 가격·콘텐츠 확정, EA 론칭 트레일러 제작, Season 1 로드맵 공개','cls':'pl-a'},
+    {offset:-5,label:'T-5m',action:'◼ Early Access 론칭 — WL 론칭 이메일 자동 발송 / 목표: D+1 CCU 15K+(P)/50K+(F2P), 긍정 리뷰 70%+','cls':'pl-a'},
+    {offset:-3,label:'T-3m',action:'◼ EA 운영 중 — Update Visibility Round 2차, 리뷰 Very Positive 80%+ 목표, 정식 LAUNCH 트레일러 착수','cls':'pl-a'},
+    {offset:-1,label:'T-1m',action:'◼ EA 운영 마무리 + 정식 LAUNCH 직전 점검 (Season 1 정식 계획, Launch Discount 설정 완료)','cls':'pl-a'},
+    {offset:0,label:'T-0 🚀',action:'◼ 정식 LAUNCH (EA 졸업) · WL 론칭 이메일 발송 · Season 1 정식 시작 · 72시간 워룸 운영','cls':'pl-target'},
+  ];
+
+  const milestones=isPathB?milestonesB:milestonesA;
+  let html=pathBanner+'<div style="display:flex;flex-direction:column;gap:5px">';
+  milestones.forEach(m=>{
+    const mDate=addM(launch,m.offset);
+    const dDiff=diffDays(mDate,today);
+    let badge='';
+    if(m.offset===0) badge='<span class="pill pg">🚀 LAUNCH</span>';
+    else if(dDiff<0) badge='<span class="pill pgr">기준일 이전</span>';
+    else if(dDiff<=60) badge='<span class="pill pa">⚠ '+Math.ceil(dDiff/7)+'주 후</span>';
+    else badge='<span class="pill pb">'+Math.ceil(dDiff/30)+'개월 후</span>';
+    const rowCls=m.cls||'';
+    html+=`<div class="planner-row ${rowCls}"><div class="planner-time">${m.label}</div><div class="planner-date">${fmt(mDate)}</div><div class="planner-action">${m.action}</div><div class="planner-badge">${badge}</div></div>`;
+  });
+  html+='</div>';
+  const pathLabel=isPathB?'◼ 직행 론칭 경로 기준 (2027년 이내 LAUNCH)':'◼ EA 론칭 경로 기준 (2028년 이후 LAUNCH)';
+  const pathColor=isPathB?'var(--opt-b)':'var(--opt-a)';
+  html+=`<div style="font-size:10px;color:${pathColor};font-weight:700;margin-top:8px;padding-top:8px;border-top:1px solid var(--border)">${pathLabel} · 목표 론칭: ${fmt(launch)} · 오늘: 2026.04.16</div>`;
+  document.getElementById('plannerResult').innerHTML=html;
+}
+calcPlan();
+
+/* Page Nav Active */
+const pnis=document.querySelectorAll('.pnav-item');
+document.querySelectorAll('.section').forEach(s=>new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)pnis.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+e.target.id));});
+},{rootMargin:'-116px 0px -40% 0px',threshold:0}).observe(s));
+</script>
+<script src="../assets/embed.js"></script>
+</body>
+</html>

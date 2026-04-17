@@ -1,0 +1,1880 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1.0" name="viewport"/>
+<title>Project S — 스팀 딥다이브 (Part A v2)</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#fff;--c1:#f3f4f6;--c2:#f9fafb;--bd:#e5e7eb;--h:#111827;--s1:#374151;--s2:#6b7280;--sc:#9ca3af;--g:#16a34a;--r:#ef4444;--a:#4f46e5;--tl:#0d9488;--rd:12px;--sh:0 1px 4px rgba(0,0,0,.08)}
+body{font-family:'Segoe UI','Apple SD Gothic Neo',system-ui,sans-serif;background:var(--bg);color:var(--h);line-height:1.6}
+header{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--bd);padding:0 40px;display:flex;align-items:center;justify-content:space-between;height:64px;flex-wrap:wrap;gap:6px}
+.hl{display:flex;align-items:center;gap:10px}
+.hb{background:var(--a);color:#fff;font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;letter-spacing:.5px}
+.htitles{display:flex;flex-direction:column;gap:1px}
+.hmain{font-size:14px;font-weight:800;line-height:1.2}
+.hsub{font-size:11px;font-weight:500;color:var(--a);letter-spacing:.3px}
+.hr{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.rb{display:flex;align-items:center;gap:6px;background:var(--c1);border:1px solid var(--bd);border-radius:8px;padding:5px 10px;font-size:11px}
+.rb label{font-weight:600;white-space:nowrap}
+.ri{width:68px;border:1px solid var(--bd);border-radius:6px;padding:3px 6px;font-size:11px;text-align:right;outline:none}
+.ri:focus{border-color:var(--a)}
+.rbtn{background:var(--a);color:#fff;border:none;border-radius:6px;padding:4px 10px;font-size:10px;font-weight:700;cursor:pointer}
+nav a{font-size:11px;color:var(--s2);text-decoration:none;padding:3px 8px;border-radius:6px}
+nav a:hover{background:var(--c1);color:var(--h)}
+.sec{padding:48px 40px;max-width:1280px;margin:0 auto}
+.sec+.sec{border-top:1px solid var(--bd)}
+.sn{font-size:10px;font-weight:700;letter-spacing:2px;color:var(--a);text-transform:uppercase;margin-bottom:4px}
+.stt{font-size:20px;font-weight:800;margin-bottom:3px}
+.ss{font-size:11px;color:var(--s2);margin-bottom:24px}
+.rn{font-size:10px;color:var(--sc);background:#eff6ff;border:1px solid #bfdbfe;border-radius:6px;padding:4px 9px;margin-bottom:12px;display:inline-block}
+.si{background:linear-gradient(135deg,#f0f4ff,#fafbff);border:1px solid #c7d2fe;border-radius:var(--rd);padding:14px 18px;margin-bottom:22px}
+.si h3{font-size:11px;font-weight:800;color:var(--a);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px}
+.si ul{list-style:none;display:flex;flex-wrap:wrap;gap:8px;padding:0}
+.si li{background:#fff;border:1px solid #e0e7ff;border-radius:8px;padding:6px 12px;font-size:11px;color:var(--s1);line-height:1.5;flex:1 1 260px}
+.si li strong{color:var(--h)}
+.kr{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+.kp{background:var(--c1);border-radius:var(--rd);padding:16px 18px;box-shadow:var(--sh);border-left:4px solid var(--a)}
+.kl{font-size:10px;color:var(--s2);font-weight:600;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px}
+.kv{font-size:22px;font-weight:800;line-height:1}
+.ks{font-size:10px;color:var(--s2);margin-top:3px}
+.kb{display:inline-block;margin-top:5px;font-size:10px;font-weight:700;padding:2px 7px;border-radius:16px}
+.kb.up{background:#dcfce7;color:var(--g)}.kb.nu{background:#e0e7ff;color:var(--a)}.kb.wa{background:#fef3c7;color:#d97706}
+.cd{background:var(--c1);border-radius:var(--rd);padding:20px 22px;box-shadow:var(--sh);margin-bottom:18px}
+.ct{font-size:13px;font-weight:700;color:var(--s1);margin-bottom:2px}
+.cs{font-size:10px;color:var(--s2);margin-bottom:14px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px}
+.co{background:var(--c2);border-left:4px solid var(--tl);border-radius:0 var(--rd) var(--rd) 0;padding:11px 14px;margin-top:12px;font-size:12px;color:var(--s1)}
+.co.bl{border-left-color:var(--a)}.co.gn{border-left-color:var(--g)}.co.rd{border-left-color:var(--r)}
+.co strong{color:var(--h)}
+.src{font-size:9px;color:var(--sc);margin-top:7px;line-height:1.5}
+.src a{color:var(--a);text-decoration:underline}
+.tw{overflow-x:auto;margin-bottom:14px}
+table{width:100%;border-collapse:collapse;font-size:11px}
+thead tr{background:#1a1a2e;color:#fff}
+thead th{padding:7px 10px;text-align:left;font-weight:600;font-size:10px;white-space:nowrap}
+tbody tr{border-bottom:1px solid var(--bd)}
+tbody tr:nth-child(even){background:var(--c2)}
+tbody tr:hover{background:#eff6ff}
+tbody td{padding:7px 10px}
+.tu{color:var(--g);font-weight:700}.td{color:var(--r);font-weight:700}.ts{color:#f59e0b;font-weight:700}
+.mb{background:#f0f9ff;border:1px solid #bae6fd;border-radius:var(--rd);padding:14px 18px;margin-bottom:18px}
+.mbt{font-size:12px;font-weight:700;color:#0369a1;margin-bottom:6px}
+.mbb{font-size:11px;color:var(--s1);line-height:1.7}
+footer{background:#1a1a2e;color:#64748b;padding:20px 40px;font-size:11px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.fl{font-size:13px;font-weight:800;color:#a5b4fc}
+@media(max-width:960px){.kr{grid-template-columns:repeat(2,1fr)}.g2{grid-template-columns:1fr}header{padding:8px 14px;height:auto}nav{display:none}.sec{padding:28px 14px}}
+@media(max-width:560px){.kr{grid-template-columns:1fr}.kv{font-size:18px}}
+
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.s3-layer{margin-bottom:18px}
+.s3-layer .ct{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.s3-chip{display:inline-block;font-size:9px;font-weight:700;padding:2px 8px;border-radius:999px;background:#e0e7ff;color:#3730a3;letter-spacing:.2px}
+.s3-kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+.s3-note{font-size:10px;color:var(--s2);line-height:1.6}
+.s3-mini{font-size:10px;color:var(--s2);margin-top:8px}
+.s3-table td small{display:block;color:var(--s2);font-size:10px;line-height:1.4;margin-top:2px}
+.s3-ref{--color-background-primary:#ffffff;--color-background-secondary:#f8fafc;--color-background-info:#eef2ff;--color-background-success:#ecfdf5;--color-background-danger:#fef2f2;--color-text-primary:#111827;--color-text-secondary:#475569;--color-text-info:#4338ca;--color-text-success:#166534;--color-text-danger:#b91c1c;--color-border-secondary:#dbe2ea;--color-border-tertiary:#e5e7eb;--color-border-info:#c7d2fe;background:#fff;border-radius:10px}
+:root { --accent: #185FA5; --accent2: #1D9E75; --warn: #BA7517; --danger: #A32D2D; --ok: #3B6D11; }
+* { box-sizing: border-box; }
+.tab-bar { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 12px; }
+.tab { padding: 5px 11px; border-radius: 6px; border: 0.5px solid var(--color-border-secondary); font-size: 11px; cursor: pointer; background: var(--color-background-primary); color: var(--color-text-secondary); white-space: nowrap; }
+.tab.active { background: var(--color-background-info); color: var(--color-text-info); border-color: var(--color-border-info); font-weight: 500; }
+.section { display: none; }
+.section.visible { display: block; }
+.tbl { width: 100%; border-collapse: collapse; font-size: 11px; }
+.tbl th { background: var(--color-background-secondary); padding: 6px 7px; text-align: left; font-weight: 500; font-size: 10px; color: var(--color-text-secondary); border-bottom: 0.5px solid var(--color-border-secondary); white-space: nowrap; }
+.tbl td { padding: 5px 7px; border-bottom: 0.5px solid var(--color-border-tertiary); vertical-align: top; }
+.tbl tr:hover td { background: var(--color-background-secondary); }
+.tag { display: inline-block; font-size: 9px; padding: 1px 5px; border-radius: 3px; font-weight: 500; margin-right: 2px; }
+.t-f2p { background: var(--color-background-success); color: var(--color-text-success); }
+.t-b2p { background: var(--color-background-info); color: var(--color-text-info); }
+.t-dead { background: var(--color-background-danger); color: var(--color-text-danger); }
+.score-vp { color: #3B6D11; font-weight: 500; }
+.score-mp { color: #185FA5; font-weight: 500; }
+.score-mix { color: #BA7517; font-weight: 500; }
+.score-neg { color: #A32D2D; font-weight: 500; }
+.score-op { color: #04342C; font-weight: 500; }
+.wl-s { color: #1D9E75; font-weight: 500; }
+.wl-a { color: #185FA5; font-weight: 500; }
+.wl-b { color: #888780; }
+.wl-c { color: #BA7517; }
+.wl-d { color: #A32D2D; }
+.stars { color: #EF9F27; font-size: 10px; }
+.stars-e { color: var(--color-border-tertiary); font-size: 10px; }
+.num-big { font-weight: 500; font-size: 12px; }
+.num-dim { color: var(--color-text-secondary); font-size: 10px; }
+.insight-box { background: var(--color-background-secondary); border-radius: 8px; padding: 12px 14px; margin: 10px 0; }
+.insight-head { font-size: 12px; font-weight: 500; margin-bottom: 8px; }
+.insight-row { font-size: 11px; color: var(--color-text-secondary); padding: 3px 0; border-bottom: 0.5px solid var(--color-border-tertiary); line-height: 1.5; }
+.insight-row:last-child { border-bottom: none; }
+.badge { display: inline-block; font-size: 9px; padding: 1px 6px; border-radius: 10px; font-weight: 500; }
+.badge-1 { background: #E6F1FB; color: #042C53; }
+.badge-2 { background: #E1F5EE; color: #04342C; }
+.prio-box { border: 0.5px solid var(--color-border-secondary); border-radius: 8px; padding: 12px; margin: 6px 0; }
+.prio-title { font-size: 12px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 5px; }
+.prio-body { font-size: 11px; color: var(--color-text-secondary); line-height: 1.6; }
+.rank-num { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; background: var(--color-background-info); color: var(--color-text-info); font-size: 10px; font-weight: 500; margin-right: 6px; flex-shrink: 0; }
+.flag-t1 { font-size: 8px; color: #1D9E75; }
+.flag-t2 { font-size: 8px; color: #185FA5; }
+.flag-t3 { font-size: 8px; color: #BA7517; }
+.flag-fix { font-size: 8px; color: #1D9E75; font-weight: 700; background: #E1F5EE; padding: 1px 4px; border-radius: 3px; }
+.num-fix { color: #1D9E75; font-weight: 600; }
+.scroll-x { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.v2-banner { background: #E1F5EE; border: 0.5px solid #1D9E75; border-radius: 6px; padding: 7px 12px; margin-bottom: 12px; font-size: 11px; color: #04342C; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.fix-table { width: 100%; border-collapse: collapse; font-size: 11px; }
+.fix-table th { background: var(--color-background-secondary); padding: 6px 8px; text-align: left; font-weight: 500; font-size: 10px; color: var(--color-text-secondary); border-bottom: 0.5px solid var(--color-border-secondary); }
+.fix-table td { padding: 5px 8px; border-bottom: 0.5px solid var(--color-border-tertiary); vertical-align: top; }
+.fix-old { color: #A32D2D; text-decoration: line-through; font-size: 11px; }
+.fix-new { color: #1D9E75; font-weight: 600; font-size: 11px; }
+.fix-table tr:hover td { background: var(--color-background-secondary); }
+@media(max-width:960px){.s3-kpi-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.s3-kpi-grid{grid-template-columns:1fr}}
+
+
+.action-detail{margin-top:12px;border:1px solid #e5e7eb;border-radius:12px;background:#f8fafc;overflow:hidden}
+.action-detail summary{cursor:pointer;list-style:none;padding:12px 14px;font-size:12px;font-weight:700;color:#0f172a;background:#eef2ff;border-bottom:1px solid #e5e7eb}
+.action-detail summary::-webkit-details-marker{display:none}
+.action-detail .inner{padding:12px 14px;background:#fff}
+.action-detail table{width:100%;border-collapse:collapse;font-size:11px}
+.action-detail th,.action-detail td{padding:8px 9px;border-bottom:.5px solid #dbe2ea;vertical-align:top;text-align:left}
+.action-detail th{background:#f1f5f9;color:#475569;font-size:10px;white-space:nowrap;position:sticky;top:0;z-index:1}
+.action-note{margin-top:8px;font-size:10px;color:#64748b;line-height:1.5}
+.s3-subcap{margin:0 0 8px 0;font-size:11px;font-weight:700;color:#334155}
+.s3-legend-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px 10px;margin:0 0 10px 0}
+.s3-legend-item{display:flex;align-items:center;gap:6px;font-size:10px;color:#475569;white-space:nowrap}
+.s3-dot{width:10px;height:10px;border-radius:999px;display:inline-block;flex:0 0 10px}
+.action-detail summary{display:flex;align-items:center;justify-content:space-between}
+.action-detail summary::after{content:'▼';font-size:11px;color:#475569;transition:transform .18s ease}
+.action-detail[open] summary::after{content:'▲'}
+.s3-card-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:10px}
+.s3-card{background:#fff;border:1px solid #dbe2ea;border-radius:12px;padding:14px 16px;box-shadow:0 1px 3px rgba(15,23,42,.05)}
+.s3-card-kicker{font-size:10px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:#4f46e5;margin-bottom:6px}
+.s3-card-title{font-size:13px;font-weight:800;color:#0f172a;margin-bottom:6px;line-height:1.4}
+.s3-card-body{font-size:11px;color:#475569;line-height:1.7}
+.s3-legend-grid.centered{max-width:430px;margin:10px auto 0;justify-items:center}
+@media(max-width:960px){.s3-card-grid{grid-template-columns:1fr}}
+
+.t4-kpi-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:18px}
+.t4-kpi{background:linear-gradient(135deg,#f8fafc,#ffffff);border:1px solid #dbe2ea;border-radius:12px;padding:14px 16px;box-shadow:0 1px 3px rgba(15,23,42,.05)}
+.t4-kpi-label{font-size:10px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:#4f46e5;margin-bottom:5px}
+.t4-kpi-value{font-size:24px;font-weight:800;line-height:1;color:#0f172a}
+.t4-kpi-sub{font-size:10px;color:#64748b;margin-top:6px;line-height:1.5}
+.t4-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px}
+.t4-snapshot{display:grid;grid-template-columns:1.05fr .95fr;gap:18px}
+.t4-list{list-style:none;display:grid;gap:8px;margin:0;padding:0}
+.t4-list li{background:#fff;border:1px solid #dbe2ea;border-radius:10px;padding:10px 12px;font-size:11px;color:#334155;line-height:1.6}
+.t4-list li strong{color:#0f172a}
+.t4-mini-table{width:100%;border-collapse:collapse;font-size:11px}
+.t4-mini-table th,.t4-mini-table td{padding:8px 10px;border-bottom:.5px solid #dbe2ea;vertical-align:top;text-align:left;line-height:1.55}
+.t4-mini-table th{background:#f8fafc;color:#475569;font-size:10px;white-space:nowrap}
+.t4-pill{display:inline-block;font-size:9px;font-weight:700;padding:2px 8px;border-radius:999px;background:#e0f2fe;color:#075985;margin-left:6px}
+.t4-note{font-size:10px;color:#64748b;line-height:1.6;margin-top:10px}
+@media(max-width:960px){.t4-grid,.t4-snapshot,.t4-kpi-grid{grid-template-columns:1fr}}
+
+</style>
+  <link rel="stylesheet" href="../assets/theme.css">
+</head>
+<body class="embed">
+<header>
+<div class="hl">
+<span class="hb">PROJECT S</span>
+<div class="htitles"><div class="hmain">Project S 스팀 론칭 대시보드</div><div class="hsub">📊 스팀 딥다이브</div></div>
+</div>
+<div class="hr">
+<div class="rb"><label>💱 환율(₩/$)</label><input class="ri" id="rateInput" max="3000" min="500" step="10" type="number" value="1450"/><button class="rbtn" onclick="applyRate()">적용</button></div>
+<nav><a href="#s1">①스팀MS</a><a href="#s2">②장르분석</a><a href="#s3">③슈팅심화</a><a href="#s4">④트래픽</a></nav>
+</div>
+</header>
+<!-- ══════ 섹션1: 스팀 MS ══════ -->
+<section class="sec" id="s1">
+<p class="sn">Section 01</p>
+<h2 class="stt">스팀 마켓 셰어 (Steam Market Share)</h2>
+<p class="ss">Steam GMV(총 매출액) $16.9B · Valve 76% payout 역산 기준 · PC 디지털 유통 경쟁 구도</p>
+<div class="si"><h3>🔑 핵심 인사이트</h3><ul>
+<li>💰 <strong>Steam 2025 GMV(총 매출액) $16.9B(<span class="kdyn" data-usd="16.9"></span>)</strong> — PC 디지털 유통 시장의 <strong>75%</strong>를 장악하는 압도적 독점</li>
+<li>📊 글로벌 전체($197B) 대비 8.6%이나, <strong>PC 디지털로 좁히면 75%</strong> → 퍼블리싱 출발점 = Steam 최적화</li>
+<li>⚔️ 2위 Epic(9%)과 <strong>약 8배 격차</strong>. Epic $317M PC유저 도달에도 Steam 아성 견고</li>
+</ul></div>
+<span class="rn" id="rn1">💱 현재 환율: 1$ = 1,450원</span>
+<div class="kr">
+<div class="kp"><div class="kl">2025년 Steam GMV(총 매출액)</div><div class="kv">$16.9B</div><div class="ks krw" data-usd="16.9"></div><span class="kb up">Valve 76% 배분 역산</span></div>
+<div class="kp" style="border-left-color:#22c55e"><div class="kl">PC 디지털 유통 점유율</div><div class="kv">75%</div><div class="ks">Wolfire v. Valve 소송 법적 수용</div><span class="kb up">압도적 독점</span></div>
+<div class="kp" style="border-left-color:#3b82f6"><div class="kl">PC 게임시장 내 비중</div><div class="kv">39.3%</div><div class="ks">$43B 전체 PC 게임시장 중</div><span class="kb nu">디지털+오프라인 포함</span></div>
+<div class="kp" style="border-left-color:#f59e0b"><div class="kl">글로벌 게임시장 비중</div><div class="kv">8.6%</div><div class="ks">$197B 전체 중</div><span class="kb wa">모바일 55% 포함</span></div>
+</div>
+<div class="g2">
+<!-- 좌: 3중 계층 -->
+<div class="cd" style="margin-bottom:0">
+<div class="ct">📊 Steam 마켓 쉐어 3중 계층 비중</div>
+<div class="cs">글로벌 전체 → PC 전체 → PC 디지털유통 순 비중 확대</div>
+<div style="height:300px"><canvas id="c1a"></canvas></div>
+<div class="co bl"><strong>💡 핵심:</strong> Steam은 글로벌 <strong>8.6%</strong>이나, PC 디지털유통으로 좁히면 <strong>75%</strong> 장악.</div>
+<p class="src">📎 GameDiscoverCo (Valve 76% payout 역산) · <a href="https://newsletter.gamediscover.co/p/revealed-the-numbers-behind-steams" target="_blank">↗원문</a><br/>📎 Wolfire v. Valve · <a href="https://allaboutlawyer.com/steam-monopoly-lawsuit-what-gamers-and-developers-need-to-know/" target="_blank">↗소송</a></p>
+</div>
+<!-- 우: PC 디지털 유통 도넛 (외부 레이블) -->
+<div class="cd" style="margin-bottom:0">
+<div class="ct">📊 PC 디지털 유통 시장 주요 Player별 점유율 비교</div>
+<div class="cs">Steam vs Epic vs MS/Game Pass vs GoG vs 기타</div>
+<div style="position:relative;height:300px">
+<canvas id="c1b"></canvas>
+<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none"><div style="font-size:14px;font-weight:800">PC 디지털</div><div style="font-size:10px;color:var(--s2)">유통 시장</div></div>
+</div>
+<div class="co"><strong>💡 핵심:</strong> Steam <strong>74.5%</strong> 독점. 2위 Epic(9%)과 약 <strong>8배 격차</strong>.</div>
+<p class="src">📎 Icon Era · <a href="https://icon-era.com/statistics/steam/" target="_blank">↗원문</a> · Epic 2025 · <a href="https://wccftech.com/epic-games-store-saw-record-setting-third-party-sales-growth-in-2025-reaches-317m-pc-users/" target="_blank">↗원문</a></p>
+</div>
+</div>
+<div class="mb">
+<div class="mbt">⚠️ 시장 MS 평가 방법론 주의</div>
+<div class="mbb"><strong>1.</strong> Steam은 매출을 공개하지 않고 있기에 분석 기관별로 측정 범위(Scope)가 근본적으로 달라, 동일 연도에 <strong>최대 $4.5B 이상 차이</strong>(방법론 차이).<br/><strong>2.</strong> VG Insights(Sensor Tower) = "게임카피 판매만, F2P IAP 제외" / Alinea Analytics = "유료+F2P 모두 포함" — 전혀 다른 기준.</div>
+</div>
+</section>
+<!-- ══════ 섹션2: 장르 분석 ══════ -->
+<section class="sec" id="s2">
+<p class="sn">Section 02</p>
+<h2 class="stt">스팀 장르별 분석: 역대 지배 장르 및 슈터 장르의 진입 장벽</h2>
+<p class="ss">GameDiscoverCo Exclusive Tag 방식 · 2024 vs 2025 장르별 매출/다운로드</p>
+<div class="si"><h3>🔑 핵심 인사이트</h3><ul>
+<li>🎯 <strong>Action 장르가 매출 58.37%</strong> — 타이틀 수 50%미만이나 CS2·PUBG 등 에버그린(가치가 유지되는) 타이틀 누적으로 독식</li>
+<li>🔴 <strong>슈터 3종(Arena+BR+Hero) $1M+ 타이틀 3개 서브장르 전체 29개</strong> — 2020년 이후 $25M+ 달성 타이틀 = 0~3개</li>
+<li>🟡 <strong>Action Roguelike 104개, JRPG 121개</strong> $1M+ 타이틀 — 평균매출은 낮으나 실질 기회가 더 많은 건강한 생태계</li>
+</ul></div>
+<span class="rn" id="rn2">💱 현재 환율: 1$ = 1,450원</span>
+<div class="mb">
+<div class="mbt">🔬 연구 방법론: Exclusive Tag 방식 (GameDiscoverCo)</div>
+<div class="mbb">Steam은 복수 태그 허용(PUBG = BR+Shooter+Multiplayer+Survival) → 단순 태그집계 = <strong>매출 중복계산</strong>.<br/>GameDiscoverCo는 수익 $1M+ 게임에 <strong>장르 1개 + 서브장르 1개만 강제배정</strong>(Exclusive Tag)하여 Steam 역사의 TAM(누적 총 매출)을 <strong>중복 없이 최초 추정</strong>.</div>
+</div>
+<div class="g2">
+<!-- 좌: 장르 도넛 (외부 레이블) -->
+<div class="cd" style="margin-bottom:0">
+<div class="ct">📊 Steam 전체 역대 누적 매출 — 최상위 장르별 비중</div>
+<div class="cs">수익 $1M+ 타이틀 · Exclusive Tag</div>
+<div style="position:relative;height:320px">
+<canvas id="c2a"></canvas>
+</div>
+<div class="co rd"><strong>💡 핵심:</strong> Action = 타이틀 수 50%미만이나 매출 <strong>58.37%</strong> → 소수 에버그린(가치 유지되는) 타이틀 독식.</div>
+</div>
+<!-- 우: Action 서브장르 수평 바 -->
+<div class="cd" style="margin-bottom:0">
+<div class="ct">📊 Action 카테고리 서브장르별 역대 누적 매출 비중</div>
+<div class="cs">Action 내 Top 10 · 단위: $B · 원화 환산은 현재 환율 연동</div>
+<div style="height:320px"><canvas id="c2b"></canvas></div>
+<div class="co rd"><strong>💡 핵심:</strong> Arena Shooter(CS2) 단독 Action 내 <strong>19%</strong>. 슈터 3종 $1M+ 타이틀 <strong style="color:#dc2626">3개 서브장르 전체 29개</strong>뿐.</div><details class="action-detail"><summary>대표 타이틀 및 주목 포인트 보기</summary><div class="inner"><table><thead><tr><th>서브장르</th><th>Action 내 비중</th><th>역대 누적 매출</th><th>대표 타이틀</th><th>주목 포인트</th></tr></thead><tbody><tr><td>Arena Shooter</td><td>18.99%</td><td>$9.52B</td><td>CS2, CS:Source</td><td>CS2 단독이 대부분을 차지하는 극단적 집중도</td></tr><tr><td>FPS</td><td>13.30%</td><td>$6.67B</td><td>CoD, Left 4 Dead 2, Ready or Not</td><td>다수 타이틀이 분산; CoD 비중 높음</td></tr><tr><td>Action-Adventure</td><td>11.37%</td><td>$5.70B</td><td>RDR2, Hogwarts Legacy, Sea of Thieves</td><td>비슈팅 서브장르 중 최대</td></tr><tr><td>Open World Survival</td><td>10.65%</td><td>$5.34B</td><td>Rust, ARK, Palworld</td><td>2020년대 가장 빠르게 성장한 서브장르</td></tr><tr><td>Battle Royale</td><td>9.89%</td><td>(총합 미공개, avg $354.2M)</td><td>PUBG, Apex Legends</td><td>29개 타이틀 전체 합산 수치 미공개 / 차트 비교용 표기에는 추정치가 적용됨</td></tr><tr><td>Souls-like</td><td>5.65%</td><td>추정 ~$2.83B</td><td>Elden Ring, Dark Souls 시리즈</td><td>소수 고품질 타이틀 집중</td></tr><tr><td>Survival Horror</td><td>5.17%</td><td>추정 ~$2.59B</td><td>Resident Evil 시리즈</td><td>콘솔 크로스오버 강세</td></tr><tr><td>Hero Shooter</td><td>4.12%</td><td>(avg $206.7M)</td><td>OW2, Marvel Rivals</td><td>신규 진입 극도로 어려움</td></tr><tr><td>Third-Person Shooter</td><td>2.86%</td><td>추정 ~$1.43B</td><td>MGSV, Division 시리즈</td><td>중간 규모 안정적</td></tr><tr><td>Hack and Slash</td><td>2.55%</td><td>추정 ~$1.28B</td><td>Devil May Cry, Hades</td><td>인디부터 AAA까지 분포</td></tr></tbody></table><div class="action-note">※ 표 데이터는 첨부된 steamdeepdive.xlsx의 Action 장르 서브장르별 LTD 누적 매출 및 대표 타이틀 구간을 기준으로 반영했습니다.</div></div></details>
+</div>
+</div>
+<p class="src">📎 GameDiscoverCo · <a href="https://newsletter.gamediscover.co/p/which-genres-have-ruled-steam-a-new" target="_blank">↗ Which genres have ruled Steam?</a></p>
+<!-- 진입 난이도 테이블 -->
+<div class="cd">
+<div class="ct">📊 서브장르별 게임당 평균 매출 vs $1M+ 타이틀 수 비교 (Gamediscover.co)</div>
+<div class="cs">높은 평균매출 = 소수 과점 (🔴) | 높은 타이틀 수 = 건강한 생태계 (🟡)</div>
+<div class="tw"><table>
+<thead><tr><th>서브장르</th><th>게임당 평균 매출</th><th>$1M+ 타이틀 수</th><th>2020 이후 $25M+</th><th>진입 난이도</th></tr></thead>
+<tbody>
+<tr><td>Arena Shooter</td><td>$634.8M</td><td rowspan="3"><strong style="color:#dc2626">3개 서브장르 전체 29개</strong></td><td>없음</td><td class="td">🔴 극도로 어려움</td></tr>
+<tr><td>Battle Royale</td><td>$354.2M</td><td>없음</td><td class="td">🔴 극도로 어려움</td></tr>
+<tr><td>Hero Shooter</td><td>$206.7M</td><td>Naraka, OW2, MR 단 3개</td><td class="td">🔴 극도로 어려움</td></tr>
+<tr><td>Action Roguelike</td><td>$8.4M</td><td><strong>104개</strong></td><td>70+ 2020이후</td><td class="ts">🟡 진입 가능</td></tr>
+<tr><td>Psych Horror</td><td>낮음</td><td>44개</td><td>상당수 최근</td><td class="ts">🟡 틈새</td></tr>
+<tr><td>JRPG</td><td>낮음</td><td><strong>121개</strong></td><td>다수 최근</td><td class="ts">🟡 경쟁치열, 가능</td></tr>
+</tbody></table></div>
+<div class="co gn"><strong>💡 역설:</strong> 평균매출 낮은 서브장르가 실제 <strong>더 건강한 생태계</strong>. 신규 퍼블리셔 기회는 이쪽.</div>
+<p class="src">📎 GameDiscoverCo · <a href="https://newsletter.gamediscover.co/p/which-genres-have-ruled-steam-a-new" target="_blank">↗원문</a></p>
+</div>
+<!-- 2024 vs 2025 매출 -->
+<div class="cd">
+<div class="ct">📊 2024 vs 2025 Steam 장르별 매출 비교(*매출 트랜드 참고용, 게임별 판매추정 합산)</div>
+<div class="cs">단위: $M · VG Insights · 합계: 2024 $10,400M → 2025 $11,700M (+12.5%)</div>
+<div style="position:relative;width:100%;height:420px"><canvas id="c2d"></canvas></div>
+<div class="co bl"><strong>⚠️ 방법론 주의:</strong> 2024 $10.9B=VG Insights(게임별판매합산). 2025 $16.9B=GameDiscoverCo(Valve역산). 동일 방법론 Alinea YoY = <strong>+7.5%</strong>.</div>
+<p class="src">📎 VG Insights / GameDiscoverCo · <a href="https://newsletter.gamediscover.co/p/revealed-the-numbers-behind-steams" target="_blank">↗원문</a> · <a href="https://e.infogram.com/_/udsFcSZDQrY9T9dxhj5k?src=embed" target="_blank">↗Infogram</a></p>
+</div>
+<!-- 2024 vs 2025 다운로드 -->
+<div class="cd">
+<div class="ct">📊 2024 vs 2025 Steam 장르별 다운로드 비교</div>
+<div class="cs">단위: M(백만) · 합계: 752M → 767M (+2.0%)</div>
+<div style="position:relative;width:100%;height:380px"><canvas id="c2e"></canvas></div>
+<div class="co"><strong>💡 핵심:</strong> Action이 매출(+32%)+DL(+27.5%) 모두 <strong>압도적 1위 성장</strong>. RPG는 매출·DL 모두 역성장.</div>
+<p class="src">📎 VG Insights / GameDiscoverCo · <a href="https://e.infogram.com/_/udsFcSZDQrY9T9dxhj5k?src=embed" target="_blank">↗Infogram</a></p>
+</div>
+</section>
+<!-- 섹션3 플레이스홀더 -->
+<section class="sec" id="s3">
+<p class="sn">Section 03</p>
+<h2 class="stt">슈팅 장르 심화 분석</h2>
+<p class="ss">출시 추세 · Revenue 기준 MS · Player 기준 MS · 대표 타이틀 월평균 CCU · 서브장르별 Top 7 인텔리전스</p>
+<div class="si"><h3>🔑 핵심 인사이트</h3><div class="s3-card-grid"><div class="s3-card"><div class="s3-card-kicker">Supply Signal</div><div class="s3-card-title">Shooter 공급 비중은 9~13% 박스권</div><div class="s3-card-body">2026년 1Q 기준 전체 6,841개 중 631개가 Shooter로 집계됐습니다. 절대 출시 수는 늘었지만, 전체 시장 팽창 속도가 더 빨라져 서브장르 포지셔닝이 더 중요해졌습니다.</div></div><div class="s3-card"><div class="s3-card-kicker">Cashflow Shift</div><div class="s3-card-title">누적 TAM(누적 총 매출) 1위와 최근 현금 유입 1위가 갈립니다</div><div class="s3-card-body">역사적 누적 규모는 택티컬·아레나가 가장 크지만, 2026년 1Q 현금 유입 점유율은 익스트랙션 24.6%로 가장 빠르게 상승했습니다. 과거 규모와 현재 모멘텀을 분리해서 봐야 합니다.</div></div><div class="s3-card"><div class="s3-card-kicker">Player Momentum</div><div class="s3-card-title">플레이어 지배력은 택티컬·아레나, 변동성은 익스트랙션</div><div class="s3-card-body">Player MS는 택티컬·아레나 우위가 유지되지만, 익스트랙션은 2025년 2.7%에서 2026년 1Q 9.6%로 급등했습니다. ARC Raiders가 대표 타이틀 레벨에서 모멘텀을 증폭했습니다.</div></div></div></div>
+<div class="s3-kpi-grid"><div class="kp" style="border-left-color:#4f46e5"><div class="kl">2026년 1Q Shooter 출시 수</div><div class="kv">631 titles</div><div class="ks">전체 6,841개 중 9.2%</div><span class="kb up">최신 집계 기준</span></div><div class="kp" style="border-left-color:#0d9488"><div class="kl">2026년 1Q 최대 절대 출시 수</div><div class="kv">Co-op 386 titles</div><div class="ks">서브장르 중 가장 큰 볼륨</div><span class="kb nu">공급 측 최다</span></div><div class="kp" style="border-left-color:#f59e0b"><div class="kl">누적 TAM(누적 총 매출) 1위</div><div class="kv">택티컬·아레나 38%</div><div class="ks">$9.52B / Shooter total $25B</div><span class="kb wa">CS2 주도 구조</span></div><div class="kp" style="border-left-color:#22c55e"><div class="kl">2026년 1Q 급부상</div><div class="kv">익스트랙션 24.6%</div><div class="ks">Revenue MS / ARC Raiders 효과</div><span class="kb up">최근 자금 유입 확대</span></div></div>
+<div class="cd s3-layer">
+<div class="ct">📊 스팀 전체 게임 및 슈터 서브 장르별 출시 현황 <span class="s3-chip">2020~2026.1Q</span></div>
+
+<div class="g2">
+<div>
+<div class="s3-subcap">전체 출시 수 + Shooter 출시 수 + Shooter 비중</div><div style="height:360px"><canvas id="c3a"></canvas></div>
+<div class="s3-mini">전체 출시 수(회색) 대비 Shooter 출시 수(청록), 우측축은 전체 신작 대비 Shooter 비중입니다.</div>
+</div>
+<div>
+<div class="s3-subcap">Shooter 서브장르별 연도별 출시 수 구성</div><div style="height:390px"><canvas id="c3a2"></canvas></div>
+<div class="s3-mini">Co-op, Military, Arena가 절대 출시 수를 키웠고, Extraction은 작지만 가장 가파른 증가 곡선을 보였습니다.</div>
+</div>
+</div>
+<div class="co bl"><strong>💡 해석:</strong> 최신 집계 기준으로 보면 전체 신작 대비 Shooter 비중은 <strong>2020~2026.1Q 동안 9~13% 범위</strong>에서 움직였습니다. 절대 출시 수는 늘었지만 전체 게임 출시 수가 더 빠르게 확대되어, 공급 경쟁은 <strong>양적 팽창보다 세부 서브장르 포지셔닝</strong>이 중요해졌습니다.</div>
+<p class="src">📎 첨부 원본 · <a href="https://www.genspark.ai/api/files/s/Gv3wUKVw" target="_blank">steamdeepdive.xlsx</a></p>
+</div>
+<div class="cd s3-layer">
+<div class="ct">📊 스팀 슈팅 서브 장르 매출 기준 MS <span class="s3-chip">누적 / 2025 / 2026.1Q</span></div>
+
+<div class="s3-subcap">누적 TAM(누적 총 매출), 2025년, 2026년 1Q 매출 기준 점유율 비교</div><div style="height:520px"><canvas id="c3b"></canvas></div>
+<div class="tw s3-table" style="margin-top:14px"><table>
+<thead><tr><th>서브장르</th><th>누적 매출</th><th>2025 매출 / 비중</th><th>2026.1Q 매출 / 비중</th><th>주요 타이틀 기여</th><th>현황 메모</th></tr></thead>
+<tbody>
+<tr><td>택티컬·아레나</td><td>$9.52B</td><td>$1,325M / 35.0%</td><td>$315M / 33.0%</td><td>CS2 $1,160M <small>2025 내 87.5%</small></td><td>CS2 안정, 일부 유저는 Marathon 류로 이탈</td></tr>
+<tr><td>밀리터리 FPS</td><td>$6.67B</td><td>$600M / 15.9%</td><td>$75M / 7.9%</td><td>BF6 $465M <small>2025 내 77.5%</small></td><td>BF6 론칭 효과 소진, Live 안정화 전</td></tr>
+<tr><td>배틀로얄</td><td>$4.95B</td><td>$850M / 22.5%</td><td>$195M / 20.4%</td><td>PUBG $649M <small>2025 내 76.4%</small></td><td>PUBG 안정, 신규 자극은 제한적</td></tr>
+<tr><td>히어로 슈팅</td><td>$2.06B</td><td>$340M / 9.0%</td><td>$70M / 7.3%</td><td>Marvel Rivals $200M <small>2025 내 58.8%</small></td><td>플레이어 감소 반영 구간</td></tr>
+<tr><td>익스트랙션</td><td>$620M</td><td>$385M / 10.2%</td><td>$235M / 24.6%</td><td>ARC Raiders $350M <small>2025 내 90.9%</small></td><td>ARC Raiders Jan $50M + Marathon Mar 출시 효과</td></tr>
+<tr><td>Co-op 슈팅</td><td>$1.00B</td><td>$285M / 7.5%</td><td>$65M / 6.8%</td><td>HD2 $200M <small>2025 내 70.2%</small></td><td>HD2 Xbox 확장에 따른 효과, Deep Rock Galactic 안정화</td></tr>
+</tbody>
+</table></div>
+<div class="co rd"><strong>💡 해석:</strong> 누적 TAM(누적 총 매출)은 택티컬·아레나가 가장 크지만, <strong>2026년 1Q 현금 유입은 익스트랙션이 24.6%</strong>로 급부상했습니다. 즉, 역사적 TAM(누적 총 매출)과 최근 매출 흐름은 다른 방향을 가리키고 있습니다.</div>
+<p class="src">📎 첨부 원본 · <a href="https://www.genspark.ai/api/files/s/Gv3wUKVw" target="_blank">steamdeepdive.xlsx</a> · 수치 근거 시트 Row 159~179</p>
+</div>
+<div class="cd s3-layer">
+<div class="ct">📊 스팀 슈팅 서브 장르 Player 기준 MS + 대표 타이틀 월평균 CCU</div>
+
+<div class="g2">
+<div>
+<div class="s3-subcap">Player 기준 MS + 대표 타이틀 2026년 1Q 평균 CCU</div><div style="height:470px"><canvas id="c3c"></canvas></div>
+<div class="s3-mini">대표 타이틀 CCU line은 각 서브장르의 대표 게임 기준입니다. (CS2 / PUBG / BF6 / Marvel Rivals / ARC Raiders / HD2)</div>
+</div>
+<div>
+<div class="s3-subcap">대표 타이틀 월평균 CCU 추이 (2025.01~2026.03)</div><div style="height:470px"><canvas id="c3d"></canvas></div>
+<div class="s3-mini">2025년 하반기부터 2026년 1Q까지는 CS2 고정 지배, PUBG 안정, ARC Raiders 급상승 후 조정, BF6 급락 패턴이 동시에 보입니다.</div>
+</div>
+</div>
+<div class="tw s3-table" style="margin-top:14px"><table>
+<thead><tr><th>서브장르</th><th>ATH PCCU</th><th>2025 평균 CCU / MS</th><th>2026 Q1 평균 CCU / MS</th><th>대표 타이틀</th><th>대표 타이틀 2026 Q1 평균</th></tr></thead>
+<tbody>
+<tr><td>택티컬·아레나</td><td>1,862,531 (CS2)</td><td>964,000 / 60.0%</td><td>1,074,000 / 58.9%</td><td>CS2</td><td>1,074,571</td></tr>
+<tr><td>배틀로얄</td><td>3,257,248 (PUBG)</td><td>337,000 / 21.0%</td><td>329,000 / 18.1%</td><td>PUBG</td><td>329,198</td></tr>
+<tr><td>밀리터리 FPS</td><td>747,440 (BF6)</td><td>122,000 / 7.6%</td><td>46,000 / 2.5%</td><td>BF6</td><td>46,423</td></tr>
+<tr><td>히어로 슈팅</td><td>644,269 (Marvel Rivals)</td><td>100,000 / 6.2%</td><td>145,000 / 8.0%</td><td>Marvel Rivals</td><td>87,930</td></tr>
+<tr><td>익스트랙션</td><td>481,966 (ARC Raiders)</td><td>43,000 / 2.7%</td><td>175,000 / 9.6%</td><td>ARC Raiders</td><td>174,849</td></tr>
+<tr><td>Co-op 슈팅</td><td>458,709 (HD2)</td><td>42,000 / 2.6%</td><td>53,000 / 2.9%</td><td>HELLDIVERS 2</td><td>52,755</td></tr>
+</tbody>
+</table></div>
+<div class="co gn"><strong>💡 해석:</strong> Player 기준에서는 여전히 <strong>택티컬·아레나가 절대 지배</strong>입니다. 다만 2026년 1Q에는 <strong>익스트랙션이 2.7% → 9.6%</strong>로 튀어 올라, Revenue와 Player 양축 모두에서 가장 빠른 변화를 만든 서브장르가 되었습니다.</div>
+<p class="src">📎 첨부 원본 · <a href="https://www.genspark.ai/api/files/s/Gv3wUKVw" target="_blank">steamdeepdive.xlsx</a> · 수치 근거 시트 Row 182~214</p>
+</div>
+<div class="cd s3-layer">
+<div class="ct">📊 서브장르별 Top 7 인텔리전스 보드</div>
+<div class="cs">첨부된 steam_shooter_genre_master_intelligence_board_v2.html를 기반으로 택티컬·아레나 / 배틀로얄 / 밀리터리 FPS / 히어로 슈팅 / 익스트랙션 / Co-op 슈팅 / 검증 내역 탭 전환형 보드를 통합했습니다.</div>
+<div class="s3-ref">
+<div class="tab-bar"><span class="tab active" onclick="showTab('tactical', this)">① 택티컬·아레나</span>
+<span class="tab" onclick="showTab('br', this)">② 배틀로얄</span>
+<span class="tab" onclick="showTab('military', this)">③ 밀리터리 FPS</span>
+<span class="tab" onclick="showTab('hero', this)">④ 히어로 슈팅</span>
+<span class="tab" onclick="showTab('extract', this)">⑤ 익스트랙션</span>
+<span class="tab" onclick="showTab('coop', this)">⑥ Co-op 슈팅</span>
+<span class="tab" onclick="showTab('verify', this)">⑦ 검증 내역</span>
+</div>
+<!-- SECTION 1: TACTICAL/ARENA (변경 없음) -->
+<div class="section visible" id="s-tactical">
+<div class="scroll-x">
+<table class="tbl">
+<tr>
+<th>#</th><th>타이틀</th><th>개발사/퍼블리셔</th><th>출시일</th><th>BM</th>
+<th>론칭 Peak CCU</th><th>ATH Peak CCU</th><th>최근 30d Avg</th>
+<th>리뷰수</th><th>평가</th><th>게임성 한줄 요약</th>
+</tr>
+<tr>
+<td>1</td><td><strong>Counter-Strike 2</strong></td><td>Valve / Valve</td><td>Sep 2023</td>
+<td><span class="tag t-f2p">F2P</span></td>
+<td class="num-big">~750k<br/><span class="num-dim flag-t3">CS:GO 전환 추산</span></td>
+<td class="num-big">1,862,531<br/><span class="num-dim flag-t1">SteamDB Apr 2025</span></td>
+<td class="num-big">~1,077k<br/><span class="num-dim flag-t2">rec0ded88.com</span></td>
+<td>9,516,148<br/><span class="num-dim flag-t1">Steambase</span></td>
+<td class="score-vp">매우 긍정</td>
+<td>20년 CS 레거시 기반 경제·유틸리티 운영이 핵심인 택티컬 FPS의 절대 정의자</td>
+</tr>
+<tr>
+<td>2</td><td><strong>R6 Siege (Siege X)</strong></td><td>Ubisoft / Ubisoft</td><td>Dec 2015</td>
+<td><span class="tag t-b2p">B2P $10</span></td>
+<td class="num-big">~30k<br/><span class="num-dim flag-t3">2015 론칭 추산</span></td>
+<td class="num-big">201,933<br/><span class="num-dim flag-t1">SteamDB Mar 2024</span></td>
+<td class="num-big">~40k<br/><span class="num-dim flag-t3">추산 (Siege X 이후)</span></td>
+<td>180k+<br/><span class="num-dim flag-t2">SteamSpy 91k CCU</span></td>
+<td class="score-mp">대체로 긍정</td>
+<td>파괴물리+오퍼레이터 고유 어빌리티의 3층 전술 퍼즐. Siege X(2025)로 F2P 전환·재활성화</td>
+</tr>
+<tr>
+<td>3</td><td><strong>BattleBit Remastered</strong></td><td>SgtOkiDoki / SgtOkiDoki</td><td>Jun 2023</td>
+<td><span class="tag t-b2p">B2P $15</span></td>
+<td class="num-big">~90k<br/><span class="num-dim flag-t2">SteamCharts 2023</span></td>
+<td class="num-big">~90k<br/><span class="num-dim flag-t2">launch = ATH</span></td>
+<td class="num-big">~7k<br/><span class="num-dim flag-t3">추산</span></td>
+<td>130k+<br/><span class="num-dim flag-t2">복수 매체</span></td>
+<td class="score-vp">매우 긍정</td>
+<td>3인팀 저폴리 미감에 254인 대규모 전투. 저가+저사양으로 Battlefield 빈자리 공략 성공</td>
+</tr>
+<tr>
+<td>4</td><td><strong>FragPunk</strong></td><td>Bad Guitar Studio / NetEase</td><td>Mar 2025</td>
+<td><span class="tag t-f2p">F2P</span></td>
+<td class="num-big">113,946<br/><span class="num-dim flag-t1">SteamDB Mar 9, 2025</span></td>
+<td class="num-big">113,946<br/><span class="num-dim flag-t1">SteamDB</span></td>
+<td class="num-big">~12k<br/><span class="num-dim flag-t3">추산</span></td>
+<td>40k+<br/><span class="num-dim flag-t2">GWO 론칭 시 12k→증가</span></td>
+<td class="score-mp">대체로 긍정</td>
+<td>매 라운드 카드로 게임룰 변형하는 신메카닉 택티컬 히어로. 기술적 이슈 초기 극복 후 안착</td>
+</tr>
+<tr>
+<td>5</td><td><strong>Quake Champions</strong></td><td>id Software / Bethesda</td><td>Sep 2022 (1.0)</td>
+<td><span class="tag t-f2p">F2P</span></td>
+<td class="num-big">~15k<br/><span class="num-dim flag-t3">추산</span></td>
+<td class="num-big">~30k<br/><span class="num-dim flag-t3">추산</span></td>
+<td class="num-big">~2k<br/><span class="num-dim flag-t3">추산</span></td>
+<td>25k+<br/><span class="num-dim flag-t3">추산</span></td>
+<td class="score-mp">대체로 긍정</td>
+<td>순수 에임·이동 기반 클래식 아레나 슈팅 리부트. 레트로 팬덤 기반이나 주류 접근성 한계</td>
+</tr>
+<tr>
+<td>6</td><td><strong>Splitgate: Arena Reloaded</strong></td><td>1047 Games / 1047 Games</td><td>Dec 2025</td>
+<td><span class="tag t-f2p">F2P</span></td>
+<td class="num-big">~25k<br/><span class="num-dim flag-t3">추산 (재출시)</span></td>
+<td class="num-big">~25k<br/><span class="num-dim flag-t3">추산</span></td>
+<td class="num-big">~10k<br/><span class="num-dim flag-t3">추산 (신규)</span></td>
+<td>소규모<br/><span class="num-dim flag-t3">신규</span></td>
+<td class="score-mp">TBD</td>
+<td>포탈 이동 메카닉 원점 회귀. Splitgate 2 실패 후 레거시 팬덤 재겨냥한 원형 복귀</td>
+</tr>
+<tr>
+<td>7</td><td><strong>Rogue Point</strong></td><td>Crowbar Collective / Team17</td><td>2026 EA</td>
+<td><span class="tag t-b2p">B2P EA</span></td>
+<td class="num-big">~3k<br/><span class="num-dim flag-t3">EA 초기</span></td>
+<td class="num-big">~3k<br/><span class="num-dim flag-t3">EA 진행중</span></td>
+<td class="num-big">~3k<br/><span class="num-dim flag-t3">EA 진행중</span></td>
+<td>소규모<br/><span class="num-dim flag-t3">EA</span></td>
+<td class="score-vp">매우 긍정</td>
+<td>Black Mesa팀 작, "게임개발 서비스" 커뮤니티 공동 개발 택티컬 FPS EA</td>
+</tr>
+</table>
+</div>
+
+<div class="insight-box">
+<div class="insight-head">추가 고려 사항: 팬덤 / 커뮤니티 / 이스포츠 평가</div>
+<table class="tbl">
+<tr><th>타이틀</th><th>프랜차이즈 팬덤</th><th>커뮤니티 네트워크</th><th>이스포츠 규모</th><th>종합</th></tr>
+<tr><td>CS2</td><td><span class="stars">★★★★★</span> 20년 레거시 최강 팬덤</td><td><span class="stars">★★★★★</span> Steam 최대 허브</td><td><span class="stars">★★★★★</span> $1B+ 누적상금, 1.8M뷰어 메이저</td><td><span class="stars">★★★★★</span></td></tr>
+<tr><td>R6 Siege</td><td><span class="stars">★★★★</span><span class="stars-e">★</span> 85M 등록계정</td><td><span class="stars">★★★★</span><span class="stars-e">★</span> 30M MAU, 강한 오퍼레이터 커뮤니티</td><td><span class="stars">★★★★</span><span class="stars-e">★</span> Six Major, 521k 최고시청</td><td><span class="stars">★★★★</span><span class="stars-e">★</span></td></tr>
+<tr><td>BattleBit</td><td><span class="stars">★★</span><span class="stars-e">★★★</span> 신규 IP, 소규모팀</td><td><span class="stars">★★★</span><span class="stars-e">★★</span> 커뮤니티 주도 콘텐츠</td><td><span class="stars">★★</span><span class="stars-e">★★★</span> 이스포츠 없음</td><td><span class="stars">★★★</span><span class="stars-e">★★</span></td></tr>
+<tr><td>FragPunk</td><td><span class="stars">★★</span><span class="stars-e">★★★</span> 신규 IP+NetEase 배경</td><td><span class="stars">★★★</span><span class="stars-e">★★</span> NetEase 글로벌 네트워크</td><td><span class="stars">★★★</span><span class="stars-e">★★</span> 이스포츠 계획 중</td><td><span class="stars">★★★</span><span class="stars-e">★★</span></td></tr>
+</table>
+</div>
+<div class="insight-box">
+<div class="insight-head">택티컬·아레나 — Top5 진입 핵심 인사이트</div>
+<div class="insight-row">① <strong>CS2 독점 구조 수용</strong>: 1위는 불가. 목표를 "CS2 다음" R6 Siege급 50-100k avg CCU로 설정하고, CS2가 제공하지 않는 요소(디스트럭션, 협력 전술, 다른 TTK) 조합 필수</div>
+<div class="insight-row">② <strong>하나의 파격 메카닉 법칙</strong>: BattleBit(규모+저가), FragPunk(카드변형), Splitgate(포탈) — 모든 성공 사례는 "CS2와 무엇이 다른가"에 한 줄로 답한다. 이 차별화가 없으면 진입 의미 없음</div>
+<div class="insight-row">③ <strong>$15-20 가격대 효과</strong>: BattleBit $15 → 130k 리뷰 Very Positive. 진입 장벽 낮추면 F2P 대비 품질 신호 + 수익 균형점 확보 가능. F2P는 이미 CS2가 있어 비교 불가</div>
+<div class="insight-row">④ <strong>이스포츠 생태계 동시 구축</strong>: R6 Siege 장수 비결은 프로씬. 오픈 토너먼트 → 인비테이션 → 오픈리그 단계 구조로 커뮤니티 하드코어 앵커층 필수 확보</div>
+<div class="insight-row">⑤ <strong>한국 스튜디오 어드밴티지</strong>: 아시아 시장은 택티컬 슈터 경쟁이 상대적으로 서구 대비 낮음. CSGO 인프라가 덜 성숙한 동남아·중앙아시아 선행 확보 후 서구 확장 가능</div>
+</div>
+</div>
+<!-- SECTION 2: BATTLE ROYALE (Naraka·Fall Guys 정정) -->
+<div class="section" id="s-br">
+<div class="scroll-x">
+<table class="tbl">
+<tr>
+<th>#</th><th>타이틀</th><th>개발사/퍼블리셔</th><th>출시일</th><th>BM</th>
+<th>론칭 Peak</th><th>ATH Peak</th><th>30d Avg</th><th>리뷰수</th><th>평가</th><th>게임성 한줄 요약</th>
+</tr>
+<tr>
+<td>1</td><td><strong>PUBG: Battlegrounds</strong></td><td>Krafton / Krafton</td><td>Dec 2017</td>
+<td><span class="tag t-f2p">F2P (구 B2P)</span></td>
+<td class="num-big">3,236k<br/><span class="num-dim flag-t1">Jan 2018 SteamDB</span></td>
+<td class="num-big">3,257,248<br/><span class="num-dim flag-t1">SteamDB</span></td>
+<td class="num-big">~334k<br/><span class="num-dim flag-t2">Steambase Apr 2026</span></td>
+<td>2,697,255<br/><span class="num-dim flag-t1">Steambase</span></td>
+<td class="score-mix">혼합</td>
+<td>배틀로얄 원조. 리얼리즘+탈것+대규모 맵. 2025년 1.347M 재도달로 장르 수명 재입증</td>
+</tr>
+<tr>
+<td>2</td><td><strong>Apex Legends</strong></td><td>Respawn / EA</td><td>Nov 2020 (Steam)</td>
+<td><span class="tag t-f2p">F2P</span></td>
+<td class="num-big">~400k<br/><span class="num-dim flag-t3">Steam 론칭 추산</span></td>
+<td class="num-big">624,473<br/><span class="num-dim flag-t1">SteamDB (GamesRadar 인용)</span></td>
+<td class="num-big">~100k<br/><span class="num-dim flag-t3">추산</span></td>
+<td>500k+<br/><span class="num-dim flag-t3">추산</span></td>
+<td class="score-mp">대체로 긍정</td>
+<td>히어로 어빌리티+핑 시스템+이동 기반 BR. Titanfall 운동성 레거시. ALGS 이스포츠 생태계</td>
+</tr>
+<tr>
+<td>3</td><td><strong>Naraka: Bladepoint</strong></td><td>24 Entertainment / NetEase</td><td>Aug 2021</td>
+<td><span class="tag t-f2p">F2P</span></td>
+<td class="num-big">~35k<br/><span class="num-dim flag-t3">2021 론칭 추산</span></td>
+<td class="num-big num-fix">385,770<br/><span class="num-dim flag-t1">Steambase Jul 3, 2024</span> <span class="flag-fix">★정정</span></td>
+<td class="num-big num-fix">~50k<br/><span class="num-dim flag-t1">Steambase live ★정정</span></td>
+<td><span class="num-fix">297,187</span><br/><span class="num-dim flag-t1">Steambase ★정정</span></td>
+<td class="score-mp">대체로 긍정</td>
+<td>근접전·무협 미학의 독창적 BR. 40M+ 플레이어. 시즌 콘텐츠 지속 갱신으로 2024 최고점 재달성</td>
+</tr>
+<tr>
+<td>4</td><td><strong>Battlefield REDSEC</strong></td><td>Battlefield Studios / EA</td><td>Oct 2025</td>
+<td><span class="tag t-f2p">F2P</span></td>
+<td class="num-big">~50k est<br/><span class="num-dim flag-t3">BF6 병행 추산</span></td>
+<td class="num-big">~50k est<br/><span class="num-dim flag-t3">추산</span></td>
+<td class="num-big">Unknown<br/><span class="num-dim flag-t3">BF6 통합</span></td>
+<td>9,399<br/><span class="num-dim flag-t1">Steam Store 43%+</span></td>
+<td class="score-mix">혼합 (43%)</td>
+<td>BF DNA 기반 BR+Gauntlet 복합. 배틀패스 강제 연동 불만. BF6 유저 크로스오버 의존</td>
+</tr>
+<tr>
+<td>5</td><td><strong>Fall Guys</strong></td><td>Mediatonic / Epic</td><td>Aug 2020 (B2P→F2P Jun 2022)</td>
+<td><span class="tag t-f2p">F2P</span></td>
+<td class="num-big num-fix">172,213<br/><span class="num-dim flag-t2">steamplayercount.com (B2P 앱) ★정정</span></td>
+<td class="num-big num-fix">172,213<br/><span class="num-dim flag-t2">B2P 앱 ATH ★정정</span></td>
+<td class="num-big num-fix">~329<br/><span class="num-dim flag-t1">Steambase F2P 앱 현재 ★정정</span></td>
+<td><span class="num-fix">470,369</span><br/><span class="num-dim flag-t1">Steambase ★정정</span></td>
+<td class="score-vp">매우 긍정</td>
+<td>물리엔진 파티BR, 비경쟁 캐주얼층 개척. F2P 전환 후 Epic 이전으로 Steam 현재 CCU 급감</td>
+</tr>
+<tr>
+<td>6</td><td><strong>Ring of Elysium</strong></td><td>Aurora Studio / Tencent</td><td>Sep 2018</td>
+<td><span class="tag t-f2p">F2P</span></td>
+<td class="num-big">~50k<br/><span class="num-dim flag-t3">추산</span></td>
+<td class="num-big">~50k<br/><span class="num-dim flag-t3">추산</span></td>
+<td class="num-big">&lt;5k<br/><span class="num-dim flag-t3">추산 (쇠퇴)</span></td>
+<td>50k+<br/><span class="num-dim flag-t3">추산</span></td>
+<td class="score-mix">혼합</td>
+<td>환경재해 메카닉 BR. Tencent 배경이나 장기 서포트 부족으로 쇠퇴. 틈새 장르 포화의 교훈</td>
+</tr>
+<tr>
+<td>7</td><td><strong>Super People</strong></td><td>Wonder People / Wonder People</td><td>Dec 2022</td>
+<td><span class="tag t-dead">서비스 종료</span></td>
+<td class="num-big">~20k<br/><span class="num-dim flag-t3">추산</span></td>
+<td class="num-big">~20k<br/><span class="num-dim flag-t3">추산</span></td>
+<td class="num-big"><span style="color:var(--color-text-danger);">종료 Feb 2024</span></td>
+<td>30k+<br/><span class="num-dim flag-t3">추산</span></td>
+<td class="score-mix">혼합</td>
+<td>슈퍼히어로 어빌리티+BR. 장르 포화+PUBG 아성에 막혀 2024년 서비스 종료. 분화 실패 교훈</td>
+</tr>
+</table>
+</div>
+
+<div class="insight-box">
+<div class="insight-head">추가 고려 사항: 팬덤 / 커뮤니티 / 이스포츠 평가</div>
+<table class="tbl">
+<tr><th>타이틀</th><th>프랜차이즈</th><th>커뮤니티</th><th>이스포츠</th><th>종합</th></tr>
+<tr><td>PUBG</td><td><span class="stars">★★★★★</span> Krafton 글로벌 BR 원조</td><td><span class="stars">★★★★</span><span class="stars-e">★</span> 2.7M 리뷰, 한국 중심</td><td><span class="stars">★★★★</span><span class="stars-e">★</span> PGI, Nations Cup</td><td><span class="stars">★★★★</span><span class="stars-e">★</span></td></tr>
+<tr><td>Apex</td><td><span class="stars">★★★★</span><span class="stars-e">★</span> Titanfall/Respawn 레거시</td><td><span class="stars">★★★★</span><span class="stars-e">★</span> 대규모 F2P 생태계</td><td><span class="stars">★★★★</span><span class="stars-e">★</span> ALGS, ENC 2026</td><td><span class="stars">★★★★</span><span class="stars-e">★</span></td></tr>
+<tr><td>Naraka</td><td><span class="stars">★★★</span><span class="stars-e">★★</span> NetEase 배경 신규 IP</td><td><span class="stars">★★★★</span><span class="stars-e">★</span> 40M+ 플레이어, 아시아 강세</td><td><span class="stars">★★★</span><span class="stars-e">★★</span> 중소 규모 이스포츠</td><td><span class="stars">★★★</span><span class="stars-e">★★</span></td></tr>
+</table>
+</div>
+<div class="insight-box">
+<div class="insight-head">배틀로얄 — Top5 진입 핵심 인사이트</div>
+<div class="insight-row">① <strong>F2P 필수 + 멀티플랫폼 Day1</strong>: Steam Top5 = F2P. REDSEC의 BF DNA도 BF6 유료 없이는 의미 없음. 모바일 크로스플레이는 추가 가산점</div>
+<div class="insight-row">② <strong>Naraka 모델 연구</strong>: 35k 론칭 → <span class="num-fix">385,770</span> 최고점 <span class="flag-fix">★정정</span>. 시즌별 메카닉 확장+아시아 우선 수요 공략이 유일하게 성공한 "후발 주자 BR" 공식</div>
+<div class="insight-row">③ <strong>PUBG 이탈층 포착</strong>: Mixed 리뷰(핵·밸런스 불만)에도 334k avg 유지. PUBG의 "불편함을 수용한 유저층"이 더 나은 경험 요구 잠재 이탈자. 리얼리즘+개선된 안티치트가 핵심</div>
+<div class="insight-row">④ <strong>장르 혁신 없인 진입 금지</strong>: Super People·RoE 실패 = 기존 BR 재현 접근의 결과. "BR + X" (X = 디스트럭션/건축/추출/Co-op) 하이브리드만이 차별점 가능</div>
+<div class="insight-row">⑤ <strong>Project S에 가장 부적합한 장르</strong>: PUBG(한국) 독주+Apex F2P 공고화+신규 진입 실패 연속. 신규 IP로 Top5 진입 가능성 최저</div>
+</div>
+</div>
+<!-- SECTION 3: MILITARY FPS (변경 없음) -->
+<div class="section" id="s-military">
+<div class="scroll-x">
+<table class="tbl">
+<tr>
+<th>#</th><th>타이틀</th><th>개발사/퍼블리셔</th><th>출시일</th><th>BM</th>
+<th>론칭 Peak</th><th>ATH Peak</th><th>30d Avg</th><th>리뷰수</th><th>평가</th><th>게임성 한줄 요약</th>
+</tr>
+<tr>
+<td>1</td><td><strong>Battlefield 6</strong></td><td>DICE / EA</td><td>Oct 2025</td>
+<td><span class="tag t-b2p">B2P $70</span></td>
+<td class="num-big">747,440<br/><span class="num-dim flag-t1">SteamDB Oct 10, 2025</span></td>
+<td class="num-big">747,440<br/><span class="num-dim flag-t1">SteamDB</span></td>
+<td class="num-big">~28,233<br/><span class="num-dim flag-t1">Steambase live</span></td>
+<td>332,684<br/><span class="num-dim flag-t1">Steambase</span></td>
+<td class="score-mix">혼합</td>
+<td>역대 BF 최고 론칭 (전작 BF2042 107k 대비 7배). BF4 계승 클래스제 부활. 서버 이슈로 초기 Mixed</td>
+</tr>
+<tr>
+<td>2</td><td><strong>Hell Let Loose</strong></td><td>Black Matter / Team17</td><td>Jul 2021 (1.0)</td>
+<td><span class="tag t-b2p">B2P $30</span></td>
+<td class="num-big">~25k<br/><span class="num-dim flag-t3">2021 론칭 추산</span></td>
+<td class="num-big">~25k<br/><span class="num-dim flag-t3">추산</span></td>
+<td class="num-big">~10k<br/><span class="num-dim flag-t3">추산</span></td>
+<td>50k+<br/><span class="num-dim flag-t3">추산</span></td>
+<td class="score-vp">매우 긍정</td>
+<td>50v50 2차대전 시뮬. 역사적 정확도+지휘관 RTS 메타게임. BF6 불만층 대안 수요 존재</td>
+</tr>
+<tr>
+<td>3</td><td><strong>Squad</strong></td><td>Offworld Industries / Offworld Industries</td><td>Sep 2020</td>
+<td><span class="tag t-b2p">B2P $40</span></td>
+<td class="num-big">~15k<br/><span class="num-dim flag-t3">추산</span></td>
+<td class="num-big">~20k<br/><span class="num-dim flag-t3">추산</span></td>
+<td class="num-big">~10k<br/><span class="num-dim flag-t3">추산</span></td>
+<td>50k+<br/><span class="num-dim flag-t3">추산</span></td>
+<td class="score-vp">매우 긍정</td>
+<td>100인 밀리터리 시뮬. 분대 음성 소통+전선 구축이 핵심. 아마추어 군사 시뮬 팬덤 특화</td>
+</tr>
+<tr>
+<td>4</td><td><strong>Enlisted</strong></td><td>Darkflow Software / Gaijin Ent.</td><td>Mar 2021</td>
+<td><span class="tag t-f2p">F2P</span></td>
+<td class="num-big">~40k<br/><span class="num-dim flag-t3">추산</span></td>
+<td class="num-big">~40k<br/><span class="num-dim flag-t3">추산</span></td>
+<td class="num-big">~8k<br/><span class="num-dim flag-t3">추산</span></td>
+<td>50k+<br/><span class="num-dim flag-t3">추산</span></td>
+<td class="score-mp">대체로 긍정</td>
+<td>분대 AI 통제+차량 결합 2차대전 FPS. War Thunder 계열 Gaijin 운영. P2W 논란 지속</td>
+</tr>
+<tr>
+<td>5</td><td><strong>Arma 3</strong></td><td>Bohemia Interactive / Bohemia</td><td>Sep 2013</td>
+<td><span class="tag t-b2p">B2P $30</span></td>
+<td class="num-big">~15k<br/><span class="num-dim flag-t3">2013 추산</span></td>
+<td class="num-big">~50k<br/><span class="num-dim flag-t3">추산</span></td>
+<td class="num-big">~7k<br/><span class="num-dim flag-t3">추산</span></td>
+<td>90k+<br/><span class="num-dim flag-t3">추산</span></td>
+<td class="score-vp">매우 긍정</td>
+<td>밀리터리 시뮬 레전드. 모딩 생태계(DayZ, Battle Royale 원조)로 13년 생존. UGC 파워 입증</td>
+</tr>
+<tr>
+<td>6</td><td><strong>Insurgency: Sandstorm</strong></td><td>New World Interactive / Focus Home</td><td>Dec 2018</td>
+<td><span class="tag t-b2p">B2P $30</span></td>
+<td class="num-big">~35k<br/><span class="num-dim flag-t3">추산</span></td>
+<td class="num-big">~35k<br/><span class="num-dim flag-t3">추산</span></td>
+<td class="num-big">~5k<br/><span class="num-dim flag-t3">추산</span></td>
+<td>75k+<br/><span class="num-dim flag-t3">추산</span></td>
+<td class="score-mp">대체로 긍정</td>
+<td>현실적 총기 피드백+사망 가중치 중동 CQB. 소규모 전술 밀리터리의 품질 기준점</td>
+</tr>
+<tr>
+<td>7</td><td><strong>Six Days in Fallujah</strong></td><td>Highwire Games / Highwire</td><td>Jul 2023</td>
+<td><span class="tag t-b2p">B2P $40</span></td>
+<td class="num-big">~5k<br/><span class="num-dim flag-t3">추산</span></td>
+<td class="num-big">~10k<br/><span class="num-dim flag-t3">추산</span></td>
+<td class="num-big">~2k<br/><span class="num-dim flag-t3">추산</span></td>
+<td>10k+<br/><span class="num-dim flag-t3">추산</span></td>
+<td class="score-mp">대체로 긍정</td>
+<td>실제 이라크 전투 소재 전술 CQB. 논쟁적 소재+소규모 팀 한계로 틈새 포지션</td>
+</tr>
+</table>
+</div>
+
+<div class="insight-box">
+<div class="insight-head">추가 고려 사항: 팬덤 / 커뮤니티 / 이스포츠 평가</div>
+<table class="tbl">
+<tr><th>타이틀</th><th>프랜차이즈</th><th>커뮤니티</th><th>이스포츠</th><th>종합</th></tr>
+<tr><td>BF6</td><td><span class="stars">★★★★★</span> EA/DICE 20년 IP</td><td><span class="stars">★★★★</span><span class="stars-e">★</span> 332k 리뷰</td><td><span class="stars">★★</span><span class="stars-e">★★★</span> 이스포츠 없음</td><td><span class="stars">★★★★</span><span class="stars-e">★</span></td></tr>
+<tr><td>HLL</td><td><span class="stars">★★★</span><span class="stars-e">★★</span> 인디 신규 IP</td><td><span class="stars">★★★★</span><span class="stars-e">★</span> 니치 강성 팬덤</td><td><span class="stars">★★</span><span class="stars-e">★★★</span> 없음</td><td><span class="stars">★★★</span><span class="stars-e">★★</span></td></tr>
+<tr><td>Arma 3</td><td><span class="stars">★★★★</span><span class="stars-e">★</span> Bohemia 레거시</td><td><span class="stars">★★★★★</span> 모딩 UGC 생태계</td><td><span class="stars">★★</span><span class="stars-e">★★★</span> 없음</td><td><span class="stars">★★★★</span><span class="stars-e">★</span></td></tr>
+</table>
+</div>
+<div class="insight-box">
+<div class="insight-head">밀리터리 FPS — Top5 진입 핵심 인사이트</div>
+<div class="insight-row">① <strong>BF6 $400M 개발비가 기준점 설정</strong>: BF6 비교 불가. "BF 이탈층(지도 불만, 클래스 불균형, AAA 피로)" 흡수하는 틈새 공략만 현실적</div>
+<div class="insight-row">② <strong>HLL·Squad 포지션의 위쪽 빈자리</strong>: $30-40 프리미엄 밀리터리 시뮬 카테고리에 UE5 고퀄 시각적 업그레이드된 타이틀이 없음. 그래픽 향상만으로도 HLL/Squad 이탈층 흡수 가능</div>
+<div class="insight-row">③ <strong>아시아 전장 설정의 미개척성</strong>: HLL Vietnam(2026 예정)이 선점 시도 중이나 한국·동남아 현대전 설정은 아직 전무. 한국 스튜디오의 로컬 어드밴티지 최대</div>
+<div class="insight-row">④ <strong>모딩 생태계 = 장수 보험</strong>: Arma 3가 13년 생존한 이유는 모딩. Steam Workshop 통합 지원 시 UGC 자생 생태계 형성으로 개발사 콘텐츠 부담 분산</div>
+<div class="insight-row">⑤ <strong>Project S 진입 시 주의점</strong>: BF6 직접 경쟁은 불가. "50-100명 규모 전술 Co-op + 밀리터리 미감" 포지션이 유일한 현실적 접근. 즉 밀리터리 FPS와 Co-op의 교집합으로 이동</div>
+</div>
+</div>
+<!-- SECTION 4: HERO SHOOTER (변경 없음) -->
+<div class="section" id="s-hero">
+<div class="scroll-x">
+<table class="tbl">
+<tr>
+<th>#</th><th>타이틀</th><th>개발사/퍼블리셔</th><th>출시일</th><th>BM</th>
+<th>론칭 Peak</th><th>ATH Peak</th><th>30d Avg</th><th>리뷰수</th><th>평가</th><th>게임성 한줄 요약</th>
+</tr>
+<tr>
+<td>1</td><td><strong>Marvel Rivals</strong></td><td>NetEase / NetEase</td><td>Dec 2024</td>
+<td><span class="tag t-f2p">F2P</span></td>
+<td class="num-big">~480k<br/><span class="num-dim flag-t1">Dec 6, 2024 SteamDB</span></td>
+<td class="num-big">644,269<br/><span class="num-dim flag-t1">SteamDB Jan 11, 2025</span></td>
+<td class="num-big">~75k<br/><span class="num-dim flag-t2">tracker.gg 96k 24h peak</span></td>
+<td>380,092<br/><span class="num-dim flag-t1">Steambase</span></td>
+<td class="score-mp">대체로 긍정</td>
+<td>Marvel IP 6v6 히어로슈팅. 다이나믹 시너지+팀업스킬. 644k→100k 급락으로 F2P 사이클 명확히 노출</td>
+</tr>
+<tr>
+<td>2</td><td><strong>Team Fortress 2</strong></td><td>Valve / Valve</td><td>Oct 2007</td>
+<td><span class="tag t-f2p">F2P</span></td>
+<td class="num-big">N/A<br/><span class="num-dim flag-t3">2007 B2P 시절</span></td>
+<td class="num-big">~150k<br/><span class="num-dim flag-t3">추산</span></td>
+<td class="num-big">~85k<br/><span class="num-dim flag-t3">추산</span></td>
+<td>700k+<br/><span class="num-dim flag-t3">추산</span></td>
+<td class="score-mp">대체로 긍정</td>
+<td>클래스 기반 팀슈팅 원조. 18년 생존의 비결은 커뮤니티 모딩·스킨 경제. 봇 문제 지속</td>
+</tr>
+<tr>
+<td>3</td><td><strong>Overwatch 2</strong></td><td>Blizzard / Microsoft</td><td>Oct 2022 (Steam)</td>
+<td><span class="tag t-f2p">F2P</span></td>
+<td class="num-big">~75k<br/><span class="num-dim flag-t3">Steam 출시 추산</span></td>
+<td class="num-big">~75k<br/><span class="num-dim flag-t3">Steam 한정</span></td>
+<td class="num-big">~30k<br/><span class="num-dim flag-t3">추산</span></td>
+<td>80k+<br/><span class="num-dim flag-t3">추산</span></td>
+<td class="score-neg">대체로 부정</td>
+<td>OW1 교체+P2W 배틀패스 논란으로 Steam 신뢰 급락. Battle.net 主, Steam은 보조 채널</td>
+</tr>
+<tr>
+<td>4</td><td><strong>FragPunk</strong></td><td>Bad Guitar Studio / NetEase</td><td>Mar 2025</td>
+<td><span class="tag t-f2p">F2P</span></td>
+<td class="num-big">113,946<br/><span class="num-dim flag-t1">SteamDB Mar 9, 2025</span></td>
+<td class="num-big">113,946<br/><span class="num-dim flag-t1">SteamDB</span></td>
+<td class="num-big">~12k<br/><span class="num-dim flag-t3">추산</span></td>
+<td>40k+<br/><span class="num-dim flag-t2">GWO 보도</span></td>
+<td class="score-mp">대체로 긍정</td>
+<td>카드로 규칙 변형하는 혁신 메카닉 히어로슈팅. 초기 기술적 문제 극복 후 안정화</td>
+</tr>
+<tr>
+<td>5</td><td><strong>Paladins</strong></td><td>Hi-Rez Studios / Hi-Rez</td><td>May 2018</td>
+<td><span class="tag t-f2p">F2P</span></td>
+<td class="num-big">~40k<br/><span class="num-dim flag-t3">추산</span></td>
+<td class="num-big">~80k<br/><span class="num-dim flag-t3">추산</span></td>
+<td class="num-big">~5k<br/><span class="num-dim flag-t3">추산</span></td>
+<td>120k+<br/><span class="num-dim flag-t3">추산</span></td>
+<td class="score-mp">대체로 긍정</td>
+<td>OW 대안 포지셔닝 히어로슈팅. 카드 커스터마이징 차별화. OW2 등장 이후 지위 약화</td>
+</tr>
+<tr>
+<td>6</td><td><strong>Highguard</strong></td><td>Wildlight Entertainment / Wildlight</td><td>Jan 2026</td>
+<td><span class="tag t-f2p">F2P</span></td>
+<td class="num-big">~3-5k<br/><span class="num-dim flag-t3">TGA 반응 냉담 추산</span></td>
+<td class="num-big">~5k<br/><span class="num-dim flag-t3">추산</span></td>
+<td class="num-big">~2k<br/><span class="num-dim flag-t3">추산</span></td>
+<td>소규모<br/><span class="num-dim flag-t3">신규</span></td>
+<td class="score-mix">혼합 TBD</td>
+<td>Apex·TF 출신 팀의 PvP 레이드슈팅. TGA 노출에도 "또 다른 히어로슈팅" 피로감으로 저조 출발</td>
+</tr>
+<tr>
+<td>7</td><td><strong>Concord</strong></td><td>Firewalk Studios / Sony</td><td>Aug 2024</td>
+<td><span class="tag t-dead">서비스 종료 (12일)</span></td>
+<td class="num-big">~700<br/><span class="num-dim flag-t1">SteamDB — 역대 최저</span></td>
+<td class="num-big">~700<br/><span class="num-dim flag-t1">SteamDB</span></td>
+<td class="num-big"><span style="color:var(--color-text-danger);">2024년 9월 종료</span></td>
+<td>~4k<br/><span class="num-dim flag-t3">추산</span></td>
+<td class="score-neg">압도적 부정</td>
+<td>$40 히어로슈팅 역대급 실패. IP 없는 히어로슈팅+유료 BM 조합의 시장 거부 완전 입증</td>
+</tr>
+</table>
+</div>
+
+<div class="insight-box">
+<div class="insight-head">추가 고려 사항: 팬덤 / 커뮤니티 / 이스포츠 평가</div>
+<table class="tbl">
+<tr><th>타이틀</th><th>프랜차이즈</th><th>커뮤니티</th><th>이스포츠</th><th>종합</th></tr>
+<tr><td>Marvel Rivals</td><td><span class="stars">★★★★★</span> Marvel/Disney 최강 IP</td><td><span class="stars">★★★★</span><span class="stars-e">★</span> 380k 리뷰</td><td><span class="stars">★★★</span><span class="stars-e">★★</span> $3M 토너먼트 2025</td><td><span class="stars">★★★★</span><span class="stars-e">★</span></td></tr>
+<tr><td>TF2</td><td><span class="stars">★★★★★</span> Valve 18년 레거시</td><td><span class="stars">★★★★★</span> 최강 모딩 커뮤니티</td><td><span class="stars">★★</span><span class="stars-e">★★★</span> 없음 (비공식)</td><td><span class="stars">★★★★</span><span class="stars-e">★</span></td></tr>
+<tr><td>OW2</td><td><span class="stars">★★★★</span><span class="stars-e">★</span> Blizzard 레거시</td><td><span class="stars">★★★</span><span class="stars-e">★★</span> Steam 부정 리뷰 다수</td><td><span class="stars">★★★★</span><span class="stars-e">★</span> OWL 상당 규모</td><td><span class="stars">★★★</span><span class="stars-e">★★</span></td></tr>
+<tr><td>Concord</td><td><span class="stars-e">★★★★★</span> IP 부재, 실패</td><td><span class="stars-e">★★★★★</span> 종료</td><td><span class="stars-e">★★★★★</span> 없음</td><td><span class="stars-e">★★★★★</span> 실패 교훈</td></tr>
+</table>
+</div>
+<div class="insight-box">
+<div class="insight-head">히어로 슈팅 — Top5 진입 핵심 인사이트</div>
+<div class="insight-row">① <strong>IP 없이 진입 금지 (Concord 교훈)</strong>: 2024-26년 Concord·Highguard 연속 실패로 시장 IP 의존성 완전 증명. 신규 IP 히어로슈팅은 OW2도 어려운 시장</div>
+<div class="insight-row">② <strong>Marvel Rivals 644k→96k 사이클</strong>: F2P 히어로슈팅 최고 수준에서도 6개월 내 85% 급락. 수익 모델 지속성 근본 리스크 상존</div>
+<div class="insight-row">③ <strong>히어로슈팅 피로감 최고조</strong>: 2026 현재 시청자·플레이어 모두 "또 다른 히어로슈팅"에 반응하지 않는 구조적 피로. Highguard 저조가 이를 확인</div>
+<div class="insight-row">④ <strong>Project S에 권장하지 않음</strong>: 마블/밸브 IP 없이 진입 불가 구조. 예산·IP 모두 불리. 전략적 선택지에서 제외 권고</div>
+</div>
+</div>
+<!-- SECTION 5: EXTRACTION (ARC Raiders 정정) -->
+<div class="section" id="s-extract">
+<div class="scroll-x">
+<table class="tbl">
+<tr>
+<th>#</th><th>타이틀</th><th>개발사/퍼블리셔</th><th>출시일</th><th>BM</th>
+<th>론칭 Peak</th><th>ATH Peak</th><th>30d Avg / 현재 CCU</th><th>리뷰수</th><th>평가</th><th>게임성 한줄 요약</th>
+</tr>
+<tr>
+<td>1</td><td><strong>ARC Raiders</strong></td><td>Embark Studios / Nexon</td><td>Nov 14, 2025</td>
+<td><span class="tag t-b2p">B2P $40</span></td>
+<td class="num-big">~264k (W1 Thu)<br/><span class="num-dim flag-t2">Resetera CCU 추적</span></td>
+<td class="num-big">481,966<br/><span class="num-dim flag-t1">SteamDB <span class="num-fix">Nov 16, 2025</span> <span class="flag-fix">★날짜 정정</span></span></td>
+<td class="num-big num-fix">59,175 (현재)<br/><span class="num-dim flag-t1">Steambase Apr 2026 ★정정</span></td>
+<td><span class="num-fix">380,784</span><br/><span class="num-dim flag-t1">Steambase ★정정</span></td>
+<td class="score-vp">매우 긍정 <span class="num-fix">(86/100)</span> <span class="flag-fix">★정정</span></td>
+<td>SF PvPvE 오픈월드 익스트랙션. 3주 연속 CCU 상승(역대 희귀). 15M 판매+2025 최다시청. 익스트랙션 BM 혁신 입증</td>
+</tr>
+<tr>
+<td>2</td><td><strong>Escape from Duckov</strong></td><td>소규모팀 / Bilibili</td><td>Oct 2025</td>
+<td><span class="tag t-b2p">B2P ~$10</span></td>
+<td class="num-big">~100k<br/><span class="num-dim flag-t3">추산</span></td>
+<td class="num-big">301,322<br/><span class="num-dim flag-t2">Install Base 2025 통계</span></td>
+<td class="num-big">&lt;5k<br/><span class="num-dim flag-t3">SP 자연감소 추산</span></td>
+<td>~50k est<br/><span class="num-dim flag-t3">추산</span></td>
+<td class="score-op">압도적 긍정</td>
+<td>Tarkov 패러디 SP 익스트랙션. 중국 소규모팀 바이럴 성공. SP 특성상 자연 감소, 장기 서포트 미정</td>
+</tr>
+<tr>
+<td>3</td><td><strong>Delta Force</strong></td><td>TiMi Studio Group / Krafton</td><td>Dec 2024</td>
+<td><span class="tag t-f2p">F2P</span></td>
+<td class="num-big">~53k (Mar 2025 rise)<br/><span class="num-dim flag-t2">Steambase</span></td>
+<td class="num-big">247,028<br/><span class="num-dim flag-t1">SteamDB Sep 26, 2025</span></td>
+<td class="num-big">~137k<br/><span class="num-dim flag-t2">Steambase Apr 2026</span></td>
+<td>178,414<br/><span class="num-dim flag-t1">Steambase</span></td>
+<td class="score-mix">혼합</td>
+<td>현대 밀리터리+익스트랙션 하이브리드 F2P. Krafton 배급+TiMi AAA 제작. Mixed 리뷰로 품질 신뢰 미확립</td>
+</tr>
+<tr>
+<td>4</td><td><strong>Hunt: Showdown 1896</strong></td><td>Crytek / Crytek</td><td>Aug 2024 (1896 리뉴얼)</td>
+<td><span class="tag t-b2p">B2P $30</span></td>
+<td class="num-big">60,124<br/><span class="num-dim flag-t1">SteamDB Aug 15, 2024</span></td>
+<td class="num-big">60,124<br/><span class="num-dim flag-t1">Steambase</span></td>
+<td class="num-big">~25,453<br/><span class="num-dim flag-t1">Steambase live</span></td>
+<td>269,213<br/><span class="num-dim flag-t1">Steambase</span></td>
+<td class="score-mp">대체로 긍정</td>
+<td>서부 공포+PvPvE 바운티헌팅. 사운드디자인 업계 최고 수준. 1896 리뉴얼 Mixed 수습 후 안정화</td>
+</tr>
+<tr>
+<td>5</td><td><strong>Dark and Darker</strong></td><td>Ironmace / Ironmace</td><td>Jun 2023</td>
+<td><span class="tag t-b2p">B2P $30</span></td>
+<td class="num-big">~60k<br/><span class="num-dim flag-t3">EA 피크 추산</span></td>
+<td class="num-big">~60k<br/><span class="num-dim flag-t3">추산</span></td>
+<td class="num-big">~15k<br/><span class="num-dim flag-t3">추산</span></td>
+<td>100k+<br/><span class="num-dim flag-t3">추산</span></td>
+<td class="score-mp">대체로 긍정</td>
+<td>던전RPG+익스트랙션 융합 독창적 장르. Nexon 저작권 분쟁 극복 후 Steam 안착. 팬덤 충성도 높음</td>
+</tr>
+<tr>
+<td>6</td><td><strong>Escape from Tarkov (Steam 1.0)</strong></td><td>Battlestate Games / Battlestate</td><td>Oct 2025 (Steam 1.0)</td>
+<td><span class="tag t-b2p">B2P $45+</span></td>
+<td class="num-big">~20k (Steam 론칭)<br/><span class="num-dim flag-t2">Resetera 보도</span></td>
+<td class="num-big">~20k Steam<br/><span class="num-dim flag-t2">실망스러운 Steam 론칭</span></td>
+<td class="num-big">~15k<br/><span class="num-dim flag-t3">추산</span></td>
+<td>20k+<br/><span class="num-dim flag-t3">추산</span></td>
+<td class="score-mix">혼합</td>
+<td>장르 창시자. 극한 리얼리즘+퍼마데스. ARC Raiders 출시 직후 Steam 이전으로 타이밍 불운. 독자런처에서 Steam 마이그레이션 사용자 제한적</td>
+</tr>
+<tr>
+<td>7</td><td><strong>Gray Zone Warfare</strong></td><td>MADFINGER Games / MADFINGER</td><td>Apr 2024 (EA)</td>
+<td><span class="tag t-b2p">B2P $35 EA</span></td>
+<td class="num-big">~24k<br/><span class="num-dim flag-t3">EA 론칭 추산</span></td>
+<td class="num-big">~24k<br/><span class="num-dim flag-t3">추산</span></td>
+<td class="num-big">~5k<br/><span class="num-dim flag-t3">추산 (ARC 이후 이탈)</span></td>
+<td>50k+<br/><span class="num-dim flag-t3">추산</span></td>
+<td class="score-mix">혼합</td>
+<td>오픈월드 밀리터리+익스트랙션 EA. 잠재력 있으나 ARC Raiders 출시 후 관심 급감</td>
+</tr>
+</table>
+</div>
+
+<div class="insight-box">
+<div class="insight-head">추가 고려 사항: 팬덤 / 커뮤니티 / 이스포츠 평가</div>
+<table class="tbl">
+<tr><th>타이틀</th><th>프랜차이즈</th><th>커뮤니티</th><th>이스포츠</th><th>종합</th></tr>
+<tr><td>ARC Raiders</td><td><span class="stars">★★★</span><span class="stars-e">★★</span> 신규 IP, Embark 신뢰</td><td><span class="stars">★★★★★</span> 2025 최다시청, 강성 팬덤</td><td><span class="stars">★★</span><span class="stars-e">★★★</span> 아직 없음</td><td><span class="stars">★★★★</span><span class="stars-e">★</span></td></tr>
+<tr><td>Hunt Showdown</td><td><span class="stars">★★★</span><span class="stars-e">★★</span> Crytek 6년 IP</td><td><span class="stars">★★★★</span><span class="stars-e">★</span> 닉 팬덤, 269k 리뷰</td><td><span class="stars">★★</span><span class="stars-e">★★★</span> 소규모 커뮤니티 대전</td><td><span class="stars">★★★</span><span class="stars-e">★★</span></td></tr>
+<tr><td>Delta Force</td><td><span class="stars">★★★</span><span class="stars-e">★★</span> 클래식 IP 리부트</td><td><span class="stars">★★★</span><span class="stars-e">★★</span> 178k 리뷰 Mixed</td><td><span class="stars">★★</span><span class="stars-e">★★★</span> 없음</td><td><span class="stars">★★★</span><span class="stars-e">★★</span></td></tr>
+</table>
+</div>
+<div class="insight-box">
+<div class="insight-head">익스트랙션 슈팅 — Top5 진입 핵심 인사이트</div>
+<div class="insight-row">① <strong>ARC Raiders 성공 공식 3원칙</strong>: ①$40 프리미엄 품질 신호 ②Solo Queue (진입 장벽 완화, PvP 기피층 흡수) ③PvPvE 하이브리드 (순수 PvP 거부층 포용) — 이 셋의 결합이 3주 연속 CCU 성장 견인</div>
+<div class="insight-row">② <strong>Marathon(2026) 성과 후 2027-28 공백</strong>: Marathon 출시 이후 다음 대형 익스트랙션 타이틀이 없음. Project S 2027Q4 진입 시 "ARC Raiders 이후 두 번째 프리미엄 선택지" 포지션 가능</div>
+<div class="insight-row">③ <strong>Tarkov의 실패 교훈</strong>: 1M WL에도 Steam 20k CCU. "이미 더 나은 게임(ARC Raiders)이 있는 시장에서 뒤늦게 진입한 원조"의 처참한 결과. 선점 타이밍이 품질보다 중요함을 증명</div>
+<div class="insight-row">④ <strong>ARC Raiders 차별화 요소 분석</strong>: 현재 SF 미감(ARC)+서부공포(Hunt)+현대 밀리터리(Delta Force/Tarkov). "현대 밀리터리+고퀄 시각+Co-op 밀도" 조합은 아직 미개척</div>
+<div class="insight-row">⑤ <strong>Project S UE5 그래픽 차별화 시점</strong>: ARC Raiders 미감 대비 고퀄 밀리터리+현실적 파괴+UE5 나나이트 활용은 시각적 차별화의 마지막 공백. 2027-28이 이 공백의 마지막 진입 윈도우</div>
+</div>
+</div>
+<!-- SECTION 6: CO-OP (Back4Blood·The Finals·Remnant II 정정) -->
+<div class="section" id="s-coop">
+<div class="scroll-x">
+<table class="tbl">
+<tr>
+<th>#</th><th>타이틀</th><th>개발사/퍼블리셔</th><th>출시일</th><th>BM</th>
+<th>론칭 Peak</th><th>ATH Peak</th><th>30d Avg / 현재 CCU</th><th>리뷰수</th><th>평가</th><th>게임성 한줄 요약</th>
+</tr>
+<tr>
+<td>1</td><td><strong>HELLDIVERS 2</strong></td><td>Arrowhead Game Studios / Sony</td><td>Feb 2024</td>
+<td><span class="tag t-b2p">B2P $40</span></td>
+<td class="num-big">~411k (D3)<br/><span class="num-dim flag-t2">TechRadar citing SteamDB</span></td>
+<td class="num-big">458,046<br/><span class="num-dim flag-t1">Steambase Feb 25, 2024</span></td>
+<td class="num-big">~34,995<br/><span class="num-dim flag-t1">Steambase live</span></td>
+<td>1,122,841<br/><span class="num-dim flag-t1">Steambase</span></td>
+<td class="score-mp">대체로 긍정</td>
+<td>4인 Co-op 갈락틱 워. 아군사격+전략무기+서사적 내러티브. $40 B2P 458k 달성으로 Co-op 프리미엄 BM 재정립</td>
+</tr>
+<tr>
+<td>2</td><td><strong>Deep Rock Galactic</strong></td><td>Ghost Ship Games / Coffee Stain</td><td>May 2020 (1.0)</td>
+<td><span class="tag t-b2p">B2P $30</span></td>
+<td class="num-big">~10k (EA 2018→1.0)<br/><span class="num-dim flag-t3">추산</span></td>
+<td class="num-big">54,160<br/><span class="num-dim flag-t1">Steambase Jun 2024</span></td>
+<td class="num-big">~9,153<br/><span class="num-dim flag-t1">Steambase live</span></td>
+<td>369,094<br/><span class="num-dim flag-t1">Steambase</span></td>
+<td class="score-op">압도적 긍정 (97%)</td>
+<td>우주 드워프 4인 Co-op 채굴+전투. Steam 역대 Co-op 최고 평점. "Rock and Stone!" 팬덤 문화 압도적</td>
+</tr>
+<tr>
+<td>3</td><td><strong>Ready or Not</strong></td><td>VOID Interactive / VOID</td><td>Dec 2023 (1.0)</td>
+<td><span class="tag t-b2p">B2P $40</span></td>
+<td class="num-big">~35k<br/><span class="num-dim flag-t3">추산</span></td>
+<td class="num-big">~35k<br/><span class="num-dim flag-t3">추산</span></td>
+<td class="num-big">~10k<br/><span class="num-dim flag-t3">추산</span></td>
+<td>80k+<br/><span class="num-dim flag-t3">추산</span></td>
+<td class="score-vp">매우 긍정</td>
+<td>S.W.A.T. 5인 전술 Co-op. 현실적 시가전 시뮬레이터. 인디 팀의 $40 AAA급 퀄리티 도달 사례</td>
+</tr>
+<tr>
+<td>4</td><td><strong>Left 4 Dead 2</strong></td><td>Valve / Valve</td><td>Nov 2009</td>
+<td><span class="tag t-b2p">B2P $10</span></td>
+<td class="num-big">~28k<br/><span class="num-dim flag-t3">2009 추산</span></td>
+<td class="num-big">~29k<br/><span class="num-dim flag-t3">추산</span></td>
+<td class="num-big">~20k<br/><span class="num-dim flag-t3">추산</span></td>
+<td>600k+<br/><span class="num-dim flag-t3">추산</span></td>
+<td class="score-op">압도적 긍정</td>
+<td>좀비 4인 Co-op 원조. 15년 지속. Valve Steam 생태계+모딩이 장수 비결. 후속작 없는 공백 존재</td>
+</tr>
+<tr>
+<td>5</td><td><strong>Back 4 Blood</strong></td><td>Turtle Rock Studios / WB Games</td><td>Oct 2021</td>
+<td><span class="tag t-b2p">B2P <span class="num-fix">$59.99</span> <span class="flag-fix">★정정</span></span></td>
+<td class="num-big num-fix">65,921<br/><span class="num-dim flag-t1">tracker.gg ★정정</span></td>
+<td class="num-big num-fix">65,921<br/><span class="num-dim flag-t1">tracker.gg ★정정</span></td>
+<td class="num-big num-fix">~859<br/><span class="num-dim flag-t1">Steambase live ★정정</span></td>
+<td><span class="num-fix">72,206</span><br/><span class="num-dim flag-t1">Steambase ★정정</span></td>
+<td class="score-mix">혼합 <span class="flag-fix">★정정</span></td>
+<td>L4D 정신적 후속작. 카드 덱 시스템 추가. <span class="num-fix">65k</span> ATH 달성했으나 장기 유지 실패 → <span class="num-fix">~859 CCU</span>로 급락. L4D 기대치 격차 교훈</td>
+</tr>
+<tr>
+<td>6</td><td><strong>The Finals</strong></td><td>Embark Studios / Nexon</td><td>Dec 2023</td>
+<td><span class="tag t-f2p">F2P</span></td>
+<td class="num-big num-fix">200,677<br/><span class="num-dim flag-t2">GWO/SteamDB ★정정</span></td>
+<td class="num-big num-fix">242,619<br/><span class="num-dim flag-t1">Steambase Dec 10, 2023 ★정정</span></td>
+<td class="num-big num-fix">~12,506<br/><span class="num-dim flag-t1">Steambase live ★정정</span></td>
+<td><span class="num-fix">264,529</span><br/><span class="num-dim flag-t1">Steambase ★정정</span></td>
+<td class="score-mp">대체로 긍정 <span class="flag-fix">★정정</span></td>
+<td>UE5 파괴 물리 아레나 Co-op. Embark의 ARC Raiders 전작. 게임성 호평이나 장기 유지 실패 → ARC로 관심 이동</td>
+</tr>
+<tr>
+<td>7</td><td><strong>Remnant II</strong></td><td>Gunfire Games / Gearbox</td><td>Jul 2023</td>
+<td><span class="tag t-b2p">B2P $49.99</span></td>
+<td class="num-big num-fix">~82,742<br/><span class="num-dim flag-t2">GWO/SteamDB ★정정</span></td>
+<td class="num-big num-fix">110,756<br/><span class="num-dim flag-t1">Steambase Jul 30, 2023 ★정정</span></td>
+<td class="num-big num-fix">~2,530<br/><span class="num-dim flag-t1">Steambase live ★정정</span></td>
+<td><span class="num-fix">65,056</span><br/><span class="num-dim flag-t1">Steambase ★정정</span></td>
+<td class="score-vp">매우 긍정</td>
+<td>Souls-like+3인 Co-op 3인칭 슈팅. 절차생성 던전 탐험. Co-op RPG 슈터 틈새 안정적 점유</td>
+</tr>
+</table>
+</div>
+
+<div class="insight-box">
+<div class="insight-head">추가 고려 사항: 팬덤 / 커뮤니티 / 이스포츠 평가</div>
+<table class="tbl">
+<tr><th>타이틀</th><th>프랜차이즈</th><th>커뮤니티</th><th>이스포츠</th><th>종합</th></tr>
+<tr><td>HD2</td><td><span class="stars">★★★</span><span class="stars-e">★★</span> Arrowhead 신생 IP</td><td><span class="stars">★★★★★</span> 1.12M 리뷰, 최강 팬덤</td><td><span class="stars">★</span><span class="stars-e">★★★★</span> 없음</td><td><span class="stars">★★★★</span><span class="stars-e">★</span></td></tr>
+<tr><td>DRG</td><td><span class="stars">★★★</span><span class="stars-e">★★</span> Ghost Ship 인디</td><td><span class="stars">★★★★★</span> 97% 평점 전설</td><td><span class="stars">★</span><span class="stars-e">★★★★</span> 없음</td><td><span class="stars">★★★★</span><span class="stars-e">★</span></td></tr>
+<tr><td>L4D2</td><td><span class="stars">★★★★★</span> Valve 15년 IP</td><td><span class="stars">★★★★★</span> 600k+ 리뷰 전설</td><td><span class="stars">★★</span><span class="stars-e">★★★</span> 없음</td><td><span class="stars">★★★★★</span></td></tr>
+<tr><td>Ready or Not</td><td><span class="stars">★★</span><span class="stars-e">★★★</span> VOID 인디</td><td><span class="stars">★★★★</span><span class="stars-e">★</span> 니치 강성 팬덤</td><td><span class="stars">★</span><span class="stars-e">★★★★</span> 없음</td><td><span class="stars">★★★</span><span class="stars-e">★★</span></td></tr>
+</table>
+</div>
+<div class="insight-box">
+<div class="insight-head">Co-op 슈팅 — Top5 진입 핵심 인사이트</div>
+<div class="insight-row">① <strong>$40 B2P 성공 공식 2연속 입증</strong>: HD2(458k)·ARC Raiders(481k) 모두 $40 B2P. "적정 프리미엄 = 품질 신뢰 신호"로 작용. F2P보다 높은 초기 리뷰 점수 유지</div>
+<div class="insight-row">② <strong>DRG 97% 평점의 의미</strong>: 54k ATH CCU이지만 369k 리뷰. 플레이 시간 대비 압도적 만족도가 장기 생존 엔진. 10k avg CCU 6년 유지는 Top5 유지의 Co-op 기준점</div>
+<div class="insight-row">③ <strong>2027-28 Co-op 공백</strong>: DRG Rogue Core(스핀오프, 로그라이크)·Horizon Hunters Gathering(2026-27 PS5 중심) 외 AAA PC Co-op 슈팅 공백. Project S 진입 시 "ARC 이후 두 번째 선택지" 포지션 가능</div>
+<div class="insight-row">④ <strong>소셜 바이럴 구조 필수</strong>: HD2·ARC Raiders·DRG 모두 공통점: "친구 초대 → 함께 플레이 → 자연 리뷰" 사이클. Co-op 설계에 소셜 공유 메카닉(공통 목표, 아이러니한 사망, 팀 성과) 내재화 필수</div>
+<div class="insight-row">⑤ <strong>Back 4 Blood 반면교사</strong>: <span class="num-fix">65k ATH → ~859 CCU</span> <span class="flag-fix">★정정</span>. L4D 기대치 충족 실패. "현재 Top 게임보다 무엇이 더 나은가"를 명확히 답하지 못한 결과. Project S는 "HD2/DRG 대비 명확한 USP" 필수</div>
+</div>
+</div>
+<!-- SECTION 7: PROJECT S PRIORITY -->
+
+<!-- SECTION 8: 검증 내역 -->
+<div class="section" id="s-verify">
+<div class="insight-box">
+<div class="insight-head">v2 정합성 검증 — 20개 항목 정정 내역</div>
+<div style="font-size:11px;color:var(--color-text-secondary);margin-bottom:10px;">T3 추산값을 T1(SteamDB/Steambase) 또는 T2(GWO/tracker.gg) 공식 소스로 교차 검증. 빨간 취소선 = 기존 오류, 녹색 = 정정값.</div>
+</div>
+<div class="scroll-x">
+<table class="fix-table">
+<tr><th>서브장르</th><th>타이틀</th><th>항목</th><th>기존 값 (오류)</th><th>정정값</th><th>검증 소스</th></tr>
+<tr><td>배틀로얄</td><td>Naraka: Bladepoint</td><td>ATH Peak CCU</td><td class="fix-old">~386,000 (T3/T2 GWO 근사)</td><td class="fix-new">385,770</td><td><span class="flag-t1">T1 Steambase Jul 3, 2024</span></td></tr>
+<tr><td>배틀로얄</td><td>Naraka: Bladepoint</td><td>리뷰 수</td><td class="fix-old">100k+ (T3)</td><td class="fix-new">297,187</td><td><span class="flag-t1">T1 Steambase</span></td></tr>
+<tr><td>배틀로얄</td><td>Naraka: Bladepoint</td><td>현재 avg CCU</td><td class="fix-old">~80k (T3 과대)</td><td class="fix-new">~50k</td><td><span class="flag-t1">T1 Steambase live</span></td></tr>
+<tr><td>배틀로얄</td><td>Fall Guys</td><td>ATH Peak CCU</td><td class="fix-old">173,421 (미세 오류)</td><td class="fix-new">172,213</td><td><span class="flag-t2">T2 steamplayercount.com (B2P 앱)</span></td></tr>
+<tr><td>배틀로얄</td><td>Fall Guys</td><td>리뷰 수</td><td class="fix-old">800k+ (T3 과대)</td><td class="fix-new">470,369</td><td><span class="flag-t1">T1 Steambase</span></td></tr>
+<tr><td>배틀로얄</td><td>Fall Guys</td><td>현재 CCU</td><td class="fix-old">~8k (T3 과대)</td><td class="fix-new">~329</td><td><span class="flag-t1">T1 Steambase F2P 앱</span></td></tr>
+<tr><td>익스트랙션</td><td>ARC Raiders</td><td>ATH Peak 날짜</td><td class="fix-old">W3 Peak (불명확)</td><td class="fix-new">Nov 16, 2025</td><td><span class="flag-t1">T1 Steambase</span></td></tr>
+<tr><td>익스트랙션</td><td>ARC Raiders</td><td>현재 avg CCU</td><td class="fix-old">~87,367 (구 보도 T2)</td><td class="fix-new">59,175</td><td><span class="flag-t1">T1 Steambase live Apr 2026</span></td></tr>
+<tr><td>익스트랙션</td><td>ARC Raiders</td><td>리뷰 수</td><td class="fix-old">~400k est (T3)</td><td class="fix-new">380,784</td><td><span class="flag-t1">T1 Steambase</span></td></tr>
+<tr><td>익스트랙션</td><td>ARC Raiders</td><td>리뷰 평가 수치</td><td class="fix-old">90% (T3 추산)</td><td class="fix-new">86/100</td><td><span class="flag-t1">T1 Steambase Player Score</span></td></tr>
+<tr><td>Co-op</td><td>Back 4 Blood</td><td>ATH Peak CCU</td><td class="fix-old">~103,000 (T3 — +56% 과대)</td><td class="fix-new">65,921</td><td><span class="flag-t2">T2 tracker.gg Steam API</span></td></tr>
+<tr><td>Co-op</td><td>Back 4 Blood</td><td>리뷰 수</td><td class="fix-old">90k+ (T3 과소)</td><td class="fix-new">72,206</td><td><span class="flag-t1">T1 Steambase</span></td></tr>
+<tr><td>Co-op</td><td>Back 4 Blood</td><td>리뷰 평가</td><td class="fix-old">대체로 긍정 (오류)</td><td class="fix-new">혼합 (Mixed) 69/100</td><td><span class="flag-t1">T1 Steambase</span></td></tr>
+<tr><td>Co-op</td><td>Back 4 Blood</td><td>가격</td><td class="fix-old">$40 (오류)</td><td class="fix-new">$59.99</td><td><span class="flag-t1">T1 Steambase 현재가</span></td></tr>
+<tr><td>Co-op</td><td>Back 4 Blood</td><td>현재 CCU</td><td class="fix-old">~2,000 (T3 과대)</td><td class="fix-new">~859</td><td><span class="flag-t1">T1 Steambase live</span></td></tr>
+<tr><td>Co-op</td><td>The Finals</td><td>ATH Peak CCU</td><td class="fix-old">~265,000 (T3 과대)</td><td class="fix-new">242,619</td><td><span class="flag-t1">T1 Steambase Dec 10, 2023</span></td></tr>
+<tr><td>Co-op</td><td>The Finals</td><td>리뷰 수</td><td class="fix-old">80k+ (T3 — -70% 과소)</td><td class="fix-new">264,529</td><td><span class="flag-t1">T1 Steambase</span></td></tr>
+<tr><td>Co-op</td><td>The Finals</td><td>론칭 Peak CCU</td><td class="fix-old">~180,000 (T3)</td><td class="fix-new">200,677</td><td><span class="flag-t2">T2 GWO citing SteamDB</span></td></tr>
+<tr><td>Co-op</td><td>Remnant II</td><td>ATH Peak CCU</td><td class="fix-old">~77,000 (T3 — -30% 과소)</td><td class="fix-new">110,756</td><td><span class="flag-t1">T1 Steambase Jul 30, 2023</span></td></tr>
+<tr><td>Co-op</td><td>Remnant II</td><td>리뷰 수</td><td class="fix-old">90k+ (T3 과대)</td><td class="fix-new">65,056</td><td><span class="flag-t1">T1 Steambase</span></td></tr>
+</table>
+</div>
+<div class="insight-box" style="margin-top:12px;">
+<div class="insight-head">정정 요약 및 품질 평가</div>
+<div class="insight-row">① <strong>Back 4 Blood ATH +56% 과대 추산</strong>: 기존 ~103k → 실제 65,921. 커뮤니티 추산치가 실제 대비 56% 부풀려진 가장 큰 오류. 반면교사 사례의 규모 왜곡</div>
+<div class="insight-row">② <strong>The Finals 리뷰 수 -70% 과소 추산</strong>: 기존 80k+ → 실제 264,529. T3 추산이 실제 대비 1/3 수준으로 대폭 과소. 게임 커뮤니티 인지도보다 실제 구매자 수가 훨씬 많았음을 시사</div>
+<div class="insight-row">③ <strong>Remnant II ATH -30% 과소 추산</strong>: 기존 ~77k → 실제 110,756. "숨겨진 히트작" 성격으로 커뮤니티 가시성 대비 실제 구매자 및 CCU 훨씬 높음</div>
+<div class="insight-row">④ <strong>ARC Raiders 현재 CCU 33% 감소</strong>: 구 보도 ~87k → T1 현재 59,175. 출시 5개월 경과 자연 감소. 여전히 익스트랙션 장르 내 Top1 유지 중</div>
+<div class="insight-row">⑤ <strong>데이터 신뢰도 교훈</strong>: T3 추산 오차 범위 -70%~+56%. 임원 보고·전략 수립 시 반드시 T1 소스(SteamDB/Steambase) 기반 검증 선행 필수</div>
+</div>
+</div></div>
+<p class="src">📎 첨부 원본 · <a href="https://www.genspark.ai/api/files/s/PwaQcfgE" target="_blank">steam_shooter_genre_master_intelligence_board_v2.html</a></p>
+</div>
+</section>
+
+<section class="sec" id="s4">
+<p class="sn">Section 04</p>
+<h2 class="stt">스팀 유저 트래픽 분석</h2>
+<div class="si"><h3>🔑 핵심 인사이트</h3><ul>
+<li>🌐 <strong>간체중국어 33.7%</strong>와 <strong>영어 33.5%</strong>가 사실상 공동 1위입니다. Steam 스토어·커뮤니티·운영의 기본 언어 우선순위는 <strong>영문 단독</strong>이 아니라 <strong>영문·중문 병행</strong>으로 보는 편이 데이터와 맞습니다.</li>
+<li>🧭 국가 단위 트래픽 비중은 여전히 <strong>중국·미국</strong>이 압도적이지만, 국가별 변화폭 기준으로는 <strong>브라질·러시아·일본·대만</strong>의 움직임이 더 큽니다.</li>
+<li>📈 지역 단위로는 <strong>아시아 확대</strong>, <strong>북미·서유럽 비중 둔화</strong> 흐름이 확인됩니다. 즉, Project S는 절대 볼륨 시장과 증분 성장 시장을 분리해서 봐야 합니다.</li>
+<li>🎯 <strong>Project S 우선 시장 판단 기준</strong>은 <strong>① 절대 유입 비중 ② 최근 증감폭 ③ 언어 대응 범용성 ④ 출시 후 운영 동시성</strong>의 결합입니다. 따라서 <strong>영문 + 간체중문</strong> 기본 대응 위에 성장 시장 대응을 얹는 구조가 효율적입니다.</li>
+</ul></div>
+<span class="rn">트래픽 비교 기준: 2024.04 → 2025.07</span>
+<div class="t4-kpi-grid">
+  <div class="t4-kpi"><div class="t4-kpi-label">Top Language</div><div class="t4-kpi-value">33.7%</div><div class="t4-kpi-sub">간체중국어 · 영어 33.5%와 초접전</div></div>
+  <div class="t4-kpi"><div class="t4-kpi-label">Top Country</div><div class="t4-kpi-value">26.1%</div><div class="t4-kpi-sub">중국 트래픽 비중 · 미국 20.4%</div></div>
+  <div class="t4-kpi"><div class="t4-kpi-label">Fastest Gain</div><div class="t4-kpi-value">+1.9%p</div><div class="t4-kpi-sub">브라질 · 국가별 증가폭 최대</div></div>
+  <div class="t4-kpi"><div class="t4-kpi-label">Largest Regional Shift</div><div class="t4-kpi-value">+1.8%p</div><div class="t4-kpi-sub">아시아 확대 · 서유럽 -1.2%p</div></div>
+</div>
+<div class="cd" style="margin-bottom:18px">
+  <div class="ct">1) 언어별 유저 비중 — Valve GDC 2025 공식 그래프</div>
+  <div class="cs">steam_traffic_2025.html에서 사용한 상위 10개 언어 가시화 구조를 유지했습니다.</div>
+  <div style="height:390px"><canvas id="c4a"></canvas></div>
+  <div class="co bl"><strong>💡 해석:</strong> 상위 10개 언어만 봐도 중문·영문이 압도적이고, 러시아어·스페인어가 그 뒤를 잇습니다. Project S의 기본 현지화 계층은 <strong>영문 + 간체중문</strong>을 1차 기준으로 두고, 이후 실제 운영 역량 안에서 후속 언어를 얹는 방식이 합리적입니다.</div>
+</div>
+<div class="cd" style="margin-bottom:18px">
+  <div class="ct">2) 국가별 트래픽 점유율 변화 — Steam 공식 Bandwidth (Apr 2024 vs Jul 2025)</div>
+  <div class="cs">첨부해주신 레퍼런스 이미지 형태에 맞춰 2024.04와 2025.07의 국가별 비중을 2개 막대로 비교하도록 재구성했습니다.</div>
+  <div style="height:500px"><canvas id="c4b"></canvas></div>
+  <p class="src">출처: Steam 공식 Bandwidth 통계 페이지 (<a href="https://store.steampowered.com/stats/content/" target="_blank">store.steampowered.com/stats/content/</a>) · GameDiscoverCo 분석 보조</p>
+</div>
+<details class="action-detail" open>
+  <summary>3) 트래픽 변화 요약 (△ Apr 2024 → Jul 2025)</summary>
+  <div class="inner">
+    <div class="tw"><table class="t4-mini-table">
+      <thead><tr><th>국가</th><th>2024.04</th><th>2025.07</th><th>변화</th></tr></thead>
+      <tbody>
+        <tr><td>중국</td><td>25.6%</td><td>26.1%</td><td class="tu">+0.5%p</td></tr>
+        <tr><td>미국</td><td>20.6%</td><td>20.4%</td><td class="td">-0.2%p</td></tr>
+        <tr><td>러시아</td><td>5.9%</td><td>6.9%</td><td class="tu">+1.0%p</td></tr>
+        <tr><td>브라질</td><td>4.0%</td><td>5.9%</td><td class="tu">+1.9%p</td></tr>
+        <tr><td>독일</td><td>4.4%</td><td>4.4%</td><td>0.0%p</td></tr>
+        <tr><td>영국</td><td>3.3%</td><td>3.3%</td><td>0.0%p</td></tr>
+        <tr><td>일본</td><td>1.9%</td><td>2.5%</td><td class="tu">+0.6%p</td></tr>
+        <tr><td>캐나다</td><td>2.6%</td><td>2.6%</td><td>0.0%p</td></tr>
+        <tr><td>프랑스</td><td>2.4%</td><td>2.4%</td><td>0.0%p</td></tr>
+        <tr><td>한국</td><td>1.9%</td><td>1.9%</td><td>0.0%p</td></tr>
+        <tr><td>폴란드</td><td>1.8%</td><td>1.8%</td><td>0.0%p</td></tr>
+        <tr><td>호주</td><td>1.7%</td><td>1.7%</td><td>0.0%p</td></tr>
+        <tr><td>터키</td><td>1.5%</td><td>1.5%</td><td>0.0%p</td></tr>
+        <tr><td>대만</td><td>0.8%</td><td>1.0%</td><td class="tu">+0.2%p</td></tr>
+        <tr><td>태국</td><td>1.0%</td><td>1.0%</td><td>0.0%p</td></tr>
+      </tbody>
+    </table></div>
+    <div class="t4-note">※ 원본 요약 표 포맷에 맞춰 <strong>2024.04 / 2025.07 / 변화</strong> 열 구조로 재구성했습니다.</div>
+  </div>
+</details>
+<details class="action-detail" open>
+  <summary>4) 지역별 트래픽 변화</summary>
+  <div class="inner">
+    <div class="tw"><table class="t4-mini-table">
+      <thead><tr><th>지역</th><th>2024.04</th><th>2025.07</th><th>변화</th></tr></thead>
+      <tbody>
+        <tr><td>아시아</td><td>30.4%</td><td>32.2%</td><td class="tu">+1.8%p</td></tr>
+        <tr><td>북미</td><td>23.4%</td><td>22.8%</td><td class="td">-0.6%p</td></tr>
+        <tr><td>서유럽</td><td>16.3%</td><td>15.1%</td><td class="td">-1.2%p</td></tr>
+        <tr><td>중남미</td><td>7.0%</td><td>7.9%</td><td class="tu">+0.9%p</td></tr>
+        <tr><td>러시아/CIS</td><td>5.1%</td><td>6.1%</td><td class="tu">+1.0%p</td></tr>
+        <tr><td>동유럽</td><td>4.4%</td><td>4.2%</td><td class="td">-0.2%p</td></tr>
+        <tr><td>동남아</td><td>3.3%</td><td>3.7%</td><td class="tu">+0.4%p</td></tr>
+        <tr><td>중동</td><td>2.7%</td><td>2.7%</td><td>0.0%p</td></tr>
+        <tr><td>오세아니아</td><td>2.0%</td><td>1.9%</td><td class="td">-0.1%p</td></tr>
+      </tbody>
+    </table></div>
+    <div class="t4-note">※ 원본 지역 표도 동일하게 <strong>2024.04 / 2025.07 / 변화</strong> 포맷으로 정리했습니다.</div>
+  </div>
+</details>
+<p class="src">📎 Steam stats bandwidth <a href="https://store.steampowered.com/stats/content/" target="_blank">↗원문</a> · 언어 Top10 보조 확인 <a href="https://app2top.com/news/valve-chinese-has-become-the-most-popular-language-on-steam-279058.html" target="_blank">app2top</a> · 지역 비중 변화 보조 확인 <a href="https://games.gg/news/asia-dominates-global-steam-activity/" target="_blank">games.gg</a></p>
+
+<div class="action-detail" style="margin-top:18px;border-radius:12px;border:1px solid #e5e7eb;background:#f8fafc;overflow:hidden">
+  <div style="display:flex;align-items:center;gap:10px;padding:13px 18px;background:linear-gradient(90deg,#f0f9ff,#f8fafc);border-bottom:1px solid #e5e7eb;cursor:default">
+    <span style="font-size:13px;font-weight:700;color:#0f172a;flex:1">5) 주요 타이틀 언어별 리뷰 현황 <span style="font-size:11px;font-weight:500;color:#64748b">(2026.04.08 기준)</span></span>
+  </div>
+  <div style="padding:16px 18px 18px">
+    <div class="co rd" style="margin-top:0;margin-bottom:14px;font-size:11.5px">
+      <strong>⚠️ 중요:</strong> 론칭 당일·+1W·+1M 시점의 언어별 누적 리뷰 수는 Steam API 구조상 역산 불가. 아래는 <strong>현재(2026.04.08) 기준</strong> 수치이며, 일부는 언론 보도 기반 추정입니다.
+    </div>
+    <div class="tw">
+      <table style="width:100%;border-collapse:collapse;font-size:11.5px">
+        <thead>
+          <tr style="background:#1e293b;color:#e2e8f0">
+            <th style="padding:9px 11px;text-align:left;font-weight:700;white-space:nowrap">타이틀</th>
+            <th style="padding:9px 11px;text-align:left;font-weight:700;white-space:nowrap">개발사</th>
+            <th style="padding:9px 11px;text-align:left;font-weight:700;white-space:nowrap">출시일</th>
+            <th style="padding:9px 11px;text-align:right;font-weight:700;white-space:nowrap">전체 리뷰</th>
+            <th style="padding:9px 11px;text-align:right;font-weight:700;white-space:nowrap">긍정률</th>
+            <th style="padding:9px 11px;text-align:right;font-weight:700;white-space:nowrap">영어(추정)</th>
+            <th style="padding:9px 11px;text-align:right;font-weight:700;white-space:nowrap">중문(간체)</th>
+            <th style="padding:9px 11px;text-align:right;font-weight:700;white-space:nowrap">한국어</th>
+            <th style="padding:9px 11px;text-align:right;font-weight:700;white-space:nowrap">일본어</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid #e5e7eb">
+            <td style="padding:8px 11px;font-weight:600;color:#111827">CS2</td>
+            <td style="padding:8px 11px;color:#374151">Valve</td>
+            <td style="padding:8px 11px;color:#6b7280;white-space:nowrap">2023.09.27</td>
+            <td style="padding:8px 11px;text-align:right;font-weight:600">~9,600,000</td>
+            <td style="padding:8px 11px;text-align:right;color:#b45309">~70%</td>
+            <td style="padding:8px 11px;text-align:right;color:#374151">~25%</td>
+            <td style="padding:8px 11px;text-align:right;color:#1d4ed8;font-weight:600">~34%</td>
+            <td style="padding:8px 11px;text-align:right;color:#374151">~3–4%</td>
+            <td style="padding:8px 11px;text-align:right;color:#374151">~2%</td>
+          </tr>
+          <tr style="background:#f9fafb;border-bottom:1px solid #e5e7eb">
+            <td style="padding:8px 11px;font-weight:600;color:#111827">PUBG</td>
+            <td style="padding:8px 11px;color:#374151">PUBG Studios / Krafton</td>
+            <td style="padding:8px 11px;color:#6b7280;white-space:nowrap">2017.12.20 (정식)</td>
+            <td style="padding:8px 11px;text-align:right;font-weight:600">~1,624,520</td>
+            <td style="padding:8px 11px;text-align:right;color:#b45309">~60%</td>
+            <td style="padding:8px 11px;text-align:right;color:#374151">~20%</td>
+            <td style="padding:8px 11px;text-align:right;color:#1d4ed8;font-weight:600">~40%</td>
+            <td style="padding:8px 11px;text-align:right;color:#374151">~8–10%</td>
+            <td style="padding:8px 11px;text-align:right;color:#374151">~3%</td>
+          </tr>
+          <tr style="border-bottom:1px solid #e5e7eb">
+            <td style="padding:8px 11px;font-weight:600;color:#111827">Marvel Rivals</td>
+            <td style="padding:8px 11px;color:#374151">NetEase Games</td>
+            <td style="padding:8px 11px;color:#6b7280;white-space:nowrap">2024.12.06</td>
+            <td style="padding:8px 11px;text-align:right;font-weight:600">~500,000</td>
+            <td style="padding:8px 11px;text-align:right;color:#15803d">~82%</td>
+            <td style="padding:8px 11px;text-align:right;color:#374151">~30%</td>
+            <td style="padding:8px 11px;text-align:right;color:#374151">~25%</td>
+            <td style="padding:8px 11px;text-align:right;color:#374151">~5%</td>
+            <td style="padding:8px 11px;text-align:right;color:#374151">~8%</td>
+          </tr>
+          <tr style="background:#f9fafb;border-bottom:1px solid #e5e7eb">
+            <td style="padding:8px 11px;font-weight:600;color:#111827">Helldivers 2</td>
+            <td style="padding:8px 11px;color:#374151">Arrowhead / Sony</td>
+            <td style="padding:8px 11px;color:#6b7280;white-space:nowrap">2024.02.08</td>
+            <td style="padding:8px 11px;text-align:right;font-weight:600">~400,000</td>
+            <td style="padding:8px 11px;text-align:right;color:#15803d">~85%</td>
+            <td style="padding:8px 11px;text-align:right;color:#374151">~45%</td>
+            <td style="padding:8px 11px;text-align:right;color:#374151">~15%</td>
+            <td style="padding:8px 11px;text-align:right;color:#374151">~5%</td>
+            <td style="padding:8px 11px;text-align:right;color:#374151">~8%</td>
+          </tr>
+          <tr style="border-bottom:1px solid #e5e7eb">
+            <td style="padding:8px 11px;font-weight:600;color:#111827">ARC Raiders</td>
+            <td style="padding:8px 11px;color:#374151">Embark Studios</td>
+            <td style="padding:8px 11px;color:#6b7280;white-space:nowrap">2025.10.30</td>
+            <td style="padding:8px 11px;text-align:right;font-weight:600">~90,000</td>
+            <td style="padding:8px 11px;text-align:right;color:#15803d">~88%</td>
+            <td style="padding:8px 11px;text-align:right;color:#374151">~35%</td>
+            <td style="padding:8px 11px;text-align:right;color:#374151">~20%</td>
+            <td style="padding:8px 11px;text-align:right;color:#374151">~5%</td>
+            <td style="padding:8px 11px;text-align:right;color:#374151">~5%</td>
+          </tr>
+          <tr style="background:#f9fafb;border-bottom:1px solid #e5e7eb">
+            <td style="padding:8px 11px;font-weight:600;color:#111827">Delta Force</td>
+            <td style="padding:8px 11px;color:#374151">TiMi Studio Group</td>
+            <td style="padding:8px 11px;color:#6b7280;white-space:nowrap">2024.12.05</td>
+            <td style="padding:8px 11px;text-align:right;font-weight:600">~200,000</td>
+            <td style="padding:8px 11px;text-align:right;color:#15803d">~82%</td>
+            <td style="padding:8px 11px;text-align:right;color:#374151">~20%</td>
+            <td style="padding:8px 11px;text-align:right;color:#1d4ed8;font-weight:600">~55%</td>
+            <td style="padding:8px 11px;text-align:right;color:#374151">~5%</td>
+            <td style="padding:8px 11px;text-align:right;color:#374151">~2%</td>
+          </tr>
+          <tr style="border-bottom:1px solid #e5e7eb">
+            <td style="padding:8px 11px;font-weight:600;color:#111827">Deep Rock Galactic</td>
+            <td style="padding:8px 11px;color:#374151">Ghost Ship Games</td>
+            <td style="padding:8px 11px;color:#6b7280;white-space:nowrap">2020.05.13 (정식)</td>
+            <td style="padding:8px 11px;text-align:right;font-weight:600">~370,000</td>
+            <td style="padding:8px 11px;text-align:right;color:#15803d;font-weight:700">~98%</td>
+            <td style="padding:8px 11px;text-align:right;color:#374151">~40%</td>
+            <td style="padding:8px 11px;text-align:right;color:#374151">~20%</td>
+            <td style="padding:8px 11px;text-align:right;color:#374151">~5%</td>
+            <td style="padding:8px 11px;text-align:right;color:#374151">~8%</td>
+          </tr>
+          <tr style="background:#f9fafb;border-bottom:1px solid #e5e7eb">
+            <td style="padding:8px 11px;font-weight:600;color:#111827">THE FINALS</td>
+            <td style="padding:8px 11px;color:#374151">Embark Studios</td>
+            <td style="padding:8px 11px;color:#6b7280;white-space:nowrap">2023.12.07</td>
+            <td style="padding:8px 11px;text-align:right;font-weight:600">~150,000</td>
+            <td style="padding:8px 11px;text-align:right;color:#b45309">~75%</td>
+            <td style="padding:8px 11px;text-align:right;color:#374151">~40%</td>
+            <td style="padding:8px 11px;text-align:right;color:#374151">~25%</td>
+            <td style="padding:8px 11px;text-align:right;color:#374151">~5%</td>
+            <td style="padding:8px 11px;text-align:right;color:#374151">~5%</td>
+          </tr>
+          <tr style="border-bottom:1px solid #e5e7eb">
+            <td style="padding:8px 11px;font-weight:600;color:#111827">Battlefield 6</td>
+            <td style="padding:8px 11px;color:#374151">DICE / EA</td>
+            <td style="padding:8px 11px;color:#6b7280;white-space:nowrap">2025.10.10</td>
+            <td style="padding:8px 11px;text-align:right;font-weight:600">~100,000</td>
+            <td style="padding:8px 11px;text-align:right;color:#ef4444">~55% <span style="font-size:10px">(Mixed)</span></td>
+            <td style="padding:8px 11px;text-align:right;color:#374151">~50%</td>
+            <td style="padding:8px 11px;text-align:right;color:#374151">~15%</td>
+            <td style="padding:8px 11px;text-align:right;color:#374151">~5%</td>
+            <td style="padding:8px 11px;text-align:right;color:#374151">~3%</td>
+          </tr>
+          <tr style="background:#f9fafb">
+            <td style="padding:8px 11px;font-weight:600;color:#111827">Apex Legends</td>
+            <td style="padding:8px 11px;color:#374151">Respawn / EA</td>
+            <td style="padding:8px 11px;color:#6b7280;white-space:nowrap">2019.02.04</td>
+            <td style="padding:8px 11px;text-align:right;font-weight:600">~1,600,000</td>
+            <td style="padding:8px 11px;text-align:right;color:#b45309">~72%</td>
+            <td style="padding:8px 11px;text-align:right;color:#374151">~35%</td>
+            <td style="padding:8px 11px;text-align:right;color:#374151">~25%</td>
+            <td style="padding:8px 11px;text-align:right;color:#374151">~8%</td>
+            <td style="padding:8px 11px;text-align:right;color:#374151">~10%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="t4-note" style="margin-top:10px;padding:10px 12px;background:#fff;border-radius:8px;border:1px solid #e5e7eb;line-height:1.7">
+      📊 <strong>Steam 언어 통계 배경 (2025 Valve GDC 발표 확인값):</strong>
+      중국어(간체) 33.7% · 영어 33.5% · 러시아어 5.4% · 스페인어 3.8% · 브라질 포르투갈어 3.5% · 한국어 1.69% · 일본어 ~2%<br>
+      <span style="color:#9ca3af;font-size:10px">출처: Reddit / Valve GDC 2025 발표 · 리뷰 비율은 현재(2026.04.08) 기준 추정치이며 시점별 역산 불가</span>
+    </div>
+  </div>
+</div>
+</section>
+<footer>
+<div><div class="fl">PROJECT S · 스팀 딥다이브</div></div>
+<div style="text-align:right"><div style="font-size:10px">기준일:2026-04-15 · 환율:<span id="fRate">1,450</span>원/$</div></div>
+</footer>
+<script>
+var RATE = 1450;
+var allCharts = [];
+
+function fK(b) {
+  var w = b * RATE * 1e9;
+  var j = Math.floor(w / 1e12);
+  var e = Math.round((w % 1e12) / 1e8);
+  if (j > 0 && e > 0) return j + '조 ' + e.toLocaleString() + '억원';
+  if (j > 0) return j + '조원';
+  return e.toLocaleString() + '억원';
+}
+function sK(m) {
+  var w = m * RATE / 100;
+  var j = Math.floor(w / 10000);
+  var e = Math.round(w % 10000);
+  if (j > 0 && e > 0) return j + '조' + e + '억';
+  if (j > 0) return j + '조원';
+  return Math.round(w) + '억원';
+}
+
+function applyRate() {
+  var v = parseInt(document.getElementById('rateInput').value);
+  if (isNaN(v) || v < 500 || v > 3000) { alert('500~3000'); return; }
+  RATE = v;
+  var els = document.querySelectorAll('.krw');
+  for (var i = 0; i < els.length; i++) {
+    var u = parseFloat(els[i].getAttribute('data-usd'));
+    if (!isNaN(u)) els[i].textContent = fK(u);
+  }
+  var dyns = document.querySelectorAll('.kdyn');
+  for (var j = 0; j < dyns.length; j++) {
+    var u2 = parseFloat(dyns[j].getAttribute('data-usd'));
+    if (!isNaN(u2)) dyns[j].textContent = fK(u2);
+  }
+  var ids = ['rn1', 'rn2'];
+  for (var k = 0; k < ids.length; k++) {
+    var el = document.getElementById(ids[k]);
+    if (el) el.textContent = '💱 현재 환율: 1$ = ' + RATE.toLocaleString() + '원';
+  }
+  document.getElementById('fRate').textContent = RATE.toLocaleString();
+  for (var c = 0; c < allCharts.length; c++) {
+    try { allCharts[c].update(); } catch(e) {}
+  }
+}
+
+/* Init KRW */
+var kwEls = document.querySelectorAll('.krw');
+for (var i = 0; i < kwEls.length; i++) {
+  var u = parseFloat(kwEls[i].getAttribute('data-usd'));
+  if (!isNaN(u)) kwEls[i].textContent = fK(u);
+}
+var dyEls = document.querySelectorAll('.kdyn');
+for (var i = 0; i < dyEls.length; i++) {
+  var u = parseFloat(dyEls[i].getAttribute('data-usd'));
+  if (!isNaN(u)) dyEls[i].textContent = fK(u);
+}
+
+/* Chart.js Setup */
+try { Chart.register(ChartDataLabels); } catch(e) {}
+
+/* ── 외부 레이블 플러그인 (bigpicture 동일) ── */
+var outerLP = {
+  id: 'outerLabel',
+  afterDraw: function(chart) {
+    if (!chart.config.options.outerLabels) return;
+    var ctx = chart.ctx;
+    var ca = chart.chartArea;
+    var meta = chart.getDatasetMeta(0);
+    var cx = (ca.left + ca.right) / 2;
+    var cy = (ca.top + ca.bottom) / 2;
+    for (var i = 0; i < meta.data.length; i++) {
+      var arc = meta.data[i];
+      var cfg = chart.config.options.outerLabels[i];
+      if (!cfg) continue;
+      var mid = (arc.startAngle + arc.endAngle) / 2;
+      var OR = arc.outerRadius;
+      var LR = OR + 16;
+      var x1 = cx + OR * Math.cos(mid), y1 = cy + OR * Math.sin(mid);
+      var x2 = cx + LR * Math.cos(mid), y2 = cy + LR * Math.sin(mid);
+      var isR = Math.cos(mid) >= 0;
+      var elbow = typeof cfg.elbow === 'number' ? cfg.elbow : 20;
+      var dx = typeof cfg.dx === 'number' ? cfg.dx : 0;
+      var dy = typeof cfg.dy === 'number' ? cfg.dy : 0;
+      var labelGapX = typeof cfg.labelGapX === 'number' ? cfg.labelGapX : 4;
+      var labelGapY = typeof cfg.labelGapY === 'number' ? cfg.labelGapY : 7;
+      var routeMode = cfg.routeMode || 'direct';
+      var bendX = typeof cfg.bendX === 'number' ? cfg.bendX : 18;
+      var x3 = x2 + (isR ? elbow : -elbow) + dx, y3 = y2 + dy;
+      var tx = x3 + (isR ? labelGapX : -labelGapX);
+      ctx.save();
+      ctx.strokeStyle = cfg.color; ctx.lineWidth = 1.2;
+      ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2);
+      if (routeMode === 'orthogonal') {
+        var xB = x2 + (isR ? bendX : -bendX) + dx;
+        ctx.lineTo(xB, y2);
+        ctx.lineTo(xB, y3);
+        ctx.lineTo(x3, y3);
+      } else {
+        ctx.lineTo(x3, y3);
+      }
+      ctx.stroke();
+      ctx.fillStyle = cfg.color; ctx.beginPath(); ctx.arc(x3,y3,2.5,0,Math.PI*2); ctx.fill();
+      ctx.font = 'bold 11px Segoe UI,sans-serif'; ctx.fillStyle = cfg.color;
+      ctx.textAlign = isR ? 'left' : 'right'; ctx.textBaseline = 'middle';
+      ctx.fillText(cfg.line1, tx, y3 - labelGapY);
+      ctx.font = '10px Segoe UI,sans-serif'; ctx.fillStyle = '#374151';
+      ctx.fillText(cfg.line2, tx, y3 + labelGapY);
+      ctx.restore();
+    }
+  }
+};
+try { Chart.register(outerLP); } catch(e) {}
+
+var centerTextP = {
+  id: 'centerTextP',
+  afterDraw: function(chart) {
+    var cfg = chart.config.options.centerText;
+    if (!cfg) return;
+    var ctx = chart.ctx;
+    var ca = chart.chartArea;
+    var cx = (ca.left + ca.right) / 2;
+    var cy = (ca.top + ca.bottom) / 2;
+    ctx.save();
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    if (cfg.line1) {
+      ctx.font = '800 14px Segoe UI,sans-serif';
+      ctx.fillStyle = '#111827';
+      ctx.fillText(cfg.line1, cx, cy - 10);
+    }
+    if (cfg.line2) {
+      ctx.font = '10px Segoe UI,sans-serif';
+      ctx.fillStyle = '#6b7280';
+      ctx.fillText(cfg.line2, cx, cy + 10);
+    }
+    ctx.restore();
+  }
+};
+try { Chart.register(centerTextP); } catch(e) {}
+
+/* ═══ S1-A: 3중 계층 수평 스택 바 ═══ */
+allCharts.push(new Chart(document.getElementById('c1a'), {
+  type: 'bar',
+  data: {
+    labels: ['1계층 글로벌 전체($197B) 비중', '2계층 PC 게임 전체($43B) 비중', '3계층 PC 디지털 유통 비중'],
+    datasets: [
+      { label: 'Steam ($16.9B)', data: [8.6, 39.3, 75], backgroundColor: '#2dd4bf', borderRadius: 4, barThickness: 28 },
+      { label: '기타', data: [91.4, 60.7, 25], backgroundColor: '#e5e7eb', borderRadius: 4, barThickness: 28 }
+    ]
+  },
+  options: {
+    indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'bottom', align: 'center' },
+      datalabels: {
+        display: function(c) { return c.datasetIndex === 0; },
+        anchor: 'center', align: 'center',
+        formatter: function(v) { return v + '%'; },
+        color: '#fff', font: { size: 13, weight: 'bold' }
+      }
+    },
+    scales: {
+      x: { stacked: true, max: 100, ticks: { callback: function(v) { return v + '%'; } }, grid: { color: '#e5e7eb', borderDash: [4, 4] } },
+      y: { stacked: true, grid: { display: false } }
+    }
+  }
+}));
+
+/* ═══ S1-B: PC디지털 도넛 (외부 레이블) ═══ */
+(function() {
+  var labels = ['Steam', 'Epic Games Store', 'MS/Game Pass', 'GoG', 'Others'];
+  var data = [74.5, 9, 7, 2.5, 7];
+  var colors = ['#2dd4bf', '#8b5cf6', '#3b82f6', '#f59e0b', '#d1d5db'];
+  var outerCfgs = [];
+  for (var i = 0; i < labels.length; i++) {
+    outerCfgs.push({ color: colors[i], line1: labels[i], line2: data[i] + '%' });
+  }
+  allCharts.push(new Chart(document.getElementById('c1b'), {
+    type: 'doughnut',
+    data: { labels: labels, datasets: [{ data: data, backgroundColor: colors, borderWidth: 2, borderColor: '#fff', hoverOffset: 6 }] },
+    options: {
+      responsive: true, maintainAspectRatio: false, cutout: '58%', layout: { padding: 55 },
+      outerLabels: outerCfgs,
+      plugins: { legend: { display: false }, datalabels: { display: false } }
+    }
+  }));
+})();
+
+/* ═══ S2-A: 장르 비중 도넛 (외부 레이블) ═══ */
+(function() {
+  var labels = ['Action', 'RPG', 'Strategy', 'Simulation', 'Sports'];
+  var data = [58.37, 17.11, 13.97, 9.76, 0.79];
+  var colors = ['#ef4444', '#8b5cf6', '#3b82f6', '#f59e0b', '#d1d5db'];
+  var chars = ['에버그린 독식', '균형 분포', 'DOTA2 견인', '틈새 안정', '소수 점유'];
+  var outerCfgs = [];
+  for (var i = 0; i < labels.length; i++) {
+    var cfg = { color: colors[i], line1: labels[i] + ' ' + data[i] + '%', line2: chars[i] };
+    if (labels[i] === 'Simulation') cfg = { color: colors[i], line1: labels[i] + ' ' + data[i] + '%', line2: chars[i], dx: 8, dy: -16, elbow: 24 };
+    if (labels[i] === 'Sports') cfg = { color: colors[i], line1: labels[i] + ' ' + data[i] + '%', line2: chars[i], dx: 4, dy: 18, elbow: 10, routeMode: 'direct' };
+    outerCfgs.push(cfg);
+  }
+  allCharts.push(new Chart(document.getElementById('c2a'), {
+    type: 'doughnut',
+    data: { labels: labels, datasets: [{ data: data, backgroundColor: colors, borderWidth: 2, borderColor: '#fff' }] },
+    options: {
+      responsive: true, maintainAspectRatio: false, cutout: '55%', layout: { padding: { top: 42, right: 98, bottom: 42, left: 72 } },
+      outerLabels: outerCfgs,
+      centerText: { line1: 'Steam', line2: '역대 누적 매출' },
+      plugins: { legend: { display: false }, datalabels: { display: false } }
+    }
+  }));
+})();
+
+/* ═══ S2-B: Action 서브장르 수평 바 ═══ */
+(function() {
+  var L = ['Arena Shooter', 'FPS', 'Action-Adv.', 'Open World Survival', 'Battle Royale', 'Souls-like', 'Survival Horror', 'Hero Shooter', 'TPS', 'Hack&Slash'];
+  var P = [18.99, 13.30, 11.37, 10.65, 9.89, 5.65, 5.17, 4.12, 2.86, 2.55];
+  var usdB = [9.52, 6.67, 5.70, 5.34, 4.96, 2.83, 2.59, 0.207, 1.43, 1.28];
+  var usdPrefix = ['', '', '', '', '추정 ~', '~', '~', 'avg ', '~', '~'];
+  function fmtUsdAction(idx) {
+    var v = usdB[idx];
+    if (v >= 1) return usdPrefix[idx] + '$' + v.toFixed(2) + 'B';
+    return usdPrefix[idx] + '$' + Math.round(v * 1000) + 'M';
+  }
+  allCharts.push(new Chart(document.getElementById('c2b'), {
+    type: 'bar',
+    data: { labels: L, datasets: [{ data: P, backgroundColor: ['#ef4444', '#f97316', '#f59e0b', '#84cc16', '#22c55e', '#06b6d4', '#3b82f6', '#8b5cf6', '#a855f7', '#ec4899'], borderRadius: 4, barThickness: 14 }] },
+    options: {
+      indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+      layout: { padding: { right: 132 } },
+      plugins: {
+        legend: { display: false },
+        datalabels: {
+          anchor: 'end', align: 'right', offset: 6,
+          formatter: function(v, c) {
+            var idx = c.dataIndex;
+            return [v + '% · ' + fmtUsdAction(idx), '(' + fK(usdB[idx]) + ')'];
+          },
+          color: '#374151', font: { size: 9, weight: 'bold', lineHeight: 1.1 }
+        }
+      },
+      scales: {
+        x: { ticks: { callback: function(v) { return v + '%'; } }, grid: { color: '#e5e7eb', borderDash: [4, 4] } },
+        y: { grid: { display: false } }
+      }
+    }
+  }));
+})();
+
+/* ═══ S2-D: 2024 vs 2025 매출 (환율 연동) ═══ */
+(function() {
+  var L = ['Action', 'RPG', 'Shooter', 'Strategy', 'Simulation', 'Arcade', 'Sports', 'Racing', 'Puzzle', 'Tabletop'];
+  var r24 = [2940, 2750, 1580, 820, 730, 420, 300, 270, 120, 50];
+  var r25 = [3880, 2460, 1770, 880, 930, 330, 250, 220, 130, 30];
+  var yoyArr = [];
+  for (var i = 0; i < r24.length; i++) {
+    yoyArr.push(((r25[i] - r24[i]) / r24[i] * 100).toFixed(1));
+  }
+  var c25Colors = [];
+  for (var j = 0; j < yoyArr.length; j++) {
+    var yv = parseFloat(yoyArr[j]);
+    if (yv >= 20) c25Colors.push('#4338ca');
+    else if (yv >= 0) c25Colors.push('#6366f1');
+    else if (yv <= -15) c25Colors.push('#ef4444');
+    else c25Colors.push('#fb7185');
+  }
+
+  allCharts.push(new Chart(document.getElementById('c2d'), {
+    type: 'bar',
+    data: {
+      labels: L,
+      datasets: [
+        { label: '2024 ($M)', data: r24, backgroundColor: '#d1d5db', borderRadius: 4, barThickness: 13 },
+        { label: '2025 ($M)', data: r25, backgroundColor: c25Colors, borderRadius: 4, barThickness: 13 }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      layout: { padding: { top: 56, right: 10 } },
+      plugins: {
+        legend: { position: 'bottom', align: 'center' },
+        datalabels: {
+          anchor: 'end', align: 'top', offset: 4,
+          font: { size: 10, weight: 'bold', lineHeight: 1.12 }, textAlign: 'center',
+          backgroundColor: function(context) {
+            return parseFloat(yoyArr[context.dataIndex]) >= 0 ? 'rgba(236,253,245,0.96)' : 'rgba(254,242,242,0.96)';
+          },
+          borderColor: function(context) {
+            return parseFloat(yoyArr[context.dataIndex]) >= 0 ? '#16a34a' : '#ef4444';
+          },
+          borderWidth: 1.2, borderRadius: 6,
+          padding: { top: 3, right: 5, bottom: 3, left: 5 },
+          display: function(context) { return context.datasetIndex === 1; },
+          formatter: function(value, context) {
+            var y = yoyArr[context.dataIndex];
+            var sign = parseFloat(y) >= 0 ? '+' : '';
+            var krwStr = sK(value);
+            return ['$' + value.toLocaleString() + 'M', '(' + krwStr + ')', 'YoY ' + sign + y + '%'];
+          },
+          color: function(context) {
+            return parseFloat(yoyArr[context.dataIndex]) >= 0 ? '#166534' : '#b91c1c';
+          }
+        }
+      },
+      scales: {
+        x: { grid: { display: false } },
+        y: { beginAtZero: true, ticks: { callback: function(v) { return '$' + v + 'M'; } }, grid: { color: '#e5e7eb', borderDash: [4, 4] } }
+      }
+    }
+  }));
+})();
+
+/* ═══ S2-E: 2024 vs 2025 다운로드 (YoY 포함) ═══ */
+(function() {
+  var L = ['Action', 'Shooter', 'Simulation', 'RPG', 'Arcade', 'Strategy', 'Puzzle', 'Racing', 'Sports', 'Tabletop'];
+  var d24 = [189, 157, 109, 106, 64, 61, 24, 15, 10, 11];
+  var d25 = [241, 153, 97, 102, 45, 64, 25, 12, 11, 5];
+  var yoyArr = [];
+  for (var i = 0; i < d24.length; i++) {
+    yoyArr.push(((d25[i] - d24[i]) / d24[i] * 100).toFixed(1));
+  }
+
+  allCharts.push(new Chart(document.getElementById('c2e'), {
+    type: 'bar',
+    data: {
+      labels: L,
+      datasets: [
+        { label: '2024 (M)', data: d24, backgroundColor: '#d1d5db', borderRadius: 4, barThickness: 13 },
+        { label: '2025 (M)', data: d25, backgroundColor: '#2dd4bf', borderRadius: 4, barThickness: 13 }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      layout: { padding: { top: 32 } },
+      plugins: {
+        legend: { position: 'bottom', align: 'center' },
+        datalabels: {
+          anchor: 'end', align: 'top', offset: 3,
+          font: { size: 9, weight: 'bold' }, textAlign: 'center',
+          display: function(context) { return context.datasetIndex === 1; },
+          formatter: function(value, context) {
+            var y = yoyArr[context.dataIndex];
+            var sign = parseFloat(y) >= 0 ? '+' : '';
+            return value + 'M (' + sign + y + '%)';
+          },
+          color: function(context) {
+            return parseFloat(yoyArr[context.dataIndex]) >= 0 ? '#0d9488' : '#ef4444';
+          }
+        }
+      },
+      scales: {
+        x: { grid: { display: false } },
+        y: { beginAtZero: true, ticks: { callback: function(v) { return v + 'M'; } }, grid: { color: '#e5e7eb', borderDash: [4, 4] } }
+      }
+    }
+  }));
+})();
+
+/* ═══ S3-A: 출시 현황 ═══ */
+(function() {
+  var L = ['2020', '2021', '2022', '2023', '2024', '2025', '2026.1Q'];
+  var games = [9646, 11233, 12268, 14054, 18573, 21541, 6841];
+  var shooters = [1041, 1417, 1579, 1770, 2031, 2251, 631];
+  var share = [10.8, 12.6, 12.9, 12.6, 10.9, 10.4, 9.2];
+  allCharts.push(new Chart(document.getElementById('c3a'), {
+    data: {
+      labels: L,
+      datasets: [
+        { type: 'bar', label: '전체 출시 수', data: games, backgroundColor: '#d1d5db', borderRadius: 4, order: 2 },
+        { type: 'bar', label: 'Shooter 출시 수', data: shooters, backgroundColor: '#14b8a6', borderRadius: 4, order: 2 },
+        { type: 'line', label: 'Shooter 비중(%)', data: share, yAxisID: 'y1', borderColor: '#4f46e5', backgroundColor: '#4f46e5', tension: 0.3, pointRadius: 4, pointHoverRadius: 5, order: 1 }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'bottom', align: 'center' },
+        datalabels: {
+          display: function(context) { return context.dataset.type === 'line'; },
+          align: 'top', anchor: 'end', offset: 4,
+          formatter: function(v) { return v + '%'; },
+          color: '#4f46e5', font: { size: 9, weight: 'bold' },
+          backgroundColor: 'rgba(255,255,255,0.88)', borderRadius: 6, padding: {top:2,bottom:2,left:4,right:4}
+        }
+      },
+      scales: {
+        y: { beginAtZero: true, grid: { color: '#e5e7eb', borderDash: [4,4] } },
+        y1: { beginAtZero: true, position: 'right', max: 60, grid: { drawOnChartArea: false }, ticks: { callback: function(v){ return v + '%'; } } },
+        x: { grid: { display: false } }
+      }
+    }
+  }));
+})();
+
+/* ═══ S3-A2: Shooter 내부 서브장르 출시 구성 ═══ */
+(function() {
+  var L = ['2020', '2021', '2022', '2023', '2024', '2025', '2026.1Q'];
+  var extraction = [1,1,5,10,23,40,12];
+  var arena = [197,314,320,434,491,518,139];
+  var hero = [83,154,161,174,158,167,48];
+  var br = [88,146,132,172,151,168,46];
+  var military = [229,338,344,420,442,513,141];
+  var coop = [572,621,639,803,1040,1257,386];
+  allCharts.push(new Chart(document.getElementById('c3a2'), {
+    type: 'bar',
+    data: {
+      labels: L,
+      datasets: [
+        { label: 'Co-op', data: coop, backgroundColor: '#22c55e', stack: 's' },
+        { label: 'Military', data: military, backgroundColor: '#3b82f6', stack: 's' },
+        { label: 'Arena', data: arena, backgroundColor: '#ef4444', stack: 's' },
+        { label: 'Hero', data: hero, backgroundColor: '#8b5cf6', stack: 's' },
+        { label: 'Battle Royale', data: br, backgroundColor: '#f59e0b', stack: 's' },
+        { label: 'Extraction', data: extraction, backgroundColor: '#0f766e', stack: 's' }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'bottom', align: 'center', labels: { usePointStyle: true, boxWidth: 10, boxHeight: 10, padding: 14 } },
+        datalabels: { display: false }
+      },
+      scales: {
+        x: { stacked: true, grid: { display: false } },
+        y: { stacked: true, beginAtZero: true, grid: { color: '#e5e7eb', borderDash: [4,4] } }
+      }
+    }
+  }));
+})();
+
+/* ═══ S3-B: Revenue 기준 MS ═══ */
+(function() {
+  var L = ['택티컬·아레나', '밀리터리 FPS', '배틀로얄', '히어로 슈팅', '익스트랙션', 'Co-op 슈팅'];
+  var cum = [38, 27, 20, 8, 3, 4];
+  var y25 = [35.0, 15.9, 22.5, 9.0, 10.2, 7.5];
+  var q126 = [33.0, 7.9, 20.4, 7.3, 24.6, 6.8];
+  allCharts.push(new Chart(document.getElementById('c3b'), {
+    type: 'bar',
+    data: {
+      labels: L,
+      datasets: [
+        { label: '누적 TAM(누적 총 매출) MS', data: cum, backgroundColor: '#cbd5e1', borderRadius: 4, barThickness: 18, maxBarThickness: 18, categoryPercentage: 0.76, barPercentage: 0.9 },
+        { label: '2025 Revenue MS', data: y25, backgroundColor: '#6366f1', borderRadius: 4, barThickness: 18, maxBarThickness: 18, categoryPercentage: 0.76, barPercentage: 0.9 },
+        { label: '2026.1Q Revenue MS', data: q126, backgroundColor: '#22c55e', borderRadius: 4, barThickness: 18, maxBarThickness: 18, categoryPercentage: 0.76, barPercentage: 0.9 }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      layout: { padding: { top: 24, right: 20, left: 18, bottom: 4 } },
+      plugins: {
+        legend: { position: 'bottom', align: 'center', labels: { usePointStyle: true, boxWidth: 10, boxHeight: 10, padding: 14 } },
+        datalabels: {
+          anchor: 'end',
+          align: 'top',
+          offset: 4,
+          clamp: true,
+          clip: false,
+          formatter: function(v) { return v + '%'; },
+          color: '#111827',
+          font: { size: 10, weight: 'bold' },
+          backgroundColor: 'rgba(255,255,255,0.96)',
+          borderRadius: 6,
+          padding: { top: 3, bottom: 3, left: 5, right: 5 }
+        }
+      },
+      scales: {
+        x: { grid: { display: false }, ticks: { maxRotation: 0, minRotation: 0, font: { size: 10 } } },
+        y: { beginAtZero: true, max: 42, ticks: { callback: function(v){ return v + '%'; } }, grid: { color: '#e5e7eb', borderDash: [4,4] } }
+      }
+    }
+  }));
+})();
+
+/* ═══ S3-C: Player 기준 MS + 대표 타이틀 CCU ═══ */
+(function() {
+  var L = ['택티컬·아레나', '배틀로얄', '밀리터리 FPS', '히어로 슈팅', '익스트랙션', 'Co-op 슈팅'];
+  var p25 = [60.0, 21.0, 7.6, 6.2, 2.7, 2.6];
+  var q126 = [58.9, 18.1, 2.5, 8.0, 9.6, 2.9];
+  var rep = [1074.6, 329.2, 46.4, 87.9, 174.8, 52.8];
+  var lineAlign = ['right', 'right', 'top', 'top', 'left', 'bottom'];
+  var lineOffset = [12, 12, 10, 10, 12, 10];
+  allCharts.push(new Chart(document.getElementById('c3c'), {
+    data: {
+      labels: L,
+      datasets: [
+        { type: 'bar', label: '2025 Player MS', data: p25, backgroundColor: '#cbd5e1', borderRadius: 4, yAxisID: 'y', barThickness: 12, maxBarThickness: 12, categoryPercentage: 0.72, barPercentage: 0.82, order: 2 },
+        { type: 'bar', label: '2026 Q1 Player MS', data: q126, backgroundColor: '#4f46e5', borderRadius: 4, yAxisID: 'y', barThickness: 12, maxBarThickness: 12, categoryPercentage: 0.72, barPercentage: 0.82, order: 2 },
+        { type: 'line', label: '대표 타이틀 2026 Q1 평균 CCU (K)', data: rep, backgroundColor: '#16a34a', borderColor: '#16a34a', tension: 0.22, pointRadius: 5, pointHoverRadius: 6, pointBackgroundColor: '#ffffff', pointBorderColor: '#16a34a', pointBorderWidth: 2, borderWidth: 2.4, yAxisID: 'y1', order: 1 }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      layout: { padding: { top: 46, right: 28, left: 18, bottom: 6 } },
+      plugins: {
+        legend: { position: 'bottom', align: 'center', labels: { usePointStyle: true, boxWidth: 10, boxHeight: 10, padding: 14, font: { size: 11 } } },
+        datalabels: {
+          formatter: function(v, c){
+            if (c.dataset.type === 'line') return Math.round(v) + 'K';
+            return v + '%';
+          },
+          color: function(c){ return c.dataset.type === 'line' ? '#166534' : '#111827'; },
+          align: function(c){
+            if (c.dataset.type === 'line') return lineAlign[c.dataIndex] || 'top';
+            return 'top';
+          },
+          anchor: 'end',
+          offset: function(c){
+            if (c.dataset.type === 'line') return lineOffset[c.dataIndex] || 10;
+            return 6;
+          },
+          clamp: true,
+          clip: false,
+          font: { size: 9, weight: 'bold', lineHeight: 1.08 },
+          backgroundColor: function(c){ return c.dataset.type === 'line' ? 'rgba(236,253,245,0.98)' : 'rgba(255,255,255,0.96)'; },
+          borderColor: function(c){ return c.dataset.type === 'line' ? '#16a34a' : 'rgba(148,163,184,0.35)'; },
+          borderWidth: 1,
+          borderRadius: 6,
+          padding: { top: 3, bottom: 3, left: 5, right: 5 }
+        }
+      },
+      scales: {
+        x: { offset: true, grid: { display: false }, ticks: { font: { size: 10 } } },
+        y: { beginAtZero: true, max: 68, ticks: { callback: function(v){ return v + '%'; }, font: { size: 10 } }, grid: { color: '#e5e7eb', borderDash: [4,4] } },
+        y1: { beginAtZero: true, position: 'right', min: 0, max: 1450, ticks: { stepSize: 250, precision: 0, callback: function(v){ return Math.round(v) + 'K'; }, font: { size: 10 } }, grid: { drawOnChartArea: false } }
+      }
+    }
+  }));
+})();
+
+/* ═══ S3-D: 대표 타이틀 월별 CCU 추이 ═══ */
+(function() {
+  var L = ['25.01','25.02','25.03','25.04','25.05','25.06','25.07','25.08','25.09','25.10','25.11','25.12','26.01','26.02','26.03'];
+  allCharts.push(new Chart(document.getElementById('c3d'), {
+    type: 'line',
+    data: {
+      labels: L,
+      datasets: [
+        { label: 'CS2', data: [914.1,920.0,930.0,1020.0,980.0,960.0,1400.0,950.0,960.0,948.2,981.5,991.2,1070.4,1084.1,1069.2], borderColor: '#ef4444', backgroundColor: '#ef4444', tension: 0.25, pointRadius: 3, pointHoverRadius: 4, pointStyle: 'circle', borderWidth: 2 },
+        { label: 'PUBG', data: [307.6,332.8,367.2,339.6,320.0,310.0,310.0,320.0,350.0,266.6,278.0,279.4,290.4,368.6,328.6], borderColor: '#f59e0b', backgroundColor: '#f59e0b', tension: 0.25, pointRadius: 3, pointHoverRadius: 4, pointStyle: 'circle', borderWidth: 2 },
+        { label: 'BF6', data: [null,null,null,null,null,null,null,null,null,311.1,223.4,89.4,56.5,45.0,37.8], borderColor: '#3b82f6', backgroundColor: '#3b82f6', tension: 0.25, pointRadius: 3, pointHoverRadius: 4, pointStyle: 'circle', borderWidth: 2 },
+        { label: 'Marvel Rivals', data: [306.1,228.0,144.3,135.2,102.1,79.8,82.8,77.5,70.0,63.7,65.3,75.5,88.8,90.0,85.0], borderColor: '#8b5cf6', backgroundColor: '#8b5cf6', tension: 0.25, pointRadius: 3, pointHoverRadius: 4, pointStyle: 'circle', borderWidth: 2 },
+        { label: 'ARC Raiders', data: [null,null,null,null,null,null,null,null,null,100.5,264.4,229.4,241.2,171.0,112.3], borderColor: '#0f766e', backgroundColor: '#0f766e', tension: 0.25, pointRadius: 3, pointHoverRadius: 4, pointStyle: 'circle', borderWidth: 2 },
+        { label: 'HD2', data: [46.8,53.3,38.5,28.0,30.0,28.0,38.0,40.4,68.4,38.0,27.0,34.5,33.9,76.5,47.9], borderColor: '#22c55e', backgroundColor: '#22c55e', tension: 0.25, pointRadius: 3, pointHoverRadius: 4, pointStyle: 'circle', borderWidth: 2 }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'bottom', align: 'center', labels: { usePointStyle: true, boxWidth: 10, boxHeight: 10, padding: 14 } },
+        datalabels: { display: false }
+      },
+      scales: {
+        x: { grid: { display: false } },
+        y: { beginAtZero: true, ticks: { callback: function(v){ return v + 'K'; } }, grid: { color: '#e5e7eb', borderDash: [4,4] } }
+      }
+    }
+  }));
+})();
+
+
+/* ═══ S4-A: 언어별 유저 비중 — Valve GDC 2025 공식 그래프 ═══ */
+(function() {
+  var labels = ['간체중국어', '영어', '러시아어', '스페인어', '브라질 포르투갈어', '독일어', '한국어', '프랑스어', '일본어', '터키어'];
+  var data = [33.7, 33.5, 8.2, 4.6, 2.8, 2.5, 2.2, 2.1, 1.7, 1.7];
+  var colors = ['#ef4444','#f97316','#8b5cf6','#3b82f6','#06b6d4','#0ea5e9','#22c55e','#10b981','#a855f7','#64748b'];
+  allCharts.push(new Chart(document.getElementById('c4a'), {
+    type: 'bar',
+    data: { labels: labels, datasets: [{ label: '언어 비중', data: data, backgroundColor: colors, borderRadius: 6, barThickness: 14 }] },
+    options: {
+      indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        datalabels: {
+          anchor: 'end', align: 'right', offset: 6,
+          formatter: function(v){ return v + '%'; },
+          color: '#111827', font: { size: 10, weight: 'bold' }, clamp: true, clip: false
+        },
+        tooltip: { callbacks: { label: function(c){ return c.raw + '%'; } } }
+      },
+      scales: {
+        x: { beginAtZero: true, max: 36, grid: { color: '#e5e7eb', borderDash: [4,4] }, ticks: { callback: function(v){ return v + '%'; } } },
+        y: { grid: { display: false }, ticks: { font: { size: 10 } } }
+      }
+    }
+  }));
+})();
+
+/* ═══ S4-B: 국가별 트래픽 점유율 변화 — Steam 공식 Bandwidth (Apr 2024 vs Jul 2025) ═══ */
+(function() {
+  var labels = ['중국','미국','러시아','브라질','독일','영국','일본','캐나다','프랑스','한국','폴란드','호주','터키','대만','태국'];
+  var apr24 = [25.6,20.6,5.9,4.0,4.4,3.3,1.9,2.6,2.4,1.9,1.8,1.7,1.5,0.8,1.0];
+  var jul25 = [26.1,20.4,6.9,5.9,4.4,3.3,2.5,2.6,2.4,1.9,1.8,1.7,1.5,1.0,1.0];
+  allCharts.push(new Chart(document.getElementById('c4b'), {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [
+        { label: '2024년 4월', data: apr24, backgroundColor: '#93c5fd', borderRadius: 0, barThickness: 6, categoryPercentage: 0.72, barPercentage: 0.9 },
+        { label: '2025년 7월', data: jul25, backgroundColor: '#3b82f6', borderRadius: 0, barThickness: 6, categoryPercentage: 0.72, barPercentage: 0.9 }
+      ]
+    },
+    options: {
+      indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+      layout: { padding: { left: 0, right: 8, top: 0, bottom: 0 } },
+      plugins: {
+        legend: { position: 'top', align: 'start', labels: { boxWidth: 10, boxHeight: 10, usePointStyle: false, color: '#475569', font: { size: 10 } } },
+        datalabels: { display: false },
+        tooltip: { callbacks: { label: function(c){ return c.dataset.label + ': ' + Number(c.raw).toFixed(1) + '%'; } } }
+      },
+      scales: {
+        x: { min: 0, max: 30, grid: { color: '#e5e7eb' }, ticks: { stepSize: 5, color: '#64748b', font: { size: 9 }, callback: function(v){ return v + '%'; } } },
+        y: { grid: { display: false }, ticks: { color: '#475569', font: { size: 10 } } }
+      }
+    }
+  }));
+})();
+
+function showTab(id, el) {
+  document.querySelectorAll('#s3 .section').forEach(function(s){ s.classList.remove('visible'); });
+  document.querySelectorAll('#s3 .tab').forEach(function(t){ t.classList.remove('active'); });
+  var target = document.getElementById('s-' + id);
+  if (target) target.classList.add('visible');
+  if (el) el.classList.add('active');
+}
+
+</script>
+<script src="../assets/embed.js"></script>
+</body>
+</html>

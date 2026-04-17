@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project S 스팀 론칭 대시보드</title>
+<link rel="stylesheet" href="assets/theme.css">
+<link rel="stylesheet" href="assets/shell.css">
+</head>
+<body>
+<aside class="sidebar" aria-label="페이지 네비게이션">
+  <div class="sidebar-head">
+    <div class="brand-line1">Project S</div>
+    <div class="brand-line2">Steam 론칭 대시보드</div>
+  </div>
+  <button id="sidebar-toggle" class="sidebar-toggle" type="button" aria-label="사이드바 토글"></button>
+  <nav class="nav">
+    <a class="nav-item" href="#p0"       data-route="p0"       data-short="P0"><span class="nav-label">Flywheel</span></a>
+    <a class="nav-item" href="#p1"       data-route="p1"       data-short="P1"><span class="nav-label">글로벌 게임 마켓</span></a>
+    <a class="nav-item" href="#p2"       data-route="p2"       data-short="P2"><span class="nav-label">스팀 마켓</span></a>
+    <a class="nav-item" href="#p3"       data-route="p3"       data-short="P3"><span class="nav-label">마일스톤</span></a>
+    <a class="nav-item" href="#p4"       data-route="p4"       data-short="P4"><span class="nav-label">스팀 정책 & 리스크</span></a>
+    <a class="nav-item" href="#p5"       data-route="p5"       data-short="P5"><span class="nav-label">Pain Point 분석</span></a>
+    <a class="nav-item" href="#p6"       data-route="p6"       data-short="P6"><span class="nav-label">BM 분석</span></a>
+    <a class="nav-item" href="#p7"       data-route="p7"       data-short="P7"><span class="nav-label">경쟁작 캘린더</span></a>
+    <a class="nav-item" href="#appendix" data-route="appendix" data-short="APX"><span class="nav-label">CCU 계산기</span></a>
+  </nav>
+  <div class="sidebar-foot">
+    <div class="rate-box">
+      <div class="rate-label">USD → KRW</div>
+      <div class="rate-row">
+        <input id="rate-input" class="rate-input" type="number" min="1" step="0.01" value="1500" />
+        <button id="rate-apply" class="rate-btn" type="button">적용</button>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<main class="main">
+  <header class="header">
+    <div class="header-title">
+      <span id="hdr-text" class="header-text">Flywheel</span>
+    </div>
+    <div class="header-meta">
+      <span class="live-dot" aria-hidden="true"></span>
+      <span>업데이트 2026-04-17</span>
+    </div>
+  </header>
+  <div class="frame-wrap">
+    <iframe id="page-frame" title="대시보드 본문" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+  </div>
+</main>
+
+<script src="assets/shell.js"></script>
+</body>
+</html>

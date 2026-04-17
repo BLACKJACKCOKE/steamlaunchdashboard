@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>스팀 정책 & 리스크 — Project S Dashboard</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg:#ffffff; --card-bg:#f3f4f6; --card-bg2:#f9fafb;
+  --border:#e5e7eb; --text-h:#111827; --text-sub1:#374151;
+  --text-sub2:#6b7280; --text-src:#9ca3af;
+  --green:#16a34a; --red:#ef4444; --accent:#4f46e5;
+  --amber:#d97706; --amber-bg:#fef3c7; --amber-border:#fde68a;
+  --green-bg:#dcfce7; --green-border:#86efac;
+  --red-bg:#fee2e2; --red-border:#fca5a5;
+  --blue-bg:#eff6ff; --blue-border:#bfdbfe;
+  --purple:#7c3aed; --purple-bg:#ede9fe; --purple-border:#c4b5fd;
+  --teal:#0f766e; --teal-bg:#f0fdfa; --teal-border:#99f6e4;
+  --radius:12px; --shadow:0 1px 4px rgba(0,0,0,.08);
+}
+html { scroll-behavior:smooth; }
+body { font-family:'Segoe UI','Apple SD Gothic Neo',sans-serif; background:var(--bg); color:var(--text-h); line-height:1.6; }
+a { color:var(--accent); text-decoration:none; } a:hover { text-decoration:underline; }
+::-webkit-scrollbar { width:6px; height:6px; }
+::-webkit-scrollbar-track { background:var(--card-bg); }
+::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
+
+/* ══ HEADER ══ */
+.top-header {
+  position:sticky; top:0; z-index:200;
+  background:rgba(255,255,255,.97); backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--border);
+  padding:0 32px; display:flex; align-items:center; justify-content:space-between; height:56px;
+}
+.header-badge { background:#4f46e5; color:#fff; font-size:10px; font-weight:700; padding:3px 8px; border-radius:20px; letter-spacing:.5px; }
+.header-left { display:flex; align-items:center; gap:10px; }
+.header-main { font-size:13px; font-weight:800; color:var(--text-h); }
+.header-sub  { font-size:10px; font-weight:500; color:var(--accent); }
+.meta-live   { display:flex; align-items:center; gap:6px; font-size:10px; color:var(--text-sub2); }
+.live-dot { width:6px; height:6px; border-radius:50%; background:var(--green); box-shadow:0 0 6px var(--green); animation:pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1}50%{opacity:.5} }
+
+/* ══ PAGE-NAV ══ */
+.page-nav {
+  position:sticky; top:56px; z-index:150;
+  background:rgba(249,250,251,.97); backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--border);
+  padding:0 32px; display:flex; align-items:stretch; height:44px;
+  overflow-x:auto; white-space:nowrap;
+}
+.page-nav::-webkit-scrollbar { height:0; }
+.pnav-item { display:flex; align-items:center; gap:6px; padding:0 14px; font-size:12px; font-weight:600; color:var(--text-sub2); border-bottom:2px solid transparent; cursor:pointer; text-decoration:none; transition:all .2s; white-space:nowrap; }
+.pnav-item:hover { color:var(--text-h); border-color:var(--border); }
+.pnav-item.active { color:var(--accent); border-color:var(--accent); background:rgba(79,70,229,.04); }
+.pnav-num { font-size:10px; font-weight:700; color:var(--accent); font-family:monospace; }
+.pnav-div { width:1px; background:var(--border); margin:10px 0; flex-shrink:0; }
+
+/* ══ CONTENT ══ */
+.content { max-width:1200px; margin:0 auto; padding:28px 40px 80px; }
+
+/* ══ SECTION ══ */
+.section { margin-bottom:8px; scroll-margin-top:110px; }
+.section-header { display:flex; align-items:center; gap:12px; padding:14px 18px; background:var(--card-bg); border:1px solid var(--border); border-radius:var(--radius); cursor:pointer; transition:all .2s; user-select:none; }
+.section-header:hover { background:#e9ebf0; }
+.section-header.open { border-color:#c7d2fe; background:linear-gradient(90deg,#f0f4ff 0%,var(--card-bg) 100%); border-radius:var(--radius) var(--radius) 0 0; }
+.section-num { font-size:11px; font-weight:700; color:var(--accent); min-width:22px; font-family:monospace; }
+.sec-title { font-size:15px; font-weight:700; color:var(--text-h); flex:1; }
+.sec-sub    { font-size:11px; color:var(--text-sub2); }
+.sec-badge  { font-size:10px; font-weight:700; padding:2px 8px; border-radius:4px; letter-spacing:.05em; white-space:nowrap; }
+.badge-blue { background:#e0e7ff; color:var(--accent); border:1px solid #c7d2fe; }
+.badge-amber{ background:var(--amber-bg); color:var(--amber); border:1px solid var(--amber-border); }
+.badge-green{ background:var(--green-bg); color:var(--green); border:1px solid var(--green-border); }
+.badge-red  { background:var(--red-bg); color:var(--red); border:1px solid var(--red-border); }
+.badge-purple{ background:var(--purple-bg); color:var(--purple); border:1px solid var(--purple-border); }
+.badge-teal { background:var(--teal-bg); color:var(--teal); border:1px solid var(--teal-border); }
+.chevron { font-size:11px; color:var(--text-src); transition:transform .25s; margin-left:4px; }
+.section-header.open .chevron { transform:rotate(90deg); color:var(--accent); }
+.section-body { display:none; border:1px solid var(--border); border-top:none; border-radius:0 0 var(--radius) var(--radius); background:#fff; overflow:hidden; }
+.section-body.open { display:block; }
+
+/* ══ SUBSECTION ══ */
+.subsection { border-bottom:1px solid var(--border); }
+.subsection:last-child { border-bottom:none; }
+.subsection-header { display:flex; align-items:center; gap:10px; padding:11px 20px; cursor:pointer; transition:background .2s; user-select:none; }
+.subsection-header:hover { background:var(--card-bg2); }
+.subsection-header.open { background:#f0f4ff; }
+.subsub-num { font-size:11px; color:var(--text-src); min-width:18px; font-weight:700; }
+.subsection-header.open .subsub-num { color:var(--accent); }
+.sub-title { font-size:13px; color:var(--text-sub1); flex:1; font-weight:500; }
+.subsection-header.open .sub-title { color:var(--text-h); }
+.sub-chevron { font-size:10px; color:var(--text-src); transition:transform .25s; }
+.subsection-header.open .sub-chevron { transform:rotate(90deg); color:var(--accent); }
+.subsection-body { display:none; padding:18px 20px 22px; border-top:1px solid var(--border); }
+.subsection-body.open { display:block; }
+
+/* ══ SUBSEC LABEL ══ */
+.subsec-label { font-size:10px; font-weight:700; color:var(--accent); text-transform:uppercase; letter-spacing:.12em; margin-bottom:10px; margin-top:4px; display:flex; align-items:center; gap:8px; }
+.subsec-label::after { content:''; flex:1; height:1px; background:linear-gradient(90deg,var(--border),transparent); }
+
+/* ══ TABLE ══ */
+.table-wrap { overflow-x:auto; margin-bottom:14px; border-radius:var(--radius); border:1px solid var(--border); }
+table { width:100%; border-collapse:collapse; font-size:12px; }
+thead tr { background:#1a1a2e; color:#fff; }
+thead th { padding:9px 11px; text-align:left; font-weight:600; font-size:11px; white-space:nowrap; }
+tbody tr { border-bottom:1px solid var(--border); transition:background .15s; }
+tbody tr:last-child td { border-bottom:none; }
+tbody td { padding:8px 11px; vertical-align:middle; line-height:1.5; color:var(--text-sub1); font-size:12px; }
+.td-bold { font-weight:600; color:var(--text-h); }
+.td-mono { font-family:monospace; font-size:11px; }
+.td-green { color:var(--green); font-weight:600; } .td-amber { color:var(--amber); font-weight:600; }
+.td-red { color:var(--red); font-weight:600; }   .td-blue { color:var(--accent); font-weight:600; }
+.cat-hdr td { background:#1a1a2e !important; color:#a5b4fc !important; font-weight:700; font-size:10px; letter-spacing:.8px; padding:7px 11px; text-transform:uppercase; }
+
+/* ══ F2P COMPARISON TABLE ══ */
+.f2p-table tbody tr.row-both { background:rgba(220,252,231,.15); }
+.f2p-table tbody tr.row-both:hover { background:rgba(220,252,231,.4); }
+.f2p-table tbody tr.row-prem-only { background:rgba(239,246,255,.2); }
+.f2p-table tbody tr.row-prem-only:hover { background:rgba(191,219,254,.35); }
+.f2p-table tbody tr.row-f2p-adv { background:rgba(253,230,138,.15); }
+.f2p-table tbody tr.row-f2p-adv:hover { background:rgba(253,230,138,.35); }
+.f2p-table tbody tr.row-prem-excl { background:rgba(239,246,255,.2); }
+.f2p-table tbody tr.row-prem-excl:hover { background:rgba(191,219,254,.35); }
+.f2p-table tbody tr.tip-row { cursor:help; }
+
+/* Status icons in F2P table */
+.st-ok    { display:inline-flex; align-items:center; gap:3px; background:var(--green-bg); color:var(--green); border:1px solid var(--green-border); padding:2px 7px; border-radius:12px; font-size:10px; font-weight:700; white-space:nowrap; }
+.st-warn  { display:inline-flex; align-items:center; gap:3px; background:var(--amber-bg); color:var(--amber); border:1px solid var(--amber-border); padding:2px 7px; border-radius:12px; font-size:10px; font-weight:700; white-space:nowrap; }
+.st-no    { display:inline-flex; align-items:center; gap:3px; background:var(--red-bg); color:var(--red); border:1px solid var(--red-border); padding:2px 7px; border-radius:12px; font-size:10px; font-weight:700; white-space:nowrap; }
+.type-chip { display:inline-block; padding:2px 6px; border-radius:4px; font-size:10px; font-weight:700; }
+.type-algo { background:#ede9fe; color:#6d28d9; }
+.type-cure { background:#e0e7ff; color:#4338ca; }
+.type-evt  { background:#d1fae5; color:#065f46; }
+.type-sys  { background:#f3f4f6; color:#6b7280; }
+
+/* ══ TOOLTIP (Global floating) ══ */
+#g-tip {
+  display:none; position:fixed; z-index:9999;
+  background:#1a1a2e; color:#e2e8f0;
+  padding:12px 16px; border-radius:10px; font-size:12px;
+  max-width:380px; box-shadow:0 8px 32px rgba(0,0,0,.45);
+  line-height:1.7; pointer-events:none;
+  border-left:3px solid #4f46e5;
+}
+#g-tip .tip-title { font-weight:700; color:#a5b4fc; font-size:12px; margin-bottom:6px; display:block; }
+#g-tip .tip-body  { color:#cbd5e1; font-size:11px; }
+#g-tip .tip-tag   { display:inline-block; background:rgba(79,70,229,.25); color:#a5b4fc; font-size:10px; padding:1px 6px; border-radius:4px; margin-top:6px; }
+
+/* ══ PILLS ══ */
+.pill { display:inline-block; padding:2px 7px; border-radius:12px; font-size:10px; font-weight:700; white-space:nowrap; }
+.pill-green { background:var(--green-bg); color:var(--green); border:1px solid var(--green-border); }
+.pill-amber { background:var(--amber-bg); color:var(--amber); border:1px solid var(--amber-border); }
+.pill-red   { background:var(--red-bg); color:var(--red); border:1px solid var(--red-border); }
+.pill-blue  { background:#e0e7ff; color:var(--accent); border:1px solid #c7d2fe; }
+.pill-gray  { background:var(--card-bg); color:var(--text-sub2); border:1px solid var(--border); }
+.pill-teal  { background:var(--teal-bg); color:var(--teal); border:1px solid var(--teal-border); }
+
+/* ══ CARDS ══ */
+.grid2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:10px 0; }
+.grid3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin:10px 0; }
+.info-card { background:var(--card-bg); border-radius:var(--radius); padding:13px 15px; border:1px solid var(--border); }
+.info-card.highlight { background:var(--blue-bg); border-color:var(--blue-border); }
+.info-card.warn    { background:var(--amber-bg); border-color:var(--amber-border); }
+.info-card.danger  { background:var(--red-bg); border-color:var(--red-border); }
+.info-card.success { background:var(--green-bg); border-color:var(--green-border); }
+.info-card.teal    { background:var(--teal-bg); border-color:var(--teal-border); }
+.card-title { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--accent); margin-bottom:7px; }
+.card-title.warn { color:var(--amber); } .card-title.danger { color:var(--red); } .card-title.success { color:var(--green); } .card-title.teal { color:var(--teal); }
+.card-body { font-size:12px; color:var(--text-sub1); line-height:1.65; }
+.card-body strong { color:var(--text-h); }
+
+/* ══ NEWS CARD ══ */
+.news-card {
+  background:linear-gradient(135deg,#f8faff 0%,#fff 100%);
+  border:1px solid #c7d2fe; border-radius:var(--radius);
+  padding:14px 16px; margin-top:14px;
+  display:flex; gap:14px; align-items:flex-start;
+}
+.news-icon { font-size:22px; flex-shrink:0; margin-top:2px; }
+.news-badge { display:inline-block; background:#ef4444; color:#fff; font-size:10px; font-weight:700; padding:1px 7px; border-radius:4px; margin-bottom:5px; }
+.news-title { font-size:13px; font-weight:700; color:var(--text-h); margin-bottom:4px; line-height:1.4; }
+.news-summary { font-size:12px; color:var(--text-sub1); line-height:1.65; }
+.news-meta { font-size:10px; color:var(--text-src); margin-top:6px; }
+.news-insight { background:#e0e7ff; border-radius:6px; padding:7px 10px; font-size:11px; color:var(--accent); margin-top:8px; font-weight:600; }
+
+/* ══ STAT CARDS ══ */
+.stat-card { background:var(--card-bg); border:1px solid var(--border); border-radius:var(--radius); padding:13px 15px; border-left:4px solid var(--accent); }
+.stat-val { font-size:22px; font-weight:800; color:var(--accent); line-height:1; margin:4px 0; font-family:monospace; }
+.stat-val.green { color:var(--green); } .stat-val.amber { color:var(--amber); }
+.stat-label { font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:.05em; color:var(--text-sub2); }
+.stat-desc  { font-size:11px; color:var(--text-sub2); margin-top:3px; }
+
+/* ══ CALLOUT ══ */
+.callout { background:var(--card-bg2); border-left:4px solid var(--accent); border-radius:0 var(--radius) var(--radius) 0; padding:11px 14px; margin:10px 0; font-size:12px; color:var(--text-sub1); }
+.callout.warn    { border-left-color:var(--amber); background:var(--amber-bg); }
+.callout.danger  { border-left-color:var(--red);   background:var(--red-bg); }
+.callout.success { border-left-color:var(--green);  background:var(--green-bg); }
+.callout.teal    { border-left-color:var(--teal);   background:var(--teal-bg); }
+.callout strong  { color:var(--text-h); }
+
+/* ══ RS BAR ══ */
+.rs-bar-container { margin:12px 0; }
+.rs-row { display:flex; align-items:center; gap:12px; padding:8px 0; border-bottom:1px solid var(--border); }
+.rs-row:last-child { border-bottom:none; }
+.rs-range { font-family:monospace; font-size:11px; color:var(--text-sub2); min-width:130px; }
+.rs-bar-wrap { flex:1; height:20px; background:var(--border); border-radius:4px; overflow:hidden; position:relative; }
+.rs-bar-dev { height:100%; background:linear-gradient(90deg,#3730a3,var(--accent)); border-radius:4px; display:flex; align-items:center; padding-left:8px; }
+.rs-bar-dev.green { background:linear-gradient(90deg,#15803d,var(--green)); }
+.rs-bar-valve { position:absolute; right:0; top:0; height:100%; background:rgba(239,68,68,.2); display:flex; align-items:center; justify-content:flex-end; padding-right:6px; }
+.rs-dev-pct { font-size:10px; color:#fff; font-weight:700; font-family:monospace; }
+.rs-valve-pct { font-size:10px; color:var(--red); font-weight:600; font-family:monospace; }
+.rs-note { font-size:11px; color:var(--text-sub2); min-width:72px; text-align:right; }
+
+/* ══ BAR ══ */
+.bar-wrap { display:flex; align-items:center; gap:8px; margin:3px 0; }
+.bar-bg   { flex:1; height:5px; background:var(--border); border-radius:3px; overflow:hidden; }
+.bar-fill { height:100%; border-radius:3px; transition:width .8s ease; }
+.bar-blue { background:linear-gradient(90deg,#6366f1,var(--accent)); }
+.bar-label { font-size:11px; color:var(--text-sub2); min-width:36px; text-align:right; font-family:monospace; }
+
+/* ══ TIMELINE ══ */
+.timeline { margin:8px 0; }
+.tl-item { display:flex; gap:10px; padding:6px 0; }
+.tl-dot { width:7px; height:7px; border-radius:50%; background:var(--accent); flex-shrink:0; margin-top:5px; }
+.tl-dot.amber { background:var(--amber); } .tl-dot.green { background:var(--green); } .tl-dot.red { background:var(--red); }
+.tl-content { font-size:12px; color:var(--text-sub1); line-height:1.55; }
+.tl-content strong { color:var(--text-h); }
+
+/* ══ TAG CHIPS ══ */
+.tag-chips { display:flex; flex-wrap:wrap; gap:4px; margin:7px 0; }
+.tag-chip { display:inline-block; font-size:10px; font-weight:600; padding:2px 7px; border-radius:4px; font-family:monospace; }
+.chip-blue { background:#e0e7ff; color:var(--accent); border:1px solid #c7d2fe; }
+.chip-amber{ background:var(--amber-bg); color:var(--amber); border:1px solid var(--amber-border); }
+.chip-green{ background:var(--green-bg); color:var(--green); border:1px solid var(--green-border); }
+.chip-gray { background:var(--card-bg); color:var(--text-sub2); border:1px solid var(--border); }
+.chip-purple{ background:var(--purple-bg); color:var(--purple); border:1px solid var(--purple-border); }
+
+/* ══ SRC LINE ══ */
+.src-line { font-size:10px; color:var(--text-src); margin-top:12px; padding-top:10px; border-top:1px solid var(--border); line-height:1.8; }
+.src-line a { color:var(--accent); text-decoration:underline; font-size:10px; }
+
+/* ══ COLLAPSIBLE ══ */
+.collapsible-btn { display:flex; align-items:center; gap:8px; background:var(--card-bg); border:1px solid var(--border); border-radius:8px; padding:10px 14px; font-size:13px; font-weight:600; color:var(--text-sub1); cursor:pointer; margin-top:14px; width:100%; text-align:left; transition:background .2s; }
+.collapsible-btn:hover { background:#e0e7ff; color:var(--accent); }
+.collapsible-btn .arr { margin-left:auto; font-size:11px; transition:transform .2s; }
+.collapsible-btn.open .arr { transform:rotate(180deg); }
+.collapsible-body { display:none; margin-top:8px; border:1px solid var(--border); border-radius:8px; padding:14px; background:var(--card-bg2); }
+.collapsible-body.open { display:block; }
+
+/* ══ SECTION INSIGHT ══ */
+.section-insight { background:linear-gradient(135deg,#f0f4ff 0%,#fafbff 100%); border:1px solid #c7d2fe; border-radius:var(--radius); padding:13px 16px; margin-bottom:14px; }
+.section-insight h3 { font-size:10px; font-weight:800; color:var(--accent); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:8px; }
+.section-insight ul { list-style:none; display:flex; flex-wrap:wrap; gap:8px; }
+.section-insight li { background:#fff; border:1px solid #e0e7ff; border-radius:8px; padding:6px 12px; font-size:12px; color:var(--text-sub1); line-height:1.5; flex:1 1 220px; }
+.section-insight li strong { color:var(--text-h); }
+
+/* ══ COOLDOWN GRID ══ */
+.cd-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:12px 0; }
+.cd-item { background:var(--card-bg); border:1px solid var(--border); border-radius:var(--radius); padding:12px 14px; border-left:4px solid var(--accent); }
+.cd-item.warn { border-left-color:var(--amber); background:var(--amber-bg); }
+.cd-item.success { border-left-color:var(--green); background:var(--green-bg); }
+.cd-val { font-size:18px; font-weight:800; color:var(--accent); font-family:monospace; line-height:1; margin:4px 0; }
+.cd-val.amber { color:var(--amber); } .cd-val.green { color:var(--green); }
+.cd-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--text-sub2); }
+.cd-desc { font-size:11px; color:var(--text-sub1); margin-top:4px; line-height:1.5; }
+.cd-desc strong { color:var(--text-h); }
+
+/* ══ STARS ══ */
+.stars-5{color:#f59e0b;font-size:12px;letter-spacing:-1px}
+.stars-4{color:#f59e0b;font-size:11px;letter-spacing:-1px}
+.stars-3{color:#d97706;font-size:11px;letter-spacing:-1px}
+.stars-2{color:#9ca3af;font-size:11px;letter-spacing:-1px}
+
+/* ══ EMBED ══ */
+.embed-frame { width:100%; border-radius:var(--radius); overflow:hidden; border:1px solid var(--border); margin:12px 0; background:#fff; }
+.embed-frame iframe { width:100%; border:none; display:block; }
+
+/* ══ F2P LEGEND ══ */
+.f2p-legend { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:14px; padding:10px 14px; background:var(--card-bg); border-radius:var(--radius); border:1px solid var(--border); }
+.f2p-legend-item { display:flex; align-items:center; gap:6px; font-size:11px; color:var(--text-sub1); }
+.f2p-legend-dot { width:12px; height:12px; border-radius:3px; flex-shrink:0; }
+
+/* ══ TOOL TIP (cursor help indicator) ══ */
+.tip-cursor { cursor:help; }
+.tip-cursor:hover td:first-child::after {
+  content: ' 🔍';
+}
+
+@media (max-width:900px) {
+  .page-nav { padding:0 16px; }
+  .content { padding:16px 20px 60px; }
+  .grid2,.grid3,.cd-grid { grid-template-columns:1fr; }
+  .news-card { flex-direction:column; }
+}
+</style>
+  <link rel="stylesheet" href="../assets/theme.css">
+</head>
+<body class="embed">
+
+<!-- ══ GLOBAL TOOLTIP ══ -->
+<div id="g-tip">
+  <span class="tip-title" id="g-tip-title"></span>
+  <div class="tip-body" id="g-tip-body"></div>
+</div>
+
+<!-- ══ HEADER ══ -->
+<header class="top-header">
+  <div class="header-left">
+    <div class="header-badge">PROJECT S</div>
+    <div>
+      <div class="header-main">스팀 정책 &amp; 리스크</div>
+      <div class="header-sub">Steam Policy · Contract Structure · Promotion · Review System · Regional Risk</div>
+    </div>
+  </div>
+  <div class="meta-live">
+    <div class="live-dot"></div>
+    <span>2026.04 기준 &nbsp;·&nbsp; 6 SECTIONS &nbsp;·&nbsp; 마우스 오버 시 상세 설명 제공</span>
+  </div>
+</header>
+
+<!-- ══ PAGE-NAV ══ -->
+<nav class="page-nav">
+  <a class="pnav-item" href="#sec1"><span class="pnav-num">01</span> 계약 구조</a>
+  <div class="pnav-div"></div>
+  <a class="pnav-item" href="#sec2"><span class="pnav-num">02</span> 스팀 프로모션</a>
+  <div class="pnav-div"></div>
+  <a class="pnav-item" href="#sec3"><span class="pnav-num">03</span> Wish List 전환율</a>
+  <div class="pnav-div"></div>
+  <a class="pnav-item" href="#sec4"><span class="pnav-num">04</span> 태그 시스템</a>
+  <div class="pnav-div"></div>
+  <a class="pnav-item" href="#sec5"><span class="pnav-num">05</span> 리뷰 시스템</a>
+  <div class="pnav-div"></div>
+  <a class="pnav-item" href="#sec6"><span class="pnav-num">06</span> 기타 항목</a>
+</nav>
+
+<div class="content">
+
+<!-- ═══════════ SEC 1: 계약 구조 ═══════════ -->
+<div class="section" id="sec1">
+  <div class="section-header open" onclick="toggleSection(this)">
+    <span class="section-num">01</span>
+    <span class="sec-title">계약 구조</span>
+    <span class="sec-sub">RS · 결제 · 환불 · 제3자 결제</span>
+    <span class="sec-badge badge-blue">POLICY</span>
+    <span class="chevron">▶</span>
+  </div>
+  <div class="section-body open">
+
+    <!-- ㄱ. RS 구조 -->
+    <div class="subsection">
+      <div class="subsection-header open" onclick="toggleSub(this)">
+        <span class="subsub-num">ㄱ</span>
+        <span class="sub-title">Revenue Share (RS) 구조</span>
+        <span class="sub-chevron">▶</span>
+      </div>
+      <div class="subsection-body open">
+        <div class="subsec-label">Steam 누진 RS 구조 (게임 단위 / 2018.10.01~)</div>
+        <div class="rs-bar-container">
+          <div class="rs-row">
+            <div class="rs-range">$0 ~ $10M (게임 단위)</div>
+            <div class="rs-bar-wrap"><div class="rs-bar-dev" style="width:70%"><span class="rs-dev-pct">개발사 70%</span></div><div class="rs-bar-valve" style="width:30%"><span class="rs-valve-pct">Steam 30%</span></div></div>
+            <div class="rs-note">기본 구조</div>
+          </div>
+          <div class="rs-row">
+            <div class="rs-range">$10M ~ $50M 초과분</div>
+            <div class="rs-bar-wrap"><div class="rs-bar-dev" style="width:75%"><span class="rs-dev-pct">개발사 75%</span></div><div class="rs-bar-valve" style="width:25%"><span class="rs-valve-pct">Steam 25%</span></div></div>
+            <div class="rs-note">누진 할인</div>
+          </div>
+          <div class="rs-row">
+            <div class="rs-range">$50M+ 초과분</div>
+            <div class="rs-bar-wrap"><div class="rs-bar-dev" style="width:80%"><span class="rs-dev-pct">개발사 80%</span></div><div class="rs-bar-valve" style="width:20%"><span class="rs-valve-pct">Steam 20%</span></div></div>
+            <div class="rs-note">최고 등급</div>
+          </div>
+        </div>
+        <div class="grid2" style="margin-top:12px">
+          <div class="info-card highlight">
+            <div class="card-title">RS 계산 기준</div>
+            <div class="card-body">누적 매출은 <strong>게임(Application) 단위</strong>로 독립 집계. 해당 게임의 <strong>패키지 판매 + DLC + 인앱 구매 + 커뮤니티 마켓 수수료</strong>가 합산됨.</div>
+          </div>
+          <div class="info-card warn">
+            <div class="card-title warn">세금 처리 및 지급 조건</div>
+            <div class="card-body">Valve가 각 지역 VAT/GST 징수·납부 대행. RS는 <strong>세금 차감 전 Net Revenue 기준</strong>. 지급은 월 1회, 최소 $100 이상. USD 단일 지급 (SWIFT 계좌 필수).</div>
+          </div>
+        </div>
+        <div class="src-line">📎 <a href="https://steamcommunity.com/groups/steamworks/announcements/detail/1697191267930157838" target="_blank">Steamworks — New Revenue Share Tiers 공식 발표 (2018.11.30)</a> · <a href="https://partner.steamgames.com/doc/finance/payments_salesreporting/faq" target="_blank">Steamworks — Payments &amp; Sales Reporting FAQ</a></div>
+
+        <!-- EGS 비교 Collapsible -->
+        <button class="collapsible-btn" onclick="toggleCollapsible(this)">📊 Epic Games Store RS 구조도 비교 참고 <span class="arr">▼</span></button>
+        <div class="collapsible-body">
+          <div class="subsec-label">EGS Revenue Share 구조 (2026.01~)</div>
+          <div class="rs-bar-container">
+            <div class="rs-row">
+              <div class="rs-range">$0 ~ $1M / 연 (제품별)</div>
+              <div class="rs-bar-wrap"><div class="rs-bar-dev green" style="width:100%"><span class="rs-dev-pct">개발사 100%</span></div></div>
+              <div class="rs-note" style="color:var(--green);font-weight:700;">신규 정책</div>
+            </div>
+            <div class="rs-row">
+              <div class="rs-range">$1M 초과분</div>
+              <div class="rs-bar-wrap"><div class="rs-bar-dev green" style="width:88%"><span class="rs-dev-pct">개발사 88%</span></div><div class="rs-bar-valve" style="width:12%"><span class="rs-valve-pct">EGS 12%</span></div></div>
+              <div class="rs-note">기본 구조</div>
+            </div>
+          </div>
+          <div class="table-wrap" style="margin-top:10px">
+            <table>
+              <thead><tr><th>항목</th><th>Steam (Valve)</th><th>Epic Games Store</th></tr></thead>
+              <tbody>
+                <tr><td class="td-bold">집계 단위</td><td>게임(App) 단위 독립 집계</td><td class="td-green">게임 단위 + 연간 리셋</td></tr>
+                <tr><td class="td-bold">기본 RS</td><td>70/25/20% 누진 구조</td><td class="td-green">단일 88/12 (초과분)</td></tr>
+                <tr><td class="td-bold">첫 $1M 특례</td><td><span class="pill pill-red">없음</span></td><td><span class="pill pill-green">개발사 100% (2026.01~ 연간 리셋)</span></td></tr>
+                <tr><td class="td-bold">F2P 인앱 결제</td><td>Steam Wallet API 통해 30% 수수료</td><td class="td-green">자체 PG 사용 시 100% 개발사</td></tr>
+                <tr><td class="td-bold">MAU</td><td class="td-bold">~132M</td><td>~67M (2024)</td></tr>
+                <tr><td class="td-bold">PC 시장점유율</td><td class="td-bold">~74%</td><td>~3% (제3자 매출 기준)</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- 국내 사례 뉴스 카드 -->
+          <div class="news-card">
+            <div class="news-icon">📰</div>
+            <div style="flex:1">
+              <div class="news-badge">최신 뉴스 2026.04.16</div>
+              <div class="news-title">넷마블 '몬길: 스타다이브', 스팀에서 볼 수 없는 이유 — EGS 독점 출시 전략</div>
+              <div class="news-summary">
+                넷마블이 신작 <strong>'몬길: 스타다이브'</strong>를 Google Play·Apple App Store(모바일)와 함께 PC 버전은 <strong>Epic Games Store에만 독점 출시</strong>하고 Steam에는 선보이지 않았다. EGS 독점 출시를 통해 <strong>메인 배너 게재 등 마케팅 지원을 확보하고 수익 구조를 극대화</strong>하겠다는 포석이다. 최근 게임업계에서는 PC 버전을 Steam에 선보이는 것이 일반화됐으나 EGS 독점이라는 승부수를 택한 것으로, 넷마블은 지난해에도 EGS와의 협력 사례를 이어온 바 있다.
+              </div>
+              <div class="news-insight">💡 Project S 시사점: 국내 대형 퍼블리셔도 F2P 기반 게임에서 EGS 독점 전략을 택하는 사례 등장. EGS의 마케팅 지원(메인 배너) + RS 우위가 Steam 유저풀 감소를 상쇄할 수 있다는 판단. F2P+인앱 매출 중심 구조에서 EGS의 자체 PG 100% 수취 조항은 전략적 검토 가치 있음.</div>
+              <div class="news-meta">출처: 아이뉴스24 · 문영수 기자 · 2026.04.16 · <a href="https://v1.inews24.com/view/1960695" target="_blank">원문 바로가기 →</a></div>
+            </div>
+          </div>
+
+          <div class="src-line">📎 <a href="https://store.epicgames.com/en-US/distribution" target="_blank">Epic Games Store Distribution 공식</a> · <a href="https://store.epicgames.com/en-US/news/epic-games-store-updates-revenue-share-keep-100-of-the-first-1m-per-product-per-year" target="_blank">EGS Revenue Share Update (2025.12)</a></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ㄴ. 빌링/환불 -->
+    <div class="subsection">
+      <div class="subsection-header" onclick="toggleSub(this)">
+        <span class="subsub-num">ㄴ</span>
+        <span class="sub-title">빌링 시스템 정책 (결제 지원 및 환불)</span>
+        <span class="sub-chevron">▶</span>
+      </div>
+      <div class="subsection-body">
+        <div class="grid2">
+          <div class="info-card highlight">
+            <div class="card-title">자동 환불 조건 (AND 2가지)</div>
+            <div class="card-body"><div class="timeline">
+              <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><strong>구매 후 14일 이내</strong></div></div>
+              <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><strong>플레이 시간 2시간 미만</strong></div></div>
+            </div></div>
+          </div>
+          <div class="info-card warn">
+            <div class="card-title warn">특수 환불 조건</div>
+            <div class="card-body"><div class="timeline">
+              <div class="tl-item"><div class="tl-dot amber"></div><div class="tl-content"><strong>사전 주문</strong>: 출시 전 언제든 가능</div></div>
+              <div class="tl-item"><div class="tl-dot amber"></div><div class="tl-content"><strong>DLC</strong>: 플레이 2시간 미만 + 14일 이내</div></div>
+              <div class="tl-item"><div class="tl-dot amber"></div><div class="tl-content"><strong>제3자 키</strong>: 외부 구매 키는 Steam 환불 불가</div></div>
+            </div></div>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>항목</th><th>환불 가능 여부</th><th>조건</th></tr></thead>
+            <tbody>
+              <tr><td class="td-bold">게임</td><td><span class="st-ok">✅ 가능</span></td><td>14일 이내 + 2시간 미만</td></tr>
+              <tr><td class="td-bold">DLC</td><td><span class="st-warn">⚠ 조건부</span></td><td>게임 플레이 2시간 미만 + 14일 이내</td></tr>
+              <tr><td class="td-bold">게임 내 아이템</td><td><span class="st-warn">⚠ 제한</span></td><td>Steam 지갑 구매 + 미사용 시</td></tr>
+              <tr><td class="td-bold">사전 구매</td><td><span class="st-ok">✅ 출시 전 무제한</span></td><td>출시 후 일반 규칙 적용</td></tr>
+              <tr><td class="td-bold">제3자 키</td><td><span class="st-no">❌ 불가</span></td><td>외부 판매처 구매 키는 Steam 환불 불가</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="info-card danger"><div class="card-title danger">⚠️ 퍼블리셔 리스크 — 남용 방지 정책</div><div class="card-body">환불 반복 패턴 감지 시 Steam이 환불 권한 제한 가능. <strong>환불율이 높은 게임은 알고리즘 불이익 위험</strong> 존재.</div></div>
+        <div class="src-line">📎 <a href="https://store.steampowered.com/steam_refunds/" target="_blank">Steam 환불 공식 정책</a></div>
+      </div>
+    </div>
+
+    <!-- ㄷ. 제3자 결제 -->
+    <div class="subsection">
+      <div class="subsection-header" onclick="toggleSub(this)">
+        <span class="subsub-num">ㄷ</span>
+        <span class="sub-title">제3자 결제 (Xsolla 등) — 영역별 허용 범위</span>
+        <span class="sub-chevron">▶</span>
+      </div>
+      <div class="subsection-body">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>영역</th><th>규제 여부</th><th>내용</th><th>적용 시점</th></tr></thead>
+            <tbody>
+              <tr><td class="td-bold">① Steam 클라이언트 내 인게임 결제</td><td><span class="st-no">❌ 외부 PG 금지</span></td><td>Steam Microtransaction API + Steam Wallet만 허용. 외부 결제 유도 절대 금지</td><td>상시</td></tr>
+              <tr><td class="td-bold">② Steam 스토어 페이지 4개 섹션</td><td><span class="st-no">❌ 2024.09~ 금지</span></td><td>About/Short Desc/Special Announcement/Awards 섹션에서 외부 링크 자동 제거</td><td>2024.09~</td></tr>
+              <tr style="background:var(--green-bg)"><td class="td-bold">③ 개발사 외부 웹사이트·뉴스레터</td><td><span class="st-ok">✅ 자유 허용</span></td><td>Xsolla·Stripe·Alipay 등 어떤 PG도 허용. 독립 웹샵 운영 가능</td><td>상시</td></tr>
+              <tr style="background:var(--green-bg)"><td class="td-bold">④ 외부 런처·모바일 앱</td><td><span class="st-ok">✅ 자유 허용</span></td><td>Steam 클라이언트 외부 런처 또는 자체 앱에서의 결제는 PG 무관 허용</td><td>상시</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout warn"><strong>2024.09 스토어 페이지 링크 금지:</strong> About/Short Description/Special Announcement/Awards 4개 섹션에서 외부 URL 자동 제거. 소셜미디어 링크는 Steamworks Basic Info 전용 필드로 이동해야 함.</div>
+        <div class="src-line">📎 <a href="https://partner.steamgames.com/doc/features/microtransactions/implementation" target="_blank">Steamworks — Implementation Guide ("no restrictions")</a> · <a href="https://steamcommunity.com/groups/steamworks/announcements/detail/4201376568915048836" target="_blank">Steamworks 공지 — 스토어 페이지 링크 금지 (2024.08)</a> · <a href="https://xsolla.com/blog/direct-to-player-plus-steam-guide" target="_blank">Xsolla — Direct-to-Player + Steam 가이드 (2025.11)</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ SEC 2: 스팀 프로모션 ═══════════ -->
+<div class="section" id="sec2">
+  <div class="section-header" onclick="toggleSection(this)">
+    <span class="section-num">02</span>
+    <span class="sec-title">스팀 프로모션: 피쳐드·노출 및 Fest</span>
+    <span class="sec-sub">알고리즘 · 노출 영역 · 론칭 후 도구 · 할인 쿨다운 · Visibility Rounds · FEST · 이메일</span>
+    <span class="sec-badge badge-amber">VISIBILITY</span>
+    <span class="chevron">▶</span>
+  </div>
+  <div class="section-body">
+
+    <!-- ㄱ. 노출 로직 -->
+    <div class="subsection">
+      <div class="subsection-header" onclick="toggleSub(this)">
+        <span class="subsub-num">ㄱ</span>
+        <span class="sub-title">피쳐드·노출 로직 (Key Factors)</span>
+        <span class="sub-chevron">▶</span>
+      </div>
+      <div class="subsection-body">
+        <div class="info-card highlight" style="margin-bottom:12px">
+          <div class="card-title">Steam 공식 발언</div>
+          <div class="card-body"><strong>"Steam의 목표는 사람들이 재미있는 게임을 찾을 수 있도록 돕는 것"</strong> — 광고 판매 없음. 모든 노출은 알고리즘 또는 큐레이션 기반.</div>
+        </div>
+        <div style="margin:8px 0">
+          <div style="margin:7px 0;font-size:12px;color:var(--text-sub1)"><strong>플레이어 수 &amp; 구매량</strong><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill bar-blue" style="width:100%"></div></div><span class="bar-label td-blue">★★★★★</span></div></div>
+          <div style="margin:7px 0;font-size:12px;color:var(--text-sub1)"><strong>태그 정확성</strong><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill bar-blue" style="width:80%"></div></div><span class="bar-label td-blue">★★★★☆</span></div></div>
+          <div style="margin:7px 0;font-size:12px;color:var(--text-sub1)"><strong>위시리스트</strong><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill bar-blue" style="width:80%"></div></div><span class="bar-label td-blue">★★★★☆</span></div></div>
+          <div style="margin:7px 0;font-size:12px;color:var(--text-sub1)"><strong>리뷰 점수</strong><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill bar-blue" style="width:80%"></div></div><span class="bar-label td-blue">★★★★☆</span></div></div>
+        </div>
+        <div class="callout success"><strong>💡 3대 임계점 (론칭 첫 주):</strong> CTR 4%+ &nbsp;·&nbsp; 리뷰 긍정률 80%+ &nbsp;·&nbsp; WL 10,000+ → <strong>자기강화 노출 루프 작동</strong></div>
+        <div class="src-line">📎 <a href="https://partner.steamgames.com/doc/marketing/visibility" target="_blank">Steamworks — Visibility on Steam</a></div>
+      </div>
+    </div>
+
+    <!-- ㄴ. Premium/F2P 22개 비교 [IMPROVED VISUALIZATION + HOVER TOOLTIPS] -->
+    <div class="subsection">
+      <div class="subsection-header" onclick="toggleSub(this)">
+        <span class="subsub-num">ㄴ</span>
+        <span class="sub-title">Premium vs F2P 노출 영역 비교 (전체 22개) — 마우스 오버 시 상세 설명</span>
+        <span class="sub-chevron">▶</span>
+      </div>
+      <div class="subsection-body">
+        <!-- Legend -->
+        <div class="f2p-legend">
+          <div class="f2p-legend-item"><div class="f2p-legend-dot" style="background:rgba(220,252,231,.8);border:1px solid #86efac"></div><span>Premium &amp; F2P 동등</span></div>
+          <div class="f2p-legend-item"><div class="f2p-legend-dot" style="background:rgba(253,230,138,.5);border:1px solid #fde68a"></div><span>F2P 유리</span></div>
+          <div class="f2p-legend-item"><div class="f2p-legend-dot" style="background:rgba(219,234,254,.5);border:1px solid #bfdbfe"></div><span>Premium 전용 or 조건 상이</span></div>
+          <div class="f2p-legend-item"><span style="font-size:11px;color:var(--text-sub2);">💡 각 행에 마우스를 올리면 상세 설명이 표시됩니다</span></div>
+        </div>
+
+        <div class="table-wrap">
+          <table class="f2p-table">
+            <thead>
+              <tr><th>#</th><th>노출 영역</th><th>유형</th><th>Premium</th><th>F2P</th><th>핵심 Key Factor</th><th>개발사 통제</th></tr>
+            </thead>
+            <tbody>
+              <tr class="cat-hdr"><td colspan="7">🔹 알고리즘 기반 주요 노출</td></tr>
+              <tr class="row-prem-only tip-cursor" data-tip-title="메인 페이지 최상단 배너" data-tip-body="Steam 홈페이지 최상단 대형 슬라이드 배너. Valve가 직접 선별하는 가장 상위 노출 영역. CS2, 엘든링 같은 초대형 인기 타이틀에만 부여됨. Premium/F2P 모두 이론적 접근 가능하지만 실질적으로 전 세계 1위급 게임에만 배치.">
+                <td class="td-mono td-blue">1</td><td class="td-bold">메인 최상단 배너</td><td><span class="type-chip type-cure">큐레이션</span></td><td><span class="st-warn">⚠ 극소수</span></td><td><span class="st-warn">⚠ 동등</span></td><td>누적 판매·플레이 성과 (Valve 선정)</td><td>❌</td>
+              </tr>
+              <tr class="row-both tip-cursor" data-tip-title="Featured &amp; Recommended" data-tip-body="Steam 메인 페이지 및 Discovery Queue의 개인화 추천 섹션. 유저의 플레이 이력, 보유 게임, 태그 매칭, 친구 행동을 ML로 분석해 유저마다 다른 게임을 추천. F2P도 동등하게 노출됨 (Valve 공식 명시). 태그 정확도가 핵심 인풋.">
+                <td class="td-mono td-blue">2</td><td class="td-bold">Featured &amp; Recommended</td><td><span class="type-chip type-algo">알고리즘</span></td><td><span class="st-ok">✅</span></td><td><span class="st-ok">✅ 동등</span></td><td>플레이 이력 · 태그 · 친구 행동 ML</td><td>△ 태그</td>
+              </tr>
+              <tr class="row-f2p-adv tip-cursor" data-tip-title="New &amp; Trending / Popular New Releases" data-tip-body="출시 직후 빠르게 인기를 얻는 신작 목록. F2P가 유리한 유일 영역 — 유료 구매뿐 아니라 무료 설치 유저 수도 카운트에 반영됨 (Valve 공식 명시: 'Popular New uses player count, in addition to sales'). 경쟁 출시작이 많은 시점이면 밀려날 수 있음.">
+                <td class="td-mono td-blue">3</td><td class="td-bold">New &amp; Trending</td><td><span class="type-chip type-algo">알고리즘</span></td><td><span class="st-ok">✅ 판매기준</span></td><td><span class="st-warn">⚠ F2P 유리</span></td><td><strong>플레이어 수</strong> + 구매량 (F2P 유리)</td><td>△</td>
+              </tr>
+              <tr class="row-both tip-cursor" data-tip-title="New Releases Queue" data-tip-body="출시 즉시 자동으로 편입되는 신규 출시 큐. 로그인 유저에게 기본 보장 노출을 제공. 뷰 수가 적은 타이틀이 우선 노출되며, 유저가 설정한 태그 필터에 의해 배제될 수 있음. Premium/F2P 차이 없음.">
+                <td class="td-mono td-blue">4</td><td class="td-bold">New Releases Queue</td><td><span class="type-chip type-algo">알고리즘</span></td><td><span class="st-ok">✅</span></td><td><span class="st-ok">✅ 동등</span></td><td>태그 필터로 배제 가능 | 뷰 수 적은 타이틀 우선</td><td>○ 태그</td>
+              </tr>
+              <tr class="row-both tip-cursor" data-tip-title="All New Releases" data-tip-body="모든 신규 출시 게임을 시간 순으로 나열한 목록. 별도 조건 없이 출시 시 자동 편입. 방대한 수의 게임이 공존하므로 단독 노출 효과는 낮지만 필터링(장르, 가격대)을 통해 특정 유저에게 도달 가능.">
+                <td class="td-mono td-blue">5</td><td class="td-bold">All New Releases</td><td><span class="type-chip type-algo">알고리즘</span></td><td><span class="st-ok">✅</span></td><td><span class="st-ok">✅ 동등</span></td><td>출시 타이밍 | 자동 편입</td><td>○ 출시 타이밍</td>
+              </tr>
+              <tr class="row-both tip-cursor" data-tip-title="Top Sellers" data-tip-body="Steam 내 총 수익 기준 상위 판매 목록. Premium은 게임 판매가 기준, F2P는 DLC·인앱결제를 포함한 총수익으로 집계. 'Top Sellers includes in-game revenue, so F2P games can be displayed among top sellers' (Valve). 지역별로 분리 표시됨.">
+                <td class="td-mono td-blue">6</td><td class="td-bold">Top Sellers</td><td><span class="type-chip type-algo">알고리즘</span></td><td><span class="st-ok">✅ 판매가</span></td><td><span class="st-ok">✅ 인앱 포함</span></td><td>총 수익(DLC·인앱 포함) | 지역별</td><td>△</td>
+              </tr>
+              <tr class="row-both tip-cursor" data-tip-title="Popular Upcoming" data-tip-body="출시 전 위시리스트 수를 기준으로 한 인기 출시 예정 목록. Premium/F2P 동등 기준 적용 (Valve 공식: 'whether paid or F2P'). 위시리스트가 직접적으로 순위에 반영되는 유일 영역. 출시일이 가까울수록 상위 노출. WL 캠페인의 핵심 목표 영역.">
+                <td class="td-mono td-blue">7</td><td class="td-bold">Popular Upcoming</td><td><span class="type-chip type-algo">알고리즘</span></td><td><span class="st-ok">✅</span></td><td><span class="st-ok">✅ 동등</span></td><td>★ <strong>위시리스트 수</strong> 직접 반영 유일 영역</td><td>○ WL</td>
+              </tr>
+              <tr class="row-prem-only tip-cursor" data-tip-title="Specials (할인 섹션)" data-tip-body="할인 중인 게임이 노출되는 특별 할인 섹션. F2P는 기본 가격이 없으므로 할인 개념 자체가 적용되지 않아 완전 불가. DLC나 배틀패스 개별 할인은 별도로 관리되지만 게임 자체는 이 섹션에서 제외됨. Premium의 핵심 강점 영역 중 하나.">
+                <td class="td-mono td-blue">8</td><td class="td-bold">Specials (할인 섹션)</td><td><span class="type-chip type-cure">큐레이션+알고</span></td><td><span class="st-ok">✅ 할인 시</span></td><td><span class="st-no">❌ 불가</span></td><td>할인율 · 판매량 · 유저 반응</td><td>△ 할인</td>
+              </tr>
+              <tr class="cat-hdr"><td colspan="7">🔹 직접 신청·통제 가능 노출</td></tr>
+              <tr class="row-both tip-cursor" data-tip-title="Update Visibility Rounds" data-tip-body="개발사가 직접 버튼을 눌러 활성화하는 업데이트 노출 라운드. 라이브러리 보유자 + 위시리스터 대상으로 최대 30일 or 100만 임프레션까지 노출. 기본 5회 제공 (EA+정식 합산). 계절 세일 기간 중 활성화 시 노출 없이 기간만 소진됨 주의. 커뮤니티 공지 (30일 내 발행) 필수 조건.">
+                <td class="td-mono td-blue">9</td><td class="td-bold">Update Visibility Rounds</td><td><span class="type-chip type-evt">이벤트</span></td><td><span class="st-ok">✅</span></td><td><span class="st-ok">✅ 동등</span></td><td>기본 5회 | Max 30일/1M 임프 | 공지 필수</td><td>✅ 완전 통제</td>
+              </tr>
+              <tr class="row-both tip-cursor" data-tip-title="Discovery Queue (맞춤 추천)" data-tip-body="유저가 Steam 홈에서 'Discovery Queue'를 실행할 때 개인화된 게임 목록이 제공되는 영역. 보유 게임, 플레이타임, 태그 선호도, 친구 행동을 ML로 분석. F2P도 동등하게 적용되며, 태그 정확도가 핵심 인풋. 유저가 이 큐를 매일 실행하므로 지속적 노출 기회가 있음.">
+                <td class="td-mono td-blue">10</td><td class="td-bold">Discovery Queue</td><td><span class="type-chip type-algo">알고리즘</span></td><td><span class="st-ok">✅</span></td><td><span class="st-ok">✅ 동등</span></td><td>태그 · 보유게임 · 플레이타임 ML</td><td>△ 태그</td>
+              </tr>
+              <tr class="row-both tip-cursor" data-tip-title="Curator Connect (큐레이터 추천)" data-tip-body="Steam 큐레이터(리뷰어, 콘텐츠 크리에이터)를 통한 추천 시스템. 개발사가 Curator Connect를 통해 큐레이터에게 키를 배포하고 추천을 요청할 수 있음. 큐레이터 팔로워에게 추천 게임으로 노출됨. Coming Soon 이후 언제든 시작 가능, 최대 100개 큐레이터 · 큐레이터당 최대 5카피.">
+                <td class="td-mono td-blue">11</td><td class="td-bold">Curator Connect</td><td><span class="type-chip type-cure">외부 큐레이션</span></td><td><span class="st-ok">✅</span></td><td><span class="st-ok">✅ 동등</span></td><td>큐레이터 팔로워 대상 | 키 배포</td><td>○ 키 배포</td>
+              </tr>
+              <tr class="row-both tip-cursor" data-tip-title="Friends Activity Feed (친구 활동 피드)" data-tip-body="유저의 친구가 게임을 구매·플레이·도전과제 달성 시 해당 친구의 뉴스 피드에 자동 노출되는 소셜 영역. F2P의 경우 구매 행위 대신 설치, 플레이, 도전과제 달성이 피드 트리거가 됨. 게임 내 도전과제 설계와 온보딩 퀄리티가 이 노출 효과를 결정함.">
+                <td class="td-mono td-blue">12</td><td class="td-bold">Friends Activity Feed</td><td><span class="type-chip type-algo">소셜 알고리즘</span></td><td><span class="st-ok">✅</span></td><td><span class="st-ok">✅ 동등</span></td><td>구매/설치/도전과제 달성 시 자동 노출</td><td>△ 게임설계</td>
+              </tr>
+              <tr class="row-both tip-cursor" data-tip-title="장르·태그·카테고리 페이지" data-tip-body="유저가 특정 장르나 태그를 탐색할 때 노출되는 영역. 예: 'FPS', 'Multiplayer', 'Free to Play' 카테고리 페이지. 태그 정확도, 판매량, 플레이어 수를 종합하여 순위 결정. 잘못된 태그 설정 시 타깃 외 유저에게 노출되어 전환율 하락 및 부정 리뷰 위험 증가.">
+                <td class="td-mono td-blue">13</td><td class="td-bold">장르·태그·카테고리 페이지</td><td><span class="type-chip type-algo">알고리즘</span></td><td><span class="st-ok">✅</span></td><td><span class="st-ok">✅ 동등</span></td><td>태그 정확도 · 판매 · 플레이어 수</td><td>✅ 태그 설정</td>
+              </tr>
+              <tr class="row-both tip-cursor" data-tip-title="Events &amp; Announcements" data-tip-body="개발사가 게시하는 이벤트·공지 알림. 게임 팔로워와 라이브러리 보유 유저에게 즉시 알림 발송. 커뮤니티 허브, 스토어 페이지, 라이브러리 내 표시. 'Major Update' 타입으로 게시 시 추가 가중치 적용. 무료이며 즉시 가능하지만 과도한 발행은 오히려 효과를 낮출 수 있음.">
+                <td class="td-mono td-blue">14</td><td class="td-bold">Events &amp; Announcements</td><td><span class="type-chip type-algo">알고리즘</span></td><td><span class="st-ok">✅</span></td><td><span class="st-ok">✅ 동등</span></td><td>팔로워 자동 알림 | Major Update 가중치</td><td>✅ 완전 통제</td>
+              </tr>
+              <tr class="cat-hdr"><td colspan="7">🔹 이메일/알림 노출</td></tr>
+              <tr class="row-prem-only tip-cursor" data-tip-title="위시리스트 이메일 알림" data-tip-body="Steam이 위시리스터에게 자동 발송하는 이메일. Premium: 론칭 + 20% 이상 할인(8시간+) 시 자동 발송. F2P: 론칭 시에만 발송 (할인 이메일 없음). SNF Demo 이메일은 양쪽 동일 1회 가능. 쿨타임: 기본 1~2주, 대형 세일 기간 3~4주로 연장. 실제 수신 비율: 위시리스터의 60~75%.">
+                <td class="td-mono td-blue">15</td><td class="td-bold">위시리스트 이메일 알림</td><td><span class="type-chip type-sys">시스템 자동</span></td><td><span class="st-ok">✅ 론칭+할인</span></td><td><span class="st-warn">⚠ 론칭만</span></td><td>WL 수 = 발송 규모 | 쿨타임 1~2주</td><td>○ WL 캠페인</td>
+              </tr>
+              <tr class="row-both tip-cursor" data-tip-title="Steam Next Fest (SNF)" data-tip-body="Valve가 연 3회(2·6·10월) 개최하는 미출시 게임 페스티벌. 참가 조건: 미출시 상태 + Demo 필수 + 1게임 당 전 생애 단 1회만 참가 가능. 초기 2일은 균등 노출 후 ML이 성과(플레이 수, 위시리스트 증가) 기반으로 상위 집중 노출. 참가 D+1에 위시리스터 전원에게 이메일 발송 (수동 버튼 클릭 필수, 2주 내). Premium/F2P 차이 없음.">
+                <td class="td-mono td-blue">16</td><td class="td-bold">Steam Next Fest (SNF)</td><td><span class="type-chip type-cure">큐레이션+알고</span></td><td><span class="st-ok">✅ Demo 필수</span></td><td><span class="st-ok">✅ 동등</span></td><td>1게임 1회 한정 | D+1 이메일 | Demo 품질</td><td>○ Demo</td>
+              </tr>
+              <tr class="cat-hdr"><td colspan="7">🔹 Premium 전용 큐레이션 스팟라이트 (F2P 불가)</td></tr>
+              <tr class="row-prem-excl tip-cursor" data-tip-title="Daily Deal" data-tip-body="Steam 홈페이지 전면에 노출되는 일일 특가 스팟라이트. Valve가 직접 초청하는 방식으로, 자체 신청 불가. 수개월간 지속적인 매출·성장 추세가 있어야 연락이 옴. F2P는 공식적으로 불가 (Valve: 'F2P games are not eligible for curated spotlights'). 노출 기간 7~14일.">
+                <td class="td-mono td-blue">17</td><td class="td-bold">Daily Deal</td><td><span class="type-chip type-cure">큐레이션</span></td><td><span class="st-ok">✅ Valve 초청</span></td><td><span class="st-no">❌ 불가</span></td><td>매출·성장 추세 | Valve 직접 초청</td><td>△ 간접</td>
+              </tr>
+              <tr class="row-prem-excl tip-cursor" data-tip-title="Midweek Deal / Weekend Deal" data-tip-body="월~목 72시간(Midweek), 목~월 96시간(Weekend)간 진행되는 Valve 큐레이션 특가. Daily Deal과 동일하게 Valve 직접 초청 방식. F2P는 기본 가격이 없어 할인 개념이 적용되지 않으므로 불가. 이 두 스팟라이트는 Steam 홈페이지에 대형으로 노출되어 트래픽 효과가 큼.">
+                <td class="td-mono td-blue">18</td><td class="td-bold">Midweek / Weekend Deal</td><td><span class="type-chip type-cure">큐레이션</span></td><td><span class="st-ok">✅ Valve 초청</span></td><td><span class="st-no">❌ 불가</span></td><td>Valve 직접 초청 | 72~96시간</td><td>△ 간접</td>
+              </tr>
+              <tr class="row-prem-excl tip-cursor" data-tip-title="Free Weekend" data-tip-body="유료 게임을 한시적으로 무료 체험할 수 있도록 하는 프로모션. F2P는 상시 무료이므로 이 개념 자체가 적용되지 않음 (Valve: 'Free Weekends differ from F2P games, which are always available at no cost'). Premium 게임의 리텐션 위기 시 신규 유입 재자극 수단으로 유용. 할인과 병행 시 효과 극대화.">
+                <td class="td-mono td-blue">19</td><td class="td-bold">Free Weekend</td><td><span class="type-chip type-cure">큐레이션</span></td><td><span class="st-ok">✅ Premium 전용</span></td><td><span class="st-no">❌ 개념 없음</span></td><td>유료 패키지 한시 무료 | 할인 병행 권장</td><td>○ Premium</td>
+              </tr>
+              <tr class="row-prem-excl tip-cursor" data-tip-title="Seasonal Sales (계절 세일)" data-tip-body="Steam 연 4회 대형 계절 세일(Spring/Summer/Autumn/Winter). Premium: 20% 이상 할인 시 세일 특설 페이지 노출 + 위시리스터에게 할인 이메일 자동 발송. F2P: 기본 가격이 없어 할인 미적용. 단, F2P 게임 자체는 세일 기간 알고리즘 노출은 유지됨. 4대 계절 세일은 30일 쿨다운이 면제되는 예외 구간.">
+                <td class="td-mono td-blue">20</td><td class="td-bold">Seasonal Sales</td><td><span class="type-chip type-cure">큐레이션+알고</span></td><td><span class="st-ok">✅ 이메일 포함</span></td><td><span class="st-warn">⚠ 제한적</span></td><td>20%+ 할인 시 WL 이메일 | 쿨다운 면제</td><td>○ 할인 전략</td>
+              </tr>
+              <tr class="row-prem-excl tip-cursor" data-tip-title="Themed Genre Fests (장르 페스트)" data-tip-body="장르별로 Valve가 개최하는 테마 페스트. 태그 기반으로 Valve가 자동 초대하며, 이메일 수락 후 등록. Premium 할인 게임이 메인 섹션에 배치되고, F2P는 별도 'F2P 섹션'에 분리 배치됨. 할인 쿨다운 30일 적용. 장르 태그 정확도가 초대 여부를 결정하는 핵심 요소.">
+                <td class="td-mono td-blue">21</td><td class="td-bold">Themed Genre Fests</td><td><span class="type-chip type-cure">큐레이션+알고</span></td><td><span class="st-ok">✅ 메인 노출</span></td><td><span class="st-warn">⚠ F2P 섹션</span></td><td>태그 일치 · 할인율 | 할인 쿨다운 30일</td><td>○ 태그</td>
+              </tr>
+              <tr class="row-both tip-cursor" data-tip-title="Early Access (EA)" data-tip-body="정식 출시 전 유료 또는 무료로 얼리 액세스를 제공하는 시스템. Premium EA는 구매 전환이 바로 발생하며 위시리스터에게 론칭 이메일이 발송됨. F2P EA는 이론적으로 가능하지만 실무상 드물고, 보통 베타 또는 소프트런칭 형태로 진행. EA 기간 동안의 Update Visibility Round 소진을 주의해야 함.">
+                <td class="td-mono td-blue">22</td><td class="td-bold">Early Access (EA)</td><td><span class="type-chip type-algo">알고리즘</span></td><td><span class="st-ok">✅</span></td><td><span class="st-warn">⚠ 드묾</span></td><td>EA 섹션 자동 편입 | WL 이메일 발송</td><td>○</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="grid3" style="margin-top:10px">
+          <div class="stat-card"><div class="stat-label">Premium 노출 가능 영역</div><div class="stat-val">22개</div><div class="stat-desc">전체 영역 접근 가능</div></div>
+          <div class="stat-card" style="border-left-color:var(--amber)"><div class="stat-label">F2P 노출 가능 영역</div><div class="stat-val amber">17개</div><div class="stat-desc">5개 불가/제한 (할인 큐레이션 계열)</div></div>
+          <div class="stat-card" style="border-left-color:var(--green)"><div class="stat-label">F2P 유리 영역</div><div class="stat-val green">1개</div><div class="stat-desc">New &amp; Trending (플레이어 수 추가)</div></div>
+        </div>
+        <div class="src-line">📎 <a href="https://partner.steamgames.com/doc/store/freetoplay" target="_blank">Steamworks — F2P Games</a> · <a href="https://partner.steamgames.com/doc/marketing/steam_sales" target="_blank">Themed Sale Events</a> · <a href="https://partner.steamgames.com/doc/marketing/curated_promotions" target="_blank">Daily/Midweek/Weekend Deals</a></div>
+      </div>
+    </div>
+
+    <!-- ㄷ. 론칭 이후 통합 비교표 [HOVER TOOLTIPS] -->
+    <div class="subsection">
+      <div class="subsection-header" onclick="toggleSub(this)">
+        <span class="subsub-num">ㄷ</span>
+        <span class="sub-title">론칭 이후 통합 프로모션 도구 비교표 — 마우스 오버 시 도구 설명</span>
+        <span class="sub-chevron">▶</span>
+      </div>
+      <div class="subsection-body">
+        <div class="callout" style="margin-bottom:12px">론칭 이후 개발사가 직접 활용할 수 있는 프로모션 도구 전체 목록. 출처: Steamworks — Update Visibility Rounds, Discounting, Themed Sales</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>프로모션 도구</th><th>활성화 조건/로직</th><th>Premium</th><th>F2P</th><th>제한/쿨다운</th><th>우선순위</th></tr></thead>
+            <tbody>
+              <tr class="cat-hdr"><td colspan="6">★ 최고 우선순위 (⭐⭐⭐⭐⭐)</td></tr>
+              <tr class="tip-cursor" data-tip-title="Update Visibility Rounds" data-tip-body="개발사가 직접 버튼을 클릭해 활성화하는 업데이트 노출 라운드. 라이브러리 보유자 + 위시리스터를 대상으로 최대 30일 또는 100만 임프레션까지 노출. 기본 5회 제공 (EA+정식 합산). 사용 조건: 최근 30일 내 커뮤니티 공지 발행 필수. ⚠ 계절 세일(Summer/Winter Sale) 기간 중 활성화 시 노출 없이 기간만 소진됨. 추가 Round는 매출 성적이 좋을 경우 Valve가 부여.">
+                <td class="td-bold">Update Visibility Rounds</td>
+                <td>론칭 초기 노출 종료 후 사용 가능. 최근 30일 내 공지 필요</td>
+                <td><span class="st-ok">✅</span></td><td><span class="st-ok">✅</span></td>
+                <td>기본 5회 (EA+정식 합산). 1회당 최대 30일 or 1M 노출</td>
+                <td><span style="color:#f59e0b;font-size:13px;letter-spacing:-1px">⭐⭐⭐⭐⭐</span></td>
+              </tr>
+              <tr class="tip-cursor" data-tip-title="Seasonal Sale (4대 계절 세일)" data-tip-body="Spring, Summer, Autumn, Winter 연 4회 진행되는 Steam 대형 세일. 출시 30일 이후 게임만 참가 가능. Premium: 20% 이상 할인 시 세일 특설 페이지 노출 + 위시리스터 할인 이메일 자동 발송. F2P: 기본 가격이 없어 할인 불가 (알고리즘 노출은 유지). ★ 4대 계절 세일은 30일 쿨다운 규칙이 면제되는 예외 구간으로, 다른 할인을 막 종료한 직후에도 참가 가능.">
+                <td class="td-bold">Seasonal Sale (4대 계절 세일)</td>
+                <td>출시 30일 이후 게임만 참가 가능</td>
+                <td><span class="st-ok">✅</span></td><td><span class="st-no">❌ (기본 무료)</span></td>
+                <td>4대 계절 세일은 30일 쿨다운 면제</td>
+                <td><span style="color:#f59e0b;font-size:13px;letter-spacing:-1px">⭐⭐⭐⭐⭐</span></td>
+              </tr>
+              <tr class="tip-cursor" data-tip-title="할인 위시리스트 이메일" data-tip-body="20% 이상 할인 적용 시 위시리스터에게 자동 발송되는 이메일. 세 가지 조건 동시 충족 필요: ① 20% 이상 할인 ② 최저가 패키지 포함 ③ 8시간 이상 적용. F2P는 기본 가격이 없어 불가. 쿨타임: 기본 1~2주 (대형 세일 기간 3~4주로 연장). 위시리스터 중 실제 수신 비율은 60~75%. 대형 세일 기간에는 경쟁 심화로 25개 한도 초과 시 미발송 가능.">
+                <td class="td-bold">할인 위시리스트 이메일</td>
+                <td>20% 이상 할인 + 최저가 패키지 포함 + 8시간 이상</td>
+                <td><span class="st-ok">✅</span></td><td><span class="st-no">❌</span></td>
+                <td>2주 쿨다운 (세일 기간 3~4주 연장)</td>
+                <td><span style="color:#f59e0b;font-size:13px;letter-spacing:-1px">⭐⭐⭐⭐⭐</span></td>
+              </tr>
+              <tr class="cat-hdr"><td colspan="6">★ 높은 우선순위 (⭐⭐⭐⭐)</td></tr>
+              <tr class="tip-cursor" data-tip-title="Themed Fest (장르 페스트)" data-tip-body="특정 장르를 주제로 한 테마 페스트. Valve가 태그를 기반으로 자동 초대 이메일을 발송하며, 개발사가 이메일을 수락하고 등록하면 참가 완료. Premium 할인 게임이 메인 섹션에 배치되고, F2P는 별도 F2P 섹션에 배치됨 (노출 위치 차이). 이벤트 공식 트레일러 참가는 F2P 일반적으로 불가. 태그 정확도가 초대 여부를 결정하는 핵심 요소.">
+                <td class="td-bold">Themed Fest (장르 페스트)</td>
+                <td>태그 기반 Valve 자동 초대, 이메일 수락 후 등록</td>
+                <td><span class="st-ok">✅</span></td><td><span class="st-warn">✅ F2P 섹션</span></td>
+                <td>할인 쿨다운 30일 적용</td>
+                <td><span style="color:#f59e0b;font-size:12px;letter-spacing:-1px">⭐⭐⭐⭐</span></td>
+              </tr>
+              <tr class="tip-cursor" data-tip-title="Events &amp; Announcements (이벤트·공지)" data-tip-body="개발사가 직접 작성·게시하는 이벤트 공지. 즉시 게시 가능하며 Steam 커뮤니티 허브, 스토어 페이지, 유저 라이브러리에 노출. 팔로워와 라이브러리 보유 유저에게 알림 발송. 'Major Update' 타입으로 설정 시 추가 가중치 적용. 무료·무제한이지만 과도한 발행 지양 (스팸으로 인식 우려). Update Visibility Round 활성화를 위한 필수 조건이기도 함.">
+                <td class="td-bold">Events &amp; Announcements</td>
+                <td>즉시 가능. 커뮤니티 허브/스토어 페이지/라이브러리에 노출</td>
+                <td><span class="st-ok">✅</span></td><td><span class="st-ok">✅</span></td>
+                <td>과도한 발행 지양</td>
+                <td><span style="color:#f59e0b;font-size:12px;letter-spacing:-1px">⭐⭐⭐⭐</span></td>
+              </tr>
+              <tr class="cat-hdr"><td colspan="6">★ 중간 우선순위 (⭐⭐⭐)</td></tr>
+              <tr class="tip-cursor" data-tip-title="Weeklong Deals" data-tip-body="7일간 진행되는 셀프서브 방식의 할인. 매주 월요일 오전 10시 Pacific 타임에 시작. 별도 Valve 승인 없이 개발사가 직접 설정 가능. 할인 간 30일 쿨다운 규칙이 적용되므로, Weeklong Deals 종료 후 30일 이내에 다른 할인 불가. F2P는 기본 가격이 없어 적용 불가.">
+                <td class="td-bold">Weeklong Deals</td>
+                <td>셀프서브. 매주 월요일 10AM Pacific 시작</td>
+                <td><span class="st-ok">✅</span></td><td><span class="st-no">❌</span></td>
+                <td>30일 쿨다운</td>
+                <td><span style="color:#d97706;font-size:11px;letter-spacing:-1px">⭐⭐⭐</span></td>
+              </tr>
+              <tr class="tip-cursor" data-tip-title="Custom Discount (사용자 지정 할인)" data-tip-body="개발사가 자유롭게 설정하는 맞춤 할인. 셀프서브 방식으로 다음 날부터 시작 가능. 할인율 10~95%, 기간 1~14일 내 자유 설정. 할인 간 30일 쿨다운 규칙 적용. 특정 이벤트, 업데이트, 기념일에 맞춰 유연하게 활용 가능. F2P는 기본 가격이 없어 적용 불가.">
+                <td class="td-bold">Custom Discount</td>
+                <td>셀프서브. 다음 날부터 시작 가능</td>
+                <td><span class="st-ok">✅</span></td><td><span class="st-no">❌</span></td>
+                <td>30일 쿨다운, 최대 14일</td>
+                <td><span style="color:#d97706;font-size:11px;letter-spacing:-1px">⭐⭐⭐</span></td>
+              </tr>
+              <tr class="tip-cursor" data-tip-title="Daily Deal" data-tip-body="Steam 홈페이지 전면에 노출되는 일일 특가. Valve가 직접 연락하는 초청 방식으로 자체 신청 불가. 수개월간 일관된 매출·성장 추세가 있는 게임에 Valve가 접촉. 노출 기간 7~14일. 가장 높은 트래픽 노출 효과를 제공하지만 Valve 관계 없이는 접근 불가. F2P 완전 불가.">
+                <td class="td-bold">Daily Deal</td>
+                <td>Valve 큐레이션 전용 (연락 받아야 함)</td>
+                <td><span class="st-ok">✅</span></td><td><span class="st-no">❌</span></td>
+                <td>7~14일 진행</td>
+                <td><span style="color:#d97706;font-size:11px;letter-spacing:-1px">⭐⭐⭐</span></td>
+              </tr>
+              <tr class="tip-cursor" data-tip-title="Midweek Deal" data-tip-body="월요일~목요일 72시간 진행되는 Valve 큐레이션 특가. Steam 홈페이지 상단에 노출. Valve 직접 초청 방식. 매출·판매 성과 기반으로 선별됨. Daily Deal과 동일하게 F2P 불가.">
+                <td class="td-bold">Midweek Deal</td>
+                <td>Valve 큐레이션 전용</td>
+                <td><span class="st-ok">✅</span></td><td><span class="st-no">❌</span></td>
+                <td>월~목 72시간</td>
+                <td><span style="color:#d97706;font-size:11px;letter-spacing:-1px">⭐⭐⭐</span></td>
+              </tr>
+              <tr class="tip-cursor" data-tip-title="Weekend Deal" data-tip-body="목요일~월요일 96시간 진행되는 Valve 큐레이션 특가. Steam 홈페이지에 노출. Valve 직접 초청 방식. Daily Deal·Midweek Deal과 동일한 기준으로 선별. F2P 완전 불가.">
+                <td class="td-bold">Weekend Deal</td>
+                <td>Valve 큐레이션 전용</td>
+                <td><span class="st-ok">✅</span></td><td><span class="st-no">❌</span></td>
+                <td>목~월 96시간</td>
+                <td><span style="color:#d97706;font-size:11px;letter-spacing:-1px">⭐⭐⭐</span></td>
+              </tr>
+              <tr class="tip-cursor" data-tip-title="Free Weekend" data-tip-body="유료 게임을 일정 기간 무료로 체험할 수 있도록 하는 프로모션. 리텐션 위기 시 신규 유입을 재자극하는 데 효과적. 별도 패키지를 만들어 한시적 무료 개방. 할인과 병행 시 구매 전환율 극대화. F2P는 항상 무료이므로 이 개념 자체가 적용되지 않음 (Valve 공식 명시).">
+                <td class="td-bold">Free Weekend</td>
+                <td>유료 게임의 한시적 무료 체험 전략</td>
+                <td><span class="st-ok">✅</span></td><td><span class="st-no">❌ (이미 무료)</span></td>
+                <td>할인과 병행 권장</td>
+                <td><span style="color:#d97706;font-size:11px;letter-spacing:-1px">⭐⭐⭐</span></td>
+              </tr>
+              <tr class="tip-cursor" data-tip-title="Steam Trading Cards" data-tip-body="Steam 커뮤니티 마켓에서 거래 가능한 트레이딩 카드. 판매+플레이 임계치(비공개)에 자동으로 도달하면 시스템이 카드를 활성화. Valve 심사 2~3일 소요. F2P의 경우 인앱결제가 필수 ($9 USD당 카드 1장 부여 기준). 뱃지, 이모티콘, 프로필 배경 등 Steam 이코노미와 연동됨.">
+                <td class="td-bold">Steam Trading Cards</td>
+                <td>판매+플레이 임계치 도달 시 자동 언락 (1일 수회 체크)</td>
+                <td><span class="st-ok">✅</span></td><td><span class="st-warn">✅ ($9/카드)</span></td>
+                <td>Valve 심사 2~3일</td>
+                <td><span style="color:#d97706;font-size:11px;letter-spacing:-1px">⭐⭐⭐</span></td>
+              </tr>
+              <tr class="tip-cursor" data-tip-title="Curator Connect" data-tip-body="Steam 큐레이터(게임 리뷰어, 콘텐츠 크리에이터)에게 키를 배포하고 추천을 요청하는 시스템. Coming Soon 이후 언제든 시작 가능. Steamworks에서 'Generate CD Keys' 권한이 필요. 최대 100개 큐레이터, 큐레이터당 최대 5카피 배포 가능. 큐레이터가 리뷰를 게시하면 팔로워들의 Steam 스토어에 추천 배너로 표시됨.">
+                <td class="td-bold">Curator Connect</td>
+                <td>Coming Soon 이후, "Generate CD Keys" 권한 필요</td>
+                <td><span class="st-ok">✅</span></td><td><span class="st-ok">✅</span></td>
+                <td>최대 100 큐레이터, 1개당 5카피</td>
+                <td><span style="color:#d97706;font-size:11px;letter-spacing:-1px">⭐⭐⭐</span></td>
+              </tr>
+              <tr class="tip-cursor" data-tip-title="UTM Analytics" data-tip-body="외부 링크에 UTM 파라미터를 추가해 트래픽 소스를 추적하는 분석 도구. Steam 스토어 페이지 URL에 utm_source, utm_medium, utm_campaign 파라미터를 붙여서 어떤 채널(SNS, 유튜브, 기사 등)에서 트래픽이 유입됐는지 파악 가능. Steamworks Marketing 섹션에서 결과 확인 가능. 무제한 사용 가능.">
+                <td class="td-bold">UTM Analytics</td>
+                <td>외부 링크에 UTM 파라미터 추가</td>
+                <td><span class="st-ok">✅</span></td><td><span class="st-ok">✅</span></td>
+                <td>무제한</td>
+                <td><span style="color:#d97706;font-size:11px;letter-spacing:-1px">⭐⭐⭐</span></td>
+              </tr>
+              <tr class="cat-hdr"><td colspan="6">★ 보조 도구 (⭐⭐)</td></tr>
+              <tr class="tip-cursor" data-tip-title="Artwork Override (아트워크 교체)" data-tip-body="이벤트나 업데이트 기간 동안 게임의 캡슐 이미지(스토어 썸네일)를 한시적으로 다른 이미지로 교체하는 기능. 이벤트 종료 후 자동으로 원래 이미지로 복원됨. 사전 예약 설정이 가능해 이벤트 시작 시점에 자동 교체 가능. 시즌 이벤트, 콜라보레이션, 업데이트 홍보에 활용.">
+                <td class="td-bold">Artwork Override</td>
+                <td>이벤트/업데이트 기간 한시적 적용. 자동 복원</td>
+                <td><span class="st-ok">✅</span></td><td><span class="st-ok">✅</span></td>
+                <td>사전 예약 가능</td>
+                <td><span style="color:#9ca3af;font-size:11px;letter-spacing:-1px">⭐⭐</span></td>
+              </tr>
+              <tr class="tip-cursor" data-tip-title="Rich Presence" data-tip-body="Steam 친구 목록에서 유저가 현재 게임의 어떤 상태인지 실시간으로 표시하는 기능. 예: '메인 캠페인 3/5 완료', '랭크 매치 진행 중', '레벨 47'. Steamworks SDK 연동이 필요하며 개발 리소스가 소요됨. 친구들에게 게임 활동을 자연스럽게 노출하는 소셜 바이럴 효과가 있음.">
+                <td class="td-bold">Rich Presence</td>
+                <td>SDK 연동 필요</td>
+                <td><span class="st-ok">✅</span></td><td><span class="st-ok">✅</span></td>
+                <td>개발 리소스 필요</td>
+                <td><span style="color:#9ca3af;font-size:11px;letter-spacing:-1px">⭐⭐</span></td>
+              </tr>
+              <tr class="tip-cursor" data-tip-title="Profile Features (Trading Cards/Badges/Emoticons)" data-tip-body="트레이딩 카드, 뱃지, 이모티콘, 프로필 배경 등 Steam 유저 프로필을 꾸밀 수 있는 아이템. 판매+플레이 임계치 자동 달성 시 활성화 (임계치는 비공개). F2P의 경우 인앱결제가 발생해야 프로필 피처 활성화 가능. Valve 심사가 필요하며, Steam 이코노미에 게임의 존재감을 높이는 장기적 효과가 있음.">
+                <td class="td-bold">Profile Features (Cards/Badges/Emoticons)</td>
+                <td>판매+플레이 임계치 자동 달성 시 (임계치 비공개)</td>
+                <td><span class="st-ok">✅</span></td><td><span class="st-warn">✅ (인앱결제 필수)</span></td>
+                <td>Valve 심사 필요</td>
+                <td><span style="color:#9ca3af;font-size:11px;letter-spacing:-1px">⭐⭐</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="src-line">📎 <a href="https://partner.steamgames.com/doc/marketing/visibility" target="_blank">Steamworks — Update Visibility Rounds</a> · <a href="https://partner.steamgames.com/doc/marketing/discounts" target="_blank">Discounting</a> · <a href="https://partner.steamgames.com/doc/marketing/steam_sales" target="_blank">Themed Sales</a></div>
+      </div>
+    </div>
+
+    <!-- ㄹ. 할인 규칙 핵심 요약 -->
+    <div class="subsection">
+      <div class="subsection-header" onclick="toggleSub(this)">
+        <span class="subsub-num">ㄹ</span>
+        <span class="sub-title">할인 규칙 핵심 요약 (Premium 전용 쿨다운 규칙)</span>
+        <span class="sub-chevron">▶</span>
+      </div>
+      <div class="subsection-body">
+        <div class="callout warn">Premium 게임의 할인 전략은 <strong>쿨다운 규칙을 이해하지 않으면 기회를 날릴 수 있습니다</strong>. 론칭 전부터 타임라인에 반영해야 합니다.</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>규칙</th><th>내용</th><th>실무 임팩트</th></tr></thead>
+            <tbody>
+              <tr><td class="td-bold">출시 후 30일 쿨다운</td><td>출시 직후 30일간 할인 불가 (Launch Discount 제외)</td><td>Summer/Winter Sale 일정 역산 필수</td></tr>
+              <tr><td class="td-bold">할인 간 30일 쿨다운</td><td>하나의 할인 종료 후 30일 이내 재할인 불가</td><td>연속 할인 불가. 할인 스케줄 사전 설계 필요</td></tr>
+              <tr><td class="td-bold">가격 인상 후 30일 쿨다운</td><td>가격 인상 후 30일간 할인 불가</td><td>가격 조정 시 할인 계획과 타이밍 연동 필수</td></tr>
+              <tr style="background:var(--green-bg)"><td class="td-bold td-green">계절 세일 쿨다운 면제</td><td>4대 계절 세일(Spring/Summer/Autumn/Winter)은 30일 쿨다운 면제</td><td class="td-green">★ 핵심 예외: 대형 세일 기간은 쿨다운 무관 참가 가능</td></tr>
+              <tr><td class="td-bold">Launch Discount 한도</td><td>최대 40%, 기간 7~14일. 출시 전 사전 설정만 가능</td><td>론칭 직후 단발 기회. 출시 전 Steamworks 설정 완료 필수</td></tr>
+              <tr><td class="td-bold">일반 할인 범위</td><td>10~95%, 1~14일</td><td>90%+ 초고 할인은 Valve 승인 필요 가능성</td></tr>
+              <tr style="background:var(--blue-bg)"><td class="td-bold td-blue">위시리스트 알림 트리거</td><td>20% 이상 할인 + 최저가 패키지 포함 + 8시간 이상 적용</td><td class="td-blue">★ 2주 쿨타임 존재. 세일 기간 3~4주로 연장 가능</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="src-line">📎 <a href="https://partner.steamgames.com/doc/marketing/discounts" target="_blank">Steamworks — Discounting your Game</a></div>
+      </div>
+    </div>
+
+    <!-- ㅁ. Update Visibility Rounds 상세 -->
+    <div class="subsection">
+      <div class="subsection-header" onclick="toggleSub(this)">
+        <span class="subsub-num">ㅁ</span>
+        <span class="sub-title">Update Visibility Rounds 상세 로직 — 론칭 이후 최강 자체 통제 노출</span>
+        <span class="sub-chevron">▶</span>
+      </div>
+      <div class="subsection-body">
+        <div class="callout success">Update Visibility Rounds는 <strong>론칭 이후 개발사가 직접 통제할 수 있는 가장 강력한 노출 기능</strong>. 5회라는 제한이 있어 전략적 배분이 필수.</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>항목</th><th>내용</th><th>실무 시사점</th></tr></thead>
+            <tbody>
+              <tr><td class="td-bold">기본 제공 횟수</td><td><strong>5회</strong> (EA와 정식 출시 합산)</td><td>EA+정식 합산 5회. EA 중 소진 시 정식 출시 후 Round 없음</td></tr>
+              <tr style="background:var(--green-bg)"><td class="td-bold td-green">추가 부여</td><td>매출 성적 좋을 경우 추가 라운드 Valve 부여</td><td class="td-green">고성과 게임은 추가 기회 — 성과 있을수록 기회 증가</td></tr>
+              <tr><td class="td-bold">노출 대상</td><td>라이브러리 보유자 + 위시리스터</td><td>기존 유저 재참여 + 위시리스터 전환 동시 공략 가능</td></tr>
+              <tr><td class="td-bold">노출 기간</td><td>최대 30일 또는 <strong>100만 노출 달성 시 종료</strong></td><td>인기 게임은 100만 노출 빠르게 소진. 업데이트 타이밍이 Round 효율 결정</td></tr>
+              <tr><td class="td-bold">사용 가능 시점</td><td>초기 론칭 노출 종료 후 (EA의 경우 출시 2주 후)</td><td>론칭 직후 자동 노출 종료 후 수동 활성화 필요</td></tr>
+              <tr><td class="td-bold">필수 조건</td><td>최근 30일 내 발행된 <strong>커뮤니티 공지 필요</strong></td><td>공지 없이는 Round 활성화 불가. 업데이트 공지와 타이밍 연동 필수</td></tr>
+              <tr style="background:var(--red-bg)"><td class="td-bold td-red">계절 세일 기간</td><td>계절 대세일 기간 중에는 <strong>노출 안 됨 (기간은 소모)</strong></td><td class="td-red">⚠ Summer/Winter Sale 기간 Round 활성화 시 노출 없이 기간만 차감됨</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="info-card danger">
+          <div class="card-title danger">⚠️ 전략 경고</div>
+          <div class="card-body"><strong>"EA 기간 중 무계획하게 Update Round를 소진하면 정식 출시 후 핵심 업데이트 때 쓸 라운드가 없어집니다. 5회를 언제 쓸지 사전 계획 필수."</strong><br><br>
+          추천 배분: EA 1~2회 → 정식 출시 1회 → 대형 업데이트 예비 2회</div>
+        </div>
+        <div class="src-line">📎 <a href="https://partner.steamgames.com/doc/marketing/visibility" target="_blank">Steamworks — Visibility Rounds</a></div>
+      </div>
+    </div>
+
+    <!-- ㅂ. 각종 FEST -->
+    <div class="subsection">
+      <div class="subsection-header" onclick="toggleSub(this)">
+        <span class="subsub-num">ㅂ</span>
+        <span class="sub-title">각종 FEST</span>
+        <span class="sub-chevron">▶</span>
+      </div>
+      <div class="subsection-body">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>FEST/이벤트</th><th>시기</th><th>참가 조건</th><th>주요 목적</th><th>전략 가치</th></tr></thead>
+            <tbody>
+              <tr><td class="td-bold">Steam Next Fest (SNF)</td><td>연 3회 (2·6·10월)</td><td>미출시 + Demo 필수 + <strong>1게임 1회만</strong></td><td>위시리스트 폭발적 증가</td><td><span class="pill pill-blue">★★★★★ 최우선</span></td></tr>
+              <tr><td class="td-bold">Summer/Winter Sale</td><td>연 2회 (6·12월)</td><td>할인 등록 (20%+). 30일 쿨다운 면제</td><td>매출 극대화 + WL 이메일</td><td><span class="pill pill-green">★★★★☆</span></td></tr>
+              <tr><td class="td-bold">Themed Genre Fests</td><td>수시 (장르별)</td><td>장르 태그 매칭 + Valve 초대 수락</td><td>장르 팬 노출</td><td><span class="pill pill-amber">★★★☆☆</span></td></tr>
+              <tr><td class="td-bold">Publisher/Dev Spotlight</td><td>파트너 신청</td><td>Valve와 별도 협의</td><td>전체 라인업 홍보</td><td><span class="pill pill-gray">★★☆☆☆</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="info-card danger"><div class="card-title danger">⚠️ SNF 핵심 주의사항</div><div class="card-body"><strong>게임당 단 1회만 참가 가능</strong> — 최대 위시리스트 확보 가능 시점에 배치. SNF 참가 후 론칭까지 <strong>6개월 이내 권장</strong>.</div></div>
+        <div class="src-line">📎 <a href="https://partner.steamgames.com/doc/marketing/upcoming_events/nextfest" target="_blank">Steamworks — Steam Next Fest</a> · <a href="https://steamdb.info/sales/history/" target="_blank">SteamDB — Sales History</a></div>
+      </div>
+    </div>
+
+    <!-- ㅅ. 이메일/알림 -->
+    <div class="subsection">
+      <div class="subsection-header" onclick="toggleSub(this)">
+        <span class="subsub-num">ㅅ</span>
+        <span class="sub-title">가장 파워풀한 이메일/알림 로직 + 쿨타임</span>
+        <span class="sub-chevron">▶</span>
+      </div>
+      <div class="subsection-body">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>트리거 이벤트</th><th>발송 대상</th><th>조건/제한</th></tr></thead>
+            <tbody>
+              <tr><td class="td-bold">Demo 배포 (SNF 포함)</td><td>위시리스터 전원</td><td>데모 공개 후 <strong>수동 버튼 클릭 필요 (2주 이내)</strong></td></tr>
+              <tr><td class="td-bold">EA 진입 / EA→1.0 전환</td><td>위시리스터 전원</td><td>EA 출시 시 1회, 1.0 전환 시 추가 1회</td></tr>
+              <tr><td class="td-bold">정식 론칭</td><td>위시리스터 전원</td><td><strong>1회만 발송 — 가장 중요한 이메일</strong></td></tr>
+              <tr><td class="td-bold">할인 (20%+, 8시간+)</td><td>위시리스터 중 일부</td><td class="td-amber">⚠️ 최저가 패키지 포함 + 25개 한도 + 2주 쿨타임</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="cd-grid" style="margin-top:12px">
+          <div class="cd-item"><div class="cd-label">기본 쿨타임</div><div class="cd-val">1~2주</div><div class="cd-desc">Steamworks 공식 명시: "There is a 1-2 week cooldown between wishlist emails"</div></div>
+          <div class="cd-item warn"><div class="cd-label">대형 세일 기간</div><div class="cd-val amber">3~4주</div><div class="cd-desc">Summer/Winter Sale 기간 3~4주로 연장</div></div>
+          <div class="cd-item success"><div class="cd-label">실제 수신 비율</div><div class="cd-val green">60~75%</div><div class="cd-desc">이메일 미인증 계정 + 수신 설정 해제 제외</div></div>
+          <div class="cd-item"><div class="cd-label">발송 처리 시간</div><div class="cd-val">수 시간</div><div class="cd-desc">대규모 위시리스터 대상 순차 발송 (즉시 일괄 아님)</div></div>
+        </div>
+        <div class="src-line">📎 <a href="https://partner.steamgames.com/doc/marketing/wishlist" target="_blank">Steamworks — Wishlists (공식 쿨타임 명시)</a> · <a href="https://presskit.gg/field-guides/how-steam-wishlists-work" target="_blank">Presskit.gg — How Steam Wishlists Work (2026.02)</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ SEC 3: WL 전환율 ═══════════ -->
+<div class="section" id="sec3">
+  <div class="section-header" onclick="toggleSection(this)">
+    <span class="section-num">03</span>
+    <span class="sec-title">스팀 Wish List 시스템 및 전환율</span>
+    <span class="sec-sub">WL→Purchase 전환율 데이터 (2024.09~2025.08)</span>
+    <span class="sec-badge badge-green">DATA</span>
+    <span class="chevron">▶</span>
+  </div>
+  <div class="section-body">
+    <div class="subsection">
+      <div class="subsection-header open" onclick="toggleSub(this)">
+        <span class="subsub-num">—</span>
+        <span class="sub-title">WL 전환율 월별 추이 (GameDiscoverCo 2024~2025)</span>
+        <span class="sub-chevron">▶</span>
+      </div>
+      <div class="subsection-body open">
+        <div class="grid3" style="margin-bottom:14px">
+          <div class="stat-card"><div class="stat-label">중앙값 전환율 (WL 25K+)</div><div class="stat-val">15%</div><div class="stat-desc">전체 WL 25k 이상 게임 기준</div></div>
+          <div class="stat-card"><div class="stat-label">성인물 제외 중앙값</div><div class="stat-val">14%</div><div class="stat-desc">non-adult 게임 기준</div></div>
+          <div class="stat-card" style="border-left-color:var(--amber)"><div class="stat-label">$10+ 유료 게임 기준</div><div class="stat-val amber">10%</div><div class="stat-desc">Project S 직접 참고 기준</div></div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>기간</th><th>WL 중앙값 (전체)</th><th>WL 중앙값 (비성인)</th><th>WL 중앙값 ($10+)</th><th>특이사항</th></tr></thead>
+            <tbody>
+              <tr><td>2024년 9월</td><td class="td-blue td-mono">0.14</td><td class="td-mono">0.11</td><td class="td-mono">0.10</td><td>—</td></tr>
+              <tr><td>2024년 10월</td><td class="td-blue td-mono">0.15</td><td class="td-mono">0.15</td><td class="td-mono">0.09</td><td><span class="pill pill-amber">SNF / 가을 세일</span></td></tr>
+              <tr><td>2024년 12월</td><td class="td-blue td-mono">0.10</td><td class="td-mono">0.10</td><td class="td-mono">0.09</td><td><span class="pill pill-red">연간 최대 메가 세일</span></td></tr>
+              <tr style="background:var(--green-bg)"><td>2025년 2월</td><td class="td-mono" style="color:var(--green);font-weight:700;">0.25</td><td class="td-mono">0.18</td><td class="td-mono">0.15</td><td><span class="pill pill-blue">SNF (최고 전환율)</span></td></tr>
+              <tr><td>2025년 6월</td><td class="td-blue td-mono">0.17</td><td class="td-mono">0.13</td><td class="td-mono">0.08</td><td><span class="pill pill-red">SNF / 연간 2대 메가 세일</span></td></tr>
+              <tr style="background:var(--green-bg)"><td>2025년 8월</td><td class="td-mono" style="color:var(--green);font-weight:700;">0.24</td><td class="td-mono">0.18</td><td class="td-mono">0.14</td><td><span class="pill pill-green">고전환 구간</span></td></tr>
+              <tr style="background:var(--blue-bg)"><td class="td-bold">중앙값 (전체)</td><td class="td-bold td-blue td-mono">0.15</td><td class="td-bold td-mono">0.14</td><td class="td-bold td-mono">0.10</td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout warn"><strong>Project S 적용:</strong> WL 전환율 10% 기준, 목표 WL 100K → 예상 판매 10K. 메가 세일 기간 전환율 약 20~30% 하락 주의.</div>
+        <div class="src-line">📎 <a href="https://newsletter.gamediscover.co/p/the-state-of-steam-wishlist-conversions" target="_blank">GameDiscoverCo — WL Conversion State (2024~2025)</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ SEC 4: 태그 시스템 ═══════════ -->
+<div class="section" id="sec4">
+  <div class="section-header" onclick="toggleSection(this)">
+    <span class="section-num">04</span>
+    <span class="sec-title">스팀 태그 시스템</span>
+    <span class="sec-sub">전체 규모 · 생애주기 구조 · 리스크</span>
+    <span class="sec-badge badge-purple">ALGORITHM</span>
+    <span class="chevron">▶</span>
+  </div>
+  <div class="section-body">
+    <div class="subsection">
+      <div class="subsection-header open" onclick="toggleSub(this)">
+        <span class="subsub-num">—</span>
+        <span class="sub-title">태그 전체 규모, 생애주기 구조 및 리스크</span>
+        <span class="sub-chevron">▶</span>
+      </div>
+      <div class="subsection-body open">
+        <div class="grid3">
+          <div class="stat-card"><div class="stat-label">Steam 총 태그 수 (2026)</div><div class="stat-val">452개</div><div class="stat-desc">games-stats.com 집계 기준</div></div>
+          <div class="stat-card" style="border-left-color:var(--amber)"><div class="stat-label">권장 태그 수</div><div class="stat-val amber">5~20개</div><div class="stat-desc">Valve 공식: 최소 5개 필수</div></div>
+          <div class="stat-card" style="border-left-color:var(--green)"><div class="stat-label">태그 카테고리 유형</div><div class="stat-val green">29개</div><div class="stat-desc">장르, 메카닉, 테마, 무드 등</div></div>
+        </div>
+        <div class="subsec-label" style="margin-top:14px">태그 생애주기 (3단계)</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>단계</th><th>시점</th><th>설정 주체</th><th>영향</th><th>특이사항</th></tr></thead>
+            <tbody>
+              <tr><td class="td-bold">① 개발사 초기 설정</td><td>Coming Soon~출시 전</td><td><span class="pill pill-green">개발사 100%</span></td><td>알고리즘 초기 매칭 기준</td><td>최소 5개 필수, 최대 20개 권장</td></tr>
+              <tr><td class="td-bold">② 론칭 후 유저 투표</td><td>스토어 오픈 후</td><td><span class="pill pill-amber">유저 주도</span></td><td>누적 투표 수에 따라 표시 태그 변경</td><td><strong>보유하지 않은 유저도 투표 가능</strong> — 오염 리스크</td></tr>
+              <tr><td class="td-bold">③ 알고리즘 안정화</td><td>리뷰 100개+ 이후</td><td><span class="pill pill-blue">알고리즘 고정</span></td><td>개인화 추천 고정 인풋</td><td>초기 태그 전략이 장기 노출에 영향 고정</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="subsec-label" style="margin-top:12px">태그 리스크 및 대응</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>리스크 유형</th><th>원인</th><th>대응</th><th>수준</th></tr></thead>
+            <tbody>
+              <tr><td class="td-bold">태그 오염</td><td>미보유 유저의 부정확한 태그 대량 투표</td><td>Steam Community 신고 + 커뮤니티 관리</td><td><span class="pill pill-red">높음</span></td></tr>
+              <tr><td class="td-bold">태그 드리프트</td><td>유저 집단이 의도와 다른 방향으로 인식</td><td>론칭 초기 정확한 장르 인식 확산</td><td><span class="pill pill-amber">중간</span></td></tr>
+              <tr><td class="td-bold">초기 태그 실수</td><td>너무 광범위한 태그 설정</td><td>경쟁작 태그 분석 필수. 정확도 &gt; 범위</td><td><span class="pill pill-red">높음</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="subsec-label" style="margin-top:10px">Project S FPS 장르 주요 태그</div>
+        <div class="tag-chips">
+          <span class="tag-chip chip-blue">FPS</span><span class="tag-chip chip-blue">Shooter</span><span class="tag-chip chip-blue">Multiplayer</span><span class="tag-chip chip-blue">Action</span><span class="tag-chip chip-blue">Online Co-Op</span><span class="tag-chip chip-blue">PvP</span><span class="tag-chip chip-amber">Tactical</span><span class="tag-chip chip-amber">Military</span><span class="tag-chip chip-amber">Team-Based</span><span class="tag-chip chip-green">Free to Play</span><span class="tag-chip chip-gray">Realistic</span><span class="tag-chip chip-purple">Unreal Engine</span>
+        </div>
+        <div class="src-line">📎 <a href="https://partner.steamgames.com/doc/store/tags" target="_blank">Steamworks — Tags 공식 가이드</a> · <a href="https://steamdb.info/tags/" target="_blank">SteamDB — 전체 태그 목록</a> · <a href="https://games-stats.com/steam/tags/" target="_blank">Games-Stats.com — 452개 태그 (2026)</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ SEC 5: 리뷰 시스템 ═══════════ -->
+<div class="section" id="sec5">
+  <div class="section-header" onclick="toggleSection(this)">
+    <span class="section-num">05</span>
+    <span class="sec-title">스팀 리뷰 시스템 및 리뷰 등급</span>
+    <span class="sec-sub">전체 등급 · 언어별 등급 (2025.08 업데이트 기준)</span>
+    <span class="sec-badge badge-teal">REVIEWS</span>
+    <span class="chevron">▶</span>
+  </div>
+  <div class="section-body">
+    <div class="subsection">
+      <div class="subsection-header open" onclick="toggleSub(this)">
+        <span class="subsub-num">ㄱ</span>
+        <span class="sub-title">전체 등급 시스템 (리뷰 500개+ — 실무 핵심)</span>
+        <span class="sub-chevron">▶</span>
+      </div>
+      <div class="subsection-body open">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>긍정 비율</th><th>등급 (영문)</th><th>한국어</th><th>알고리즘</th><th>WL→구매 전환율</th></tr></thead>
+            <tbody>
+              <tr style="background:var(--green-bg)"><td class="td-mono td-green">95~100%</td><td class="td-bold td-green">Overwhelmingly Positive</td><td class="td-green">압도적으로 긍정적</td><td>없음 (최상위)</td><td class="td-bold td-green td-mono">0.51 ★ 최고</td></tr>
+              <tr><td class="td-mono">90~94%</td><td>Very Positive</td><td>매우 긍정적</td><td>없음</td><td class="td-blue td-mono">0.33</td></tr>
+              <tr><td class="td-mono">80~89%</td><td>Very Positive</td><td>매우 긍정적</td><td>없음</td><td class="td-blue td-mono">0.25~0.29</td></tr>
+              <tr><td class="td-mono">70~79%</td><td>Mostly Positive</td><td class="td-amber">대체로 긍정적</td><td>없음</td><td class="td-blue td-mono">0.26</td></tr>
+              <tr><td class="td-mono">60~69%</td><td>Mixed</td><td>복합적</td><td>없음</td><td class="td-amber td-mono">0.18</td></tr>
+              <tr><td class="td-mono">20~39%</td><td>Mostly Negative</td><td class="td-red">대체로 부정적</td><td class="td-red">노출 감소</td><td class="td-red td-mono">—</td></tr>
+              <tr><td class="td-mono">0~19%</td><td>Overwhelmingly Negative</td><td class="td-red">압도적 부정</td><td class="td-red">노출 감소</td><td class="td-red td-mono">—</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="src-line">📎 <a href="https://partner.steamgames.com/doc/store/reviews" target="_blank">Steamworks — User Reviews</a></div>
+      </div>
+    </div>
+    <div class="subsection">
+      <div class="subsection-header open" onclick="toggleSub(this)">
+        <span class="subsub-num">ㄴ</span>
+        <span class="sub-title">언어별 리뷰 점수 표기 (2025.08 Steam 업데이트 기준)</span>
+        <span class="sub-chevron">▶</span>
+      </div>
+      <div class="subsection-body open">
+        <div class="info-card highlight">
+          <div class="card-title">언어별 리뷰 표시 조건 (Steam 공식, 2025.08~)</div>
+          <div class="card-body">
+            ① 게임 전체 공개 리뷰 수 <strong>2,000개 이상</strong><br>
+            ② 특정 언어 리뷰가 <strong>200개 이상</strong>인 언어에 한해 언어별 점수 별도 표시<br>
+            Valve: <em>"We purposely made these thresholds higher than the 10 reviews required to calculate the Overall Review Score"</em>
+          </div>
+        </div>
+        <div class="table-wrap" style="margin-top:10px">
+          <table>
+            <thead><tr><th>언어</th><th>Steam 비중 (2024)</th><th>임계값</th><th>Project S 관련도</th></tr></thead>
+            <tbody>
+              <tr><td class="td-bold">중국어 간체</td><td class="td-mono td-amber">~30%+ (1위)</td><td>전체 2,000 + 언어 200개</td><td><span class="pill pill-red">최우선 관리 (리뷰 폭탄 리스크)</span></td></tr>
+              <tr><td class="td-bold">영어</td><td class="td-mono">~24%</td><td>전체 2,000 + 언어 200개</td><td><span class="pill pill-blue">글로벌 핵심</span></td></tr>
+              <tr><td class="td-bold">러시아어</td><td class="td-mono">~9%</td><td>전체 2,000 + 언어 200개</td><td><span class="pill pill-gray">그레이 영역</span></td></tr>
+              <tr><td class="td-bold">한국어</td><td class="td-mono">~4%</td><td>전체 2,000 + 언어 200개</td><td><span class="pill pill-green">Project S 로컬 관리 대상</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout warn"><strong>중요:</strong> 2024년 기준 Steam 최대 언어는 중국어 간체(1위). 중국 리뷰 폭탄이 언어별 분리로 한국어 점수에 미치는 영향 최소화. 단, 전체 리뷰 2,000개 미달 구간에서는 전체 점수 관리가 우선.</div>
+        <div class="src-line">📎 <a href="https://www.pcgamer.com/games/steam-launches-language-specific-review-scores-because-customers-in-different-regions-of-the-world-may-have-vastly-different-experiences-from-each-other-for-the-same-game/" target="_blank">PC Gamer — Language-Specific Reviews (2025.08.18)</a> · <a href="https://store.steampowered.com/news/app/593110/view/500579345320904529" target="_blank">Steam 공식 업데이트 노트 (2025.08)</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ SEC 6: 기타 항목 ═══════════ -->
+<div class="section" id="sec6">
+  <div class="section-header" onclick="toggleSection(this)">
+    <span class="section-num">06</span>
+    <span class="sec-title">기타 항목</span>
+    <span class="sec-sub">심의 등급 (PEGI 2026 포함) · 성인 등급 리스크 · 중국 결제 · 러시아 결제 · e-sports</span>
+    <span class="sec-badge badge-red">RISK</span>
+    <span class="chevron">▶</span>
+  </div>
+  <div class="section-body">
+    <!-- ㄱ. 심의 등급 -->
+    <div class="subsection">
+      <div class="subsection-header open" onclick="toggleSub(this)">
+        <span class="subsub-num">ㄱ</span>
+        <span class="sub-title">심의 등급 — PEGI 2026 변경사항 + 성인 등급 리스크</span>
+        <span class="sub-chevron">▶</span>
+      </div>
+      <div class="subsection-body open">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>지역</th><th>등급 기관</th><th>필수 여부</th><th>비고</th></tr></thead>
+            <tbody>
+              <tr><td class="td-bold">글로벌</td><td>IARC</td><td><span class="pill pill-blue">권장</span></td><td>무료. 설문 기반 자동 분류</td></tr>
+              <tr><td class="td-bold">한국</td><td>게임물관리위원회 (GRB)</td><td><span class="pill pill-red">필수</span></td><td>심의 기간 2~4주, 비용 발생</td></tr>
+              <tr><td class="td-bold">독일</td><td>USK</td><td><span class="pill pill-red">필수</span></td><td>독일어 현지화 시 적용</td></tr>
+              <tr><td class="td-bold">유럽</td><td>PEGI</td><td><span class="pill pill-blue">권장</span></td><td>⚠️ 2026년 말 대규모 기준 변경 예정</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="subsec-label" style="margin-top:14px">🆕 PEGI 2026 신규 등급 기준</div>
+        <div class="callout warn" style="margin-bottom:10px">유럽 PEGI는 <strong>2026년 말부터 중독성 콘텐츠와 유료 콘텐츠에 대한 신규 등급 기준 4가지를 추가</strong>할 예정. <a href="https://www.thegamer.com/pegi-age-rating-increase-loot-box-battle-pass/" target="_blank">출처: The Gamer</a></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>콘텐츠 유형</th><th>신규 PEGI 등급</th><th>설명</th><th>Project S 관련도</th></tr></thead>
+            <tbody>
+              <tr><td class="td-bold">배틀패스</td><td class="td-amber">PEGI 12</td><td>기간/수량 한정 유료 시스템</td><td><span class="pill pill-amber">F2P 배틀패스 도입 시 직접 영향</span></td></tr>
+              <tr><td class="td-bold">유료 랜덤 아이템</td><td class="td-red">PEGI 16 (소셜카지노 18)</td><td>가챠, 루트박스, 랜덤 잠금해제 키 포함</td><td><span class="pill pill-red">가챠 도입 시 직접 영향</span></td></tr>
+              <tr><td class="td-bold">예약 플레이</td><td class="td-blue">PEGI 7 + 알림 의무</td><td>일일 퀘스트 등 정기 플레이 강요 게임</td><td><span class="pill pill-blue">MMORPG 일일 미션 해당 가능</span></td></tr>
+              <tr><td class="td-bold">온라인 커뮤니티</td><td class="td-red">PEGI 18</td><td>음성·텍스트·영상 자유 소통 기능</td><td><span class="pill pill-red">MMORPG 채팅 시스템 직접 영향 ⚠️</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout danger"><strong>⚠ Project S 긴급 검토:</strong> PEGI "온라인 커뮤니티" 기준 시행 시 자유 채팅을 가진 MMORPG에 PEGI 18 강제 적용 가능. 유럽 서비스 시 성인 등급 리스크 발생. 사전 법무 검토 권고.</div>
+        <div class="subsec-label" style="margin-top:14px">🔞 성인 등급(18+) 수령 시 리스크</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>제약 영역</th><th>내용</th><th>리스크 수준</th></tr></thead>
+            <tbody>
+              <tr><td class="td-bold">메인 스토어 노출</td><td>기본 설정에서 숨겨짐. 유저가 성인 콘텐츠 허용을 수동 활성화해야만 노출</td><td><span class="pill pill-red">매우 높음</span></td></tr>
+              <tr><td class="td-bold">SNF 참가</td><td>참가 가능하나 별도 성인 콘텐츠 섹션 분리 배치. 메인 FEST 노출 불가</td><td><span class="pill pill-red">높음</span></td></tr>
+              <tr><td class="td-bold">Daily/Midweek Deal</td><td>Valve 큐레이션 프로모션에서 사실상 배제</td><td><span class="pill pill-red">높음</span></td></tr>
+              <tr><td class="td-bold">한국 서비스</td><td>GRB 청소년이용불가 → 청소년 유저층 완전 제외. 이용 시간 제한 추가 가능</td><td><span class="pill pill-red">높음</span></td></tr>
+              <tr><td class="td-bold">광고 플랫폼</td><td>Google/Meta/Twitter 등 주요 광고 플랫폼에서 성인 게임 광고 게재 제한</td><td><span class="pill pill-amber">중간</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout teal"><strong>Project S 권고:</strong> <strong>일반 등급(15세 이용가) 유지</strong>가 최대 노출 영역 확보에 필수. 성인 콘텐츠 도입 시 별도 DLC 분리 구조로 등급 분리 대응 가능.</div>
+        <div class="src-line">📎 <a href="https://partner.steamgames.com/doc/store/ratings" target="_blank">Steamworks — Game Ratings</a> · <a href="https://partner.steamgames.com/doc/store/adult_only_content" target="_blank">Steamworks — Adult Only Content</a> · <a href="https://www.thegamer.com/pegi-age-rating-increase-loot-box-battle-pass/" target="_blank">The Gamer — PEGI 2026</a> · <a href="https://www.grac.or.kr/" target="_blank">GRB 게임물관리위원회</a></div>
+      </div>
+    </div>
+
+    <!-- ㄴ. 중국 결제 -->
+    <div class="subsection">
+      <div class="subsection-header" onclick="toggleSub(this)">
+        <span class="subsub-num">ㄴ</span>
+        <span class="sub-title">스팀 그레이 영역 — 중국 결제 상세 가이드</span>
+        <span class="sub-chevron">▶</span>
+      </div>
+      <div class="subsection-body">
+        <div class="grid2" style="margin-bottom:12px">
+          <div class="info-card highlight"><div class="card-title">중국 스팀 구조</div><div class="card-body">글로벌 Steam + Steam 중국(WeGame) <strong>2개 플랫폼 존재</strong>. 계정 공유, <strong>지갑/구매/결제 시스템은 완전히 별개</strong>. PayPal 불가.</div></div>
+          <div class="info-card warn"><div class="card-title warn">CNY 가격 설정 주의</div><div class="card-body"><strong>L10N 중국어 + CNY 가격 설정 필수</strong>. USD 대비 <strong>30~50% 할인 권장</strong>. Steam 기본 로직 <strong>51% 할인 금액 자동 설정</strong> → 확인 필수.</div></div>
+        </div>
+        <div class="embed-frame"><iframe src="steam_china.html" style="height:800px" onload="autoResize(this)"></iframe></div>
+        <div class="src-line">📎 <a href="https://partner.steamgames.com/doc/store/pricing/currencies" target="_blank">Steamworks — Supported Currencies</a></div>
+      </div>
+    </div>
+
+    <!-- ㄷ. 러시아 결제 -->
+    <div class="subsection">
+      <div class="subsection-header" onclick="toggleSub(this)">
+        <span class="subsub-num">ㄷ</span>
+        <span class="sub-title">스팀 그레이 영역 — 러시아 결제 상세 가이드</span>
+        <span class="sub-chevron">▶</span>
+      </div>
+      <div class="subsection-body">
+        <div class="info-card danger" style="margin-bottom:12px"><div class="card-title danger">러시아 결제 현황</div><div class="card-body">러시아는 <strong>Steam 직접 결제 불가</strong> (제재 영향). <strong>2022년 이후 Visa/Mastercard 철수</strong>로 대부분 결제 수단 제한.</div></div>
+        <div class="embed-frame"><iframe src="steam_russia.html" style="height:900px" onload="autoResize(this)"></iframe></div>
+        <div class="src-line">📎 <a href="https://partner.steamgames.com/doc/store/pricing/currencies" target="_blank">Steamworks — Supported Currencies</a></div>
+      </div>
+    </div>
+
+    <!-- ㄹ. e-sports -->
+    <div class="subsection">
+      <div class="subsection-header" onclick="toggleSub(this)">
+        <span class="subsub-num">ㄹ</span>
+        <span class="sub-title">e-sports 고려 사항</span>
+        <span class="sub-chevron">▶</span>
+      </div>
+      <div class="subsection-body">
+
+        <!-- 핵심 판단 포인트 -->
+        <div class="section-insight">
+          <h3>⚡ 핵심 판단 포인트 (Newzoo 데이터 기반)</h3>
+          <ul>
+            <li><strong>팬의 70%는 단 1개 게임만 시청</strong> — 타 e-sports 팬 유입 기대 불가. 기존 유저 락인이 핵심</li>
+            <li><strong>시청자의 42%가 직접 플레이 않음</strong> — "보는 콘텐츠"로 독립 비즈니스 가치 존재</li>
+            <li><strong>Steam은 e-sports 전용 정책 없음</strong> — Twitch/YouTube 연동이 실무적으로 효과적</li>
+          </ul>
+        </div>
+
+        <!-- 핵심 인사이트 2가지 -->
+        <div class="subsec-label">슈터 장르 e-sports 핵심 인사이트</div>
+        <div class="grid2" style="margin-bottom:14px">
+          <div class="info-card highlight">
+            <div class="card-title">① e-sports = 장기 리텐션 엔진</div>
+            <div class="card-body">
+              e-sports는 슈터 장르에서 <strong>"유저 모객 부스터"가 아닌 "장기 리텐션 엔진"</strong>으로 작동한다.<br><br>
+              메이저 대회 기간 CS2 동접 <strong>+12~18% 스파이크</strong>가 발생하지만, 비-e스포츠 타이틀인 Helldivers 2도 <strong>458K 동접</strong>을 달성한 바 있어, <em>e스포츠 없이도 초기 모객은 가능</em>하다.<br><br>
+              → e-sports는 <strong>초기 모객이 아닌 장기 생태계 유지</strong>를 위한 투자로 판단해야 함
+            </div>
+          </div>
+          <div class="info-card warn">
+            <div class="card-title warn">② e-sports ROI 입증 장르는 2개뿐</div>
+            <div class="card-body">
+              6개 슈터 서브장르 중 <strong>e-sports ROI가 입증된 장르</strong>는:<br>
+              ✅ <strong>택티컬·아레나</strong> (CS2 / Valorant)<br>
+              ✅ <strong>배틀로얄</strong> (PUBG)<br><br>
+              ❌ <strong>히어로 슈팅</strong> (OW2) — e-sports 투자 대비 리텐션 <em>실패</em> 사례<br>
+              ❌ <strong>익스트랙션·Co-op</strong> — 구조적 특성상 e-sports 자체가 성립하지 않음<br><br>
+              → Project S의 장르 정체성이 택티컬/아레나에 가까울수록 e-sports 투자 가치 상승
+            </div>
+          </div>
+        </div>
+
+        <!-- Newzoo 데이터 테이블 -->
+        <div class="subsec-label">Newzoo 팬 행동 데이터</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>데이터 포인트</th><th>수치</th><th>Project S 시사점</th></tr></thead>
+            <tbody>
+              <tr><td class="td-bold">단일 게임 시청 팬 비중</td><td class="td-bold td-blue td-mono">70%</td><td>e-sports 투자는 자체 게임 팬 락인이 목표. 타 게임 팬 유입 기대 낮음</td></tr>
+              <tr><td class="td-bold">상위 3 e-sports 시청 전용 팬</td><td class="td-bold td-amber td-mono">42%</td><td>"보는 콘텐츠"로 독립 수익 모델 가능 — 광고·미디어 권리 검토 가치</td></tr>
+              <tr><td class="td-bold">CS:GO 시청 전용 팬</td><td class="td-mono">30%</td><td rowspan="2" style="vertical-align:middle;">FPS 장르 특성상 CS:GO(30%) 수준의 시청 전용 팬 확보 가능성 검토</td></tr>
+              <tr><td class="td-bold">League of Legends 시청 전용 팬</td><td class="td-mono">26%</td></tr>
+              <tr><td class="td-bold">글로벌 e-sports 시청자 (2024)</td><td class="td-bold td-green td-mono">620M</td><td>아시아태평양 57% 점유 → 한국/APAC 집중 전략 유효</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- 성공/실패 사례 -->
+        <div class="subsec-label" style="margin-top:18px">성공·실패 사례 분석 — Project S 교훈 도출</div>
+
+        <!-- 성공 사례: CS2 -->
+        <div style="border:1px solid var(--green-border); border-left:4px solid var(--green); border-radius:var(--radius); background:linear-gradient(135deg,var(--green-bg) 0%,#fff 100%); padding:16px 18px; margin-bottom:12px;">
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+            <span style="font-size:18px;">✅</span>
+            <div>
+              <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--green);">성공 사례</div>
+              <div style="font-size:14px; font-weight:800; color:var(--text-h);">CS2 — "밸브의 최소 개입, 커뮤니티 최대 자율" 모델</div>
+            </div>
+          </div>
+          <div style="font-size:12px; color:var(--text-sub1); line-height:1.75; margin-bottom:10px;">
+            CS2는 Valve가 직접 리그를 운영하지 않고, <strong>Third-Party TO(PGL, ESL 등)에 Major 라이선스를 부여</strong>하는 모델을 채택했다. 이 덕분에 연간 수백 개의 토너먼트가 자생적으로 운영되며, Valve의 운영 비용은 최소화된다. <strong>2025년 4월 역대 최고 동접 1.86M</strong>을 기록했으며, 이는 e-sports 생태계의 건강성이 곧 게임의 건강성임을 증명한다.
+          </div>
+          <div style="display:flex; flex-wrap:wrap; gap:8px;">
+            <div style="background:#fff; border:1px solid var(--green-border); border-radius:8px; padding:8px 14px; font-size:12px; flex:1; min-width:200px;">
+              <div style="font-size:10px; color:var(--green); font-weight:700; text-transform:uppercase; letter-spacing:.08em; margin-bottom:4px;">핵심 성공 요인</div>
+              <div style="color:var(--text-sub1);">직접 운영 비용 Zero · 커뮤니티 자생 생태계 · Major 라이선스 수익 구조</div>
+            </div>
+            <div style="background:#fff; border:1px solid var(--green-border); border-radius:8px; padding:8px 14px; font-size:12px; flex:1; min-width:200px;">
+              <div style="font-size:10px; color:var(--green); font-weight:700; text-transform:uppercase; letter-spacing:.08em; margin-bottom:4px;">Project S 교훈</div>
+              <div style="color:var(--text-sub1);">자사 리그 직영 전에 <strong>TO 파트너십 → 라이선스 부여</strong> 단계적 접근 권장</div>
+            </div>
+          </div>
+          <div style="font-size:10px; color:var(--text-src); margin-top:8px;">출처: SteamDB · SteamCharts · Esports Charts 크로스체크 완료</div>
+        </div>
+
+        <!-- 실패 사례 1: OWL -->
+        <div style="border:1px solid var(--red-border); border-left:4px solid var(--red); border-radius:var(--radius); background:linear-gradient(135deg,var(--red-bg) 0%,#fff 100%); padding:16px 18px; margin-bottom:12px;">
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+            <span style="font-size:18px;">❌</span>
+            <div>
+              <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--red);">실패 사례 ①</div>
+              <div style="font-size:14px; font-weight:800; color:var(--text-h);">Overwatch League — "$20M 프랜차이즈 슬롯의 몰락"</div>
+            </div>
+          </div>
+          <div style="font-size:12px; color:var(--text-sub1); line-height:1.75; margin-bottom:10px;">
+            OWL은 팀당 <strong>$20M 이상의 슬롯 비용</strong>을 받고 프랜차이즈 리그를 구성했으나, <strong>YouTube 독점 스트리밍 계약</strong>으로 시청자 접근성이 하락하고, 팀들에 약속된 수익 분배가 이행되지 않아 <strong>2023년 사실상 폐지</strong>되었다. OW2 Steam 동접은 2025년 7월 <strong>24K까지 추락</strong>했다.
+          </div>
+          <div style="display:flex; flex-wrap:wrap; gap:8px;">
+            <div style="background:#fff; border:1px solid var(--red-border); border-radius:8px; padding:8px 14px; font-size:12px; flex:1; min-width:200px;">
+              <div style="font-size:10px; color:var(--red); font-weight:700; text-transform:uppercase; letter-spacing:.08em; margin-bottom:4px;">핵심 실패 요인</div>
+              <div style="color:var(--text-sub1);">독점 스트리밍으로 접근성 차단 · 수익 분배 불이행 · 과도한 초기 투자 회수 실패</div>
+            </div>
+            <div style="background:#fff; border:1px solid var(--red-border); border-radius:8px; padding:8px 14px; font-size:12px; flex:1; min-width:200px;">
+              <div style="font-size:10px; color:var(--red); font-weight:700; text-transform:uppercase; letter-spacing:.08em; margin-bottom:4px;">Project S 교훈</div>
+              <div style="color:var(--text-sub1);"><strong>플랫폼 독점 스트리밍 계약 금지.</strong> Twitch·YouTube 동시 오픈 정책 + 팀 수익 분배 계약 명문화 필수</div>
+            </div>
+          </div>
+          <div style="font-size:10px; color:var(--text-src); margin-top:8px;">출처: Esports Charts · Esports Insider 크로스체크 완료</div>
+        </div>
+
+        <!-- 실패 사례 2: Spectre Divide -->
+        <div style="border:1px solid var(--red-border); border-left:4px solid var(--red); border-radius:var(--radius); background:linear-gradient(135deg,var(--red-bg) 0%,#fff 100%); padding:16px 18px; margin-bottom:14px;">
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+            <span style="font-size:18px;">❌</span>
+            <div>
+              <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--red);">실패 사례 ②</div>
+              <div style="font-size:14px; font-weight:800; color:var(--text-h);">Spectre Divide — "$65M 투자, 2주 만에 사망"</div>
+            </div>
+          </div>
+          <div style="font-size:12px; color:var(--text-sub1); line-height:1.75; margin-bottom:10px;">
+            Shroud 등 인플루언서 마케팅 + e-sports 지향 설계에 <strong>$65M을 투자</strong>했으나, Peak 동접 30K → <strong>2주 내 5.8K → 최종 서비스 종료.</strong> 게임 자체의 <strong>펀(fun factor)과 차별화 없이 e-sports를 먼저 추진</strong>한 것이 실패의 핵심 원인이다.
+          </div>
+          <div style="display:flex; flex-wrap:wrap; gap:8px;">
+            <div style="background:#fff; border:1px solid var(--red-border); border-radius:8px; padding:8px 14px; font-size:12px; flex:1; min-width:200px;">
+              <div style="font-size:10px; color:var(--red); font-weight:700; text-transform:uppercase; letter-spacing:.08em; margin-bottom:4px;">핵심 실패 요인</div>
+              <div style="color:var(--text-sub1);">게임 품질 미확보 상태의 e-sports 선행 투자 · 인플루언서 마케팅 의존 · 차별화 부재</div>
+            </div>
+            <div style="background:#fff; border:1px solid var(--red-border); border-radius:8px; padding:8px 14px; font-size:12px; flex:1; min-width:200px;">
+              <div style="font-size:10px; color:var(--red); font-weight:700; text-transform:uppercase; letter-spacing:.08em; margin-bottom:4px;">Project S 교훈</div>
+              <div style="color:var(--text-sub1);"><strong>DAU 안정화 이후 e-sports 진입.</strong> e-sports는 좋은 게임의 "결과"이지, 좋은 게임을 만드는 "원인"이 아님</div>
+            </div>
+          </div>
+          <div style="font-size:10px; color:var(--text-src); margin-top:8px;">출처: Forbes · GameSpot · SteamDB 크로스체크 완료</div>
+        </div>
+
+        <!-- 전략 -->
+        <div class="callout teal"><strong>Project S e-sports 단계 전략:</strong> DAU 50K+ 확인 후 → 1단계: 커뮤니티 자발적 토너먼트 + 인게임 아이템 지원 → 2단계: TO 파트너십으로 공식 소규모 토너먼트 → 3단계: Major 라이선스 구조 기반 e-sports 오거나이저 파트너십. <strong>직영 리그 운영은 최우선 배제.</strong></div>
+
+        <div class="src-line">📎 <a href="https://newzoo.com/resources/blog/esports-franchises-70-watch-only-one-game-and-42-dont-play" target="_blank">Newzoo — Esports Franchises (70% watch only one game)</a> · <a href="https://partner.steamgames.com/doc/features/tournaments" target="_blank">Steamworks — Steam Tournaments</a> · <a href="https://escharts.com/" target="_blank">Esports Charts</a> · <a href="https://esportsinsider.com/esports-titles/shooters/counter-strike" target="_blank">Esports Insider — CS2</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div style="margin-top:48px;padding-top:14px;border-top:1px solid var(--border);font-size:10px;color:var(--text-src);font-family:monospace;line-height:2;display:flex;gap:16px;flex-wrap:wrap;align-items:center">
+  <span style="color:var(--accent);font-weight:700;">Project S Steam Launch Dashboard v5.0</span>
+  <span>·</span><span>스팀 정책 &amp; 리스크</span>
+  <span>·</span><span>최종 업데이트: 2026.04</span>
+  <span>·</span><span style="color:var(--amber);">⚠️ 스팀 공식 문서 기반. 정책 변경 시 별도 업데이트 필요</span>
+</div>
+</div>
+
+<script>
+// ── Accordion ──
+function toggleSection(hdr) {
+  const isOpen = hdr.classList.contains('open');
+  document.querySelectorAll('.section-header.open').forEach(h => { h.classList.remove('open'); h.nextElementSibling.classList.remove('open'); });
+  if (!isOpen) { hdr.classList.add('open'); hdr.nextElementSibling.classList.add('open'); }
+}
+function toggleSub(hdr) { hdr.classList.toggle('open'); hdr.nextElementSibling.classList.toggle('open'); }
+function toggleCollapsible(btn) { btn.classList.toggle('open'); btn.nextElementSibling.classList.toggle('open'); }
+
+// ── Iframe ──
+function autoResize(iframe) {
+  try { const h = iframe.contentWindow.document.body.scrollHeight; if (h > 200) iframe.style.height = (h+40)+'px'; } catch(e) {}
+}
+
+// ── Global Tooltip ──
+const gtip = document.getElementById('g-tip');
+const gtipTitle = document.getElementById('g-tip-title');
+const gtipBody  = document.getElementById('g-tip-body');
+
+function showTip(e) {
+  const t = e.currentTarget;
+  const title = t.getAttribute('data-tip-title') || '';
+  const body  = t.getAttribute('data-tip-body')  || '';
+  if (!title && !body) return;
+  gtipTitle.textContent = title;
+  gtipBody.innerHTML = body;
+  gtip.style.display = 'block';
+  moveTip(e);
+}
+function moveTip(e) {
+  const x = e.clientX + 18, y = e.clientY + 18;
+  const tw = gtip.offsetWidth, th = gtip.offsetHeight;
+  gtip.style.left = (x + tw > window.innerWidth  ? e.clientX - tw - 10 : x) + 'px';
+  gtip.style.top  = (y + th > window.innerHeight ? e.clientY - th - 10 : y) + 'px';
+}
+function hideTip() { gtip.style.display = 'none'; }
+
+document.querySelectorAll('[data-tip-title], [data-tip-body]').forEach(el => {
+  el.addEventListener('mouseenter', showTip);
+  el.addEventListener('mousemove', moveTip);
+  el.addEventListener('mouseleave', hideTip);
+});
+
+// ── Page Nav Active ──
+const pnavItems = document.querySelectorAll('.pnav-item');
+const sections  = document.querySelectorAll('.section');
+const pnavObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) pnavItems.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
+  });
+}, { rootMargin:'-110px 0px -40% 0px', threshold:0 });
+sections.forEach(s => pnavObs.observe(s));
+
+// ── Bar animation ──
+const barFills = document.querySelectorAll('.bar-fill');
+const barObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const w = e.target.style.width; e.target.style.width='0';
+      setTimeout(() => { e.target.style.width = w; }, 80);
+    }
+  });
+}, { threshold:0.5 });
+barFills.forEach(b => barObs.observe(b));
+</script>
+<script src="../assets/embed.js"></script>
+</body>
+</html>
