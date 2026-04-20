@@ -168,6 +168,11 @@ header{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.97);backdr
 .df-label{font-size:10px;color:var(--text-sub2);min-width:90px;text-align:right;flex-shrink:0}
 .df-note{font-size:10px;background:var(--card-bg2);border-left:3px solid;border-radius:0 6px 6px 0;padding:8px 10px;margin-top:10px;line-height:1.55;color:var(--text-sub1)}
 .df-note strong{color:var(--text-h)}
+.df-compare{grid-column:1/-1;margin-top:14px;padding:12px 14px;background:#fef3c7;border:1px solid #f59e0b;border-radius:8px;color:#78350f}
+.df-cmp-title{font-size:12px;font-weight:800;margin-bottom:8px;color:#78350f}
+.df-cmp-rows{display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:11px;font-weight:600}
+.df-cmp-row{background:rgba(255,255,255,.6);padding:6px 10px;border-radius:6px}
+.df-cmp-note{margin-top:8px;font-size:11px;line-height:1.5;color:#92400e}
 
 .cal-wrapper{overflow-x:auto;margin-bottom:12px}
 .cal-block{min-width:960px}
@@ -662,7 +667,7 @@ footer{background:#1a1a2e;color:#64748b;padding:24px 40px;font-size:11px;display
       <div class="c3-m c3-cm"><div class="c3-mn">Nov'26</div><div class="c3-evs"><div class="c3-ev ce-ph">CS 오픈</div></div><div class="c3-bar cb-teal"></div></div>
       <div class="c3-m c3-cm"><div class="c3-mn">Dec'26</div><div class="c3-evs"><div class="c3-ev ce-sale" style="font-size:7px">Winter Sale</div></div><div class="c3-bar cb-teal"></div></div>
       <div class="c3-m c3-cm"><div class="c3-mn">Jan'27</div><div class="c3-evs"><div class="c3-ev ce-ph">CLA 시작</div></div><div class="c3-bar cb-teal"></div></div>
-      <div class="c3-m c3-cm"><div class="c3-mn">Feb'27</div><div class="c3-evs"><div class="c3-ev ce-ph" style="font-size:7px">CLA 종료</div><div class="c3-ev ce-snf" style="font-size:7px">SNF</div></div><div class="c3-bar cb-teal"></div></div>
+      <div class="c3-m c3-cm"><div class="c3-mn">Feb'27</div><div class="c3-evs"><div class="c3-ev ce-ph" style="font-size:7px">CLA 종료</div></div><div class="c3-bar cb-teal"></div></div>
       <div class="c3-m c3-cm"><div class="c3-mn">Mar'27</div><div class="c3-evs"><div class="c3-ev ce-ph">CBT 시작</div><div class="c3-ev ce-sale" style="font-size:7px">Spring</div></div><div class="c3-bar cb-purple"></div></div>
       <div class="c3-m c3-cm"><div class="c3-mn">May'27</div><div class="c3-evs"><div class="c3-ev ce-ph">Demo 준비</div></div><div class="c3-bar cb-purple"></div></div>
       <div class="c3-m c3-snf"><div class="c3-mn">Jun'27★</div><div class="c3-evs"><div class="c3-ev ce-snf">★ SNF!</div><div class="c3-ev" style="background:var(--purple);color:#fff;font-size:7px">경로 분기</div></div><div class="c3-bar cb-snf"></div></div>
@@ -753,13 +758,13 @@ footer{background:#1a1a2e;color:#64748b;padding:24px 40px;font-size:11px;display
     </div>
     <!-- Dual Funnel -->
     <div class="chart-card">
-      <div class="ct">WL → Launch PCCU 전환 Funnel — <span class="chip-p">P</span> vs <span class="chip-f">F2P</span> BM별 비교</div>
-      <div class="cs">BM 구조 차이로 전환 경로가 다름 · 각 단계별 수치는 엑셀 기준 목표값</div>
+      <div class="ct">WL → Launch PCCU 경로 — <span class="chip-p">P</span> · <span class="chip-f">F2P</span> 트랙별 트래킹</div>
+      <div class="cs">⚠️ 두 BM의 핵심 전환 지표는 분모/분자가 다름 — Premium "WL→구매(15%)" ↔ F2P "WL→설치(~42%)"는 <strong>직접 % 비교 불가</strong>. 공통 비교 지표는 최하단 「WL→PCCU Peak 전환율」.</div>
       <div class="dual-funnel">
         <!-- Premium Funnel -->
         <div class="df-col">
           <div class="df-title" style="background:var(--p-bg);color:var(--p)">◼ Premium — 1.6M WL 기준</div>
-          <div class="df-sub">WL→구매 전환율 <strong>15%</strong><br>(유료 결제 결정 후 구매 = 높은 구매 의도)</div>
+          <div class="df-sub">핵심 ① WL→<strong>구매</strong> <strong>15%</strong> &nbsp;·&nbsp; 공통 비교 ② WL→PCCU Peak <strong>4.19%</strong><br>(결제 장벽 통과 → 구매 의도 강함)</div>
           <div class="df-row"><div class="df-label">WL (론칭 직전)</div><div class="df-bar-wrap"><div class="df-bar" style="width:100%;background:var(--p)"></div><span class="df-val">1,600,000</span></div></div>
           <div class="df-row"><div class="df-label">이메일 발송 70%</div><div class="df-bar-wrap"><div class="df-bar" style="width:70%;background:#818cf8"></div><span class="df-val">1,120,000</span></div></div>
           <div class="df-row"><div class="df-label">스토어 방문</div><div class="df-bar-wrap"><div class="df-bar" style="width:30%;background:#a5b4fc"></div><span class="df-val">480,000</span></div></div>
@@ -770,13 +775,21 @@ footer{background:#1a1a2e;color:#64748b;padding:24px 40px;font-size:11px;display
         <!-- F2P Funnel -->
         <div class="df-col">
           <div class="df-title" style="background:var(--f2p-bg);color:var(--f2p)">◼ F2P — 2.4M WL 기준</div>
-          <div class="df-sub">WL→설치 전환율 <strong>~42%</strong><br>(무료이므로 결제 장벽 없음 → 설치 전환 높음)</div>
+          <div class="df-sub">핵심 ① WL→<strong>설치</strong> <strong>~42%</strong> &nbsp;·&nbsp; 공통 비교 ② WL→PCCU Peak <strong>2.42%</strong><br>(무료 → 설치 장벽 낮음, Premium 15%와 직접 비교 ✗)</div>
           <div class="df-row"><div class="df-label">WL (론칭 직전)</div><div class="df-bar-wrap"><div class="df-bar" style="width:100%;background:var(--f2p)"></div><span class="df-val">2,400,000</span></div></div>
           <div class="df-row"><div class="df-label">이메일 발송 70%</div><div class="df-bar-wrap"><div class="df-bar" style="width:70%;background:#22d3ee"></div><span class="df-val">1,680,000</span></div></div>
           <div class="df-row"><div class="df-label">설치 완료 (무료)</div><div class="df-bar-wrap"><div class="df-bar" style="width:42%;background:#67e8f9"></div><span class="df-val">1,000,000</span></div></div>
-          <div class="df-row"><div class="df-label">D+7 활성 25%</div><div class="df-bar-wrap"><div class="df-bar" style="width:10.4%;background:#16a34a"></div><span class="df-val" style="color:var(--green);font-weight:900">250,000</span></div></div>
+          <div class="df-row"><div class="df-label">D+7 활성 (설치 25% · WL 10.4%)</div><div class="df-bar-wrap"><div class="df-bar" style="width:10.4%;background:#16a34a"></div><span class="df-val" style="color:var(--green);font-weight:900">250,000</span></div></div>
           <div class="df-row"><div class="df-label">PCCU Peak ★</div><div class="df-bar-wrap"><div class="df-bar" style="width:2.4%;background:#d97706"></div><span class="df-val" style="color:var(--amber);font-weight:900">58,000</span></div></div>
           <div class="df-note" style="border-left-color:var(--f2p)"><strong>F2P 전환 특성:</strong> 결제 장벽 없어 설치 전환율 높음(~42%). 단, 무료 유저는 이탈이 빠름 — <strong>D+7 리텐션 25%</strong>로 낮음. 수익은 과금 유저(~10%) IAP에서 발생.</div>
+        </div>
+        <div class="df-compare">
+          <div class="df-cmp-title">✅ 직접 비교 가능한 단일 지표 — WL → PCCU Peak 전환율</div>
+          <div class="df-cmp-rows">
+            <div class="df-cmp-row"><span class="chip-p">P</span> 1,600,000 WL → 67,000 PCCU = <strong>4.19%</strong></div>
+            <div class="df-cmp-row"><span class="chip-f">F2P</span> 2,400,000 WL → 58,000 PCCU = <strong>2.42%</strong></div>
+          </div>
+          <div class="df-cmp-note">→ Premium이 단위 WL당 PCCU 약 1.7× 효율 (D+7 리텐션 35% vs 25% 격차에서 발생). 단, 절대 PCCU는 F2P 트래픽 규모로 보완 가능.</div>
         </div>
       </div>
     </div>
@@ -809,7 +822,7 @@ footer{background:#1a1a2e;color:#64748b;padding:24px 40px;font-size:11px;display
       <div class="sim-r acc"><div class="sim-rl">예상 판매량 (Week1)</div><div class="sim-rv" id="simSales">240,000</div><div class="sim-rs">목표: 200K+ units</div></div>
       <div class="sim-r"><div class="sim-rl">총 수익 (Gross)</div><div class="sim-rv" id="simGross">$7.2M</div><div class="sim-rs">USD 기준</div></div>
       <div class="sim-r"><div class="sim-rl">개발사 수익 (70%)</div><div class="sim-rv" id="simDev">$5.0M</div><div class="sim-rs">Steam 30% 차감 후</div></div>
-      <div class="sim-r"><div class="sim-rl">개발사 수익 (KRW)</div><div class="sim-rv" id="simKRW">₩69억</div><div class="sim-rs">환율 1,385원 기준</div></div>
+      <div class="sim-r"><div class="sim-rl">개발사 수익 (KRW)</div><div class="sim-rv" id="simKRW">₩75.6억</div><div class="sim-rs">환율 1,500원 기준</div></div>
     </div>
     <div style="margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,.1);font-size:11px;color:#64748b">
       ⚠️ Top 5 진입 기준: <span class="chip-p">P</span> Launch +1주 PCCU 67K+ / <span class="chip-f">F2P</span> 58K+ / 최소선 55K+. 세금·지역별 가격차 미포함.
@@ -1139,6 +1152,20 @@ footer{background:#1a1a2e;color:#64748b;padding:24px 40px;font-size:11px;display
     </div>
   </div>
   <div class="src-line">📎 출처: <a href="https://partner.steamgames.com/doc/store/releasing" target="_blank">Release Process</a> · <a href="https://partner.steamgames.com/doc/store/coming_soon" target="_blank">Coming Soon</a> · <a href="https://partner.steamgames.com/doc/store/assets/standard" target="_blank">Store Graphical Assets</a> · <a href="https://partner.steamgames.com/doc/store/assets/rules" target="_blank">Asset Rules</a> · <a href="https://partner.steamgames.com/doc/gettingstarted/onboarding" target="_blank">Onboarding</a> · <a href="https://partner.steamgames.com/doc/store/review_process" target="_blank">Review Process</a></div>
+  <div class="src-line">📚 <strong>3rd-party 인용 출처</strong> (15% WL 전환·D+7 리텐션·CCU 벤치마크 등 본문 비-Valve 수치):<br>
+    <a href="https://howtomarketagame.com/" target="_blank" rel="noopener">Chris Zukowski — How to Market a Game (WL→구매 15% 룰)</a> ·
+    <a href="https://newsletter.gamediscover.co/" target="_blank" rel="noopener">GameDiscoverCo Newsletter (Simon Carless · PCCU↔WL 비율)</a> ·
+    <a href="https://gamalytic.com/" target="_blank" rel="noopener">Gamalytic (Steam 판매 추정)</a> ·
+    <a href="https://vginsights.com/" target="_blank" rel="noopener">VG Insights (Steam 매출 모델링)</a> ·
+    <a href="https://steamdb.info/app/2073850/" target="_blank" rel="noopener">SteamDB — The Finals (268K→11K CCU 검증)</a> ·
+    <a href="https://steamcharts.com/app/2073850" target="_blank" rel="noopener">Steam Charts — The Finals</a> ·
+    <a href="https://partner.steamgames.com/doc/marketing/wishlists" target="_blank" rel="noopener">Steamworks — Wishlist 이메일 쿨다운/정책</a> ·
+    <a href="https://partner.steamgames.com/doc/marketing/visibility" target="_blank" rel="noopener">Steamworks — Visibility Rounds</a> ·
+    <a href="https://partner.steamgames.com/doc/marketing/curators" target="_blank" rel="noopener">Steamworks — Curator Connect</a> ·
+    <a href="https://partner.steamgames.com/doc/marketing" target="_blank" rel="noopener">Steamworks — Marketing &amp; Promotion 허브 (Next Fest 포함)</a> ·
+    <a href="https://www.irs.gov/forms-pubs/about-form-w-8-ben-e" target="_blank" rel="noopener">IRS — W-8BEN-E (한국 법인 세무)</a> ·
+    <a href="https://www.grac.or.kr/" target="_blank" rel="noopener">GRAC 게임물관리위원회</a>
+  </div>
 </div>
 
 <!-- ══════════════════════════════
@@ -1433,7 +1460,7 @@ Chart.register(ChartDataLabels);
 /* Funnel: HTML-based dual funnel (P + F2P), no canvas needed */
 
 /* Simulator */
-const KRW=1385;
+const KRW=1500;
 function updateSim(){
   const wl=parseInt(document.getElementById('sWL').value);
   const cvr=parseFloat(document.getElementById('sCVR').value);
