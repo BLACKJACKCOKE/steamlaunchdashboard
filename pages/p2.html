@@ -1458,17 +1458,22 @@ var flagAxisPlugin = {
       if (!img.complete || img.naturalWidth === 0) {
         if (!img.$attached) {
           img.$attached = true;
-          (function(c){ img.addEventListener('load', function(){ c.update('none'); }, { once: true }); })(chart);
+          (function(c){
+            img.addEventListener('load', function(){ try{ c.update('none'); }catch(e){} }, { once: true });
+            img.addEventListener('error', function(){ /* silent */ }, { once: true });
+          })(chart);
         }
         continue;
       }
       var tw = ctx.measureText(label).width;
       var y = yScale.getPixelForTick ? yScale.getPixelForTick(i) : yScale.getPixelForValue(i);
       if (y == null || isNaN(y)) continue;
-      var labelEndX = yScale.left - tickPad;
-      var labelStartX = labelEndX - tw;
-      var flagX = labelStartX - flagW - 4;
-      if (flagX < 1) continue;
+      // y축 영역: scale.left(좌측)=캔버스 왼쪽, scale.right(우측)=축선. 라벨은 축선에 붙어 우측정렬됨
+      var labelEndX = yScale.right - tickPad;      // 라벨 오른쪽 끝(= 축선 바로 앞)
+      var labelStartX = labelEndX - tw;             // 라벨 왼쪽 끝(= 텍스트 시작)
+      var flagX = labelStartX - flagW - 4;          // 라벨 직전에 flag 배치
+      // 스케일 영역 좌측을 벗어나면 좌측으로 fallback (고정 컬럼)
+      if (flagX < yScale.left + 1) flagX = yScale.left + 2;
       var flagH = flagW * (img.naturalHeight / img.naturalWidth);
       ctx.save();
       ctx.drawImage(img, flagX, y - flagH/2, flagW, flagH);
@@ -1481,6 +1486,8 @@ var flagAxisPlugin = {
   }
 };
 try { Chart.register(flagAxisPlugin); } catch(e) {}
+/* 국기 이미지 사전 프리로드 — 첫 렌더 시점에 이미 캐시되도록 */
+['cn','us','ru','es','br','de','kr','fr','jp','tr','gb','ca','pl','au','tw','th'].forEach(getFlagImg2);
 
 /* ═══ S1-A: 3중 계층 수평 스택 바 ═══ */
 allCharts.push(new Chart(document.getElementById('c1a'), {
