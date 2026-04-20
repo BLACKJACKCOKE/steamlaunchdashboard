@@ -1049,7 +1049,7 @@ footer{background:#1a1a2e;color:#64748b;padding:24px 40px;font-size:11px;display
     <div class="cl-overall-header">
       <div>
         <div class="cl-overall-title">전체 체크리스트 진행률</div>
-        <div style="font-size:11px;color:#64748b;margin-top:2px" id="clOverallSub">0개 완료 / 총 52개 항목</div>
+        <div style="font-size:11px;color:#64748b;margin-top:2px" id="clOverallSub">0개 완료 / 총 55개 항목</div>
       </div>
       <div style="display:flex;align-items:center;gap:14px">
         <div class="cl-overall-pct" id="clPct">0%</div>
@@ -1149,6 +1149,25 @@ footer{background:#1a1a2e;color:#64748b;padding:24px 40px;font-size:11px;display
       <div class="cl-item" data-cat="tech" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">Steam Deck 호환성 검토 (Verified/Playable)</div><div class="cl-note">필수는 아니나 알고리즘 노출 가점 가능. 컨트롤러 지원 필수</div></div><span class="cl-priority cl-p-low">선택</span></div>
       <div class="cl-item" data-cat="tech" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">Early Access 탭 설정 및 Q&amp;A 전체 답변 (EA 론칭 경로 해당 시)</div><div class="cl-note">1.0 예상 출시일 설정. EA 키 외부 배포 시 EA 브랜딩 명시 필수</div></div><span class="cl-priority cl-p-med">EA 경로</span></div>
       <div class="cl-item" data-cat="tech" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">안티치트 시스템 연동 (VAC 또는 자체 솔루션)</div><div class="cl-note">멀티플레이어 FPS에서 리뷰 퀄리티에 직접 영향</div></div><span class="cl-priority cl-p-med">중간</span></div>
+    </div>
+  </div>
+
+  <!-- Cat 7: 커뮤니티 & 호환성 -->
+  <div class="cl-category" data-cat="community">
+    <div class="cl-cat-header"><div class="cl-cat-title"><span style="font-size:16px">🌐</span> 커뮤니티 &amp; 호환성 최적화<span class="pill" style="background:#dbeafe;color:#1e40af;border:1px solid #93c5fd">론칭 준비도</span></div><div class="cl-cat-count" id="count-community">0 / 11</div></div>
+    <div class="cl-progress-wrap"><div class="cl-progress-bar" id="bar-community" style="width:0%;background:linear-gradient(90deg,#0ea5e9,#22d3ee)"></div></div>
+    <div class="cl-items" id="items-community">
+      <div class="cl-item" data-cat="community" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">Steam Community Hub 구조 점검</div><div class="cl-note">토론 / 가이드 / 뉴스 / 리뷰 / 방송 탭 운영 준비 + 모더레이터 권한 사전 지정</div></div><span class="cl-priority cl-p-high">필수</span></div>
+      <div class="cl-item" data-cat="community" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">Steam 공지 / 이벤트 게시 운영안 준비</div><div class="cl-note">CS~출시 후 Live Ops cadence 반영 — 주 1회 이상 공지 유지</div></div><span class="cl-priority cl-p-high">필수</span></div>
+      <div class="cl-item" data-cat="community" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">스토어 페이지 External Links 정비</div><div class="cl-note">Discord / 공식 사이트 / 기타 공식 채널 URL 정합성 점검 (About 본문 외부링크 자동 제거 우회)</div></div><span class="cl-priority cl-p-high">필수</span></div>
+      <div class="cl-item" data-cat="community" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">Discord 연동 전략 확정</div><div class="cl-note">Account Linking · Rich Presence · 친구 초대 · provisional accounts 적용 여부 결정</div></div><span class="cl-priority cl-p-med">중간</span></div>
+      <div class="cl-item" data-cat="community" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">Twitch 런칭 연계안 확정</div><div class="cl-note">Drops 운영 가능 여부 / Streamer Mode / Plugin 기반 시청자 상호작용 시나리오 검토</div></div><span class="cl-priority cl-p-med">중간</span></div>
+      <div class="cl-item" data-cat="community" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">Steam Deck Verified 체크리스트 점검</div><div class="cl-note">컨트롤러 완전 지원 / 올바른 glyph / 온스크린 키보드 / 1280×800·720 가독성</div></div><span class="cl-priority cl-p-high">필수</span></div>
+      <div class="cl-item" data-cat="community" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">Proton 호환성 리스크 점검</div><div class="cl-note">launcher 의존성 / anti-cheat / codec / Windows 전용 기술 스택 — Linux/Deck 차단 요인 사전 제거</div></div><span class="cl-priority cl-p-high">필수</span></div>
+      <div class="cl-item" data-cat="community" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">Steam Input 최적화</div><div class="cl-note">기본 컨트롤러 구성 / 동시 입력 처리 / Big Picture · couch UX 점검</div></div><span class="cl-priority cl-p-med">중간</span></div>
+      <div class="cl-item" data-cat="community" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">Steam Cloud 저장 구조 점검</div><div class="cl-note">다기기 연속 플레이 검증 / 머신 종속 설정 분리 / 충돌 정책 정의</div></div><span class="cl-priority cl-p-med">중간</span></div>
+      <div class="cl-item" data-cat="community" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">Steam Remote Play 대응</div><div class="cl-note">Phone / Tablet / TV 가독성 + 입력 시나리오 점검 (Remote Play Together 포함)</div></div><span class="cl-priority cl-p-med">중간</span></div>
+      <div class="cl-item" data-cat="community" onclick="toggleItem(this)"><div class="cl-check"><span class="cl-check-mark">✓</span></div><div><div class="cl-label">GeForce NOW opt-in 검토</div><div class="cl-note">필수 아님 — Steam Cloud Play 확장 옵션 상태 확인 (opt-in 시 사전 신청 필요)</div></div><span class="cl-priority cl-p-low">선택</span></div>
     </div>
   </div>
   <div class="src-line">📎 출처: <a href="https://partner.steamgames.com/doc/store/releasing" target="_blank">Release Process</a> · <a href="https://partner.steamgames.com/doc/store/coming_soon" target="_blank">Coming Soon</a> · <a href="https://partner.steamgames.com/doc/store/assets/standard" target="_blank">Store Graphical Assets</a> · <a href="https://partner.steamgames.com/doc/store/assets/rules" target="_blank">Asset Rules</a> · <a href="https://partner.steamgames.com/doc/gettingstarted/onboarding" target="_blank">Onboarding</a> · <a href="https://partner.steamgames.com/doc/store/review_process" target="_blank">Review Process</a></div>
@@ -1501,7 +1520,7 @@ function toggleItem(el){
   updateProgress();
 }
 function updateProgress(){
-  const cats=['account','asset','content','legal','review','tech'];
+  const cats=['account','asset','content','legal','review','tech','community'];
   let td=0,ta=0;
   cats.forEach(cat=>{
     const items=document.querySelectorAll(`.cl-item[data-cat="${cat}"]`);
@@ -1519,7 +1538,7 @@ function updateProgress(){
 function resetAll(){if(!confirm('모든 체크 상태를 초기화하시겠습니까?'))return;saveStates({});document.querySelectorAll('.cl-item.done').forEach(el=>el.classList.remove('done'));updateProgress();}
 (function(){
   const states=loadStates();
-  ['account','asset','content','legal','review','tech'].forEach(cat=>{
+  ['account','asset','content','legal','review','tech','community'].forEach(cat=>{
     document.querySelectorAll(`.cl-item[data-cat="${cat}"]`).forEach((el,i)=>{if(states[cat+'_'+i])el.classList.add('done')});
   });
   updateProgress();
