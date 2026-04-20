@@ -164,7 +164,9 @@ tbody tr:last-child td { border-bottom:none; }
 .s7-fnote { font-size:11px; color:var(--text-sub2); margin-top:6px; padding-top:8px; border-top:1px solid var(--border); line-height:1.6; }
 /* ── 변수 의미 마우스오버 툴팁 (중학생 수준 설명) ── */
 .tip { position:relative; cursor:help; border-bottom:1px dotted currentColor; }
-.tip:hover::after { content:attr(data-tip); position:absolute; bottom:calc(100% + 10px); left:50%; transform:translateX(-50%); background:#1a1a2e; color:#fff; padding:10px 14px; border-radius:8px; font-family:'Apple SD Gothic Neo','Segoe UI',system-ui,sans-serif; font-size:12px; font-weight:500; line-height:1.6; min-width:220px; max-width:340px; white-space:normal; text-align:left; z-index:1000; pointer-events:none; box-shadow:0 6px 20px rgba(0,0,0,.18); letter-spacing:0; text-transform:none; }
+/* 풍선: 변수의 좌측 가장자리에 anchor → 좌측 변수도 잘리지 않음. 너비는 viewport - 32px로 클램핑 */
+.tip:hover::after { content:attr(data-tip); position:absolute; bottom:calc(100% + 10px); left:0; right:auto; transform:none; background:#1a1a2e; color:#fff; padding:10px 14px; border-radius:8px; font-family:'Apple SD Gothic Neo','Segoe UI',system-ui,sans-serif; font-size:12px; font-weight:500; line-height:1.6; width:max-content; min-width:220px; max-width:min(340px, calc(100vw - 32px)); white-space:normal; text-align:left; z-index:1000; pointer-events:none; box-shadow:0 6px 20px rgba(0,0,0,.18); letter-spacing:0; text-transform:none; }
+/* 화살표는 변수 중앙에 유지 */
 .tip:hover::before { content:''; position:absolute; bottom:calc(100% + 4px); left:50%; transform:translateX(-50%); border:6px solid transparent; border-top-color:#1a1a2e; z-index:1000; pointer-events:none; }
 .s7-calc-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin:14px 0; }
 @media(max-width:700px){ .s7-calc-grid { grid-template-columns:1fr 1fr; } }
@@ -270,7 +272,7 @@ input.s7-range::-moz-range-thumb { width:13px; height:13px; border-radius:50%; b
       <div class="subsection-body open">
         <div class="info-card highlight" style="margin-bottom:14px;">
           <div class="s7-src">SOURCE · Microsoft Research — Graepel &amp; Herbrich (2006) · Game Developer Magazine</div>
-          <div style="font-size:11px;color:var(--text-sub1);margin-bottom:8px;line-height:1.6">💡 <strong>각 변수에 마우스를 올리면</strong> 중학생도 알기 쉬운 설명이 나타납니다.</div>
+          <div style="font-size:12px;color:var(--text-sub1);margin-bottom:10px;line-height:1.65">💡 <strong>이 공식의 뜻 (한 줄):</strong> 매칭에 걸리는 시간(T<sub>Wait</sub>)은 매칭을 까다롭게 만드는 조건(<em>모드 수 · 경기 시간 · 매치당 인원 · 실력 등급</em>)을 곱한 만큼 길어지고, 큐에 줄 서 있는 동시접속자 수(N<sub>Online</sub>)로 나눈 만큼 짧아져요.</div>
           <div class="s7-formula">
             <span class="tip" data-tip="플레이어가 큐에서 견뎌줄 수 있는 평균 대기 시간(분). 짧을수록 더 많은 동시접속자가 있어야 빠른 매칭이 가능해요.">T<sub>Wait</sub></span> <span class="fo">=</span>
             <span class="fv tip" data-tip="게임 안에서 따로 매칭되는 큐(예: 일반전/랭크전, 5대5/8대8)의 개수. 모드가 많을수록 한 모드에 모이는 인원이 줄어 매칭이 어려워져요.">N<sub>Modes</sub></span> <span class="fo">×</span>
@@ -450,7 +452,7 @@ input.s7-range::-moz-range-thumb { width:13px; height:13px; border-radius:50%; b
             <span style="color:var(--accent);" class="tip" data-tip="지금 매칭을 기다리는 사람의 수. '게임 중'인 사람은 빼고, 큐에 줄 서 있는 인원만 셉니다. 이 숫자가 크면 매칭이 빨라져요.">N<sub style="font-size:.75em">Online</sub></span>
           </div>
           <div style="font-size:11px;color:var(--text-sub2);margin-top:8px;padding-top:8px;border-top:1px solid var(--border);">
-            💡 <strong>한 줄 요약:</strong> 대기시간(T_Wait)은 <em>모드·경기시간·필요 인원·스킬 등급</em>이 많아질수록 길어지고, <em>큐에 서 있는 사람</em>이 많을수록 짧아져요. 변수 위에 마우스를 올리면 자세한 의미가 나타납니다.<br>
+            💡 <strong>한 줄 요약:</strong> 대기시간(T_Wait)은 <em>모드·경기시간·필요 인원·스킬 등급</em>이 많아질수록 길어지고, <em>큐에 서 있는 사람</em>이 많을수록 짧아져요.<br>
             원문 예시: N<sub>Modes</sub>=10, T<sub>Match</sub>=10분, N<sub>Participants</sub>=8, N<sub>Skills</sub>=10 → 대기 1분 이내 위해 <strong style="color:var(--text-h);">N<sub>Online</sub> ≥ 8,000명</strong> 필요
           </div>
         </div>
