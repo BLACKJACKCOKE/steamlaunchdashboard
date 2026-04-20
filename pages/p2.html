@@ -1416,6 +1416,72 @@ var centerTextP = {
 };
 try { Chart.register(centerTextP); } catch(e) {}
 
+/* ── 국기 이미지 플러그인 (수평 bar 차트 y축 라벨 앞에 국기 PNG 표시) ── */
+var labelFlagMap = {
+  // 언어 → 국가 매핑
+  '간체중국어':'cn', '영어':'us', '러시아어':'ru', '스페인어':'es',
+  '브라질 포르투갈어':'br', '독일어':'de', '한국어':'kr', '프랑스어':'fr',
+  '일본어':'jp', '터키어':'tr',
+  // 국가 라벨
+  '중국':'cn', '미국':'us', '러시아':'ru', '브라질':'br', '독일':'de',
+  '영국':'gb', '일본':'jp', '캐나다':'ca', '프랑스':'fr', '한국':'kr',
+  '폴란드':'pl', '호주':'au', '터키':'tr', '대만':'tw', '태국':'th'
+};
+var flagImgCache2 = {};
+function getFlagImg2(code) {
+  if (!flagImgCache2[code]) {
+    var img = new Image();
+    img.src = 'https://flagcdn.com/w40/' + code + '.png';
+    flagImgCache2[code] = img;
+  }
+  return flagImgCache2[code];
+}
+var flagAxisPlugin = {
+  id: 'flagAxis',
+  afterDraw: function(chart) {
+    if (chart.config.options.indexAxis !== 'y') return;
+    var ctx = chart.ctx;
+    var yScale = chart.scales.y;
+    if (!yScale) return;
+    var labels = chart.data.labels || [];
+    if (!labels.some(function(l){ return !!labelFlagMap[l]; })) return;
+    var flagW = 14;
+    var tickFontSize = (chart.options.scales && chart.options.scales.y && chart.options.scales.y.ticks && chart.options.scales.y.ticks.font && chart.options.scales.y.ticks.font.size) || 10;
+    var tickPad = (chart.options.scales && chart.options.scales.y && chart.options.scales.y.ticks && chart.options.scales.y.ticks.padding) || 3;
+    var oldFont = ctx.font;
+    ctx.font = tickFontSize + 'px "Segoe UI","Apple SD Gothic Neo",sans-serif';
+    for (var i = 0; i < labels.length; i++) {
+      var label = labels[i];
+      var code = labelFlagMap[label];
+      if (!code) continue;
+      var img = getFlagImg2(code);
+      if (!img.complete || img.naturalWidth === 0) {
+        if (!img.$attached) {
+          img.$attached = true;
+          (function(c){ img.addEventListener('load', function(){ c.update('none'); }, { once: true }); })(chart);
+        }
+        continue;
+      }
+      var tw = ctx.measureText(label).width;
+      var y = yScale.getPixelForTick ? yScale.getPixelForTick(i) : yScale.getPixelForValue(i);
+      if (y == null || isNaN(y)) continue;
+      var labelEndX = yScale.left - tickPad;
+      var labelStartX = labelEndX - tw;
+      var flagX = labelStartX - flagW - 4;
+      if (flagX < 1) continue;
+      var flagH = flagW * (img.naturalHeight / img.naturalWidth);
+      ctx.save();
+      ctx.drawImage(img, flagX, y - flagH/2, flagW, flagH);
+      ctx.strokeStyle = 'rgba(17,24,39,0.28)';
+      ctx.lineWidth = 0.5;
+      ctx.strokeRect(flagX, y - flagH/2, flagW, flagH);
+      ctx.restore();
+    }
+    ctx.font = oldFont;
+  }
+};
+try { Chart.register(flagAxisPlugin); } catch(e) {}
+
 /* ═══ S1-A: 3중 계층 수평 스택 바 ═══ */
 allCharts.push(new Chart(document.getElementById('c1a'), {
   type: 'bar',
@@ -1846,6 +1912,7 @@ allCharts.push(new Chart(document.getElementById('c1a'), {
     data: { labels: labels, datasets: [{ label: '언어 비중', data: data, backgroundColor: colors, borderRadius: 6, barThickness: 14 }] },
     options: {
       indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+      layout: { padding: { left: 24, right: 8, top: 4, bottom: 4 } },
       plugins: {
         legend: { display: false },
         datalabels: {
@@ -1879,7 +1946,7 @@ allCharts.push(new Chart(document.getElementById('c1a'), {
     },
     options: {
       indexAxis: 'y', responsive: true, maintainAspectRatio: false,
-      layout: { padding: { left: 0, right: 8, top: 0, bottom: 0 } },
+      layout: { padding: { left: 24, right: 8, top: 0, bottom: 0 } },
       plugins: {
         legend: { position: 'top', align: 'start', labels: { boxWidth: 10, boxHeight: 10, usePointStyle: false, color: '#475569', font: { size: 10 } } },
         datalabels: { display: false },
