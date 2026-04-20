@@ -795,6 +795,180 @@ footer{background:#1a1a2e;color:#64748b;padding:24px 40px;font-size:11px;display
     </div>
   </div>
 
+  <!-- ═══ Top 5 PCCU 예측치 (collapsible) ═══ -->
+  <div class="pt-card" style="margin-bottom:14px">
+    <div class="pt-header" onclick="togglePT(this)">
+      <div class="pt-bar" style="background:linear-gradient(180deg,#0ea5e9,#22d3ee)"></div>
+      <div class="pt-phase-info">
+        <div class="pt-phase-name">📈 서브장르별 Launch Top 5 진입 PCCU 예측치 &nbsp; <span class="pill pb">데이터 보강</span></div>
+        <div class="pt-phase-date">SteamDB ATH · Steam Charts · GameDiscoverCo · VG Insights / Gamalytic 교차 검증 — 6개 슈터 서브장르</div>
+      </div>
+      <div class="pt-wl-tags"></div>
+      <div class="pt-chevron">▶</div>
+    </div>
+    <div class="pt-body">
+
+      <!-- 1) 메인 예측 테이블 -->
+      <div class="ct">📊 서브장르별 Top 5 진입 PCCU 예측치 (Launch +1주 기준)</div>
+      <div class="cs">각 서브장르 Steam 최근 12개월 #5 타이틀의 peak CCU를 기준선으로 BM·시즌·burst 보정 → 보수 / 기대 / 적극 3구간 제시. 모든 수치는 공개 데이터 기반 추정.</div>
+      <div class="tw">
+        <table>
+          <thead>
+            <tr>
+              <th>서브장르</th>
+              <th>현 Top 5 대표 타이틀 (SteamDB peak)</th>
+              <th>#5 기준선<br>(최근 12개월)</th>
+              <th>예측 보수</th>
+              <th>예측 기대</th>
+              <th>예측 적극</th>
+              <th>BM 분포</th>
+              <th>신뢰도</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="td-b">택티컬·아레나</td>
+              <td>CS2 (~1.4M) · R6 Siege (~200K) · The Finals (~268K) · Splitgate 2 (~70K) · CSGO 잔존 트래픽<br><span style="font-size:10px;color:var(--text-sub2)">※ Valorant=Riot client, Steam 미수록</span></td>
+              <td style="font-family:monospace">≈ 50–70K</td>
+              <td class="td-a" style="font-family:monospace">55K</td>
+              <td class="td-g td-b" style="font-family:monospace">75K</td>
+              <td class="td-r td-b" style="font-family:monospace">100K+</td>
+              <td><span class="chip-f">F2P 우세</span></td>
+              <td><span class="pill pg">높음</span></td>
+            </tr>
+            <tr>
+              <td class="td-b">밀리터리 FPS</td>
+              <td>Battlefield 6 (~221K) · CoD BO6 (Steam ~120K) · ARMA Reforger (~30K) · Hell Let Loose (~25K) · Squad (~18K)</td>
+              <td style="font-family:monospace">≈ 18–30K</td>
+              <td class="td-a" style="font-family:monospace">25K</td>
+              <td class="td-g td-b" style="font-family:monospace">35K</td>
+              <td class="td-r td-b" style="font-family:monospace">50K+</td>
+              <td><span class="chip-p">P 우세</span></td>
+              <td><span class="pill pa">중간</span></td>
+            </tr>
+            <tr>
+              <td class="td-b">배틀로얄</td>
+              <td>PUBG (ATH ~3.2M, 최근 ~500K) · Apex Legends (ATH ~624K) · Naraka (ATH ~134K) · Once Human (~232K) · Off The Grid<br><span style="font-size:10px;color:var(--text-sub2)">※ Fortnite=EGS, Steam 미수록</span></td>
+              <td style="font-family:monospace">≈ 50–90K</td>
+              <td class="td-a" style="font-family:monospace">60K</td>
+              <td class="td-g td-b" style="font-family:monospace">90K</td>
+              <td class="td-r td-b" style="font-family:monospace">130K+</td>
+              <td><span class="chip-f">F2P 압도</span></td>
+              <td><span class="pill pg">높음</span></td>
+            </tr>
+            <tr>
+              <td class="td-b">히어로 슈팅</td>
+              <td>Marvel Rivals (ATH ~644K) · Deadlock (~171K) · Overwatch 2 (Steam 한정 ~50K) · Concord (~700, 종료)<br><span style="font-size:10px;color:var(--text-sub2)">※ 모집단 4종 — 변동성 매우 큼</span></td>
+              <td style="font-family:monospace">≈ 30–50K</td>
+              <td class="td-a" style="font-family:monospace">40K</td>
+              <td class="td-g td-b" style="font-family:monospace">60K</td>
+              <td class="td-r td-b" style="font-family:monospace">100K+</td>
+              <td><span class="chip-f">F2P 우세</span></td>
+              <td><span class="pill pa">중간</span></td>
+            </tr>
+            <tr>
+              <td class="td-b">익스트랙션</td>
+              <td>Delta Force (~191K) · ARC Raiders (Steam ~87K → ~59K) · Hunt: Showdown (~36K) · Dark and Darker (Steam 시기 ~30K) · Marauders (~5K)<br><span style="font-size:10px;color:var(--text-sub2)">※ Tarkov=자체 런처, Steam 미수록</span></td>
+              <td style="font-family:monospace">≈ 20–40K</td>
+              <td class="td-a" style="font-family:monospace">25K</td>
+              <td class="td-g td-b" style="font-family:monospace">45K</td>
+              <td class="td-r td-b" style="font-family:monospace">70K+</td>
+              <td><span class="chip-p">P/F2P 혼재</span></td>
+              <td><span class="pill pg">높음</span></td>
+            </tr>
+            <tr>
+              <td class="td-b">Co-op 슈팅</td>
+              <td>Helldivers 2 (ATH ~458K) · Warhammer 40K Darktide (~107K) · Deep Rock Galactic (~107K) · Payday 3 (~38K) · GTFO (~13K)</td>
+              <td style="font-family:monospace">≈ 10–20K</td>
+              <td class="td-a" style="font-family:monospace">15K</td>
+              <td class="td-g td-b" style="font-family:monospace">25K</td>
+              <td class="td-r td-b" style="font-family:monospace">40K+</td>
+              <td><span class="chip-p">P 압도</span></td>
+              <td><span class="pill pa">중간</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 2) Top5 예측치 산출 근거 (방법론 테이블) -->
+      <div class="ct" style="margin-top:18px">🧮 Top 5 예측치 산출 근거 (방법론)</div>
+      <div class="cs">5단계 산출 절차 — 모집단 정의 → #5 기준선 → BM/시즌 보정 → 구간화 → 신뢰도 등급</div>
+      <div class="tw">
+        <table>
+          <thead>
+            <tr>
+              <th>단계</th>
+              <th>방법</th>
+              <th>데이터 소스</th>
+              <th>주의·한계</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="td-b">① 모집단 정의</td>
+              <td>각 서브장르 Steam 등록 + 활성 멀티플레이어 슈터, 최근 12개월 데이터 존재</td>
+              <td>SteamDB 카테고리 / Steam Charts 활성 게임 목록</td>
+              <td>비-Steam 클라이언트(Riot · Battle.net · EGS · 자체 런처) 별도 표기, 모집단 제외</td>
+            </tr>
+            <tr>
+              <td class="td-b">② #5 기준선</td>
+              <td>각 서브장르 최근 12개월 peak CCU 기준 #5 위치 게임의 peak 평균</td>
+              <td>SteamDB ATH (alltime) · Steam Charts 월별 peak</td>
+              <td>일시적 무료 캠페인 / Drops 스파이크 / 홀리데이 ramp 제외</td>
+            </tr>
+            <tr>
+              <td class="td-b">③ BM·시즌 보정</td>
+              <td>F2P 트래픽 가중 ×1.5–2.0 · 출시 직후 burst ×1.3–1.7 · 시즌 effect 보정 ±15%</td>
+              <td>GameDiscoverCo 모델 · VG Insights · Gamalytic</td>
+              <td>가중치는 보수적으로 적용 — 과도한 burst 가정 금지</td>
+            </tr>
+            <tr>
+              <td class="td-b">④ 구간화</td>
+              <td>보수(#5 이상 도달 확률 ≥60%) / 기대(중앙값) / 적극(상위 25%, 입소문·스트리머 effect 가정)</td>
+              <td>3rd-party 모델 + 자체 보정</td>
+              <td>적극 구간은 통제 불가 변수 의존 — 단독 KPI로 사용 금지</td>
+            </tr>
+            <tr>
+              <td class="td-b">⑤ 신뢰도 등급</td>
+              <td>모집단 ≥10종 + 12mo 연속 데이터 = <span class="pill pg">높음</span> &nbsp; 6–9종 = <span class="pill pa">중간</span> &nbsp; &lt;6종 = <span class="pill pgr">낮음</span></td>
+              <td>SteamDB 카테고리 카운트</td>
+              <td>히어로 슈팅 / 일부 Co-op은 모집단 작아 변동성 큼 → 단독 진입 시 리스크</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 3) 핵심 시사점 (3-card grid) -->
+      <div class="ct" style="margin-top:18px">💡 핵심 시사점 — 장르별 Project S 적합성</div>
+      <div class="g3" style="margin-top:8px">
+        <div class="co ok">
+          <strong>✅ 권장 타겟 장르:</strong> <strong>익스트랙션 / 밀리터리 FPS / Co-op</strong>은 #5 기준선 18–40K로 진입 장벽 가장 낮음. Project S 목표 PCCU(<span class="chip-p">P</span> 67K / <span class="chip-f">F2P</span> 58K)로 <strong>충분히 Top 5 진입 가능</strong>.
+        </div>
+        <div class="co warn">
+          <strong>⚠ 고난도 장르:</strong> <strong>택티컬·아레나 / 배틀로얄</strong>은 CS2·PUBG 등 메가타이틀 존재. #5 기준선 50–90K → Project S 67K로는 <em>경계선</em>. 보수 추정 시 진입 가능, 적극 추정 시 미달.
+        </div>
+        <div class="co danger">
+          <strong>🚨 신뢰도 주의:</strong> <strong>히어로 슈팅</strong>은 모집단 4종(Marvel Rivals 압도 + Concord 즉시 종료 사례). <em>예측 변동성 매우 큼 — 단독 진입 권장하지 않음</em>.
+        </div>
+      </div>
+
+      <!-- 4) 출처 + 한계 -->
+      <div class="src-line">
+        📎 <strong>Top 5 예측 데이터 출처</strong>:
+        <a href="https://steamdb.info/charts/" target="_blank" rel="noopener">SteamDB — All Games Charts</a> ·
+        <a href="https://steamcharts.com/" target="_blank" rel="noopener">Steam Charts</a> ·
+        <a href="https://newsletter.gamediscover.co/" target="_blank" rel="noopener">GameDiscoverCo (시즌·BM 보정 모델)</a> ·
+        <a href="https://vginsights.com/" target="_blank" rel="noopener">VG Insights (장르 카탈로그)</a> ·
+        <a href="https://gamalytic.com/" target="_blank" rel="noopener">Gamalytic (PCCU↔판매 추정)</a>
+      </div>
+      <div class="src-line" style="border-top:none;padding-top:0">
+        ⚠️ <strong>한계 명시:</strong> 모든 수치는 공개 데이터 기반 추정. Riot Valorant · Battle.net OW2 · Epic Fortnite · Tarkov 자체 런처는 Steam 미수록 → 본 표는 <em>Steam 한정 분포만</em>이 모집단. 무료 출시일 burst · 메이저 e스포츠 이벤트 같은 일시 스파이크는 제외. 신규 사례 출현 시 6개월마다 재추정 권장.
+      </div>
+
+    </div>
+  </div>
+  <!-- /Top 5 PCCU 예측치 -->
+
   <div class="sim-box">
     <div class="sim-title">🎯 WL → PCCU / 판매 전환 시뮬레이터</div>
     <div class="sim-sub">슬라이더로 다양한 시나리오 시뮬레이션 · Top 5 진입 기준: PCCU Peak 55K+ 최소선</div>
