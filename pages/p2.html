@@ -1446,10 +1446,10 @@ var flagAxisPlugin = {
     var labels = chart.data.labels || [];
     if (!labels.some(function(l){ return !!labelFlagMap[l]; })) return;
     var flagW = 14;
-    var tickFontSize = (chart.options.scales && chart.options.scales.y && chart.options.scales.y.ticks && chart.options.scales.y.ticks.font && chart.options.scales.y.ticks.font.size) || 10;
-    var tickPad = (chart.options.scales && chart.options.scales.y && chart.options.scales.y.ticks && chart.options.scales.y.ticks.padding) || 3;
-    var oldFont = ctx.font;
-    ctx.font = tickFontSize + 'px "Segoe UI","Apple SD Gothic Neo",sans-serif';
+    // 국기를 축 영역 바깥(layout.padding.left 영역 안, yScale.left 직전)에 고정 배치
+    // → 라벨이 렌더되는 axis 영역(yScale.left ~ yScale.right)과 물리적으로 겹치지 않음
+    var flagX = yScale.left - flagW - 3;
+    if (flagX < 2) flagX = 2;
     for (var i = 0; i < labels.length; i++) {
       var label = labels[i];
       var code = labelFlagMap[label];
@@ -1465,15 +1465,8 @@ var flagAxisPlugin = {
         }
         continue;
       }
-      var tw = ctx.measureText(label).width;
       var y = yScale.getPixelForTick ? yScale.getPixelForTick(i) : yScale.getPixelForValue(i);
       if (y == null || isNaN(y)) continue;
-      // y축 영역: scale.left(좌측)=캔버스 왼쪽, scale.right(우측)=축선. 라벨은 축선에 붙어 우측정렬됨
-      var labelEndX = yScale.right - tickPad;      // 라벨 오른쪽 끝(= 축선 바로 앞)
-      var labelStartX = labelEndX - tw;             // 라벨 왼쪽 끝(= 텍스트 시작)
-      var flagX = labelStartX - flagW - 4;          // 라벨 직전에 flag 배치
-      // 스케일 영역 좌측을 벗어나면 좌측으로 fallback (고정 컬럼)
-      if (flagX < yScale.left + 1) flagX = yScale.left + 2;
       var flagH = flagW * (img.naturalHeight / img.naturalWidth);
       ctx.save();
       ctx.drawImage(img, flagX, y - flagH/2, flagW, flagH);
@@ -1482,7 +1475,6 @@ var flagAxisPlugin = {
       ctx.strokeRect(flagX, y - flagH/2, flagW, flagH);
       ctx.restore();
     }
-    ctx.font = oldFont;
   }
 };
 try { Chart.register(flagAxisPlugin); } catch(e) {}
