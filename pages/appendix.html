@@ -162,6 +162,10 @@ tbody tr:last-child td { border-bottom:none; }
 .s7-formula .fv { color:var(--accent); }
 .s7-formula .fo { color:var(--text-sub2); }
 .s7-fnote { font-size:11px; color:var(--text-sub2); margin-top:6px; padding-top:8px; border-top:1px solid var(--border); line-height:1.6; }
+/* ── 변수 의미 마우스오버 툴팁 (중학생 수준 설명) ── */
+.tip { position:relative; cursor:help; border-bottom:1px dotted currentColor; }
+.tip:hover::after { content:attr(data-tip); position:absolute; bottom:calc(100% + 10px); left:50%; transform:translateX(-50%); background:#1a1a2e; color:#fff; padding:10px 14px; border-radius:8px; font-family:'Apple SD Gothic Neo','Segoe UI',system-ui,sans-serif; font-size:12px; font-weight:500; line-height:1.6; min-width:220px; max-width:340px; white-space:normal; text-align:left; z-index:1000; pointer-events:none; box-shadow:0 6px 20px rgba(0,0,0,.18); letter-spacing:0; text-transform:none; }
+.tip:hover::before { content:''; position:absolute; bottom:calc(100% + 4px); left:50%; transform:translateX(-50%); border:6px solid transparent; border-top-color:#1a1a2e; z-index:1000; pointer-events:none; }
 .s7-calc-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin:14px 0; }
 @media(max-width:700px){ .s7-calc-grid { grid-template-columns:1fr 1fr; } }
 .s7-input { background:var(--card-bg2); border:1px solid var(--border); border-radius:8px; padding:10px 12px; transition:border-color .15s; }
@@ -266,52 +270,53 @@ input.s7-range::-moz-range-thumb { width:13px; height:13px; border-radius:50%; b
       <div class="subsection-body open">
         <div class="info-card highlight" style="margin-bottom:14px;">
           <div class="s7-src">SOURCE · Microsoft Research — Graepel &amp; Herbrich (2006) · Game Developer Magazine</div>
+          <div style="font-size:11px;color:var(--text-sub1);margin-bottom:8px;line-height:1.6">💡 <strong>각 변수에 마우스를 올리면</strong> 중학생도 알기 쉬운 설명이 나타납니다.</div>
           <div class="s7-formula">
-            T<sub>Wait</sub> <span class="fo">=</span>
-            <span class="fv">N<sub>Modes</sub></span> <span class="fo">×</span>
-            <span class="fv">T<sub>Match</sub></span> <span class="fo">×</span>
-            <span class="fv">N<sub>Players</sub></span> <span class="fo">×</span>
-            <span class="fv">N<sub>Skills</sub></span> <span class="fo">÷</span>
-            <span class="fv">N<sub>Online</sub></span>
+            <span class="tip" data-tip="플레이어가 큐에서 견뎌줄 수 있는 평균 대기 시간(분). 짧을수록 더 많은 동시접속자가 있어야 빠른 매칭이 가능해요.">T<sub>Wait</sub></span> <span class="fo">=</span>
+            <span class="fv tip" data-tip="게임 안에서 따로 매칭되는 큐(예: 일반전/랭크전, 5대5/8대8)의 개수. 모드가 많을수록 한 모드에 모이는 인원이 줄어 매칭이 어려워져요.">N<sub>Modes</sub></span> <span class="fo">×</span>
+            <span class="fv tip" data-tip="한 판이 끝날 때까지 걸리는 평균 시간(분). 한 판이 길수록 사람들이 다음 매칭 큐로 돌아오는 속도가 느려져요.">T<sub>Match</sub></span> <span class="fo">×</span>
+            <span class="fv tip" data-tip="한 판을 시작하려면 모여야 하는 총 인원(예: 5대5 = 10명). 모여야 할 인원이 많을수록 매칭이 더 어려워져요.">N<sub>Players</sub></span> <span class="fo">×</span>
+            <span class="fv tip" data-tip="실력별로 나눈 등급의 개수(예: 브론즈/실버/골드/플래티넘…). 등급을 더 잘게 나눌수록 같은 실력 친구를 찾기 어려워져요.">N<sub>Skills</sub></span> <span class="fo">÷</span>
+            <span class="fv tip" data-tip="지금 매칭을 기다리는 사람의 수. '게임 중'인 사람은 빼고, 큐에 줄 서 있는 인원만 셉니다. 이 숫자가 크면 매칭이 빨라져요.">N<sub>Online</sub></span>
             <br>
             <span style="color:var(--text-src);font-size:.8em">→&nbsp;</span>
-            <span class="fv">N<sub>Online</sub></span> <span class="fo">=</span>
-            <span class="fv">N<sub>Modes</sub></span> <span class="fo">×</span>
-            <span class="fv">T<sub>Match</sub></span> <span class="fo">×</span>
-            <span class="fv">N<sub>Players</sub></span> <span class="fo">×</span>
-            <span class="fv">N<sub>Skills</sub></span> <span class="fo">÷</span>
-            <span class="fv">T<sub>Wait</sub></span>
+            <span class="fv tip" data-tip="목표 대기시간(T_Wait)을 만족하기 위해 큐에 들어와 있어야 하는 최소 인원. 이 공식은 그 수를 거꾸로 구해줘요.">N<sub>Online</sub></span> <span class="fo">=</span>
+            <span class="fv tip" data-tip="게임 모드 개수. 위와 동일.">N<sub>Modes</sub></span> <span class="fo">×</span>
+            <span class="fv tip" data-tip="한 판 평균 시간(분). 위와 동일.">T<sub>Match</sub></span> <span class="fo">×</span>
+            <span class="fv tip" data-tip="한 판당 모여야 할 총 인원. 위와 동일.">N<sub>Players</sub></span> <span class="fo">×</span>
+            <span class="fv tip" data-tip="실력 등급 칸 수. 위와 동일.">N<sub>Skills</sub></span> <span class="fo">÷</span>
+            <span class="fv tip" data-tip="견뎌줄 수 있는 대기 시간(분). 위와 동일.">T<sub>Wait</sub></span>
           </div>
           <div class="s7-fnote">N<sub>Online</sub> = 큐 대기 중인 플레이어만 계산 · 게임 중 인원 미포함 · 극단 스킬 버킷 희박·시간대 변동·지역 분산 미반영 → 이론적 하한선. <em>※ 논문 원문 표기: N<sub>Participants</sub> (본 계산기에서는 N<sub>Players</sub>로 통일)</em></div>
         </div>
 
         <div class="s7-calc-grid">
           <div class="s7-input">
-            <div class="s7-ilabel"><span>게임 모드 수</span><span class="iv">N<sub>Modes</sub></span></div>
+            <div class="s7-ilabel"><span class="tip" data-tip="게임 안에서 따로 매칭되는 큐(예: 일반전/랭크전, 5대5/8대8)의 개수. 모드가 많을수록 한 모드에 모이는 인원이 줄어 매칭이 어려워져요.">게임 모드 수</span><span class="iv">N<sub>Modes</sub></span></div>
             <div class="s7-ival" id="s7_v_modes">2</div>
             <input class="s7-range" type="range" id="s7_modes" min="1" max="10" value="2" step="1">
             <div class="s7-rlabels"><span>1</span><span>10</span></div>
           </div>
           <div class="s7-input">
-            <div class="s7-ilabel"><span>평균 경기 시간</span><span class="iv">T<sub>Match</sub></span></div>
+            <div class="s7-ilabel"><span class="tip" data-tip="한 판이 끝날 때까지 걸리는 평균 시간(분). 한 판이 길수록 사람들이 다음 매칭 큐로 돌아오는 속도가 느려져요.">평균 경기 시간</span><span class="iv">T<sub>Match</sub></span></div>
             <div class="s7-ival" id="s7_v_tmatch">15분</div>
             <input class="s7-range" type="range" id="s7_tmatch" min="3" max="40" value="15" step="1">
             <div class="s7-rlabels"><span>3분</span><span>40분</span></div>
           </div>
           <div class="s7-input">
-            <div class="s7-ilabel"><span>매치당 총 플레이어</span><span class="iv">N<sub>Players</sub></span></div>
+            <div class="s7-ilabel"><span class="tip" data-tip="한 판을 시작하려면 모여야 하는 총 인원(예: 5대5 = 10명). 모여야 할 인원이 많을수록 매칭이 더 어려워져요.">매치당 총 플레이어</span><span class="iv">N<sub>Players</sub></span></div>
             <div class="s7-ival" id="s7_v_players">10명</div>
             <input class="s7-range" type="range" id="s7_players" min="2" max="100" value="10" step="1">
             <div class="s7-rlabels"><span>2명</span><span>100명</span></div>
           </div>
           <div class="s7-input">
-            <div class="s7-ilabel"><span>스킬 버킷 수</span><span class="iv">N<sub>Skills</sub></span></div>
+            <div class="s7-ilabel"><span class="tip" data-tip="실력별로 나눈 등급의 개수(예: 브론즈/실버/골드/플래티넘…). 등급을 더 잘게 나눌수록 같은 실력 친구를 찾기 어려워져요.">스킬 버킷 수</span><span class="iv">N<sub>Skills</sub></span></div>
             <div class="s7-ival" id="s7_v_skills">5</div>
             <input class="s7-range" type="range" id="s7_skills" min="1" max="10" value="5" step="1">
             <div class="s7-rlabels"><span>1</span><span>10</span></div>
           </div>
           <div class="s7-input">
-            <div class="s7-ilabel"><span>허용 대기 시간</span><span class="iv">T<sub>Wait</sub></span></div>
+            <div class="s7-ilabel"><span class="tip" data-tip="플레이어가 큐에서 견뎌줄 수 있는 평균 대기 시간(분). 짧을수록 더 많은 동시접속자가 있어야 빠른 매칭이 가능해요.">허용 대기 시간</span><span class="iv">T<sub>Wait</sub></span></div>
             <div class="s7-ival" id="s7_v_twait">1분</div>
             <input class="s7-range" type="range" id="s7_twait" min="0.25" max="5" value="1" step="0.25">
             <div class="s7-rlabels"><span>15초</span><span>5분</span></div>
@@ -320,12 +325,12 @@ input.s7-range::-moz-range-thumb { width:13px; height:13px; border-radius:50%; b
 
         <div class="s7-results">
           <div class="s7-rcard primary">
-            <div class="s7-rlabel">큐 대기 최소 CCU</div>
+            <div class="s7-rlabel"><span class="tip" data-tip="목표 대기시간을 지키려면 큐에 들어와 있어야 하는 최소 인원이에요. 위 공식의 N_Online에 해당해요.">큐 대기 최소 CCU</span></div>
             <div class="s7-rval" id="s7_r_queue">—</div>
             <div class="s7-rsub">대기열 인원 · 공식 직접 계산값</div>
           </div>
           <div class="s7-rcard">
-            <div class="s7-rlabel">최소 CCU</div>
+            <div class="s7-rlabel"><span class="tip" data-tip="큐에서 기다리는 사람 + 지금 게임 중인 사람을 모두 합친 동시접속 추정치예요. 게임 한 판 시간(T_Match)이 길수록 게임 중 인원이 많아져 더 커집니다.">최소 CCU</span></div>
             <div class="s7-rval" id="s7_r_total" style="color:var(--amber)">—</div>
             <div class="s7-rsub">대기 + 게임 중 인원 합산</div>
           </div>
@@ -432,19 +437,20 @@ input.s7-range::-moz-range-thumb { width:13px; height:13px; border-radius:50%; b
         <div class="subsec-label">논문 원문 박스: "You Can't Have It All — Match Quality and Waiting Time"</div>
         <div class="info-card" style="margin-bottom:12px;">
           <div class="card-body" style="font-family:monospace;font-size:13px;line-height:2.2;color:var(--text-h);">
-            T<sub style="font-size:.75em">Wait</sub>
+            <span class="tip" data-tip="플레이어가 큐에서 견뎌줄 수 있는 평균 대기 시간(분). 짧을수록 더 많은 동시접속자가 있어야 빠른 매칭이 가능해요.">T<sub style="font-size:.75em">Wait</sub></span>
             <span style="color:var(--text-sub2);">=</span>
-            <span style="color:var(--accent);">N<sub style="font-size:.75em">Modes</sub></span>
+            <span style="color:var(--accent);" class="tip" data-tip="게임 안에서 따로 매칭되는 큐(예: 일반전/랭크전, 5대5/8대8)의 개수. 모드가 많을수록 한 모드에 모이는 인원이 줄어 매칭이 어려워져요.">N<sub style="font-size:.75em">Modes</sub></span>
             <span style="color:var(--text-sub2);">×</span>
-            <span style="color:var(--accent);">T<sub style="font-size:.75em">Match</sub></span>
+            <span style="color:var(--accent);" class="tip" data-tip="한 판이 끝날 때까지 걸리는 평균 시간(분). 한 판이 길수록 사람들이 다음 매칭 큐로 돌아오는 속도가 느려져요.">T<sub style="font-size:.75em">Match</sub></span>
             <span style="color:var(--text-sub2);">×</span>
-            <span style="color:var(--accent);">N<sub style="font-size:.75em">Participants</sub></span>
+            <span style="color:var(--accent);" class="tip" data-tip="한 판을 시작하려면 모여야 하는 총 인원(예: 5대5 = 10명). 논문 원문에서는 'Participants'라고 표기 — 본 계산기의 N_Players와 동일.">N<sub style="font-size:.75em">Participants</sub></span>
             <span style="color:var(--text-sub2);">×</span>
-            <span style="color:var(--accent);">N<sub style="font-size:.75em">Skills</sub></span>
+            <span style="color:var(--accent);" class="tip" data-tip="실력별로 나눈 등급의 개수(예: 브론즈/실버/골드/플래티넘…). 등급을 더 잘게 나눌수록 같은 실력 친구를 찾기 어려워져요.">N<sub style="font-size:.75em">Skills</sub></span>
             <span style="color:var(--text-sub2);">÷</span>
-            <span style="color:var(--accent);">N<sub style="font-size:.75em">Online</sub></span>
+            <span style="color:var(--accent);" class="tip" data-tip="지금 매칭을 기다리는 사람의 수. '게임 중'인 사람은 빼고, 큐에 줄 서 있는 인원만 셉니다. 이 숫자가 크면 매칭이 빨라져요.">N<sub style="font-size:.75em">Online</sub></span>
           </div>
           <div style="font-size:11px;color:var(--text-sub2);margin-top:8px;padding-top:8px;border-top:1px solid var(--border);">
+            💡 <strong>한 줄 요약:</strong> 대기시간(T_Wait)은 <em>모드·경기시간·필요 인원·스킬 등급</em>이 많아질수록 길어지고, <em>큐에 서 있는 사람</em>이 많을수록 짧아져요. 변수 위에 마우스를 올리면 자세한 의미가 나타납니다.<br>
             원문 예시: N<sub>Modes</sub>=10, T<sub>Match</sub>=10분, N<sub>Participants</sub>=8, N<sub>Skills</sub>=10 → 대기 1분 이내 위해 <strong style="color:var(--text-h);">N<sub>Online</sub> ≥ 8,000명</strong> 필요
           </div>
         </div>
