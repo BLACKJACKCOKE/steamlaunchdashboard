@@ -811,12 +811,12 @@ const outerLabelPlugin = {
 };
 Chart.register(outerLabelPlugin);
 
-/* ── 국기 이미지 플러그인 (버블차트용) ── */
+/* ── 국기 이미지 플러그인 (버블차트: 원형 클리핑으로 버블 전체를 국기로 대체) ── */
 const flagImgCache = {};
 function getFlagImg(code) {
   if (!flagImgCache[code]) {
     const img = new Image();
-    img.src = 'https://flagcdn.com/w40/' + code + '.png';
+    img.src = 'https://flagcdn.com/w80/' + code + '.png';
     flagImgCache[code] = img;
   }
   return flagImgCache[code];
@@ -824,7 +824,7 @@ function getFlagImg(code) {
 const flagBubblePlugin = {
   id: 'flagBubble',
   afterDatasetsDraw(chart) {
-    const { ctx } = chart;
+    const ctx = chart.ctx;
     chart.data.datasets.forEach((ds, dsi) => {
       const meta = chart.getDatasetMeta(dsi);
       const pt = meta.data[0];
@@ -839,13 +839,106 @@ const flagBubblePlugin = {
         return;
       }
       const r = dp.r || 8;
-      const w = Math.max(12, Math.min(30, r * 1.2));
-      const h = w * (img.naturalHeight / img.naturalWidth);
+      const cx = pt.x, cy = pt.y;
+      const size = r * 2;
+      const imgAspect = img.naturalWidth / img.naturalHeight;
+      let drawW, drawH;
+      if (imgAspect >= 1) { drawH = size; drawW = size * imgAspect; }
+      else                { drawW = size; drawH = size / imgAspect; }
+      // 1) 원형 클리핑 후 flag를 cover 방식으로 그리기
       ctx.save();
-      ctx.drawImage(img, pt.x - w/2, pt.y - h/2, w, h);
-      ctx.strokeStyle = 'rgba(0,0,0,0.25)';
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.closePath();
+      ctx.clip();
+      ctx.drawImage(img, cx - drawW/2, cy - drawH/2, drawW, drawH);
+      ctx.restore();
+      // 2) 원형 테두리 stroke (클립 밖에서 그려 경계 선명)
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(17,24,39,0.45)';
+      ctx.lineWidth = 1.2;
+      ctx.stroke();
+      ctx.restore();
+    });
+  }
+};
+
+/* ── 국가명 레이블 + 리더 라인 플러그인 (겹침 감지 → 아래로 밀어내며 선 연결) ── */
+const flagLabelPlugin = {
+  id: 'flagLabel',
+  afterDatasetsDraw(chart) {
+    const ctx = chart.ctx;
+    const area = chart.chartArea;
+    ctx.font = 'bold 10px "Segoe UI","Apple SD Gothic Neo",sans-serif';
+    // 라벨 후보 수집
+    const items = [];
+    chart.data.datasets.forEach((ds, dsi) => {
+      const meta = chart.getDatasetMeta(dsi);
+      const pt = meta.data[0];
+      const dp = ds.data[0];
+      if (!pt || !dp || !dp.name) return;
+      const tw = ctx.measureText(dp.name).width + 10;
+      items.push({
+        cx: pt.x, cy: pt.y, r: dp.r || 8, name: dp.name,
+        tw: tw, th: 16,
+        lx: pt.x, ly: pt.y + (dp.r || 8) + 14
+      });
+    });
+    // 충돌 회피: y 중앙 기준 정렬 후, 이미 배치된 라벨과 겹치면 아래로 push
+    items.sort((a,b) => a.cy - b.cy);
+    const placed = [];
+    items.forEach(it => {
+      let tries = 0;
+      while (tries < 50) {
+        let collide = false;
+        for (const p of placed) {
+          const dx = Math.abs(it.lx - p.lx);
+          const dy = Math.abs(it.ly - p.ly);
+          if (dx < (it.tw + p.tw)/2 + 3 && dy < (it.th + p.th)/2 + 2) { collide = true; break; }
+        }
+        if (!collide) break;
+        it.ly += it.th + 3;
+        tries++;
+      }
+      // 차트 영역 밖으로 나가면 클램프
+      if (it.ly + it.th/2 > area.bottom) it.ly = area.bottom - it.th/2;
+      placed.push(it);
+    });
+    // 렌더: 필요 시 리더 라인 → 흰 배경 박스 → 텍스트
+    placed.forEach(it => {
+      const pushed = (it.ly - it.cy) > (it.r + 18);
+      if (pushed) {
+        ctx.save();
+        ctx.strokeStyle = 'rgba(55,65,81,0.55)';
+        ctx.lineWidth = 0.8;
+        ctx.beginPath();
+        ctx.moveTo(it.cx, it.cy + it.r);
+        ctx.lineTo(it.lx, it.ly - it.th/2);
+        ctx.stroke();
+        ctx.restore();
+      }
+      // 둥근 사각 배경
+      const tx = it.lx - it.tw/2, ty = it.ly - it.th/2, rr = 3;
+      ctx.save();
+      ctx.fillStyle = 'rgba(255,255,255,0.94)';
+      ctx.strokeStyle = 'rgba(17,24,39,0.15)';
       ctx.lineWidth = 0.5;
-      ctx.strokeRect(pt.x - w/2, pt.y - h/2, w, h);
+      ctx.beginPath();
+      ctx.moveTo(tx + rr, ty);
+      ctx.arcTo(tx + it.tw, ty, tx + it.tw, ty + rr, rr);
+      ctx.arcTo(tx + it.tw, ty + it.th, tx + it.tw - rr, ty + it.th, rr);
+      ctx.arcTo(tx, ty + it.th, tx, ty + it.th - rr, rr);
+      ctx.arcTo(tx, ty, tx + rr, ty, rr);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+      // 텍스트
+      ctx.fillStyle = '#111827';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(it.name, it.lx, it.ly);
       ctx.restore();
     });
   }
@@ -974,11 +1067,10 @@ const flagBubblePlugin = {
     {code:'br',name:'브라질',x:48,y:20,r:7,rev:1.0},{code:'ca',name:'캐나다',x:16,y:55,r:7,rev:0.9},
     {code:'fr',name:'프랑스',x:22,y:45,r:7,rev:1.0},{code:'mx',name:'멕시코',x:24,y:42,r:7,rev:1.0}];
   const clrs=['#ef4444','#4f46e5','#f59e0b','#06b6d4','#8b5cf6','#10b981','#f97316','#3b82f6','#ec4899','#84cc16'];
-  new Chart(document.getElementById('chartBubblePC'),{type:'bubble',plugins:[ChartDataLabels,flagBubblePlugin],
-    data:{datasets:data.map((d,i)=>({label:d.name,data:[{x:d.x,y:d.y,r:d.r,code:d.code,name:d.name,rev:d.rev}],backgroundColor:clrs[i]+'99',borderColor:clrs[i],borderWidth:2}))},
-    options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:8,right:8,bottom:18,left:8}},
-      plugins:{legend:{display:false,align:'center'},
-        datalabels:{formatter:(v,ctx)=>data[ctx.datasetIndex].name,color:'#111827',backgroundColor:'rgba(255,255,255,0.88)',borderRadius:4,padding:{top:2,right:5,bottom:2,left:5},font:{size:10,weight:'bold'},anchor:'center',align:'bottom',offset:(ctx)=>ctx.dataset.data[0].r+6},
+  new Chart(document.getElementById('chartBubblePC'),{type:'bubble',plugins:[flagBubblePlugin,flagLabelPlugin],
+    data:{datasets:data.map((d,i)=>({label:d.name,data:[{x:d.x,y:d.y,r:d.r,code:d.code,name:d.name,rev:d.rev}],backgroundColor:'transparent',borderColor:'transparent',borderWidth:0}))},
+    options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:14,right:14,bottom:28,left:14}},
+      plugins:{legend:{display:false},
         tooltip:{callbacks:{label:ctx=>{const d=data[ctx.datasetIndex];return[`${d.name}`,`유저: ${d.x}M`,`ARPU: $${d.y}/년`,`매출: $${d.rev}B (${formatKRW(d.rev)})`];}}}},
       scales:{x:{title:{display:true,text:'유저 수 (M)'},grid:{color:'#e5e7eb',borderDash:[4,4]}},y:{title:{display:true,text:'ARPU ($/년)'},grid:{color:'#e5e7eb',borderDash:[4,4]}}}}});
 })();
@@ -991,11 +1083,10 @@ const flagBubblePlugin = {
     {code:'it',name:'이탈리아',x:19,y:62,r:8,rev:1.2},{code:'cn',name:'중국',x:26,y:48,r:8,rev:1.2},
     {code:'es',name:'스페인',x:19,y:58,r:8,rev:1.1},{code:'mx',name:'멕시코',x:27,y:28,r:6,rev:0.8}];
   const clrs=['#4f46e5','#8b5cf6','#10b981','#06b6d4','#3b82f6','#ec4899','#f59e0b','#ef4444','#f97316','#84cc16'];
-  new Chart(document.getElementById('chartBubbleConsole'),{type:'bubble',plugins:[ChartDataLabels,flagBubblePlugin],
-    data:{datasets:data.map((d,i)=>({label:d.name,data:[{x:d.x,y:d.y,r:d.r,code:d.code,name:d.name,rev:d.rev}],backgroundColor:clrs[i]+'99',borderColor:clrs[i],borderWidth:2}))},
-    options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:8,right:8,bottom:18,left:8}},
-      plugins:{legend:{display:false,align:'center'},
-        datalabels:{formatter:(v,ctx)=>data[ctx.datasetIndex].name,color:'#111827',backgroundColor:'rgba(255,255,255,0.88)',borderRadius:4,padding:{top:2,right:5,bottom:2,left:5},font:{size:10,weight:'bold'},anchor:'center',align:'bottom',offset:(ctx)=>ctx.dataset.data[0].r+6},
+  new Chart(document.getElementById('chartBubbleConsole'),{type:'bubble',plugins:[flagBubblePlugin,flagLabelPlugin],
+    data:{datasets:data.map((d,i)=>({label:d.name,data:[{x:d.x,y:d.y,r:d.r,code:d.code,name:d.name,rev:d.rev}],backgroundColor:'transparent',borderColor:'transparent',borderWidth:0}))},
+    options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:14,right:14,bottom:28,left:14}},
+      plugins:{legend:{display:false},
         tooltip:{callbacks:{label:ctx=>{const d=data[ctx.datasetIndex];return[`${d.name}`,`유저: ${d.x}M`,`ARPU: $${d.y}/년`,`매출: $${d.rev}B (${formatKRW(d.rev)})`];}}}},
       scales:{x:{title:{display:true,text:'유저 수 (M)'},grid:{color:'#e5e7eb',borderDash:[4,4]}},y:{title:{display:true,text:'ARPU ($/년)'},grid:{color:'#e5e7eb',borderDash:[4,4]}}}}});
 })();
