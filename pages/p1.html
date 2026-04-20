@@ -418,8 +418,8 @@
           <tr><td>🇧🇷 브라질</td><td>48M</td><td>$20</td><td>$1.0B</td><td class="krw" data-usd="1.0">1조 5,000억</td><td>F2P 필수</td></tr>
           <tr><td>🇫🇷 프랑스</td><td>22M</td><td>$45</td><td>$1.0B</td><td class="krw" data-usd="1.0">1조 5,000억</td><td>유럽 e스포츠 강국</td></tr>
           <tr><td>🇨🇦 캐나다</td><td>16M</td><td>$55</td><td>$0.9B</td><td class="krw" data-usd="0.9">1조 3,500억</td><td>북미 소프트 론칭 최적</td></tr>
-          <tr><td>🇲🇽 멕시코</td><td>32M</td><td>$15</td><td>$0.5B</td><td class="krw" data-usd="0.5">7,500억</td><td>LATAM 허브</td></tr>
-          <tr><td>기타</td><td>—</td><td>—</td><td>$7.9B</td><td class="krw" data-usd="7.9">11조 8,500억</td><td>동남아, MENA, 유럽 나머지, 러시아·CIS 등</td></tr>
+          <tr><td>🇲🇽 멕시코</td><td>24M</td><td>$42</td><td>$1.0B</td><td class="krw" data-usd="1.0">1조 5,000억</td><td>LATAM 허브</td></tr>
+          <tr><td>기타</td><td>—</td><td>—</td><td>$7.4B</td><td class="krw" data-usd="7.4">11조 1,000억</td><td>동남아, MENA, 유럽 나머지, 러시아·CIS 등</td></tr>
           <tr style="background:#1a1a2e;color:#fff;font-weight:700;">
             <td>총합</td><td colspan="2">—</td><td>$43.0B</td><td class="krw" data-usd="43.0" style="color:#4ade80;">64조 5,000억</td><td>—</td>
           </tr>
@@ -930,7 +930,7 @@ Chart.register(outerLabelPlugin);
     {label:'🇰🇷 한국',x:28,y:135,r:14,rev:3.8},{label:'🇩🇪 독일',x:30,y:90,r:12,rev:2.7},
     {label:'🇯🇵 일본',x:35,y:75,r:11,rev:2.6},{label:'🇬🇧 영국',x:26,y:60,r:9,rev:1.6},
     {label:'🇧🇷 브라질',x:48,y:20,r:7,rev:1.0},{label:'🇨🇦 캐나다',x:16,y:55,r:7,rev:0.9},
-    {label:'🇫🇷 프랑스',x:22,y:45,r:7,rev:1.0},{label:'🇲🇽 멕시코',x:32,y:15,r:5,rev:0.5}];
+    {label:'🇫🇷 프랑스',x:22,y:45,r:7,rev:1.0},{label:'🇲🇽 멕시코',x:24,y:42,r:7,rev:1.0}];
   const clrs=['#ef4444','#4f46e5','#f59e0b','#06b6d4','#8b5cf6','#10b981','#f97316','#3b82f6','#ec4899','#84cc16'];
   new Chart(document.getElementById('chartBubblePC'),{type:'bubble',plugins:[ChartDataLabels],
     data:{datasets:data.map((d,i)=>({label:d.label,data:[{x:d.x,y:d.y,r:d.r}],backgroundColor:clrs[i]+'99',borderColor:clrs[i],borderWidth:2}))},
