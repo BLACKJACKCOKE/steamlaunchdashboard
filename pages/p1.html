@@ -811,12 +811,11 @@ Chart.register(outerLabelPlugin);
 (function(){
   const labels=['2022','2023','2024','2025F','2026F','2027F','2028F'];
   const totalRev=[173.8,176.8,183.0,196.7,208.2,218.2,227.2];
-  const pcPct=[0.20,0.21,0.21,0.22,0.22,0.23,0.23];
-  const conPct=[0.25,0.25,0.24,0.23,0.23,0.23,0.23];
-  const mobPct=[0.55,0.55,0.55,0.55,0.55,0.54,0.54];
-  const pcRev=totalRev.map((t,i)=>+(t*pcPct[i]).toFixed(1));
-  const conRev=totalRev.map((t,i)=>+(t*conPct[i]).toFixed(1));
-  const mobRev=totalRev.map((t,i)=>+(t*mobPct[i]).toFixed(1));
+  // PC/콘솔은 Section 02 표·차트(S2-A)와 절대값으로 100% 일치 — 비중(%) 환산이 아닌 직접 정의
+  const pcRev=[35.3,37.3,38.9,43.0,45.8,48.9,52.0];
+  const conRev=[43.3,44.6,43.5,45.3,48.5,50.5,51.7];
+  // 모바일은 잔여(totalRev 유지) → 합계 $196.7B/$227.2B 등 인사이트 텍스트 무영향
+  const mobRev=totalRev.map((t,i)=>+(t-pcRev[i]-conRev[i]).toFixed(1));
   const totalTopPlugin={id:'totalTop',afterDatasetsDraw(chart){
     const{ctx}=chart; const meta=chart.getDatasetMeta(2);
     totalRev.forEach((tot,i)=>{const bar=meta.data[i];if(!bar)return;
