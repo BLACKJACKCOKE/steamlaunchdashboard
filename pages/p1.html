@@ -36,6 +36,7 @@
     .rate-input { width:72px; border:1px solid var(--border); border-radius:6px; padding:3px 6px; font-size:12px; text-align:right; outline:none; color:var(--text-h); }
     .rate-input:focus { border-color:var(--accent); }
     .rate-btn { background:var(--accent); color:#fff; border:none; border-radius:6px; padding:4px 10px; font-size:11px; font-weight:700; cursor:pointer; }
+    .flag-icon { width:18px; height:13px; vertical-align:middle; margin-right:5px; border:1px solid #e5e7eb; border-radius:2px; object-fit:cover; display:inline-block; }
     .rate-btn:hover { background:#4338ca; }
     nav { display:flex; gap:4px; }
     nav a { font-size:12px; color:var(--text-sub2); text-decoration:none; padding:4px 10px; border-radius:6px; transition:all .2s; }
@@ -375,8 +376,8 @@
   <div class="section-insight">
     <h3>🔑 Section 핵심 인사이트</h3>
     <ul>
-      <li>🇰🇷 <strong>한국 PC ARPU $135/년 — 압도적 세계 1위</strong>. PC방 인프라+슈팅 수요+높은 지불 의향의 3박자 완비. Project S 최우선 시장</li>
-      <li>🇺🇸 <strong>미국 콘솔 $21.2B — 단일 시장으로 콘솔 전체의 47%</strong> 차지. ARPU $155로 콘솔 최고, 북미 커버 시 매출 절반 확보</li>
+      <li><img class="flag-icon" src="https://flagcdn.com/w20/kr.png" alt="KR"> <strong>한국 PC ARPU $135/년 — 압도적 세계 1위</strong>. PC방 인프라+슈팅 수요+높은 지불 의향의 3박자 완비. Project S 최우선 시장</li>
+      <li><img class="flag-icon" src="https://flagcdn.com/w20/us.png" alt="US"> <strong>미국 콘솔 $21.2B — 단일 시장으로 콘솔 전체의 47%</strong> 차지. ARPU $155로 콘솔 최고, 북미 커버 시 매출 절반 확보</li>
       <li>🎯 <strong>중국은 PC 유저 235M 최대 볼륨이나 ARPU $55로 낮고 판호 규제 리스크</strong> 존재 — 판호 리스크 헷지 통한 진입 필수 (장기 예비 시장)</li>
     </ul>
   </div>
@@ -410,16 +411,16 @@
       <table>
         <thead><tr><th>국가</th><th>유저 수</th><th>ARPU</th><th>추산 매출($)</th><th>추산 매출(원화)</th><th>전략 우선순위</th></tr></thead>
         <tbody>
-          <tr><td>🇨🇳 중국</td><td>240M</td><td>$55</td><td>$13.2B</td><td class="krw" data-usd="13.2">19조 8,000억</td><td>판호 리스크 헷지 통한 진입 필수</td></tr>
-          <tr><td>🇺🇸 미국</td><td>78M</td><td>$100</td><td class="tag-up">$7.8B</td><td class="krw tag-up" data-usd="7.8">11조 7,000억</td><td>🎯 1차 핵심 타겟</td></tr>
-          <tr><td>🇰🇷 한국</td><td>28M</td><td class="tag-star"><strong>$135 ★ARPU 1위</strong></td><td class="tag-up">$3.8B</td><td class="krw tag-up" data-usd="3.8">5조 7,000억</td><td>🎯 1차 핵심 타겟 (PC방 인프라)</td></tr>
-          <tr><td>🇩🇪 독일</td><td>30M</td><td>$90</td><td>$2.7B</td><td class="krw" data-usd="2.7">4조 500억</td><td>유럽 최대 PC 시장</td></tr>
-          <tr><td>🇯🇵 일본</td><td>35M</td><td>$75</td><td>$2.6B</td><td class="krw" data-usd="2.6">3조 9,000억</td><td>슈팅 선호도 급상승</td></tr>
-          <tr><td>🇬🇧 영국</td><td>26M</td><td>$60</td><td>$1.6B</td><td class="krw" data-usd="1.6">2조 4,000억</td><td>영어권 진출 교두보</td></tr>
-          <tr><td>🇧🇷 브라질</td><td>48M</td><td>$20</td><td>$1.0B</td><td class="krw" data-usd="1.0">1조 5,000억</td><td>F2P 필수</td></tr>
-          <tr><td>🇫🇷 프랑스</td><td>22M</td><td>$45</td><td>$1.0B</td><td class="krw" data-usd="1.0">1조 5,000억</td><td>유럽 e스포츠 강국</td></tr>
-          <tr><td>🇨🇦 캐나다</td><td>16M</td><td>$55</td><td>$0.9B</td><td class="krw" data-usd="0.9">1조 3,500억</td><td>북미 소프트 론칭 최적</td></tr>
-          <tr><td>🇲🇽 멕시코</td><td>24M</td><td>$42</td><td>$1.0B</td><td class="krw" data-usd="1.0">1조 5,000억</td><td>LATAM 허브</td></tr>
+          <tr><td><img class="flag-icon" src="https://flagcdn.com/w20/cn.png" alt="CN"> 중국</td><td>240M</td><td>$55</td><td>$13.2B</td><td class="krw" data-usd="13.2">19조 8,000억</td><td>판호 리스크 헷지 통한 진입 필수</td></tr>
+          <tr><td><img class="flag-icon" src="https://flagcdn.com/w20/us.png" alt="US"> 미국</td><td>78M</td><td>$100</td><td class="tag-up">$7.8B</td><td class="krw tag-up" data-usd="7.8">11조 7,000억</td><td>🎯 1차 핵심 타겟</td></tr>
+          <tr><td><img class="flag-icon" src="https://flagcdn.com/w20/kr.png" alt="KR"> 한국</td><td>28M</td><td class="tag-star"><strong>$135 ★ARPU 1위</strong></td><td class="tag-up">$3.8B</td><td class="krw tag-up" data-usd="3.8">5조 7,000억</td><td>🎯 1차 핵심 타겟 (PC방 인프라)</td></tr>
+          <tr><td><img class="flag-icon" src="https://flagcdn.com/w20/de.png" alt="DE"> 독일</td><td>30M</td><td>$90</td><td>$2.7B</td><td class="krw" data-usd="2.7">4조 500억</td><td>유럽 최대 PC 시장</td></tr>
+          <tr><td><img class="flag-icon" src="https://flagcdn.com/w20/jp.png" alt="JP"> 일본</td><td>35M</td><td>$75</td><td>$2.6B</td><td class="krw" data-usd="2.6">3조 9,000억</td><td>슈팅 선호도 급상승</td></tr>
+          <tr><td><img class="flag-icon" src="https://flagcdn.com/w20/gb.png" alt="GB"> 영국</td><td>26M</td><td>$60</td><td>$1.6B</td><td class="krw" data-usd="1.6">2조 4,000억</td><td>영어권 진출 교두보</td></tr>
+          <tr><td><img class="flag-icon" src="https://flagcdn.com/w20/br.png" alt="BR"> 브라질</td><td>48M</td><td>$20</td><td>$1.0B</td><td class="krw" data-usd="1.0">1조 5,000억</td><td>F2P 필수</td></tr>
+          <tr><td><img class="flag-icon" src="https://flagcdn.com/w20/fr.png" alt="FR"> 프랑스</td><td>22M</td><td>$45</td><td>$1.0B</td><td class="krw" data-usd="1.0">1조 5,000억</td><td>유럽 e스포츠 강국</td></tr>
+          <tr><td><img class="flag-icon" src="https://flagcdn.com/w20/ca.png" alt="CA"> 캐나다</td><td>16M</td><td>$55</td><td>$0.9B</td><td class="krw" data-usd="0.9">1조 3,500억</td><td>북미 소프트 론칭 최적</td></tr>
+          <tr><td><img class="flag-icon" src="https://flagcdn.com/w20/mx.png" alt="MX"> 멕시코</td><td>24M</td><td>$42</td><td>$1.0B</td><td class="krw" data-usd="1.0">1조 5,000억</td><td>LATAM 허브</td></tr>
           <tr><td>기타</td><td>—</td><td>—</td><td>$7.4B</td><td class="krw" data-usd="7.4">11조 1,000억</td><td>동남아, MENA, 유럽 나머지, 러시아·CIS 등</td></tr>
           <tr style="background:#1a1a2e;color:#fff;font-weight:700;">
             <td>총합</td><td colspan="2">—</td><td>$43.0B</td><td class="krw" data-usd="43.0" style="color:#4ade80;">64조 5,000억</td><td>—</td>
@@ -810,6 +811,46 @@ const outerLabelPlugin = {
 };
 Chart.register(outerLabelPlugin);
 
+/* ── 국기 이미지 플러그인 (버블차트용) ── */
+const flagImgCache = {};
+function getFlagImg(code) {
+  if (!flagImgCache[code]) {
+    const img = new Image();
+    img.src = 'https://flagcdn.com/w40/' + code + '.png';
+    flagImgCache[code] = img;
+  }
+  return flagImgCache[code];
+}
+const flagBubblePlugin = {
+  id: 'flagBubble',
+  afterDatasetsDraw(chart) {
+    const { ctx } = chart;
+    chart.data.datasets.forEach((ds, dsi) => {
+      const meta = chart.getDatasetMeta(dsi);
+      const pt = meta.data[0];
+      const dp = ds.data[0];
+      if (!pt || !dp || !dp.code) return;
+      const img = getFlagImg(dp.code);
+      if (!img.complete || img.naturalWidth === 0) {
+        if (!img.$attached) {
+          img.$attached = true;
+          img.addEventListener('load', () => chart.update('none'), { once: true });
+        }
+        return;
+      }
+      const r = dp.r || 8;
+      const w = Math.max(12, Math.min(30, r * 1.2));
+      const h = w * (img.naturalHeight / img.naturalWidth);
+      ctx.save();
+      ctx.drawImage(img, pt.x - w/2, pt.y - h/2, w, h);
+      ctx.strokeStyle = 'rgba(0,0,0,0.25)';
+      ctx.lineWidth = 0.5;
+      ctx.strokeRect(pt.x - w/2, pt.y - h/2, w, h);
+      ctx.restore();
+    });
+  }
+};
+
 /* ─── S1-A: 플랫폼 매출 스택 바 ─── */
 (function(){
   const labels=['2022','2023','2024','2025F','2026F','2027F','2028F'];
@@ -927,35 +968,35 @@ Chart.register(outerLabelPlugin);
 
 /* ─── S3: 버블 PC ─── */
 (function(){
-  const data=[{label:'🇨🇳 중국',x:240,y:55,r:26,rev:13.2},{label:'🇺🇸 미국',x:78,y:100,r:20,rev:7.8},
-    {label:'🇰🇷 한국',x:28,y:135,r:14,rev:3.8},{label:'🇩🇪 독일',x:30,y:90,r:12,rev:2.7},
-    {label:'🇯🇵 일본',x:35,y:75,r:11,rev:2.6},{label:'🇬🇧 영국',x:26,y:60,r:9,rev:1.6},
-    {label:'🇧🇷 브라질',x:48,y:20,r:7,rev:1.0},{label:'🇨🇦 캐나다',x:16,y:55,r:7,rev:0.9},
-    {label:'🇫🇷 프랑스',x:22,y:45,r:7,rev:1.0},{label:'🇲🇽 멕시코',x:24,y:42,r:7,rev:1.0}];
+  const data=[{code:'cn',name:'중국',x:240,y:55,r:26,rev:13.2},{code:'us',name:'미국',x:78,y:100,r:20,rev:7.8},
+    {code:'kr',name:'한국',x:28,y:135,r:14,rev:3.8},{code:'de',name:'독일',x:30,y:90,r:12,rev:2.7},
+    {code:'jp',name:'일본',x:35,y:75,r:11,rev:2.6},{code:'gb',name:'영국',x:26,y:60,r:9,rev:1.6},
+    {code:'br',name:'브라질',x:48,y:20,r:7,rev:1.0},{code:'ca',name:'캐나다',x:16,y:55,r:7,rev:0.9},
+    {code:'fr',name:'프랑스',x:22,y:45,r:7,rev:1.0},{code:'mx',name:'멕시코',x:24,y:42,r:7,rev:1.0}];
   const clrs=['#ef4444','#4f46e5','#f59e0b','#06b6d4','#8b5cf6','#10b981','#f97316','#3b82f6','#ec4899','#84cc16'];
-  new Chart(document.getElementById('chartBubblePC'),{type:'bubble',plugins:[ChartDataLabels],
-    data:{datasets:data.map((d,i)=>({label:d.label,data:[{x:d.x,y:d.y,r:d.r}],backgroundColor:clrs[i]+'99',borderColor:clrs[i],borderWidth:2}))},
-    options:{responsive:true,maintainAspectRatio:false,
+  new Chart(document.getElementById('chartBubblePC'),{type:'bubble',plugins:[ChartDataLabels,flagBubblePlugin],
+    data:{datasets:data.map((d,i)=>({label:d.name,data:[{x:d.x,y:d.y,r:d.r,code:d.code,name:d.name,rev:d.rev}],backgroundColor:clrs[i]+'99',borderColor:clrs[i],borderWidth:2}))},
+    options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:8,right:8,bottom:18,left:8}},
       plugins:{legend:{display:false,align:'center'},
-        datalabels:{formatter:(v,ctx)=>data[ctx.datasetIndex].label,color:'#111827',backgroundColor:'rgba(255,255,255,0.82)',borderRadius:4,padding:{top:2,right:5,bottom:2,left:5},font:{size:10,weight:'bold'},anchor:'center'},
-        tooltip:{callbacks:{label:ctx=>{const d=data[ctx.datasetIndex];return[`${d.label}`,`유저: ${d.x}M`,`ARPU: $${d.y}/년`,`매출: $${d.rev}B (${formatKRW(d.rev)})`];}}}},
+        datalabels:{formatter:(v,ctx)=>data[ctx.datasetIndex].name,color:'#111827',backgroundColor:'rgba(255,255,255,0.88)',borderRadius:4,padding:{top:2,right:5,bottom:2,left:5},font:{size:10,weight:'bold'},anchor:'center',align:'bottom',offset:(ctx)=>ctx.dataset.data[0].r+6},
+        tooltip:{callbacks:{label:ctx=>{const d=data[ctx.datasetIndex];return[`${d.name}`,`유저: ${d.x}M`,`ARPU: $${d.y}/년`,`매출: $${d.rev}B (${formatKRW(d.rev)})`];}}}},
       scales:{x:{title:{display:true,text:'유저 수 (M)'},grid:{color:'#e5e7eb',borderDash:[4,4]}},y:{title:{display:true,text:'ARPU ($/년)'},grid:{color:'#e5e7eb',borderDash:[4,4]}}}}});
 })();
 
 /* ─── S3: 버블 콘솔 ─── */
 (function(){
-  const data=[{label:'🇺🇸 미국',x:125,y:155,r:30,rev:19.4},{label:'🇯🇵 일본',x:39,y:96,r:13,rev:3.7},
-    {label:'🇬🇧 영국',x:25,y:142,r:13,rev:3.6},{label:'🇩🇪 독일',x:28,y:118,r:12,rev:3.3},
-    {label:'🇫🇷 프랑스',x:25,y:92,r:11,rev:2.3},{label:'🇨🇦 캐나다',x:15,y:111,r:9,rev:1.7},
-    {label:'🇮🇹 이탈리아',x:19,y:62,r:8,rev:1.2},{label:'🇨🇳 중국',x:26,y:48,r:8,rev:1.2},
-    {label:'🇪🇸 스페인',x:19,y:58,r:8,rev:1.1},{label:'🇲🇽 멕시코',x:27,y:28,r:6,rev:0.8}];
+  const data=[{code:'us',name:'미국',x:125,y:155,r:30,rev:19.4},{code:'jp',name:'일본',x:39,y:96,r:13,rev:3.7},
+    {code:'gb',name:'영국',x:25,y:142,r:13,rev:3.6},{code:'de',name:'독일',x:28,y:118,r:12,rev:3.3},
+    {code:'fr',name:'프랑스',x:25,y:92,r:11,rev:2.3},{code:'ca',name:'캐나다',x:15,y:111,r:9,rev:1.7},
+    {code:'it',name:'이탈리아',x:19,y:62,r:8,rev:1.2},{code:'cn',name:'중국',x:26,y:48,r:8,rev:1.2},
+    {code:'es',name:'스페인',x:19,y:58,r:8,rev:1.1},{code:'mx',name:'멕시코',x:27,y:28,r:6,rev:0.8}];
   const clrs=['#4f46e5','#8b5cf6','#10b981','#06b6d4','#3b82f6','#ec4899','#f59e0b','#ef4444','#f97316','#84cc16'];
-  new Chart(document.getElementById('chartBubbleConsole'),{type:'bubble',plugins:[ChartDataLabels],
-    data:{datasets:data.map((d,i)=>({label:d.label,data:[{x:d.x,y:d.y,r:d.r}],backgroundColor:clrs[i]+'99',borderColor:clrs[i],borderWidth:2}))},
-    options:{responsive:true,maintainAspectRatio:false,
+  new Chart(document.getElementById('chartBubbleConsole'),{type:'bubble',plugins:[ChartDataLabels,flagBubblePlugin],
+    data:{datasets:data.map((d,i)=>({label:d.name,data:[{x:d.x,y:d.y,r:d.r,code:d.code,name:d.name,rev:d.rev}],backgroundColor:clrs[i]+'99',borderColor:clrs[i],borderWidth:2}))},
+    options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:8,right:8,bottom:18,left:8}},
       plugins:{legend:{display:false,align:'center'},
-        datalabels:{formatter:(v,ctx)=>data[ctx.datasetIndex].label,color:'#111827',backgroundColor:'rgba(255,255,255,0.82)',borderRadius:4,padding:{top:2,right:5,bottom:2,left:5},font:{size:10,weight:'bold'},anchor:'center'},
-        tooltip:{callbacks:{label:ctx=>{const d=data[ctx.datasetIndex];return[`${d.label}`,`유저: ${d.x}M`,`ARPU: $${d.y}/년`,`매출: $${d.rev}B (${formatKRW(d.rev)})`];}}}},
+        datalabels:{formatter:(v,ctx)=>data[ctx.datasetIndex].name,color:'#111827',backgroundColor:'rgba(255,255,255,0.88)',borderRadius:4,padding:{top:2,right:5,bottom:2,left:5},font:{size:10,weight:'bold'},anchor:'center',align:'bottom',offset:(ctx)=>ctx.dataset.data[0].r+6},
+        tooltip:{callbacks:{label:ctx=>{const d=data[ctx.datasetIndex];return[`${d.name}`,`유저: ${d.x}M`,`ARPU: $${d.y}/년`,`매출: $${d.rev}B (${formatKRW(d.rev)})`];}}}},
       scales:{x:{title:{display:true,text:'유저 수 (M)'},grid:{color:'#e5e7eb',borderDash:[4,4]}},y:{title:{display:true,text:'ARPU ($/년)'},grid:{color:'#e5e7eb',borderDash:[4,4]}}}}});
 })();
 
