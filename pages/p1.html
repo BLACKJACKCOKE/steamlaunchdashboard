@@ -398,7 +398,8 @@
       <div class="chart-wrap" style="height:340px;"><canvas id="chartBubbleConsole"></canvas></div>
       <div class="callout blue" style="margin-top:14px;">
         <strong>💡 핵심 인사이트:</strong>
-        미국이 ARPU($155)와 규모(136M) 모두 압도적 1위. 미국 단일 시장 = 콘솔 전체의 <strong>47%</strong>. 영국($150)·캐나다·독일(이상 $120) 고ARPU 시장이 2차 공략 대상.
+        미국이 ARPU($155)와 규모(125M) 모두 압도적 1위. 미국 단일 시장 = 콘솔 전체의 <strong>43%</strong>. 영국($142)·독일($118)·캐나다($111) 고ARPU 시장이 2차 공략 대상.<br>
+        <span style="font-size:11px;color:var(--text-sub2)">※ Top 10 합 ≈$38.3B · 기타 지역 ≈$7.0B (Newzoo 공식 총합 $45.3B)</span>
       </div>
     </div>
   </div>
@@ -943,11 +944,11 @@ Chart.register(outerLabelPlugin);
 
 /* ─── S3: 버블 콘솔 ─── */
 (function(){
-  const data=[{label:'🇺🇸 미국',x:136,y:155,r:32,rev:21.2},{label:'🇯🇵 일본',x:44,y:100,r:15,rev:4.5},
-    {label:'🇬🇧 영국',x:25,y:150,r:14,rev:3.8},{label:'🇩🇪 독일',x:25,y:120,r:13,rev:3.0},
-    {label:'🇨🇦 캐나다',x:19,y:120,r:11,rev:2.3},{label:'🇫🇷 프랑스',x:25,y:80,r:11,rev:2.0},
-    {label:'🇮🇹 이탈리아',x:19,y:65,r:9,rev:1.2},{label:'🇨🇳 중국',x:25,y:45,r:9,rev:1.1},
-    {label:'🇪🇸 스페인',x:19,y:50,r:8,rev:1.0},{label:'🇲🇽 멕시코',x:14,y:25,r:6,rev:0.4}];
+  const data=[{label:'🇺🇸 미국',x:125,y:155,r:30,rev:19.4},{label:'🇯🇵 일본',x:39,y:96,r:13,rev:3.7},
+    {label:'🇬🇧 영국',x:25,y:142,r:13,rev:3.6},{label:'🇩🇪 독일',x:28,y:118,r:12,rev:3.3},
+    {label:'🇫🇷 프랑스',x:25,y:92,r:11,rev:2.3},{label:'🇨🇦 캐나다',x:15,y:111,r:9,rev:1.7},
+    {label:'🇮🇹 이탈리아',x:19,y:62,r:8,rev:1.2},{label:'🇨🇳 중국',x:26,y:48,r:8,rev:1.2},
+    {label:'🇪🇸 스페인',x:19,y:58,r:8,rev:1.1},{label:'🇲🇽 멕시코',x:27,y:28,r:6,rev:0.8}];
   const clrs=['#4f46e5','#8b5cf6','#10b981','#06b6d4','#3b82f6','#ec4899','#f59e0b','#ef4444','#f97316','#84cc16'];
   new Chart(document.getElementById('chartBubbleConsole'),{type:'bubble',plugins:[ChartDataLabels],
     data:{datasets:data.map((d,i)=>({label:d.label,data:[{x:d.x,y:d.y,r:d.r}],backgroundColor:clrs[i]+'99',borderColor:clrs[i],borderWidth:2}))},
