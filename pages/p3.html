@@ -515,7 +515,7 @@ footer{background:#1a1a2e;color:#64748b;padding:24px 40px;font-size:11px;display
 <div class="section" id="sec1">
   <div class="sec-num">Section 01</div>
   <div class="sec-title">전체 론칭 타임라인</div>
-  <div class="sec-sub">전사테스트 → FGT → Coming Soon → CLA → CBT → SNF Jun 2027 공통 경로 후 경로 분기 · 목표: Steam Shooter 장르 Top 5</div>
+  <div class="sec-sub">전사테스트 → FGT → Coming Soon → CLA → CBT → SNF Jun 2027 공통 경로 후 경로 분기 · <strong style="color:var(--accent)">목표 시나리오 3-tier</strong>: Conservative (Steam Shooter Top 20, PCCU 25-30K) · <strong>Target (Top 10, PCCU 100-120K)</strong> · Stretch (Top 5, PCCU 300K+ — Helldivers 2/ARC Raiders 급)</div>
 
   <div class="insight">
     <h3>📋 핵심 3줄 요약</h3>
@@ -714,33 +714,85 @@ footer{background:#1a1a2e;color:#64748b;padding:24px 40px;font-size:11px;display
 
 
 
-  <!-- KPI Snapshot -->
-  <div class="sl" style="margin-top:20px">Phase별 핵심 WL KPI 스냅샷</div>
-  <div class="g4">
-    <div class="kpi-card p-card">
-      <div class="kl">Coming Soon 8주 WL</div>
-      <div class="kv" style="color:var(--p)">50K+</div>
-      <div class="ks">공통 목표</div>
-      <div class="kb kb-p" style="margin-right:4px">P</div><div class="kb kb-f">F2P</div>
+  <!-- KPI Snapshot — 3-Scenario Model (2026-05-06 V3 update) -->
+  <!-- 출처: vault SoT 2026-05-06_wl-kpi-validation.md (GameDiscoverCo + Steam Charts 2026 cross-check) -->
+  <div class="sl" style="margin-top:20px">Phase별 핵심 WL KPI 스냅샷 — 3-시나리오 모델</div>
+
+  <!-- 3-시나리오 KPI 표 (Conservative · Target · Stretch) -->
+  <div style="overflow-x:auto;margin-bottom:14px">
+  <table style="width:100%;border-collapse:collapse;font-size:12.5px;background:#fff;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden">
+    <thead>
+      <tr style="background:linear-gradient(90deg,#f5f3ff,#ecfeff,#f0fdf4)">
+        <th style="padding:10px 12px;text-align:left;font-weight:800;color:var(--text-h);border-bottom:2px solid var(--border);width:170px">Phase / Milestone</th>
+        <th style="padding:10px 12px;text-align:center;font-weight:800;color:var(--opt-a-dark);border-bottom:2px solid var(--border);width:170px">🛡️ Conservative<br><span style="font-size:10px;font-weight:600">Top 20 (60% 확률)</span></th>
+        <th style="padding:10px 12px;text-align:center;font-weight:800;color:var(--accent);border-bottom:2px solid var(--border);width:170px;background:#eff6ff">⭐ Target<br><span style="font-size:10px;font-weight:600">Top 10 (30% 확률)</span></th>
+        <th style="padding:10px 12px;text-align:center;font-weight:800;color:var(--purple);border-bottom:2px solid var(--border);width:170px">🚀 Stretch<br><span style="font-size:10px;font-weight:600">Top 5 (10% 확률)</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="padding:9px 12px;border-bottom:1px solid var(--border);font-weight:700;color:var(--text-h)">Coming Soon 8주 WL<br><span style="font-size:10px;color:var(--text-sub2);font-weight:500">2026.11~2027.01</span></td>
+        <td style="padding:9px 12px;border-bottom:1px solid var(--border);text-align:center"><span style="color:var(--opt-a);font-weight:800">25K+</span><br><span style="font-size:10px;color:var(--text-sub2)">공통</span></td>
+        <td style="padding:9px 12px;border-bottom:1px solid var(--border);text-align:center;background:rgba(239,246,255,.5)"><span style="color:var(--accent);font-weight:800">50K+</span><br><span style="font-size:10px;color:var(--text-sub2)">공통</span></td>
+        <td style="padding:9px 12px;border-bottom:1px solid var(--border);text-align:center"><span style="color:var(--purple);font-weight:800">100K+</span><br><span style="font-size:10px;color:var(--text-sub2)">공통</span></td>
+      </tr>
+      <tr style="background:var(--card-bg2)">
+        <td style="padding:9px 12px;border-bottom:1px solid var(--border);font-weight:700;color:var(--text-h)">CBT 종료 (분기 시작)<br><span style="font-size:10px;color:var(--text-sub2);font-weight:500">2027.04</span></td>
+        <td style="padding:9px 12px;border-bottom:1px solid var(--border);text-align:center"><span class="chip-p">P</span> 100K · <span class="chip-f">F2P</span> 200K</td>
+        <td style="padding:9px 12px;border-bottom:1px solid var(--border);text-align:center;background:rgba(239,246,255,.5)"><span class="chip-p">P</span> 200K · <span class="chip-f">F2P</span> 400K</td>
+        <td style="padding:9px 12px;border-bottom:1px solid var(--border);text-align:center"><span class="chip-p">P</span> 400K · <span class="chip-f">F2P</span> 800K</td>
+      </tr>
+      <tr>
+        <td style="padding:9px 12px;border-bottom:1px solid var(--border);font-weight:700;color:var(--text-h)">SNF 종료 후 누적 WL<br><span style="font-size:10px;color:var(--text-sub2);font-weight:500">2027.06 — 경로 분기</span></td>
+        <td style="padding:9px 12px;border-bottom:1px solid var(--border);text-align:center"><span class="chip-p">P</span> 400K · <span class="chip-f">F2P</span> 600K</td>
+        <td style="padding:9px 12px;border-bottom:1px solid var(--border);text-align:center;background:rgba(239,246,255,.5)"><span class="chip-p">P</span> 800K · <span class="chip-f">F2P</span> 1.2M</td>
+        <td style="padding:9px 12px;border-bottom:1px solid var(--border);text-align:center"><span class="chip-p">P</span> 1.5M · <span class="chip-f">F2P</span> 2.5M</td>
+      </tr>
+      <tr style="background:var(--card-bg2)">
+        <td style="padding:9px 12px;border-bottom:1px solid var(--border);font-weight:800;color:var(--text-h)">Launch 직전 누적 WL ⭐<br><span style="font-size:10px;color:var(--text-sub2);font-weight:500">2027.11 직행 / 2028.02-03 EA</span></td>
+        <td style="padding:9px 12px;border-bottom:1px solid var(--border);text-align:center"><span class="chip-p">P</span> <strong>800K</strong> · <span class="chip-f">F2P</span> <strong>1.2M</strong></td>
+        <td style="padding:9px 12px;border-bottom:1px solid var(--border);text-align:center;background:rgba(239,246,255,.5)"><span class="chip-p">P</span> <strong>1.6M</strong> · <span class="chip-f">F2P</span> <strong>2.4M</strong></td>
+        <td style="padding:9px 12px;border-bottom:1px solid var(--border);text-align:center"><span class="chip-p">P</span> <strong>2.5M+</strong> · <span class="chip-f">F2P</span> <strong>4M+</strong></td>
+      </tr>
+      <tr style="background:#fef3c7">
+        <td style="padding:9px 12px;border-bottom:1px solid var(--border);font-weight:800;color:var(--amber)">PCCU Peak target ⭐<br><span style="font-size:10px;color:var(--text-sub2);font-weight:500">Steam 차트 진입선</span></td>
+        <td style="padding:9px 12px;border-bottom:1px solid var(--border);text-align:center;font-weight:700;color:var(--opt-a)"><strong>25-30K</strong><br><span style="font-size:10px;font-weight:500">Top 20 진입</span></td>
+        <td style="padding:9px 12px;border-bottom:1px solid var(--border);text-align:center;font-weight:700;color:var(--accent);background:rgba(239,246,255,.5)"><strong>100-120K</strong><br><span style="font-size:10px;font-weight:500">Top 10 진입</span></td>
+        <td style="padding:9px 12px;border-bottom:1px solid var(--border);text-align:center;font-weight:700;color:var(--purple)"><strong>300K+</strong><br><span style="font-size:10px;font-weight:500">Top 5 진입 (HD2/ARC급)</span></td>
+      </tr>
+      <tr>
+        <td style="padding:9px 12px;font-weight:600;color:var(--text-sub1)">Comparable 사례</td>
+        <td style="padding:9px 12px;text-align:center;font-size:11px;color:var(--text-sub1)">Hunt Showdown · Squad · Marauders</td>
+        <td style="padding:9px 12px;text-align:center;font-size:11px;color:var(--text-sub1);background:rgba(239,246,255,.5)">Sea of Thieves · 7 Days to Die · Hunt cross</td>
+        <td style="padding:9px 12px;text-align:center;font-size:11px;color:var(--text-sub1)"><strong>Helldivers 2 (458K)</strong> · ARC Raiders (462K) · BF6 (747K)</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <!-- 시나리오 가정 + 출처 -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+    <div style="background:var(--blue-bg);border:1px solid var(--blue-bdr);border-radius:var(--radius);padding:12px 16px">
+      <div style="font-weight:800;color:var(--accent);margin-bottom:6px;font-size:12px">📊 KPI 가정 (3-시나리오 공통)</div>
+      <ul style="font-size:11px;color:var(--text-sub1);line-height:1.7;list-style:disc;padding-left:18px">
+        <li><strong>WL→Purchase 전환 (P)</strong>: Conservative 10% ($30+ adj) / Target 15% (median) / Stretch 20% (viral)</li>
+        <li><strong>WL→Install 전환 (F2P)</strong>: Conservative 35% / Target 42% / Stretch 50%</li>
+        <li><strong>D+7 retention</strong>: P 35% / F2P 25% (3-시나리오 공통)</li>
+        <li><strong>WL→PCCU%</strong>: Top 20 ~3% / Top 10 ~6% / Top 5 ~12% (Helldivers 2 30%급은 outlier)</li>
+      </ul>
     </div>
-    <div class="kpi-card pp">
-      <div class="kl">CBT 종료 — 분기 시작</div>
-      <div class="kv" style="color:var(--p);font-size:16px"><span class="chip-p">P</span> 200K</div>
-      <div class="kv" style="color:var(--f2p);font-size:16px;margin-top:2px"><span class="chip-f">F2P</span> 400K</div>
-      <div class="ks">2027.04 이후 목표 분기</div>
+    <div style="background:#fef3c7;border:1px solid #fde68a;border-radius:var(--radius);padding:12px 16px">
+      <div style="font-weight:800;color:var(--amber);margin-bottom:6px;font-size:12px">⚠️ 임원 보고 핵심 메시지</div>
+      <ul style="font-size:11px;color:var(--text-sub1);line-height:1.7;list-style:disc;padding-left:18px">
+        <li>현재 dashboard <strong>"Top 5 최소선 PCCU 55K+"</strong> 가정은 <strong>Top 10-20 진입선</strong>에 가까움</li>
+        <li>실제 <strong>Steam Shooter Top 5</strong> 진입은 <strong>150-300K+ PCCU</strong> 필요 (Helldivers 2 458K · ARC 462K · BF6 747K)</li>
+        <li><strong>F2P 2.4M WL</strong>은 Delta Force 2.1M (Steam top wishlisted) 상회 = AAA publisher partnership 전제</li>
+      </ul>
     </div>
-    <div class="kpi-card" style="border-left-color:var(--purple)">
-      <div class="kl">SNF 종료 후 누적 WL</div>
-      <div class="kv" style="color:var(--p);font-size:16px"><span class="chip-p">P</span> 800K</div>
-      <div class="kv" style="color:var(--f2p);font-size:16px;margin-top:2px"><span class="chip-f">F2P</span> 1.2M</div>
-      <div class="ks">경로 분기 핵심 기준</div>
-    </div>
-    <div class="kpi-card gn">
-      <div class="kl">Launch 직전 누적 WL</div>
-      <div class="kv" style="color:var(--p);font-size:16px"><span class="chip-p">P</span> 1.6M</div>
-      <div class="kv" style="color:var(--f2p);font-size:16px;margin-top:2px"><span class="chip-f">F2P</span> 2.4M</div>
-      <div class="ks">PCCU 55K+ (Top 5 최소선)</div>
-    </div>
+  </div>
+
+  <div style="font-size:10px;color:var(--text-src);text-align:right">
+    📎 출처: vault SoT <code>04_EMPLOYED/projects/steam-launch-expert/insights/2026-05-06_wl-kpi-validation.md</code> · <a href="https://newsletter.gamediscover.co/p/the-state-of-steam-wishlist-conversions" target="_blank">GameDiscoverCo 2024-2025</a> · <a href="https://steamcharts.com/" target="_blank">Steam Charts 2026</a>
   </div>
 </div>
 
@@ -777,8 +829,8 @@ footer{background:#1a1a2e;color:#64748b;padding:24px 40px;font-size:11px;display
     </div>
     <!-- Dual Funnel -->
     <div class="chart-card">
-      <div class="ct">WL → Launch PCCU 경로 — <span class="chip-p">P</span> · <span class="chip-f">F2P</span> 트랙별 트래킹</div>
-      <div class="cs">⚠️ 두 BM의 핵심 전환 지표는 분모/분자가 다름 — Premium "WL→구매(15%)" ↔ F2P "WL→설치(~42%)"는 <strong>직접 % 비교 불가</strong>. 공통 비교 지표는 최하단 「WL→PCCU Peak 전환율」.</div>
+      <div class="ct">WL → Launch PCCU 경로 — <span class="chip-p">P</span> · <span class="chip-f">F2P</span> 트랙별 트래킹 <span style="font-size:10px;font-weight:600;color:var(--accent);background:#eff6ff;padding:2px 7px;border-radius:10px;margin-left:6px">⭐ Target 시나리오</span></div>
+      <div class="cs">⚠️ 본 차트는 <strong>Target 시나리오 (Top 10 진입)</strong> 기준. 3-시나리오 비교는 sec1 KPI 표 참조. Premium "WL→구매(15%)" ↔ F2P "WL→설치(~42%)"는 분모·분자 다름 → <strong>직접 % 비교 불가</strong>. 공통 비교 지표는 최하단 「WL→PCCU Peak 전환율」.</div>
       <div class="dual-funnel">
         <!-- Premium Funnel -->
         <div class="df-col">
@@ -803,12 +855,13 @@ footer{background:#1a1a2e;color:#64748b;padding:24px 40px;font-size:11px;display
           <div class="df-note" style="border-left-color:var(--f2p)"><strong>F2P 전환 특성:</strong> 결제 장벽 없어 설치 전환율 높음(~42%). 단, 무료 유저는 이탈이 빠름 — <strong>D+7 리텐션 25%</strong>로 낮음. 수익은 과금 유저(~10%) IAP에서 발생.</div>
         </div>
         <div class="df-compare">
-          <div class="df-cmp-title">✅ 직접 비교 가능한 단일 지표 — WL → PCCU Peak 전환율</div>
+          <div class="df-cmp-title">✅ 직접 비교 가능한 단일 지표 — WL → PCCU Peak 전환율 (3-시나리오)</div>
           <div class="df-cmp-rows">
-            <div class="df-cmp-row"><span class="chip-p">P</span> 1,600,000 WL → 67,000 PCCU = <strong>4.19%</strong></div>
-            <div class="df-cmp-row"><span class="chip-f">F2P</span> 2,400,000 WL → 58,000 PCCU = <strong>2.42%</strong></div>
+            <div class="df-cmp-row" style="opacity:.85"><span style="background:var(--opt-a);color:#fff;font-size:9px;font-weight:800;padding:2px 6px;border-radius:8px;margin-right:6px">Conservative</span><span class="chip-p">P</span> 800K → 25K PCCU = <strong>3.1%</strong> · <span class="chip-f">F2P</span> 1.2M → 30K = <strong>2.5%</strong></div>
+            <div class="df-cmp-row" style="background:#eff6ff;border-radius:6px;padding:4px 6px"><span style="background:var(--accent);color:#fff;font-size:9px;font-weight:800;padding:2px 6px;border-radius:8px;margin-right:6px">⭐ Target</span><span class="chip-p">P</span> 1.6M → <strong>100K PCCU = 6.3%</strong> · <span class="chip-f">F2P</span> 2.4M → <strong>120K = 5.0%</strong></div>
+            <div class="df-cmp-row" style="opacity:.85"><span style="background:var(--purple);color:#fff;font-size:9px;font-weight:800;padding:2px 6px;border-radius:8px;margin-right:6px">Stretch</span><span class="chip-p">P</span> 2.5M → 300K PCCU = <strong>12%</strong> · <span class="chip-f">F2P</span> 4M → 400K = <strong>10%</strong></div>
           </div>
-          <div class="df-cmp-note">→ Premium이 단위 WL당 PCCU 약 1.7× 효율 (D+7 리텐션 35% vs 25% 격차에서 발생). 단, 절대 PCCU는 F2P 트래픽 규모로 보완 가능.</div>
+          <div class="df-cmp-note">→ <strong>Target 시나리오 PCCU 100-120K = Steam Top 10 진입선</strong> (HD2 458K · ARC 462K 같은 Top 5는 Stretch 시나리오). Premium이 단위 WL당 PCCU 약 1.5-1.7× 효율 (D+7 리텐션 35% vs 25% 격차). <span style="color:var(--text-src)">📎 sec1 3-시나리오 표 참조 · vault SoT: 2026-05-06_wl-kpi-validation.md</span></div>
         </div>
       </div>
     </div>
@@ -1581,10 +1634,11 @@ footer{background:#1a1a2e;color:#64748b;padding:24px 40px;font-size:11px;display
   <!-- ━━━━━━━━━━ Bull / Bear case ━━━━━━━━━━ -->
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
     <div style="background:var(--green-bg);border:1px solid var(--green-bdr);border-radius:var(--radius);padding:14px 18px">
-      <div style="font-weight:800;color:var(--opt-b-dark);margin-bottom:6px;font-size:13px">🐂 Bull case (Project S takeover 성공 시)</div>
+      <div style="font-weight:800;color:var(--opt-b-dark);margin-bottom:6px;font-size:13px">🐂 Bull case (Project S takeover 성공 시 — 시나리오별)</div>
       <ul style="font-size:12px;color:var(--text-sub1);line-height:1.7;list-style:disc;padding-left:18px">
         <li>Windrose 검증 패턴 — 6일 1M / 222K 동접 / Steam revenue 2위 (CS2 다음)</li>
-        <li>WL 1.6M~2.4M (sec1 launch 직전 KPI) → sale 전환 5-10x ⇒ <strong>PCCU 55K+ Top 5 진입</strong> 가능</li>
+        <li><strong>Target 시나리오</strong>: WL 1.6M~2.4M → PCCU <strong>100-120K (Top 10 진입)</strong> · Sea of Thieves / 7DTD 급</li>
+        <li><strong>Stretch 시나리오</strong>: WL 2.5M+/4M+ → PCCU <strong>300K+ (Top 5 진입)</strong> · Helldivers 2 (458K) · ARC Raiders (462K) · BF6 (747K) 급 — viral hit 필요</li>
         <li>Brand awareness 폭발 → Season 1·2 retention 토대 + 2차 takeover (T+6) 자격 진입</li>
       </ul>
     </div>
