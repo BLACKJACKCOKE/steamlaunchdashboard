@@ -789,16 +789,20 @@ footer{background:#1a1a2e;color:#64748b;padding:24px 40px;font-size:11px;display
   </table>
   </div>
 
-  <!-- 가정 + 출처 (단일 박스, 임원 메시지 박스 제거) -->
+  <!-- 가정 + 출처 + 정직성 disclaimer -->
   <div style="background:var(--blue-bg);border:1px solid var(--blue-bdr);border-radius:var(--radius);padding:12px 16px;margin-bottom:14px">
     <div style="font-weight:800;color:var(--accent);margin-bottom:6px;font-size:12px">📊 5-Tier 모델 산정 근거</div>
     <ul style="font-size:11px;color:var(--text-sub1);line-height:1.7;list-style:disc;padding-left:18px">
-      <li><strong>확률 분포 (40/30/18/9/3)</strong>: <a href="https://www.thegamer.com/2025-live-service-games-player-analysis/" target="_blank">TheGamer 2025 live-service 분석</a> — 19개 launch 中 11개 (58%) 90%+ 이탈 → Failure 40% + Survival 30% (총 70% 시장 진입 어려움)</li>
-      <li><strong>WL→Purchase 전환 (P)</strong>: <a href="https://newsletter.gamediscover.co/p/the-state-of-steam-wishlist-conversions" target="_blank">GameDiscoverCo 2024-2025</a> 25K+ wishlist median 0.15× / $10+ 0.10× → Project S $30+ premium 가정 시 10% baseline</li>
-      <li><strong>WL→Install 전환 (F2P)</strong>: 직접 데이터 부족 (Steam 비공개) — Marvel Rivals · ARC Raiders · Delta Force 사례에서 30-55% 추정</li>
-      <li><strong>WL→PCCU% (역산)</strong>: HD2 458K÷1M WL est=46% (outlier viral) · Marvel 644K÷1M+=50% · BF6 747K÷2.5M=30% · Concord 697÷4K=17% (flop) · Hunt 60K÷700K-1M=6-9%</li>
-      <li><strong>D+7 retention</strong>: P 35% / F2P 25% (5-Tier 공통) — FPS 일반 retention curve</li>
+      <li><strong>🔴 Failure 40%</strong> <span style="background:#16a34a;color:#fff;font-size:9px;font-weight:800;padding:1px 5px;border-radius:6px;margin:0 3px">DATA-BACKED</span>: <a href="https://www.thegamer.com/2025-live-service-games-player-analysis/" target="_blank">TheGamer 2025 live-service 분석</a> — 19개 launch 中 11개 (58%) 90%+ 이탈. Project S publisher backing 가정 시 -18%p 보정 → 40%</li>
+      <li><strong>🟠 Survival 30% / 🛡️ Conservative 18% / ⭐ Target 9% / 🚀 Stretch 3%</strong> <span style="background:var(--amber);color:#fff;font-size:9px;font-weight:800;padding:1px 5px;border-radius:6px;margin:0 3px">ESTIMATED</span>: 100% - 40% (Failure) = 60% non-failure를 <strong>Pareto-style decay</strong>로 분배 (30 : 18 : 9 : 3 = 10 : 6 : 3 : 1). <span style="color:var(--red)">⚠️ 직접 data 없음</span> — Steam 신규 launch → Top X 진입률 비공개. 더 엄밀한 추정 시 Conservative 5-10% / Target 2-5% / Stretch 0.5-1% (현재 분포는 2-6배 낙관적 가능)</li>
+      <li><strong>WL→Purchase 전환 (P)</strong> <span style="background:#16a34a;color:#fff;font-size:9px;font-weight:800;padding:1px 5px;border-radius:6px;margin:0 3px">DATA-BACKED</span>: <a href="https://newsletter.gamediscover.co/p/the-state-of-steam-wishlist-conversions" target="_blank">GameDiscoverCo 2024-2025</a> 25K+ wishlist median 0.15× / $10+ 0.10× → Project S $30+ premium 가정 시 10% baseline</li>
+      <li><strong>WL→Install 전환 (F2P)</strong> <span style="background:var(--amber);color:#fff;font-size:9px;font-weight:800;padding:1px 5px;border-radius:6px;margin:0 3px">ESTIMATED</span>: 직접 데이터 부족 (Steam 비공개) — Marvel Rivals · ARC Raiders · Delta Force 사례에서 30-55% 추정</li>
+      <li><strong>WL→PCCU% (역산)</strong> <span style="background:#16a34a;color:#fff;font-size:9px;font-weight:800;padding:1px 5px;border-radius:6px;margin:0 3px">DATA-BACKED</span>: HD2 458K÷1M WL est=46% (outlier viral) · Marvel 644K÷1M+=50% · BF6 747K÷2.5M=30% · Concord 697÷4K=17% (flop) · Hunt 60K÷700K-1M=6-9%</li>
+      <li><strong>D+7 retention</strong> <span style="background:var(--amber);color:#fff;font-size:9px;font-weight:800;padding:1px 5px;border-radius:6px;margin:0 3px">ESTIMATED</span>: P 35% / F2P 25% (5-Tier 공통) — FPS 일반 retention curve 추정</li>
     </ul>
+    <div style="margin-top:10px;padding:8px 12px;background:#fef3c7;border:1px solid #fde68a;border-radius:8px;font-size:10.5px;color:var(--text-sub1);line-height:1.5">
+      <strong style="color:var(--amber)">⚠️ 정직성 Disclaimer</strong>: Failure 40% + WL→Purchase + WL→PCCU% 만 외부 data 근거. 나머지 4개 Tier 확률 (Survival 30% / Conservative 18% / Target 9% / Stretch 3%) + WL→Install + retention 은 <strong>Pareto-style 추정값</strong>. Steam은 신규 launch → Top X 진입률 비공개. 더 엄밀 추정 가능 source: <a href="https://vginsights.com/insights" target="_blank" style="color:var(--accent)">VG Insights</a> · <a href="https://newsletter.gamediscover.co/" target="_blank" style="color:var(--accent)">GameDiscoverCo paid reports</a> · <a href="https://steamdb.info/charts/" target="_blank" style="color:var(--accent)">SteamDB historical</a> — 향후 V5 update 시 갱신 후보.
+    </div>
   </div>
 
   <!-- Phase 별 WL trajectory (5-Tier × 4 milestones) -->
