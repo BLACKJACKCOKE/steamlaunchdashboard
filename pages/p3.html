@@ -1812,8 +1812,7 @@ function initGantt() {
     {m0:1, m1:6,  fill:'#3b82f6',id:'cpf',lbl:'전사테스트 + FGT 1·2차',sub:"Jul'26~Dec'26",   da:true },
     {m0:7, m1:9,  fill:'#0d9488',id:'cpc',lbl:'CS 오픈',               sub:"Jan~Mar'27",      da:false},
     {m0:10,m1:12, fill:'#0891b2',id:'cpl',lbl:'CLA',                   sub:"Apr~Jun'27",      da:true },
-    {m0:12,m1:14, fill:'#7c3aed',id:'cpb',lbl:'CBT',                   sub:"Jun~Aug'27",      da:false},
-    {m0:14,m1:15, fill:'#9333ea',id:'cpd',lbl:'Demo',                  sub:"Aug~Sep'27",      da:true },
+    {m0:12,m1:15, fill:'#7c3aed',id:'cpb',lbl:'CBT',                   sub:"Jun~Sep'27",      da:false},
   ];
   const EA_BARS=[
     {m0:17,m1:20,fill:'#f97316',id:'cpe1',lbl:'EA 준비',             sub:"Nov'27~Feb'28",da:true },
@@ -1937,7 +1936,7 @@ function initGantt() {
     g += tx(mcx,sy,sub,`text-anchor="middle" font-size="10" fill="${da?'#475569':'#64748b'}"`);
   });
   // 점선 연결 (바와 바 사이 갭에만)
-  [[6,7],[9,10],[15,16]].forEach(([a,b])=>{
+  [[6,7],[9,10],[15,16]].forEach(([a,b])=>{  // CBT m=12~15 → SNF m=16
     const x1=X(a), x2=b===16?X(b)-24:X(b);
     g += ln(x1,BY+BH/2,x2,BY+BH/2,'stroke="#9ca3af" stroke-width="1.5" stroke-dasharray="3,2"');
   });
@@ -1998,7 +1997,7 @@ function initGantt() {
   const LEGS=[
     {col:'#3b82f6',lbl:'FGT (검증)'},
     {col:'#0d9488',lbl:'CS 오픈·WL'},
-    {col:'#7c3aed',lbl:'CBT·Demo'},
+    {col:'#7c3aed',lbl:'CBT'},
     {col:'#fbbf24',lbl:"★ SNF Oct'27"},
     {col:'#f97316',lbl:'EA 경로'},
     {col:'#22c55e',lbl:'직행 경로'},
