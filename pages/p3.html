@@ -513,15 +513,36 @@ footer{background:#1a1a2e;color:#64748b;padding:24px 40px;font-size:11px;display
 <div class="section" id="sec1">
   <div class="sec-num">Section 01</div>
   <div class="sec-title">전체 론칭 타임라인</div>
-  <div class="sec-sub">전사테스트 → FGT → Coming Soon → CLA → CBT → SNF Dec 2027 공통 경로 후 경로 분기 · <strong style="color:var(--accent)">5-Tier industry-realistic 시나리오</strong>: 🔴 Failure 58% · 🟠 Survival 27% · 🛡️ Conservative 10% · ⭐ Target 4% · 🚀 Stretch 1% (확률 분포 합 100%, 산업 데이터 정합)</div>
 
-  <div class="insight">
-    <h3>📋 핵심 3줄 요약</h3>
-    <ul>
-      <li><strong>공통 경로:</strong> 전사테스트(2026.07) → FGT 2회(2026.08~12) → Coming Soon(2027.01) → CLA → CBT → SNF Dec 2027. SNF 결과로 두 경로 분기.</li>
-      <li><strong><span style="color:var(--opt-a)">◼ EA 론칭 경로</span>:</strong> SNF 위시 🛡️ Conservative 목표의 70~100% + 빌드 완성도 80% 수준. EA로 피드백 추가 수집 후 정식 론칭. SNF~LAUNCH 갭 8~9개월, 정식 LAUNCH 2028.Q3.</li>
-      <li><strong><span style="color:var(--opt-b)">◼ 직행 론칭 경로</span>:</strong> SNF 위시 🛡️ Conservative 목표 달성·초과 + 빌드 완성도 90%+. 서버 부하 최종 검증 후 즉시 정식 론칭. SNF~LAUNCH 갭 4~5개월, 정식 LAUNCH 2028.04~05.</li>
-    </ul>
+  <!-- ── 경로 요약 3-Card ── -->
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:24px">
+
+    <div style="background:#f0f9ff;border:1.5px solid #bae6fd;border-radius:12px;padding:16px 18px">
+      <div style="font-size:10px;font-weight:800;color:#0284c7;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:10px">🗺 공통 경로</div>
+      <div style="font-size:13px;font-weight:700;color:#0f172a;line-height:1.7">
+        전사테스트(2026.07) → FGT → CS 오픈(2027.01) → CLA → CBT → <strong style="color:var(--purple)">★ SNF Dec 2027</strong>
+      </div>
+      <div style="margin-top:10px;padding-top:8px;border-top:1px solid #bae6fd;font-size:11.5px;color:#0369a1;font-weight:600">SNF 결과로 아래 두 경로 중 하나로 분기</div>
+    </div>
+
+    <div style="background:#fff7ed;border:1.5px solid #fdba74;border-left:4px solid var(--opt-a);border-radius:12px;padding:16px 18px">
+      <div style="font-size:10px;font-weight:800;color:var(--opt-a);letter-spacing:1.2px;text-transform:uppercase;margin-bottom:10px">◼ EA 론칭 경로</div>
+      <div style="font-size:13px;font-weight:700;color:#0f172a;line-height:1.7">🛡️ WL 목표 70~100% + 빌드 완성도 80%</div>
+      <div style="margin-top:10px;padding-top:8px;border-top:1px solid #fdba74;display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:11.5px;color:var(--text-sub1)">SNF~LAUNCH 8~9개월</span>
+        <span style="font-size:13px;font-weight:800;color:var(--opt-a)">🚀 2028.Q3</span>
+      </div>
+    </div>
+
+    <div style="background:#f0fdf4;border:1.5px solid #86efac;border-left:4px solid var(--opt-b);border-radius:12px;padding:16px 18px">
+      <div style="font-size:10px;font-weight:800;color:var(--opt-b);letter-spacing:1.2px;text-transform:uppercase;margin-bottom:10px">◼ 직행 론칭 경로</div>
+      <div style="font-size:13px;font-weight:700;color:#0f172a;line-height:1.7">🛡️ WL 목표 달성·초과 + 빌드 완성도 90%+</div>
+      <div style="margin-top:10px;padding-top:8px;border-top:1px solid #86efac;display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:11.5px;color:var(--text-sub1)">SNF~LAUNCH 4~5개월</span>
+        <span style="font-size:13px;font-weight:800;color:var(--opt-b)">🚀 2028.04~05</span>
+      </div>
+    </div>
+
   </div>
 
   <!-- ══ GANTT ROADMAP ══ -->
@@ -552,64 +573,79 @@ footer{background:#1a1a2e;color:#64748b;padding:24px 40px;font-size:11px;display
   <!-- 출처: vault SoT 2026-05-06_wl-kpi-validation.md (GameDiscoverCo + Steam Charts 2026 + 2025 live-service failure analysis) -->
   <div class="sl" style="margin-top:20px">5-Tier Industry-Realistic 시나리오 — Steam Shooter launch 분포</div>
 
-  <!-- 직관적 분포 박스 — "100개 launch 中" 표현 + visual proportion bars -->
-  <div style="background:#fff;border:2px solid var(--border);border-radius:var(--radius);padding:14px 18px;margin-bottom:14px">
-    <div style="font-weight:800;color:var(--text-h);font-size:13px;margin-bottom:10px">📊 직관적 분포 — 신규 Steam Shooter <strong style="color:var(--accent)">100개 launch</strong> 중 1년 후 어디에 도달하는가?</div>
-    <div style="display:flex;flex-direction:column;gap:6px">
-      <!-- Failure 58% -->
-      <div style="display:flex;align-items:center;gap:8px">
-        <span style="width:130px;font-weight:700;color:var(--red);font-size:12px">🔴 Failure</span>
-        <span style="width:55px;font-weight:800;font-family:monospace;color:var(--red);font-size:13px">58개</span>
-        <div style="flex:1;height:18px;background:#f3f4f6;border-radius:4px;overflow:hidden">
-          <div style="width:58%;height:100%;background:var(--red);border-radius:4px"></div>
-        </div>
-        <span style="width:42px;font-weight:800;font-family:monospace;color:var(--red);font-size:12px;text-align:right">58%</span>
-        <span style="font-size:11.5px;color:var(--text-sub2);width:230px;text-align:right">PCCU avg &lt;5K (1년 90%+ 이탈)</span>
+  <!-- 5-Tier 카드형 분포 -->
+  <div style="margin-bottom:6px;font-size:12px;font-weight:700;color:var(--text-sub2)">📊 신규 Steam Shooter <strong style="color:var(--text-h)">100개 launch</strong> 중 1년 후 어디에 도달하는가?</div>
+  <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:14px">
+
+    <!-- Failure 58% -->
+    <div style="border-radius:12px;overflow:hidden;border:1.5px solid #fca5a5;box-shadow:0 1px 4px rgba(0,0,0,.06)">
+      <div style="background:var(--red);padding:10px 8px;text-align:center">
+        <div style="font-size:20px;line-height:1">🔴</div>
+        <div style="font-size:11px;font-weight:800;color:#fff;margin-top:4px;letter-spacing:.5px">Failure</div>
       </div>
-      <!-- Survival 27% -->
-      <div style="display:flex;align-items:center;gap:8px">
-        <span style="width:130px;font-weight:700;color:var(--opt-a);font-size:12px">🟠 Survival</span>
-        <span style="width:55px;font-weight:800;font-family:monospace;color:var(--opt-a);font-size:13px">27개</span>
-        <div style="flex:1;height:18px;background:#f3f4f6;border-radius:4px;overflow:hidden">
-          <div style="width:27%;height:100%;background:var(--opt-a);border-radius:4px"></div>
-        </div>
-        <span style="width:42px;font-weight:800;font-family:monospace;color:var(--opt-a);font-size:12px;text-align:right">27%</span>
-        <span style="font-size:11.5px;color:var(--text-sub2);width:230px;text-align:right">PCCU avg 5-30K (지속 가능 community)</span>
-      </div>
-      <!-- Conservative 10% -->
-      <div style="display:flex;align-items:center;gap:8px">
-        <span style="width:130px;font-weight:700;color:var(--amber);font-size:12px">🛡️ Conservative</span>
-        <span style="width:55px;font-weight:800;font-family:monospace;color:var(--amber);font-size:13px">10개</span>
-        <div style="flex:1;height:18px;background:#f3f4f6;border-radius:4px;overflow:hidden">
-          <div style="width:10%;height:100%;background:var(--amber);border-radius:4px"></div>
-        </div>
-        <span style="width:42px;font-weight:800;font-family:monospace;color:var(--amber);font-size:12px;text-align:right">10%</span>
-        <span style="font-size:11.5px;color:var(--text-sub2);width:230px;text-align:right">PCCU avg 30-100K (Top 20 진입)</span>
-      </div>
-      <!-- Target 4% -->
-      <div style="display:flex;align-items:center;gap:8px">
-        <span style="width:130px;font-weight:700;color:var(--accent);font-size:12px">⭐ Target</span>
-        <span style="width:55px;font-weight:800;font-family:monospace;color:var(--accent);font-size:13px">4개</span>
-        <div style="flex:1;height:18px;background:#f3f4f6;border-radius:4px;overflow:hidden">
-          <div style="width:4%;min-width:6px;height:100%;background:var(--accent);border-radius:4px"></div>
-        </div>
-        <span style="width:42px;font-weight:800;font-family:monospace;color:var(--accent);font-size:12px;text-align:right">4%</span>
-        <span style="font-size:11.5px;color:var(--text-sub2);width:230px;text-align:right">PCCU avg 100-300K (Top 10 진입)</span>
-      </div>
-      <!-- Stretch 1% -->
-      <div style="display:flex;align-items:center;gap:8px">
-        <span style="width:130px;font-weight:700;color:var(--purple);font-size:12px">🚀 Stretch</span>
-        <span style="width:55px;font-weight:800;font-family:monospace;color:var(--purple);font-size:13px">1개</span>
-        <div style="flex:1;height:18px;background:#f3f4f6;border-radius:4px;overflow:hidden;position:relative">
-          <div style="width:1%;min-width:6px;height:100%;background:var(--purple);border-radius:4px;box-shadow:0 0 0 2px rgba(124,58,237,.25)"></div>
-        </div>
-        <span style="width:42px;font-weight:800;font-family:monospace;color:var(--purple);font-size:12px;text-align:right">1%</span>
-        <span style="font-size:11.5px;color:var(--text-sub2);width:230px;text-align:right">PCCU avg 300K+ (Top 5 mega-hit)</span>
+      <div style="background:#fff5f5;padding:12px 8px;text-align:center">
+        <div style="font-size:30px;font-weight:900;color:var(--red);line-height:1">58%</div>
+        <div style="font-size:12px;color:var(--red);font-weight:700;margin-top:3px">58개 / 100</div>
+        <div style="margin-top:8px;font-size:11px;color:var(--text-sub2);line-height:1.5">PCCU avg<br><strong style="color:#dc2626;font-size:12px">&lt;5K</strong><br>1년 90%+ 이탈</div>
       </div>
     </div>
-    <div style="margin-top:10px;padding-top:8px;border-top:1px dashed var(--border);font-size:11.5px;color:var(--text-sub2);line-height:1.5">
-      💡 <strong>해석</strong>: 신규 launch 100개 中 <strong style="color:var(--red)">85개 (58+27)는 실패 또는 지속만</strong>. <strong style="color:var(--amber)">15개 (10+4+1)만 의미 있는 hit</strong>. PCCU는 <strong>1년 sustained avg</strong> (Steam Charts 직접 관찰 가능 지표) 기준. 자세한 산정 근거는 아래 박스 펼치기.
+
+    <!-- Survival 27% -->
+    <div style="border-radius:12px;overflow:hidden;border:1.5px solid #fdba74;box-shadow:0 1px 4px rgba(0,0,0,.06)">
+      <div style="background:var(--opt-a);padding:10px 8px;text-align:center">
+        <div style="font-size:20px;line-height:1">🟠</div>
+        <div style="font-size:11px;font-weight:800;color:#fff;margin-top:4px;letter-spacing:.5px">Survival</div>
+      </div>
+      <div style="background:#fff7ed;padding:12px 8px;text-align:center">
+        <div style="font-size:30px;font-weight:900;color:var(--opt-a);line-height:1">27%</div>
+        <div style="font-size:12px;color:var(--opt-a);font-weight:700;margin-top:3px">27개 / 100</div>
+        <div style="margin-top:8px;font-size:11px;color:var(--text-sub2);line-height:1.5">PCCU avg<br><strong style="color:var(--opt-a);font-size:12px">5-30K</strong><br>지속 가능 커뮤니티</div>
+      </div>
     </div>
+
+    <!-- Conservative 10% -->
+    <div style="border-radius:12px;overflow:hidden;border:2px solid var(--amber);box-shadow:0 2px 8px rgba(245,158,11,.18)">
+      <div style="background:var(--amber);padding:10px 8px;text-align:center;position:relative">
+        <div style="position:absolute;top:4px;right:6px;font-size:9px;font-weight:800;color:#78350f;background:#fef3c7;padding:1px 5px;border-radius:8px">기본값</div>
+        <div style="font-size:20px;line-height:1">🛡️</div>
+        <div style="font-size:11px;font-weight:800;color:#fff;margin-top:4px;letter-spacing:.5px">Conservative</div>
+      </div>
+      <div style="background:#fefce8;padding:12px 8px;text-align:center">
+        <div style="font-size:30px;font-weight:900;color:var(--amber);line-height:1">10%</div>
+        <div style="font-size:12px;color:var(--amber);font-weight:700;margin-top:3px">10개 / 100</div>
+        <div style="margin-top:8px;font-size:11px;color:var(--text-sub2);line-height:1.5">PCCU avg<br><strong style="color:var(--amber);font-size:12px">30-100K</strong><br>Top 20 진입</div>
+      </div>
+    </div>
+
+    <!-- Target 4% -->
+    <div style="border-radius:12px;overflow:hidden;border:1.5px solid #93c5fd;box-shadow:0 1px 4px rgba(0,0,0,.06)">
+      <div style="background:var(--accent);padding:10px 8px;text-align:center">
+        <div style="font-size:20px;line-height:1">⭐</div>
+        <div style="font-size:11px;font-weight:800;color:#fff;margin-top:4px;letter-spacing:.5px">Target</div>
+      </div>
+      <div style="background:#eff6ff;padding:12px 8px;text-align:center">
+        <div style="font-size:30px;font-weight:900;color:var(--accent);line-height:1">4%</div>
+        <div style="font-size:12px;color:var(--accent);font-weight:700;margin-top:3px">4개 / 100</div>
+        <div style="margin-top:8px;font-size:11px;color:var(--text-sub2);line-height:1.5">PCCU avg<br><strong style="color:var(--accent);font-size:12px">100-300K</strong><br>Top 10 진입</div>
+      </div>
+    </div>
+
+    <!-- Stretch 1% -->
+    <div style="border-radius:12px;overflow:hidden;border:1.5px solid #c4b5fd;box-shadow:0 1px 4px rgba(0,0,0,.06)">
+      <div style="background:var(--purple);padding:10px 8px;text-align:center">
+        <div style="font-size:20px;line-height:1">🚀</div>
+        <div style="font-size:11px;font-weight:800;color:#fff;margin-top:4px;letter-spacing:.5px">Stretch</div>
+      </div>
+      <div style="background:#f5f3ff;padding:12px 8px;text-align:center">
+        <div style="font-size:30px;font-weight:900;color:var(--purple);line-height:1">1%</div>
+        <div style="font-size:12px;color:var(--purple);font-weight:700;margin-top:3px">1개 / 100</div>
+        <div style="margin-top:8px;font-size:11px;color:var(--text-sub2);line-height:1.5">PCCU avg<br><strong style="color:var(--purple);font-size:12px">300K+</strong><br>Top 5 mega-hit</div>
+      </div>
+    </div>
+
+  </div>
+  <div style="padding:8px 14px;background:#f8fafc;border:1px dashed var(--border);border-radius:8px;font-size:11.5px;color:var(--text-sub2);line-height:1.5;margin-bottom:14px">
+    💡 <strong style="color:var(--text-h)">해석</strong>: 100개 중 <strong style="color:var(--red)">85개(58+27)는 실패 또는 지속만</strong> — <strong style="color:var(--amber)">15개(10+4+1)만 의미 있는 hit</strong>. PCCU = 1년 sustained avg (Steam Charts 직접 관찰 가능). 상세 근거는 아래 표 참조.
   </div>
 
   <!-- 5-Tier 마스터 표 (Tier × 핵심 지표 + Comparable + 출처) -->
