@@ -65,9 +65,9 @@ header{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.97);backdr
 /* LAYOUT */
 .page-wrap{max-width:1280px;margin:0 auto}
 .section{padding:52px 40px;border-bottom:1px solid var(--border);scroll-margin-top:142px}
-.sec-num{font-size:11px;font-weight:700;letter-spacing:2px;color:var(--accent);text-transform:uppercase;margin-bottom:5px}
-.sec-title{font-size:22px;font-weight:800;color:var(--text-h);margin-bottom:4px;line-height:1.3}
-.sec-sub{font-size:13px;color:var(--text-sub2);margin-bottom:28px}
+.sec-num{font-size:15px;font-weight:700;letter-spacing:2px;color:var(--accent);text-transform:uppercase;margin-bottom:5px}
+.sec-title{font-size:30px;font-weight:800;color:var(--text-h);margin-bottom:4px;line-height:1.3}
+.sec-sub{font-size:15px;color:var(--text-sub2);margin-bottom:28px}
 
 /* INSIGHT */
 .insight{background:linear-gradient(135deg,#f0f4ff,#fafbff);border:1px solid #c7d2fe;border-radius:var(--radius);padding:14px 20px;margin-bottom:24px}
@@ -348,7 +348,7 @@ header{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.97);backdr
 .planner-badge{padding:10px 12px;display:flex;align-items:center;min-width:80px;justify-content:flex-end}
 
 /* SUBSEC LABEL */
-.sl{font-size:10px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.12em;margin:14px 0 8px;display:flex;align-items:center;gap:8px}
+.sl{font-size:13px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.12em;margin:14px 0 8px;display:flex;align-items:center;gap:8px}
 .sl::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent)}
 
 /* SRC LINE */
@@ -653,52 +653,30 @@ footer{background:#1a1a2e;color:#64748b;padding:24px 40px;font-size:11px;display
   <table style="width:100%;border-collapse:collapse;font-size:12px;background:#fff;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden">
     <thead>
       <tr style="background:linear-gradient(90deg,#fee2e2,#ffedd5,#fef3c7,#dbeafe,#ede9fe)">
-        <th style="padding:10px 10px;text-align:left;font-weight:800;color:var(--text-h);border-bottom:2px solid var(--border);width:120px">Tier</th>
+        <th style="padding:10px 10px;text-align:center;font-weight:800;color:var(--text-h);border-bottom:2px solid var(--border);width:120px">Tier</th>
         <th style="padding:10px 10px;text-align:center;font-weight:800;color:var(--text-h);border-bottom:2px solid var(--border);width:80px">확률<br><span style="font-size:9px;font-weight:600;color:var(--text-sub2)">100개 中</span></th>
         <th style="padding:10px 10px;text-align:center;font-weight:800;color:var(--text-h);border-bottom:2px solid var(--border)">PCCU avg (1yr)<br><span style="font-size:9px;font-weight:600;color:var(--text-sub2)">/ peak (launch)</span></th>
         <th style="padding:10px 10px;text-align:center;font-weight:800;color:var(--text-h);border-bottom:2px solid var(--border)">Pre-launch WL</th>
         <th style="padding:10px 10px;text-align:center;font-weight:800;color:var(--text-h);border-bottom:2px solid var(--border)">WL→Purchase (P) / Install (F2P)</th>
         <th style="padding:10px 10px;text-align:center;font-weight:800;color:var(--text-h);border-bottom:2px solid var(--border)">WL→PCCU%</th>
-        <th style="padding:10px 10px;text-align:left;font-weight:800;color:var(--text-h);border-bottom:2px solid var(--border)">Comparable & 근거</th>
+        <th style="padding:10px 10px;text-align:center;font-weight:800;color:var(--text-h);border-bottom:2px solid var(--border)">Comparable & 근거</th>
       </tr>
     </thead>
     <tbody>
-      <!-- Tier 1: Failure -->
-      <tr style="background:rgba(254,226,226,.45)">
-        <td style="padding:10px 10px;border-bottom:1px solid var(--border);font-weight:800;color:var(--red)">🔴 Failure<br><span style="font-size:10px;color:var(--text-sub2);font-weight:600">시장 진입 실패</span></td>
-        <td style="padding:10px 10px;border-bottom:1px solid var(--border);text-align:center;font-weight:800;color:var(--red);font-size:14px">58%<br><span style="font-size:10px;color:var(--text-sub2);font-weight:600">58개</span></td>
-        <td style="padding:10px 10px;border-bottom:1px solid var(--border);text-align:center;font-weight:700"><strong style="color:var(--red)">&lt;5K avg</strong><br><span style="font-size:10px;color:var(--text-sub2)">/ &lt;10K peak · 1년 90%+ 이탈</span></td>
-        <td style="padding:10px 10px;border-bottom:1px solid var(--border);text-align:center">50K-300K</td>
-        <td style="padding:10px 10px;border-bottom:1px solid var(--border);text-align:center;font-size:11px"><span class="chip-p">P</span>5% · <span class="chip-f">F2P</span>20%</td>
-        <td style="padding:10px 10px;border-bottom:1px solid var(--border);text-align:center">5-10%</td>
-        <td style="padding:10px 10px;border-bottom:1px solid var(--border);font-size:11.5px;color:var(--text-sub1);line-height:1.5"><strong>XDefiant</strong>(셧다운) · <strong>Concord</strong>(697 peak/4K WL) · <strong>Steel Hunters</strong>(4.5K) · FBC: Firebreak(1.9K) · Suicide Squad KTJL<br><span style="color:var(--text-src)">📎 <a href="https://www.thegamer.com/2025-live-service-games-player-analysis/" target="_blank">TheGamer 2025 live-service 분석</a> (19개 中 11개 90%+ 이탈)</span></td>
+      <!-- Tier 5: Stretch (1%) -->
+      <tr style="background:rgba(237,233,254,.6)">
+        <td style="padding:10px 10px;border-bottom:1px solid var(--border);font-weight:800;text-align:center;color:var(--purple)">🚀 Stretch<br><span style="font-size:10px;color:var(--text-sub2);font-weight:600">Top 5 진입 (mega-hit)</span></td>
+        <td style="padding:10px 10px;border-bottom:1px solid var(--border);text-align:center;font-weight:800;color:var(--purple);font-size:14px">1%<br><span style="font-size:10px;color:var(--text-sub2);font-weight:600">1개</span></td>
+        <td style="padding:10px 10px;border-bottom:1px solid var(--border);text-align:center;font-weight:700"><strong style="color:var(--purple)">300K+ avg</strong><br><span style="font-size:10px;color:var(--text-sub2)">/ 500K-1M+ peak · viral mega-hit</span></td>
+        <td style="padding:10px 10px;border-bottom:1px solid var(--border);text-align:center">3M-5M+</td>
+        <td style="padding:10px 10px;border-bottom:1px solid var(--border);text-align:center;font-size:11px"><span class="chip-p">P</span>15-20% · <span class="chip-f">F2P</span>45-55%</td>
+        <td style="padding:10px 10px;border-bottom:1px solid var(--border);text-align:center">30-50%</td>
+        <td style="padding:10px 10px;border-bottom:1px solid var(--border);font-size:11.5px;color:var(--text-sub1);line-height:1.5"><strong>Helldivers 2</strong>(458K peak Feb 2024) · <strong>Marvel Rivals</strong>(644K peak Jan 2025) · <strong>BF6</strong>(747K peak Oct 2025) · <strong>CS2</strong>(1.86M peak / 935K daily avg)<br><span style="color:var(--text-src)">📎 <a href="https://store.steampowered.com/news/group/4777282/view/539965477266391041" target="_blank">SteamDB Marvel Rivals 644K</a> · <a href="https://www.gamesradar.com/games/battlefield/battlefield-6-player-count-tops-600-000-on-steam-alone-quadrupling-battlefield-5s-peak-in-minutes-and-gunning-for-eas-all-time-record-with-apex-legends/" target="_blank">GamesRadar BF6 700K+</a> · <a href="https://icon-era.com/statistics/steam-concurrent-player-records/" target="_blank">Icon Era CS2 1.86M</a></span></td>
       </tr>
 
-      <!-- Tier 2: Survival -->
-      <tr style="background:rgba(255,237,213,.5)">
-        <td style="padding:10px 10px;border-bottom:1px solid var(--border);font-weight:800;color:var(--opt-a-dark)">🟠 Survival<br><span style="font-size:10px;color:var(--text-sub2);font-weight:600">Top 30-50 진입</span></td>
-        <td style="padding:10px 10px;border-bottom:1px solid var(--border);text-align:center;font-weight:800;color:var(--opt-a);font-size:14px">27%<br><span style="font-size:10px;color:var(--text-sub2);font-weight:600">27개</span></td>
-        <td style="padding:10px 10px;border-bottom:1px solid var(--border);text-align:center;font-weight:700"><strong style="color:var(--opt-a)">5-30K avg</strong><br><span style="font-size:10px;color:var(--text-sub2)">/ 10-50K peak · 지속 community</span></td>
-        <td style="padding:10px 10px;border-bottom:1px solid var(--border);text-align:center">300K-700K</td>
-        <td style="padding:10px 10px;border-bottom:1px solid var(--border);text-align:center;font-size:11px"><span class="chip-p">P</span>8% · <span class="chip-f">F2P</span>30%</td>
-        <td style="padding:10px 10px;border-bottom:1px solid var(--border);text-align:center">7-12%</td>
-        <td style="padding:10px 10px;border-bottom:1px solid var(--border);font-size:11.5px;color:var(--text-sub1);line-height:1.5"><strong>Squad</strong>(~10K avg) · <strong>Hell Let Loose</strong>(~30K avg / 50K peak) · Battlebit Remastered(launch 후 안정)<br><span style="color:var(--text-src)">📎 <a href="https://steamcharts.com/" target="_blank">Steam Charts 2026</a> · <a href="https://gameworldobserver.com/2024/02/09/helldivers-2-81k-concurrent-players-sony-biggest-pc-launch" target="_blank">Game World Observer launch peak 분석</a></span></td>
-      </tr>
-
-      <!-- Tier 3: Conservative -->
-      <tr style="background:rgba(254,243,199,.55)">
-        <td style="padding:10px 10px;border-bottom:1px solid var(--border);font-weight:800;color:var(--amber)">🛡️ Conservative<br><span style="font-size:10px;color:var(--text-sub2);font-weight:600">Top 20 진입</span></td>
-        <td style="padding:10px 10px;border-bottom:1px solid var(--border);text-align:center;font-weight:800;color:var(--amber);font-size:14px">10%<br><span style="font-size:10px;color:var(--text-sub2);font-weight:600">10개</span></td>
-        <td style="padding:10px 10px;border-bottom:1px solid var(--border);text-align:center;font-weight:700"><strong style="color:var(--amber)">30-100K avg</strong><br><span style="font-size:10px;color:var(--text-sub2)">/ 60-150K peak · 중하위 안정</span></td>
-        <td style="padding:10px 10px;border-bottom:1px solid var(--border);text-align:center">700K-1.5M</td>
-        <td style="padding:10px 10px;border-bottom:1px solid var(--border);text-align:center;font-size:11px"><span class="chip-p">P</span>10% · <span class="chip-f">F2P</span>35%</td>
-        <td style="padding:10px 10px;border-bottom:1px solid var(--border);text-align:center">8-12%</td>
-        <td style="padding:10px 10px;border-bottom:1px solid var(--border);font-size:11.5px;color:var(--text-sub1);line-height:1.5"><strong>Hunt Showdown 1896</strong>(60K peak Aug 2024 / ~30K avg) · <strong>Sea of Thieves Steam</strong>(66K peak) · <strong>7 Days to Die</strong>(124K peak / smaller avg)<br><span style="color:var(--text-src)">📎 <a href="https://store.steampowered.com/news/app/594650/view/3690185668817996115" target="_blank">Hunt: Showdown Steam News 60K record</a> · <a href="https://gameworldobserver.com/2024/08/16/hunt-showdown-1896-record-ccu-negative-reviews" target="_blank">Game World Observer Hunt 60K 분석</a></span></td>
-      </tr>
-
-      <!-- Tier 4: Target -->
+      <!-- Tier 4: Target (4%) -->
       <tr style="background:rgba(219,234,254,.55)">
-        <td style="padding:10px 10px;border-bottom:1px solid var(--border);font-weight:800;color:var(--accent)">⭐ Target<br><span style="font-size:10px;color:var(--text-sub2);font-weight:600">Top 10 진입</span></td>
+        <td style="padding:10px 10px;border-bottom:1px solid var(--border);font-weight:800;text-align:center;color:var(--accent)">⭐ Target<br><span style="font-size:10px;color:var(--text-sub2);font-weight:600">Top 10 진입</span></td>
         <td style="padding:10px 10px;border-bottom:1px solid var(--border);text-align:center;font-weight:800;color:var(--accent);font-size:14px">4%<br><span style="font-size:10px;color:var(--text-sub2);font-weight:600">4개</span></td>
         <td style="padding:10px 10px;border-bottom:1px solid var(--border);text-align:center;font-weight:700"><strong style="color:var(--accent)">100-300K avg</strong><br><span style="font-size:10px;color:var(--text-sub2)">/ 200-500K peak · 중상위급</span></td>
         <td style="padding:10px 10px;border-bottom:1px solid var(--border);text-align:center">1.5M-3M</td>
@@ -707,16 +685,39 @@ footer{background:#1a1a2e;color:#64748b;padding:24px 40px;font-size:11px;display
         <td style="padding:10px 10px;border-bottom:1px solid var(--border);font-size:11.5px;color:var(--text-sub1);line-height:1.5"><strong>Apex Legends</strong>(~95K avg 2025 / 624K ATH 2023) · <strong>ARC Raiders</strong>(~120K avg 론칭 6개월 / 481,966 ATH Nov 2025) · <strong>Delta Force</strong>(2.1M wishlist Steam Top 5)<br><span style="color:var(--text-src)">📎 <a href="https://www.demandsage.com/apex-legends-player-count-2026/" target="_blank">Demandsage Apex 2026 stats</a> · <a href="https://steamcommunity.com/groups/SteamDB/announcements/detail/768552869317050400" target="_blank">SteamDB ARC Raiders 481,966 ATH</a> · <a href="https://www.pcgamesn.com/delta-force-hawk-ops/steam-wishlists-2-million" target="_blank">PCGamesN Delta Force 2.1M</a></span></td>
       </tr>
 
-      <!-- Tier 5: Stretch -->
-      <tr style="background:rgba(237,233,254,.6)">
-        <td style="padding:10px 10px;font-weight:800;color:var(--purple)">🚀 Stretch<br><span style="font-size:10px;color:var(--text-sub2);font-weight:600">Top 5 진입 (mega-hit)</span></td>
-        <td style="padding:10px 10px;text-align:center;font-weight:800;color:var(--purple);font-size:14px">1%<br><span style="font-size:10px;color:var(--text-sub2);font-weight:600">1개</span></td>
-        <td style="padding:10px 10px;text-align:center;font-weight:700"><strong style="color:var(--purple)">300K+ avg</strong><br><span style="font-size:10px;color:var(--text-sub2)">/ 500K-1M+ peak · viral mega-hit</span></td>
-        <td style="padding:10px 10px;text-align:center">3M-5M+</td>
-        <td style="padding:10px 10px;text-align:center;font-size:11px"><span class="chip-p">P</span>15-20% · <span class="chip-f">F2P</span>45-55%</td>
-        <td style="padding:10px 10px;text-align:center">30-50%</td>
-        <td style="padding:10px 10px;font-size:11.5px;color:var(--text-sub1);line-height:1.5"><strong>Helldivers 2</strong>(458K peak Feb 2024) · <strong>Marvel Rivals</strong>(644K peak Jan 2025) · <strong>BF6</strong>(747K peak Oct 2025) · <strong>CS2</strong>(1.86M peak / 935K daily avg)<br><span style="color:var(--text-src)">📎 <a href="https://store.steampowered.com/news/group/4777282/view/539965477266391041" target="_blank">SteamDB Marvel Rivals 644K</a> · <a href="https://www.gamesradar.com/games/battlefield/battlefield-6-player-count-tops-600-000-on-steam-alone-quadrupling-battlefield-5s-peak-in-minutes-and-gunning-for-eas-all-time-record-with-apex-legends/" target="_blank">GamesRadar BF6 700K+</a> · <a href="https://icon-era.com/statistics/steam-concurrent-player-records/" target="_blank">Icon Era CS2 1.86M</a></span></td>
+      <!-- Tier 3: Conservative (10%) -->
+      <tr style="background:rgba(254,243,199,.55)">
+        <td style="padding:10px 10px;border-bottom:1px solid var(--border);font-weight:800;text-align:center;color:var(--amber)">🛡️ Conservative<br><span style="font-size:10px;color:var(--text-sub2);font-weight:600">Top 20 진입</span></td>
+        <td style="padding:10px 10px;border-bottom:1px solid var(--border);text-align:center;font-weight:800;color:var(--amber);font-size:14px">10%<br><span style="font-size:10px;color:var(--text-sub2);font-weight:600">10개</span></td>
+        <td style="padding:10px 10px;border-bottom:1px solid var(--border);text-align:center;font-weight:700"><strong style="color:var(--amber)">30-100K avg</strong><br><span style="font-size:10px;color:var(--text-sub2)">/ 60-150K peak · 중하위 안정</span></td>
+        <td style="padding:10px 10px;border-bottom:1px solid var(--border);text-align:center">700K-1.5M</td>
+        <td style="padding:10px 10px;border-bottom:1px solid var(--border);text-align:center;font-size:11px"><span class="chip-p">P</span>10% · <span class="chip-f">F2P</span>35%</td>
+        <td style="padding:10px 10px;border-bottom:1px solid var(--border);text-align:center">8-12%</td>
+        <td style="padding:10px 10px;border-bottom:1px solid var(--border);font-size:11.5px;color:var(--text-sub1);line-height:1.5"><strong>Hunt Showdown 1896</strong>(60K peak Aug 2024 / ~30K avg) · <strong>Sea of Thieves Steam</strong>(66K peak) · <strong>7 Days to Die</strong>(124K peak / smaller avg)<br><span style="color:var(--text-src)">📎 <a href="https://store.steampowered.com/news/app/594650/view/3690185668817996115" target="_blank">Hunt: Showdown Steam News 60K record</a> · <a href="https://gameworldobserver.com/2024/08/16/hunt-showdown-1896-record-ccu-negative-reviews" target="_blank">Game World Observer Hunt 60K 분석</a></span></td>
       </tr>
+
+      <!-- Tier 2: Survival (27%) -->
+      <tr style="background:rgba(255,237,213,.5)">
+        <td style="padding:10px 10px;border-bottom:1px solid var(--border);font-weight:800;text-align:center;color:var(--opt-a-dark)">🟠 Survival<br><span style="font-size:10px;color:var(--text-sub2);font-weight:600">Top 30-50 진입</span></td>
+        <td style="padding:10px 10px;border-bottom:1px solid var(--border);text-align:center;font-weight:800;color:var(--opt-a);font-size:14px">27%<br><span style="font-size:10px;color:var(--text-sub2);font-weight:600">27개</span></td>
+        <td style="padding:10px 10px;border-bottom:1px solid var(--border);text-align:center;font-weight:700"><strong style="color:var(--opt-a)">5-30K avg</strong><br><span style="font-size:10px;color:var(--text-sub2)">/ 10-50K peak · 지속 community</span></td>
+        <td style="padding:10px 10px;border-bottom:1px solid var(--border);text-align:center">300K-700K</td>
+        <td style="padding:10px 10px;border-bottom:1px solid var(--border);text-align:center;font-size:11px"><span class="chip-p">P</span>8% · <span class="chip-f">F2P</span>30%</td>
+        <td style="padding:10px 10px;border-bottom:1px solid var(--border);text-align:center">7-12%</td>
+        <td style="padding:10px 10px;border-bottom:1px solid var(--border);font-size:11.5px;color:var(--text-sub1);line-height:1.5"><strong>Squad</strong>(~10K avg) · <strong>Hell Let Loose</strong>(~30K avg / 50K peak) · Battlebit Remastered(launch 후 안정)<br><span style="color:var(--text-src)">📎 <a href="https://steamcharts.com/" target="_blank">Steam Charts 2026</a> · <a href="https://gameworldobserver.com/2024/02/09/helldivers-2-81k-concurrent-players-sony-biggest-pc-launch" target="_blank">Game World Observer launch peak 분석</a></span></td>
+      </tr>
+
+      <!-- Tier 1: Failure (58%) -->
+      <tr style="background:rgba(254,226,226,.45)">
+        <td style="padding:10px 10px;font-weight:800;text-align:center;color:var(--red)">🔴 Failure<br><span style="font-size:10px;color:var(--text-sub2);font-weight:600">시장 진입 실패</span></td>
+        <td style="padding:10px 10px;text-align:center;font-weight:800;color:var(--red);font-size:14px">58%<br><span style="font-size:10px;color:var(--text-sub2);font-weight:600">58개</span></td>
+        <td style="padding:10px 10px;text-align:center;font-weight:700"><strong style="color:var(--red)">&lt;5K avg</strong><br><span style="font-size:10px;color:var(--text-sub2)">/ &lt;10K peak · 1년 90%+ 이탈</span></td>
+        <td style="padding:10px 10px;text-align:center">50K-300K</td>
+        <td style="padding:10px 10px;text-align:center;font-size:11px"><span class="chip-p">P</span>5% · <span class="chip-f">F2P</span>20%</td>
+        <td style="padding:10px 10px;text-align:center">5-10%</td>
+        <td style="padding:10px 10px;font-size:11.5px;color:var(--text-sub1);line-height:1.5"><strong>XDefiant</strong>(셧다운) · <strong>Concord</strong>(697 peak/4K WL) · <strong>Steel Hunters</strong>(4.5K) · FBC: Firebreak(1.9K) · Suicide Squad KTJL<br><span style="color:var(--text-src)">📎 <a href="https://www.thegamer.com/2025-live-service-games-player-analysis/" target="_blank">TheGamer 2025 live-service 분석</a> (19개 中 11개 90%+ 이탈)</span></td>
+      </tr>
+
     </tbody>
   </table>
   </div>
