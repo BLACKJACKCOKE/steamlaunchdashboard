@@ -1042,12 +1042,12 @@ body {
 <script>
 /* ──────────────────────────────────────────────────────────────────
    다크 Gantt — HTML/CSS 기반 (onclick 신뢰성 보장)
-   TM=25 개월: m=0=Jun'26 ~ m=25=Jul'28
+   TM=26 개월: m=0=Jun'26 ~ m=26=Aug'28 (Jul'28 LAUNCH = 96.2%)
    leftPct(m) = (m/25)*100 + '%'
    widthPct(m0,m1) = ((m1-m0)/25)*100 + '%'
    ────────────────────────────────────────────────────────────────── */
 
-const TM = 25;
+const TM = 26;
 const lp = m => ((m/TM)*100).toFixed(2)+'%';
 const wp = (m0,m1) => (((m1-m0)/TM)*100).toFixed(2)+'%';
 
@@ -1176,7 +1176,7 @@ function buildGantt() {
       <div class="gd-ruler-months" style="display:flex;flex:1;height:100%">
         ${rulerMonthsHtml}
       </div>
-      <div class="gd-ruler-snf" style="left:${snfPct}"></div>
+
 
     </div>
   </div>`;
@@ -1211,8 +1211,7 @@ function buildGantt() {
         <div class="gd-task-label">${t.name}</div>
         <div class="gd-task-track">
           <div class="gd-track-bg"></div>
-
-
+          <div class="gd-vline" style="left:${snfPct};background:#d29922;opacity:.18;pointer-events:none"></div>
           <div class="gd-task-bar" style="left:${lp(t.m0)};width:${wp(t.m0,Math.max(t.m1,t.m0+0.3))}">
             <div class="gd-task-bar-inner" style="background:${ph.col}"></div>
             <div class="gd-bar-dot start"></div>
