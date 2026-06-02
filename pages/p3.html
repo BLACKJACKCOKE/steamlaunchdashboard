@@ -444,6 +444,20 @@ footer{background:#1a1a2e;color:#64748b;padding:24px 40px;font-size:11px;display
   .sim-res{grid-template-columns:1fr 1fr}
   .cl-items{grid-template-columns:1fr}
 }
+
+/* ── View Tab System ───────────────────────────── */
+.view-tabs{display:flex;align-items:center;gap:0;background:#fff;border-bottom:2px solid var(--border);padding:0 40px;position:sticky;top:96px;z-index:190;height:46px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.view-tab{display:flex;align-items:center;gap:7px;padding:0 22px;height:46px;font-size:13px;font-weight:700;color:var(--text-sub2);border:none;border-bottom:3px solid transparent;cursor:pointer;background:none;margin-bottom:-2px;transition:color .15s,border-color .15s;white-space:nowrap}
+.view-tab:hover{color:var(--text-h)}
+.view-tab.tab-exec.vt-active{color:var(--accent);border-bottom-color:var(--accent)}
+.view-tab.tab-ops.vt-active{color:#16a34a;border-bottom-color:#16a34a}
+.view-badge{font-size:9px;font-weight:800;padding:2px 7px;border-radius:8px}
+.vb-exec{background:#dbeafe;color:#1e40af}
+.vb-ops{background:#dcfce7;color:#15803d}
+
+/* 실무 전용: 경영진 뷰에서 숨김 */
+body.view-exec .ops-section{display:none!important}
+body.view-exec .ops-nav{display:none!important}
 </style>
   <link rel="stylesheet" href="../assets/theme.css">
   <!-- Google tag (gtag.js) -->
@@ -491,18 +505,32 @@ footer{background:#1a1a2e;color:#64748b;padding:24px 40px;font-size:11px;display
   <div class="lb-div"></div>
   <div class="lb-item"><span class="lb-chip lb-b">◼</span>&nbsp;직행 론칭 경로 — SNF 후 4~5개월, 정식 LAUNCH 2028.03</div>
 </div>
-<nav class="page-nav">
-  <a class="pnav-item" href="#sec1"><span class="pnav-num">01</span> 타임라인 + 5-Tier KPI + 시뮬레이터</a>
+<!-- VIEW TAB BAR -->
+<div class="view-tabs" id="viewTabs">
+  <button class="view-tab tab-exec vt-active" id="tabExec" onclick="switchView('exec')">
+    📊 경영진 보고
+    <span class="view-badge vb-exec">EXEC</span>
+  </button>
+  <div style="width:1px;height:22px;background:var(--border);margin:0 4px"></div>
+  <button class="view-tab tab-ops" id="tabOps" onclick="switchView('ops')">
+    🔧 상세 실무
+    <span class="view-badge vb-ops">OPS</span>
+  </button>
+  <div style="flex:1"></div>
+  <span style="font-size:11px;color:var(--text-sub2);font-weight:600" id="viewLabel">경영진 보고 핵심 지표만 표시 중</span>
+</div>
+<nav class="page-nav" id="pageNav">
+  <a class="pnav-item" href="#sec1"><span class="pnav-num">01</span> 타임라인 + 5-Tier KPI</a>
   <div class="pnav-div"></div>
-  <a class="pnav-item" href="#sec3"><span class="pnav-num">02</span> 단계별 액션 &amp; 마케팅</a>
-  <div class="pnav-div"></div>
-  <a class="pnav-item" href="#sec4"><span class="pnav-num">03</span> 체크리스트</a>
-  <div class="pnav-div"></div>
-  <a class="pnav-item" href="#sec5"><span class="pnav-num">04</span> 역산 플래너</a>
-  <div class="pnav-div"></div>
-  <a class="pnav-item" href="#sec6"><span class="pnav-num">05</span> 스팀 프로모션 협상</a>
-  <div class="pnav-div"></div>
-  <a class="pnav-item" href="#part2"><span class="pnav-num">↓</span> 상세 Phase 플랜</a>
+  <a class="pnav-item" href="#sec5"><span class="pnav-num">02</span> 역산 플래너</a>
+  <div class="pnav-div ops-nav"></div>
+  <a class="pnav-item ops-nav" href="#sec3"><span class="pnav-num">03</span> 단계별 액션 &amp; 마케팅</a>
+  <div class="pnav-div ops-nav"></div>
+  <a class="pnav-item ops-nav" href="#sec4"><span class="pnav-num">04</span> 체크리스트</a>
+  <div class="pnav-div ops-nav"></div>
+  <a class="pnav-item ops-nav" href="#sec6"><span class="pnav-num">05</span> 스팀 프로모션 협상</a>
+  <div class="pnav-div ops-nav"></div>
+  <a class="pnav-item ops-nav" href="#part2"><span class="pnav-num">↓</span> 상세 Phase 플랜</a>
 </nav>
 
 <div class="page-wrap">
@@ -971,7 +999,7 @@ footer{background:#1a1a2e;color:#64748b;padding:24px 40px;font-size:11px;display
 <!-- ══════════════════════════════
      SEC 3: 단계별 액션 & 마케팅
 ══════════════════════════════ -->
-<div class="section" id="sec3">
+<div class="section ops-section" id="sec3">
   <div class="sec-num">Section 02</div>
   <div class="sec-title">단계별 핵심 액션 &amp; 마케팅 캠페인</div>
   <div class="sec-sub">각 Phase 핵심 액션 · 마케팅 캠페인 · 팀 책임 · 상세 내용은 하단 '상세 Phase별 액션 플랜' 참고</div>
@@ -1180,7 +1208,7 @@ footer{background:#1a1a2e;color:#64748b;padding:24px 40px;font-size:11px;display
 <!-- ══════════════════════════════
      SEC 4: 개발·퍼블리싱 체크리스트
 ══════════════════════════════ -->
-<div class="section" id="sec4">
+<div class="section ops-section" id="sec4">
   <div class="sec-num">Section 03</div>
   <div class="sec-title">개발 &amp; 퍼블리싱 체크리스트</div>
   <div class="sec-sub">Steamworks 공식 문서 기반 필수 항목 · 클릭하여 완료 처리 · 브라우저 재접속 시에도 상태 유지</div>
@@ -1352,7 +1380,7 @@ footer{background:#1a1a2e;color:#64748b;padding:24px 40px;font-size:11px;display
      · SNF anchor: 2027.10 (sec1 Phase 8) — Steam Next Fest Oct 2027 실제 일정
      · Path split: 직행 LAUNCH 2028.03 / EA 정식 LAUNCH 2028.07
 ══════════════════════════════ -->
-<div class="section" id="sec6">
+<div class="section ops-section" id="sec6">
   <div class="sec-num">Section 05</div>
   <div class="sec-title">🏪 스팀 프로모션 협상 타임라인 (Project S × Valve Curation)</div>
   <div class="sec-sub">sec1 Project S 일정과 절대 일자 동기화 · Wishlist 캠페인 시작 = <strong style="color:var(--accent)">2027.01 Steam Coming Soon</strong> · <strong style="color:var(--red)">정식 LAUNCH 6개월 전 협상 누락 시 Takeover 0%</strong></div>
@@ -1557,7 +1585,7 @@ footer{background:#1a1a2e;color:#64748b;padding:24px 40px;font-size:11px;display
 <!-- ══════════════════════════════════════
      PART 2: 상세 Phase별 액션 플랜
 ══════════════════════════════════════ -->
-<div class="part2-wrapper" id="part2">
+<div class="part2-wrapper ops-section" id="part2">
   <button class="part2-toggle" onclick="togglePart2(this)">
     <div class="part2-toggle-left">
       <div class="part2-toggle-icon">📋</div>
@@ -2114,6 +2142,21 @@ initGantt();
 
 
 
+
+/* ── View Tab Switcher ── */
+function switchView(v){
+  document.body.classList.remove('view-exec','view-ops');
+  document.body.classList.add('view-'+v);
+  document.getElementById('tabExec').classList.toggle('vt-active',v==='exec');
+  document.getElementById('tabOps').classList.toggle('vt-active',v==='ops');
+  const lbl=document.getElementById('viewLabel');
+  if(lbl)lbl.textContent=v==='exec'?'경영진 보고 핵심 지표만 표시 중':'전체 상세 실무 자료 표시 중';
+  try{localStorage.setItem('ps_view_tab',v);}catch(e){}
+}
+(function(){
+  const saved=localStorage.getItem('ps_view_tab')||'exec';
+  switchView(saved);
+})();
 
 /* WL Grouped Horizontal Bar Chart removed in V4 5-Tier refactor (sec2 삭제) — wlChart canvas no longer exists */
 
