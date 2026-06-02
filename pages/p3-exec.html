@@ -165,7 +165,7 @@ body {
   box-shadow: 0 4px 24px rgba(0,0,0,.18);
 }
 .gantt-label {
-  font-size: 15px; font-weight: 800; color: #e6edf3;
+  font-size: 15px; font-weight: 800; color: #111827;
   letter-spacing: .5px; margin-bottom: 12px;
 }
 .gd-root {
@@ -182,8 +182,8 @@ body {
   position: sticky; top: 0; z-index: 10;
 }
 .gd-ruler-label {
-  width: 220px; min-width: 220px;
-  padding: 0 16px;
+  width: 180px; min-width: 180px;
+  padding: 0 14px;
   display: flex; align-items: center;
   font-size: 10px; font-weight: 700; color: #8b949e;
   text-transform: uppercase; letter-spacing: 1px;
@@ -238,9 +238,9 @@ body {
 }
 .gd-phase-header:hover { filter: brightness(1.1); }
 .gd-phase-header-label {
-  width: 220px; min-width: 220px;
-  display: flex; align-items: center; gap: 8px;
-  padding: 10px 14px;
+  width: 180px; min-width: 180px;
+  display: flex; flex-direction: column; justify-content: center; gap: 2px;
+  padding: 8px 14px;
   border-right: 1px solid rgba(255,255,255,.12);
 }
 .gd-phase-badge {
@@ -250,7 +250,8 @@ body {
   white-space: nowrap;
 }
 .gd-phase-name {
-  font-size: 13px; font-weight: 700; color: #fff; flex: 1;
+  font-size: 13px; font-weight: 700; color: #fff;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .gd-phase-date {
   font-size: 10px; color: rgba(255,255,255,.65); white-space: nowrap;
@@ -277,8 +278,8 @@ body {
 .gd-task-row:nth-child(odd)  { background: #161b22; }
 .gd-task-row:nth-child(even) { background: #0d1117; }
 .gd-task-label {
-  width: 220px; min-width: 220px;
-  padding: 8px 14px 8px 24px;
+  width: 180px; min-width: 180px;
+  padding: 8px 12px 8px 20px;
   font-size: 12px; color: #c9d1d9;
   border-right: 1px solid #21262d;
   line-height: 1.4;
@@ -512,7 +513,7 @@ body {
   <!-- ── GANTT 차트 ── -->
   <div class="mt24">
     <div class="gantt-label">2026–2028 론칭 로드맵 — 단계별 마일스톤
-      <span style="font-size:11px;font-weight:600;color:#8b949e;margin-left:12px;text-transform:none;letter-spacing:0">
+      <span style="font-size:11px;font-weight:600;color:#4b5563;margin-left:12px;text-transform:none;letter-spacing:0">
         (Phase 헤더 클릭 → 접기/펼치기)
       </span>
     </div>
@@ -903,6 +904,15 @@ const PHASES = [
     ]
   },
   {
+    step:'SNF', name:'Steam Next Fest', date:"Oct'27", col:'#b45309',
+    tasks:[
+      {name:'★ SNF 7일간 — D+1 WL 이메일 수동 클릭 필수!', m0:16.0,m1:16.5,s:"Oct'27",  e:"Oct'27"},
+      {name:'Curator Connect 전체 배포 + SNS 동시 발행',    m0:16.0,m1:16.3,s:"D+1",     e:"D+2"},
+      {name:'Demo D+7 리텐션·WL 증분 집계 → 경로 분기 결정',m0:16.5,m1:17.0,s:"D+7",     e:"D+14"},
+      {name:'🛡️ Conservative 목표: P 300K+ / F2P 500K+',    m0:16.0,m1:17.0,s:"SNF 중",  e:"SNF 후"},
+    ]
+  },
+  {
     step:'EA', name:'EA 론칭 경로', date:"Nov'27~Jul'28", col:'#c05621',
     tasks:[
       {name:'EA 준비 (가격·콘텐츠·트레일러)',   m0:17.0,m1:20.0, s:"Nov'27",   e:"Feb'28"},
@@ -1026,19 +1036,37 @@ function buildGantt() {
       </div>`;
     }).join('');
 
+    // EA/직행 헤더 트랙에 LAUNCH 시점 아이콘 추가
+    let launchIcon = '';
+    if (ph.step === 'EA') {
+      const eaLaunchPct = lp(25);
+      launchIcon = `<div style="position:absolute;left:${eaLaunchPct};top:50%;transform:translate(-50%,-50%);
+        font-size:16px;filter:drop-shadow(0 0 4px rgba(255,255,255,.4));z-index:5">🚀</div>
+        <div style="position:absolute;left:${eaLaunchPct};top:4px;transform:translateX(-50%);
+        font-size:9px;font-weight:700;color:#fed7aa;white-space:nowrap">Jul'28 LAUNCH</div>`;
+    } else if (ph.step === '직행') {
+      const drLaunchPct = lp(21);
+      launchIcon = `<div style="position:absolute;left:${drLaunchPct};top:50%;transform:translate(-50%,-50%);
+        font-size:16px;filter:drop-shadow(0 0 4px rgba(255,255,255,.4));z-index:5">🚀</div>
+        <div style="position:absolute;left:${drLaunchPct};top:4px;transform:translateX(-50%);
+        font-size:9px;font-weight:700;color:#bbf7d0;white-space:nowrap">Mar'28 LAUNCH</div>`;
+    }
+
     html += `
     <div class="gd-phase" data-step="${ph.step}">
       <div class="gd-phase-header" style="background:${ph.col}22"
            onclick="togglePhase('${ph.step}')">
         <div class="gd-phase-header-label" style="background:${ph.col}">
-          <span class="gd-phase-badge">${ph.step}</span>
-          <span class="gd-phase-name">${ph.name}</span>
+          <div style="display:flex;align-items:center;gap:6px;width:100%">
+            <span class="gd-phase-name">${ph.name}</span>
+            <span class="gd-phase-arrow">${arrow}</span>
+          </div>
           <span class="gd-phase-date">${ph.date}</span>
-          <span class="gd-phase-arrow">${arrow}</span>
         </div>
         <div class="gd-phase-header-track">
           <div class="gd-vline" style="left:${snfPct};background:#d29922;opacity:.3"></div>
           ${headerBar}
+          ${launchIcon}
         </div>
       </div>
       <div class="gd-tasks" id="tasks-${ph.step}" style="display:${isOpen?'block':'none'}">
@@ -1051,7 +1079,7 @@ function buildGantt() {
   html += `<div class="gd-legend">
     ${PHASES.map(ph=>`<div class="gd-leg-item">
       <div class="gd-leg-dot" style="background:${ph.col}"></div>
-      <span>${ph.step} ${ph.name}</span>
+      <span>${ph.name}</span>
     </div>`).join('')}
     <div class="gd-leg-item">
       <div class="gd-leg-dot" style="background:#d29922"></div>
@@ -1065,8 +1093,12 @@ function buildGantt() {
   root.innerHTML = html;
 }
 
-/* ── 접기/펼치기 (HTML onclick — 신뢰성 보장) ── */
-const phaseState = {}; // true = 접힘
+/* ── 접기/펼치기 — 디폴트: 모두 닫힘 ── */
+const phaseState = {}; // true = 접힘 (기본값)
+
+function initPhaseState() {
+  PHASES.forEach(ph => { phaseState[ph.step] = true; }); // 기본 닫힘
+}
 
 function togglePhase(step) {
   phaseState[step] = !phaseState[step];
@@ -1077,6 +1109,7 @@ function togglePhase(step) {
 }
 
 /* ── 초기화 ── */
+initPhaseState(); // 모든 Phase 기본 닫힘 설정
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', buildGantt);
 } else {
