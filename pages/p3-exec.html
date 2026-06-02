@@ -437,6 +437,121 @@ body {
   .g3 { grid-template-columns: 1fr 1fr; }
   .g4, .g5 { grid-template-columns: 1fr 1fr; }
 }
+
+/* ═══════════════════════════════════════════════════════
+   EFFECTS — Gantt 바 트레이서 + 페이지 이펙트
+   ═══════════════════════════════════════════════════════ */
+
+/* ── 1. 바 채움: scaleX 슬라이드인 ── */
+@keyframes barFill {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+/* ── 2. 트레이서: 채움 선단의 백색 발광 ── */
+@keyframes tracerFade {
+  0%   { opacity: 1; }
+  80%  { opacity: .8; }
+  100% { opacity: 0; }
+}
+
+/* ── 3. 채움 후 shimmer sweep ── */
+@keyframes shimmerSweep {
+  0%   { background-position: -300% center; }
+  100% { background-position: 500% center; }
+}
+
+/* ── gd-task-bar-inner: scaleX + shimmer ── */
+.gd-task-bar-inner {
+  position: absolute; inset: 0; border-radius: 4px; opacity: .92;
+  transform-origin: left center;
+  overflow: visible;
+  /* shimmer gradient overlay */
+  background-image: linear-gradient(
+    90deg,
+    transparent 25%,
+    rgba(255,255,255,.28) 50%,
+    transparent 75%
+  );
+  background-size: 300% 100%;
+  /* scaleX fill + shimmer sweep (shimmer starts after fill) */
+  animation:
+    barFill 0.8s cubic-bezier(.25, 0, .2, 1) both,
+    shimmerSweep 2.4s linear 1s infinite;
+}
+
+/* 트레이서: scaleX 시 right 끝이 이동 → 발광이 선단을 따라감 */
+.gd-task-bar-inner::after {
+  content: '';
+  position: absolute;
+  top: -4px; bottom: -4px;
+  right: -3px; width: 4px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, .95);
+  box-shadow:
+    0 0  6px  3px rgba(255,255,255,.95),
+    0 0 16px  8px rgba(255,255,255,.6),
+    0 0 32px 12px rgba(255,255,255,.3);
+  animation: tracerFade 0.8s cubic-bezier(.25, 0, .2, 1) both;
+  pointer-events: none;
+}
+
+/* 행별 순차 딜레이 */
+.gd-task-row:nth-child(1)  .gd-task-bar-inner { animation-delay: 0.05s, 1.05s; }
+.gd-task-row:nth-child(1)  .gd-task-bar-inner::after { animation-delay: 0.05s; }
+.gd-task-row:nth-child(2)  .gd-task-bar-inner { animation-delay: 0.15s, 1.15s; }
+.gd-task-row:nth-child(2)  .gd-task-bar-inner::after { animation-delay: 0.15s; }
+.gd-task-row:nth-child(3)  .gd-task-bar-inner { animation-delay: 0.25s, 1.25s; }
+.gd-task-row:nth-child(3)  .gd-task-bar-inner::after { animation-delay: 0.25s; }
+.gd-task-row:nth-child(4)  .gd-task-bar-inner { animation-delay: 0.35s, 1.35s; }
+.gd-task-row:nth-child(4)  .gd-task-bar-inner::after { animation-delay: 0.35s; }
+.gd-task-row:nth-child(5)  .gd-task-bar-inner { animation-delay: 0.45s, 1.45s; }
+.gd-task-row:nth-child(5)  .gd-task-bar-inner::after { animation-delay: 0.45s; }
+.gd-task-row:nth-child(6)  .gd-task-bar-inner { animation-delay: 0.55s, 1.55s; }
+.gd-task-row:nth-child(6)  .gd-task-bar-inner::after { animation-delay: 0.55s; }
+.gd-task-row:nth-child(7)  .gd-task-bar-inner { animation-delay: 0.65s, 1.65s; }
+.gd-task-row:nth-child(7)  .gd-task-bar-inner::after { animation-delay: 0.65s; }
+.gd-task-row:nth-child(8)  .gd-task-bar-inner { animation-delay: 0.75s, 1.75s; }
+.gd-task-row:nth-child(8)  .gd-task-bar-inner::after { animation-delay: 0.75s; }
+
+/* ── 현재 마커 펄스 ── */
+@keyframes markerPulse {
+  0%   { opacity: .55; filter: drop-shadow(0 0  0px #f85149); }
+  50%  { opacity: 1;   filter: drop-shadow(0 0  8px #f85149) drop-shadow(0 0 16px rgba(248,81,73,.5)); }
+  100% { opacity: .55; filter: drop-shadow(0 0  0px #f85149); }
+}
+.gd-ruler-now { animation: markerPulse 2s ease-in-out infinite; }
+
+/* ── SNF 황금선 glow ── */
+@keyframes snfGlow {
+  0%, 100% { filter: drop-shadow(0 0 2px #f59e0b); opacity: .8; }
+  50%       { filter: drop-shadow(0 0 10px #fde68a) drop-shadow(0 0 20px #f59e0b); opacity: 1; }
+}
+.gd-ruler-snf { animation: snfGlow 3s ease-in-out infinite; }
+
+/* ── 카드 fade-in ── */
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.stat-card { animation: fadeSlideUp .45s ease-out both; }
+.stat-card:nth-child(1) { animation-delay: .1s; }
+.stat-card:nth-child(2) { animation-delay: .2s; }
+.stat-card:nth-child(3) { animation-delay: .3s; }
+.stat-card:nth-child(4) { animation-delay: .4s; }
+
+.tier-card { animation: fadeSlideUp .4s ease-out both; }
+.tier-card:nth-child(1) { animation-delay: .05s; }
+.tier-card:nth-child(2) { animation-delay: .12s; }
+.tier-card:nth-child(3) { animation-delay: .19s; }
+.tier-card:nth-child(4) { animation-delay: .26s; }
+.tier-card:nth-child(5) { animation-delay: .33s; }
+
+/* ── 카드 hover lift ── */
+.card { transition: transform .2s, box-shadow .2s; }
+.card:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(79,70,229,.12); }
+.phase-todo { transition: box-shadow .2s; }
+.phase-todo:hover { box-shadow: 0 4px 16px rgba(79,70,229,.1); }
 </style>
 </head>
 <body>
@@ -1222,7 +1337,7 @@ function buildGantt() {
           <div class="gd-track-bg"></div>
           <div class="gd-vline" style="left:${snfPct};background:#d29922;opacity:.18;pointer-events:none"></div>
           <div class="gd-task-bar" style="left:${lp(t.m0)};width:${wp(t.m0,Math.max(t.m1,t.m0+0.3))}">
-            <div class="gd-task-bar-inner" style="background:${ph.col}"></div>
+            <div class="gd-task-bar-inner" style="background-color:${ph.col}"></div>
             <div class="gd-bar-dot start"></div>
             ${t.m1>t.m0+0.2 ? '<div class="gd-bar-dot end"></div>' : ''}
             <div class="gd-bar-lbl-start" style="color:${ph.col}">${t.s}</div>
