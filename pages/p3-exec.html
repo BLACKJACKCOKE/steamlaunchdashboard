@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Project S — 경영진 보고 | 마일스톤 & 론칭 전략</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+/* ═══════════════════════════════════════════════════════════
+   DESIGN SYSTEM — Project S Executive Report
+   Typography:  H1=26px · H2=20px · H3=14px · Body=13px · Caption=11px
+   Colors:      Navy #0f172a · Blue #3b82f6 · Purple #7c3aed
+                Orange #f97316 (EA) · Green #16a34a (직행) · Gold #f59e0b (SNF)
+   ═══════════════════════════════════════════════════════════ */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy:   #0f172a;
+  --blue:   #3b82f6;
+  --indigo: #4f46e5;
+  --purple: #7c3aed;
+  --amber:  #f59e0b;
+  --orange: #f97316;
+  --green:  #16a34a;
+  --red:    #dc2626;
+  --teal:   #0d9488;
+  --cyan:   #0891b2;
+
+  --bg:     #f8fafc;
+  --white:  #ffffff;
+  --border: #e2e8f0;
+  --text1:  #111827;
+  --text2:  #4b5563;
+  --text3:  #9ca3af;
+
+  --r:      8px;
+  --shadow: 0 1px 4px rgba(0,0,0,.06), 0 4px 16px rgba(0,0,0,.06);
+}
+
+body {
+  font-family: 'Pretendard', -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text1);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+/* ── 레이아웃 ── */
+.page { max-width: 1280px; margin: 0 auto; padding: 0 32px 60px; }
+
+/* ── 헤더 ── */
+.rpt-header {
+  background: var(--navy);
+  color: #fff;
+  padding: 0 40px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky; top: 0; z-index: 100;
+}
+.rpt-badge { background: var(--blue); color: #fff; font-size: 10px; font-weight: 800; padding: 3px 10px; border-radius: 20px; letter-spacing: 1.5px; text-transform: uppercase; }
+.rpt-title { font-size: 17px; font-weight: 700; margin-left: 14px; }
+.rpt-meta  { font-size: 11px; color: #94a3b8; }
+.rpt-header-left { display: flex; align-items: center; gap: 0; }
+
+/* ── 섹션 탭 내비 ── */
+.sec-nav {
+  background: #fff;
+  border-bottom: 1px solid var(--border);
+  padding: 0 40px;
+  display: flex;
+  align-items: stretch;
+  height: 46px;
+  position: sticky; top: 64px; z-index: 99;
+  box-shadow: 0 2px 8px rgba(0,0,0,.04);
+}
+.sec-nav a {
+  display: flex; align-items: center; gap: 7px;
+  padding: 0 20px;
+  font-size: 12.5px; font-weight: 700; color: var(--text2);
+  text-decoration: none;
+  border-bottom: 3px solid transparent;
+  transition: all .15s;
+  white-space: nowrap;
+}
+.sec-nav a:hover { color: var(--text1); }
+.sec-nav a.s1 { color: var(--blue); border-bottom-color: var(--blue); }
+.sec-nav a.s2 { color: var(--purple); border-bottom-color: var(--purple); }
+.sec-nav a.s3 { color: var(--green); border-bottom-color: var(--green); }
+.sec-nav-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.sec-nav-divider { width: 1px; background: var(--border); margin: 12px 4px; }
+
+/* ── 섹션 구조 ── */
+.section { padding: 44px 0; border-bottom: 1px solid var(--border); }
+.section:last-child { border-bottom: none; }
+
+.sec-eyebrow {
+  font-size: 10px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--text3); margin-bottom: 6px;
+}
+.sec-h2 { font-size: 22px; font-weight: 800; color: var(--text1); margin-bottom: 6px; letter-spacing: -.3px; }
+.sec-desc { font-size: 13px; color: var(--text2); margin-bottom: 32px; line-height: 1.6; }
+
+/* ── 카드 ── */
+.card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 24px 28px;
+  box-shadow: var(--shadow);
+}
+.card-h { font-size: 13px; font-weight: 800; color: var(--text2); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
+
+/* ── 그리드 ── */
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+.g4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; }
+.g5 { display: grid; grid-template-columns: repeat(5,1fr); gap: 12px; }
+
+/* ══════════════════════════════════════════════════════════
+   SECTION 1 — 일정 / 마일스톤
+   ══════════════════════════════════════════════════════════ */
+
+/* 현황 스탯 카드 */
+.stat-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 20px 22px;
+  position: relative;
+  overflow: hidden;
+}
+.stat-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  background: var(--accent-color, var(--blue));
+}
+.stat-label { font-size: 10px; font-weight: 800; color: var(--text3); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 8px; }
+.stat-value { font-size: 20px; font-weight: 900; color: var(--text1); line-height: 1; margin-bottom: 4px; }
+.stat-sub   { font-size: 11.5px; color: var(--text2); }
+
+/* ── 경로 요약 3-카드 ── */
+.path-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 20px 22px;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.path-label { font-size: 10px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; }
+.path-body  { font-size: 13px; font-weight: 600; color: var(--text1); line-height: 1.55; }
+.path-footer{ display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 1px solid var(--border); }
+.path-gap   { font-size: 11.5px; color: var(--text2); }
+.path-date  { font-size: 14px; font-weight: 800; }
+
+/* ── GANTT ── */
+.gantt-wrap {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 20px 16px 16px;
+  overflow-x: auto;
+  box-shadow: var(--shadow);
+}
+.gantt-label {
+  font-size: 11px; font-weight: 800; color: var(--text2); text-transform: uppercase; letter-spacing: 1px;
+  margin-bottom: 16px;
+}
+
+/* ══════════════════════════════════════════════════════════
+   SECTION 2 — 지표 / KPI
+   ══════════════════════════════════════════════════════════ */
+
+/* 5-Tier 카드 */
+.tier-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  overflow: hidden;
+  text-align: center;
+}
+.tier-head { padding: 14px 12px 10px; }
+.tier-emoji { font-size: 22px; line-height: 1; margin-bottom: 4px; }
+.tier-name  { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .5px; }
+.tier-body  { padding: 14px 12px; }
+.tier-pct   { font-size: 24px; font-weight: 900; line-height: 1; margin-bottom: 4px; }
+.tier-count { font-size: 11px; color: var(--text2); font-weight: 600; margin-bottom: 10px; }
+.tier-pccu  { font-size: 11.5px; color: var(--text2); line-height: 1.4; }
+.tier-pccu strong { font-size: 13px; }
+
+/* WL 목표 테이블 */
+.wl-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.wl-table th { background: #f8fafc; padding: 9px 12px; text-align: center; font-weight: 700; font-size: 11px; border-bottom: 2px solid var(--border); color: var(--text2); white-space: nowrap; }
+.wl-table th:first-child { text-align: left; }
+.wl-table td { padding: 9px 12px; border-bottom: 1px solid var(--border); text-align: center; }
+.wl-table td:first-child { text-align: left; font-weight: 600; }
+.wl-table tr:last-child td { border-bottom: none; }
+.wl-table tr.hl td { background: rgba(254,243,199,.5); font-weight: 700; }
+
+/* ══════════════════════════════════════════════════════════
+   SECTION 3 — To-Do / 체크리스트
+   ══════════════════════════════════════════════════════════ */
+
+.phase-todo { border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; margin-bottom: 12px; }
+.phase-todo-head {
+  padding: 14px 18px; display: flex; align-items: center; gap: 12px;
+  cursor: pointer; background: var(--white);
+  border-bottom: 1px solid var(--border);
+}
+.phase-todo-head.open { background: #f8fafc; }
+.phase-badge { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; color: #fff; flex-shrink: 0; }
+.phase-todo-title { font-size: 14px; font-weight: 700; color: var(--text1); flex: 1; }
+.phase-todo-date  { font-size: 11.5px; color: var(--text2); font-weight: 600; }
+.phase-todo-chevron { font-size: 12px; color: var(--text3); transition: transform .2s; }
+.phase-todo-head.open .phase-todo-chevron { transform: rotate(90deg); }
+.phase-todo-body { display: none; padding: 16px 18px; background: var(--white); }
+.phase-todo-body.open { display: block; }
+.todo-item { display: flex; align-items: flex-start; gap: 10px; padding: 7px 0; border-bottom: 1px solid #f1f5f9; font-size: 12.5px; color: var(--text2); }
+.todo-item:last-child { border-bottom: none; }
+.todo-item input[type=checkbox] { margin-top: 2px; width: 14px; height: 14px; flex-shrink: 0; accent-color: var(--blue); cursor: pointer; }
+.todo-priority { font-size: 10px; font-weight: 800; padding: 2px 7px; border-radius: 12px; flex-shrink: 0; }
+.pri-high   { background: #fee2e2; color: #b91c1c; }
+.pri-medium { background: #fef3c7; color: #92400e; }
+.pri-low    { background: #dcfce7; color: #15803d; }
+
+/* ── 공통 유틸 ── */
+.tag { display: inline-flex; align-items: center; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 10px; }
+.tag-p   { background: #dbeafe; color: #1e40af; }
+.tag-f2p { background: #d1fae5; color: #065f46; }
+
+.divider { height: 1px; background: var(--border); margin: 28px 0; }
+.mt16 { margin-top: 16px; }
+.mt24 { margin-top: 24px; }
+.mb8  { margin-bottom: 8px; }
+
+/* ── 인쇄 ── */
+@media print {
+  .sec-nav, .rpt-header { position: static; }
+  .section { break-inside: avoid; }
+}
+@media (max-width: 900px) {
+  .g3 { grid-template-columns: 1fr 1fr; }
+  .g4, .g5 { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ 상단 헤더 ══ -->
+<header class="rpt-header">
+  <div class="rpt-header-left">
+    <span class="rpt-badge">PROJECT S</span>
+    <span class="rpt-title" style="color:#fff;margin-left:14px">마일스톤 &amp; 론칭 전략 — 경영진 보고</span>
+  </div>
+  <span class="rpt-meta">2026.06 기준 &nbsp;·&nbsp; 전사테스트 진행 중 (2026.07 예정) &nbsp;·&nbsp; CONFIDENTIAL</span>
+</header>
+
+<!-- ══ 섹션 탭 내비 ══ -->
+<nav class="sec-nav">
+  <a href="#s1" class="s1"><span class="sec-nav-dot" style="background:#3b82f6"></span>일정 &amp; 마일스톤</a>
+  <div class="sec-nav-divider"></div>
+  <a href="#s2" class="s2"><span class="sec-nav-dot" style="background:#7c3aed"></span>지표 &amp; KPI</a>
+  <div class="sec-nav-divider"></div>
+  <a href="#s3" class="s3"><span class="sec-nav-dot" style="background:#16a34a"></span>Phase별 실행 To-Do</a>
+</nav>
+
+<div class="page">
+
+<!-- ══════════════════════════════════════════════════════════
+     SECTION 1 — 일정 & 마일스톤
+     ══════════════════════════════════════════════════════════ -->
+<section class="section" id="s1">
+  <div class="sec-eyebrow">Section 01</div>
+  <h2 class="sec-h2">일정 &amp; 마일스톤</h2>
+  <p class="sec-desc">전사테스트 → FGT → CS 오픈 → CLA → CBT → ★ SNF Oct 2027 공통 경로 이후, WL 성과에 따라 EA 론칭 또는 직행 론칭 경로로 분기합니다.</p>
+
+  <!-- 현황 스탯 카드 4개 -->
+  <div class="g4 mb8">
+    <div class="stat-card" style="--accent-color:#ef4444">
+      <div class="stat-label">📍 현재 단계</div>
+      <div class="stat-value" style="font-size:17px;color:#ef4444">전사테스트</div>
+      <div class="stat-sub">2026.07 예정 · 일정 조정 중</div>
+    </div>
+    <div class="stat-card" style="--accent-color:#f59e0b">
+      <div class="stat-label">⭐ 핵심 이벤트</div>
+      <div class="stat-value" style="color:#d97706">SNF Oct'27</div>
+      <div class="stat-sub">Steam Next Fest · 경로 분기 결정</div>
+    </div>
+    <div class="stat-card" style="--accent-color:#f97316">
+      <div class="stat-label">◼ EA 론칭 경로</div>
+      <div class="stat-value" style="color:#ea580c">2028.07</div>
+      <div class="stat-sub">SNF~LAUNCH 8~9개월 갭</div>
+    </div>
+    <div class="stat-card" style="--accent-color:#16a34a">
+      <div class="stat-label">◼ 직행 론칭 경로</div>
+      <div class="stat-value" style="color:#16a34a">2028.03</div>
+      <div class="stat-sub">SNF~LAUNCH 4~5개월 갭</div>
+    </div>
+  </div>
+
+  <!-- 경로 요약 3-카드 -->
+  <div class="g3 mt16">
+    <div class="path-card" style="border-top:3px solid #3b82f6">
+      <div class="path-label" style="color:#3b82f6">🗺 공통 경로 (모든 경우)</div>
+      <div class="path-body">전사테스트(2026.07) → FGT 1·2차 → CS 오픈(2027.01) → CLA → CBT → <strong style="color:#d97706">★ SNF Oct 2027</strong></div>
+      <div class="path-footer">
+        <span class="path-gap">SNF 결과로 아래 두 경로 중 하나로 분기</span>
+      </div>
+    </div>
+    <div class="path-card" style="border-top:3px solid #f97316">
+      <div class="path-label" style="color:#f97316">◼ EA 론칭 경로</div>
+      <div class="path-body">🛡️ WL 목표 70~100% 달성 + 빌드 완성도 80%<br>EA 론칭 후 운영·리뷰 축적 → 정식 1.0 출시</div>
+      <div class="path-footer">
+        <span class="path-gap">SNF~LAUNCH 8~9개월</span>
+        <span class="path-date" style="color:#f97316">🚀 2028.07</span>
+      </div>
+    </div>
+    <div class="path-card" style="border-top:3px solid #16a34a">
+      <div class="path-label" style="color:#16a34a">◼ 직행 론칭 경로</div>
+      <div class="path-body">🛡️ WL 목표 달성·초과 + 빌드 완성도 90%+<br>서버 부하 최종 검증 후 바로 정식 론칭</div>
+      <div class="path-footer">
+        <span class="path-gap">SNF~LAUNCH 4~5개월</span>
+        <span class="path-date" style="color:#16a34a">🚀 2028.03</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── GANTT 차트 ── -->
+  <div class="mt24">
+    <div class="gantt-label">2026–2028 론칭 로드맵 — 단계별 마일스톤</div>
+    <div class="gantt-wrap">
+      <svg id="ganttSvg" width="100%" style="display:block"></svg>
+    </div>
+  </div>
+
+  <!-- ── SNF 분기 결정 기준 ── -->
+  <div class="mt24 card">
+    <div class="card-h">⚡ SNF Oct 2027 종료 후 2주 이내 — 경로 분기 결정 기준</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px">
+      <div>
+        <div style="font-size:11px;font-weight:700;color:#f97316;margin-bottom:6px">◼ EA 론칭 선택 조건</div>
+        <ul style="font-size:12.5px;color:var(--text2);line-height:1.7;padding-left:16px">
+          <li>SNF WL 목표의 70~100% 달성</li>
+          <li>Demo D+7 리텐션 25~35%</li>
+          <li>빌드 완성도 80% 수준</li>
+        </ul>
+      </div>
+      <div>
+        <div style="font-size:11px;font-weight:700;color:#16a34a;margin-bottom:6px">◼ 직행 론칭 선택 조건</div>
+        <ul style="font-size:12.5px;color:var(--text2);line-height:1.7;padding-left:16px">
+          <li>SNF WL 목표 달성·초과</li>
+          <li>Demo D+7 리텐션 35%+</li>
+          <li>빌드 완성도 90%+ 필수</li>
+          <li>CBT 서버 검증 완료</li>
+        </ul>
+      </div>
+      <div>
+        <div style="font-size:11px;font-weight:700;color:#dc2626;margin-bottom:6px">🔴 재검토 조건</div>
+        <ul style="font-size:12.5px;color:var(--text2);line-height:1.7;padding-left:16px">
+          <li>Conservative 미달 (Survival/Failure)</li>
+          <li>BM 전환 또는 출시 재검토</li>
+          <li>다음 SNF 참가 재평가</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     SECTION 2 — 지표 & KPI
+     ══════════════════════════════════════════════════════════ -->
+<section class="section" id="s2">
+  <div class="sec-eyebrow">Section 02</div>
+  <h2 class="sec-h2">지표 &amp; KPI</h2>
+  <p class="sec-desc">신규 Steam Shooter 론칭의 업계 현실과 Project S의 목표 구간을 데이터 기반으로 제시합니다. Conservative 기준을 베이스라인으로 설정합니다.</p>
+
+  <!-- 5-Tier 분포 -->
+  <div class="card-h" style="font-size:11px;font-weight:800;color:var(--text2);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px">
+    📊 신규 Steam Shooter 100개 론칭 중 1년 후 도달 분포 (업계 실측)
+  </div>
+  <div class="g5">
+    <div class="tier-card">
+      <div class="tier-head" style="background:#fef2f2">
+        <div class="tier-emoji">🚀</div>
+        <div class="tier-name" style="color:#16a34a">Stretch</div>
+      </div>
+      <div class="tier-body">
+        <div class="tier-pct" style="color:#16a34a">1%</div>
+        <div class="tier-count">1개 / 100</div>
+        <div class="tier-pccu">PCCU avg<br><strong style="color:#16a34a">300K+</strong><br>Top 5 mega-hit</div>
+      </div>
+    </div>
+    <div class="tier-card">
+      <div class="tier-head" style="background:#eff6ff">
+        <div class="tier-emoji">⭐</div>
+        <div class="tier-name" style="color:#2563eb">Target</div>
+      </div>
+      <div class="tier-body">
+        <div class="tier-pct" style="color:#2563eb">4%</div>
+        <div class="tier-count">4개 / 100</div>
+        <div class="tier-pccu">PCCU avg<br><strong style="color:#2563eb">100-300K</strong><br>Top 10 진입</div>
+      </div>
+    </div>
+    <div class="tier-card" style="border:2px solid #f59e0b">
+      <div class="tier-head" style="background:#fefce8">
+        <div class="tier-emoji">🛡️</div>
+        <div class="tier-name" style="color:#d97706">Conservative<br><span style="font-size:9px;background:#fbbf24;color:#78350f;padding:1px 5px;border-radius:8px">기본 목표</span></div>
+      </div>
+      <div class="tier-body">
+        <div class="tier-pct" style="color:#d97706">10%</div>
+        <div class="tier-count">10개 / 100</div>
+        <div class="tier-pccu">PCCU avg<br><strong style="color:#d97706">30-100K</strong><br>Top 20 진입</div>
+      </div>
+    </div>
+    <div class="tier-card">
+      <div class="tier-head" style="background:#fff7ed">
+        <div class="tier-emoji">🟠</div>
+        <div class="tier-name" style="color:#ea580c">Survival</div>
+      </div>
+      <div class="tier-body">
+        <div class="tier-pct" style="color:#ea580c">27%</div>
+        <div class="tier-count">27개 / 100</div>
+        <div class="tier-pccu">PCCU avg<br><strong style="color:#ea580c">5-30K</strong><br>지속 커뮤니티</div>
+      </div>
+    </div>
+    <div class="tier-card">
+      <div class="tier-head" style="background:#fef2f2">
+        <div class="tier-emoji">🔴</div>
+        <div class="tier-name" style="color:#dc2626">Failure</div>
+      </div>
+      <div class="tier-body">
+        <div class="tier-pct" style="color:#dc2626">58%</div>
+        <div class="tier-count">58개 / 100</div>
+        <div class="tier-pccu">PCCU avg<br><strong style="color:#dc2626">&lt;5K</strong><br>1년 내 90%+ 이탈</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WL 목표 & 시나리오 테이블 -->
+  <div class="mt24 g2">
+    <div class="card">
+      <div class="card-h">Wishlist 단계별 목표 (Conservative 기준)</div>
+      <table class="wl-table">
+        <thead>
+          <tr>
+            <th>Phase / 시점</th>
+            <th><span class="tag tag-p">P</span> Premium</th>
+            <th><span class="tag tag-f2p">F2P</span> Free</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>CS 오픈 4주</td><td>15K+</td><td>15K+</td></tr>
+          <tr><td>CS 오픈 8주</td><td>30K+</td><td>30K+</td></tr>
+          <tr><td>CLA 완료</td><td>80K+</td><td>80K+</td></tr>
+          <tr><td>CBT 완료</td><td>150K+</td><td>200K+</td></tr>
+          <tr class="hl"><td>★ SNF 후 누적</td><td><strong>300K+</strong></td><td><strong>500K+</strong></td></tr>
+          <tr class="hl"><td>🚀 Launch 직전</td><td><strong>500K+</strong></td><td><strong>700K+</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-h">시나리오별 Launch 성과 예측</div>
+      <table class="wl-table">
+        <thead>
+          <tr>
+            <th>시나리오</th>
+            <th>WL (Combined)</th>
+            <th>PCCU avg</th>
+            <th>Week1 매출</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>🔴 Failure</td><td>50-300K</td><td>&lt;5K</td><td>&lt;$1M</td></tr>
+          <tr><td>🟠 Survival</td><td>300-700K</td><td>5-30K</td><td>$1-3M</td></tr>
+          <tr class="hl"><td>🛡️ Conservative</td><td>700K-1.5M</td><td>30-100K</td><td>~$3M</td></tr>
+          <tr><td>⭐ Target</td><td>1.5M-3M</td><td>100-300K</td><td>~$12M+</td></tr>
+          <tr><td>🚀 Stretch</td><td>3M-5M+</td><td>300K+</td><td>$50M+</td></tr>
+        </tbody>
+      </table>
+      <div style="margin-top:10px;font-size:11px;color:var(--text3)">* Steam 30% 수수료 전 기준 · 환율 1,450원/$ 기준</div>
+    </div>
+  </div>
+
+  <!-- WL→PCCU 전환 벤치마크 -->
+  <div class="mt16 card">
+    <div class="card-h">WL→PCCU% 업계 실측 벤치마크</div>
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px">
+      <div style="text-align:center;padding:12px;background:#f8fafc;border-radius:8px">
+        <div style="font-size:11px;font-weight:700;color:var(--text2);margin-bottom:6px">HD2</div>
+        <div style="font-size:20px;font-weight:800;color:#16a34a">46%</div>
+        <div style="font-size:10.5px;color:var(--text3)">458K÷1M WL</div>
+        <div style="font-size:10px;color:var(--text3)">outlier viral</div>
+      </div>
+      <div style="text-align:center;padding:12px;background:#f8fafc;border-radius:8px">
+        <div style="font-size:11px;font-weight:700;color:var(--text2);margin-bottom:6px">Marvel Rivals</div>
+        <div style="font-size:20px;font-weight:800;color:#16a34a">50%</div>
+        <div style="font-size:10.5px;color:var(--text3)">644K÷1M+ WL</div>
+        <div style="font-size:10px;color:var(--text3)">F2P 출시</div>
+      </div>
+      <div style="text-align:center;padding:12px;background:#f8fafc;border-radius:8px">
+        <div style="font-size:11px;font-weight:700;color:var(--text2);margin-bottom:6px">BF6</div>
+        <div style="font-size:20px;font-weight:800;color:#3b82f6">30%</div>
+        <div style="font-size:10.5px;color:var(--text3)">747K÷2.5M WL</div>
+        <div style="font-size:10px;color:var(--text3)">AAA 타이틀</div>
+      </div>
+      <div style="text-align:center;padding:12px;background:#f8fafc;border-radius:8px">
+        <div style="font-size:11px;font-weight:700;color:var(--text2);margin-bottom:6px">Hunt Showdown</div>
+        <div style="font-size:20px;font-weight:800;color:#d97706">7%</div>
+        <div style="font-size:10.5px;color:var(--text3)">60K÷800K WL</div>
+        <div style="font-size:10px;color:var(--text3)">PvP 니치</div>
+      </div>
+      <div style="text-align:center;padding:12px;background:#fef2f2;border-radius:8px">
+        <div style="font-size:11px;font-weight:700;color:var(--text2);margin-bottom:6px">Concord</div>
+        <div style="font-size:20px;font-weight:800;color:#dc2626">17%</div>
+        <div style="font-size:10.5px;color:var(--text3)">697÷4K WL</div>
+        <div style="font-size:10px;color:var(--text3)">2주 만에 종료</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     SECTION 3 — Phase별 To-Do 체크리스트
+     ══════════════════════════════════════════════════════════ -->
+<section class="section" id="s3">
+  <div class="sec-eyebrow">Section 03</div>
+  <h2 class="sec-h2">Phase별 실행 To-Do</h2>
+  <p class="sec-desc">각 Phase의 핵심 실행 항목과 Go/Hold 기준을 정리했습니다. 체크박스는 로컬에 저장됩니다.</p>
+
+  <!-- Phase 0 -->
+  <div class="phase-todo">
+    <div class="phase-todo-head" onclick="toggleTodo(this)">
+      <div class="phase-badge" style="background:#3b82f6">P0</div>
+      <div class="phase-todo-title">전사테스트 &amp; 장르 확정</div>
+      <div class="phase-todo-date">2026.07</div>
+      <span class="phase-todo-chevron">▶</span>
+    </div>
+    <div class="phase-todo-body">
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">긴급</span>Steamworks 파트너 계정 생성 + NDA + SDA 서명</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">긴급</span>앱 deposit 납부 ($100 · 30일 대기 역산 필수)</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">긴급</span>세금정보 제출 (W-8BEN-E) + 은행계좌 연동</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>전사테스트 완료 → 서브장르·핵심 메커닉 공식 확정</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>BM 방향 초안 결정 (Premium vs F2P)</div>
+      <div style="margin-top:12px;padding:10px 12px;background:#fef3c7;border-radius:6px;font-size:12px">
+        <strong>GO 기준:</strong> 서브장르 확정 + 핵심 메커닉 플레이어블 빌드 완성 → FGT 진입
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 1 -->
+  <div class="phase-todo">
+    <div class="phase-todo-head" onclick="toggleTodo(this)">
+      <div class="phase-badge" style="background:#0891b2">P1</div>
+      <div class="phase-todo-title">FGT 1차 · 2차 (외부 유저 검증)</div>
+      <div class="phase-todo-date">2026.08 ~ 2026.12</div>
+      <span class="phase-todo-chevron">▶</span>
+    </div>
+    <div class="phase-todo-body">
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>FGT 1차: 외부 30명+ / NDA / 재플레이 의향 7.0+, NPS 40+</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>FGT 2차: 60명+ 세그먼트별 / 1차 피드백 반영 빌드로 진행</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>BM Premium/F2P 최종 확정 + 가격 정책 수립</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>스토어 에셋 제작 착수 (캡슐 4종 + 트레일러)</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-low">일반</span>Steam Playtest Child App ID 생성 (CLA/CBT용)</div>
+      <div style="margin-top:12px;padding:10px 12px;background:#fef3c7;border-radius:6px;font-size:12px">
+        <strong>GO 기준:</strong> 재플레이 의향 7.5+, NPS 50+, 1차 대비 개선 확인 → CS 오픈 준비<br>
+        <strong>HOLD 기준:</strong> 핵심 메커닉 부족 → CS 연기 + 추가 FGT 검토
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 2~3 -->
+  <div class="phase-todo">
+    <div class="phase-todo-head" onclick="toggleTodo(this)">
+      <div class="phase-badge" style="background:#0d9488">P2</div>
+      <div class="phase-todo-title">Coming Soon 오픈 &amp; WL 수집</div>
+      <div class="phase-todo-date">2027.01 ~ 2027.03</div>
+      <span class="phase-todo-chevron">▶</span>
+    </div>
+    <div class="phase-todo-body">
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>Steam Coming Soon 페이지 오픈 (캡슐 4종+트레일러 제출 7일 전)</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>WL 수집 시작 / 4주 목표: 25K+ / 8주 목표: 50K+</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>커뮤니티 허브 개설 + Discord 공식 서버 운영 시작</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>SNF Oct 2027 등록 신청 준비 (참가 조건 사전 확인)</div>
+      <div style="margin-top:12px;padding:10px 12px;background:#fef3c7;border-radius:6px;font-size:12px">
+        <strong>GO 기준:</strong> 4주 WL 25K+ → CLA 일정 유지<br>
+        <strong>HOLD 기준:</strong> 15K 미만 → 트레일러 교체 + 태그 재검토
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 4~5 -->
+  <div class="phase-todo">
+    <div class="phase-todo-head" onclick="toggleTodo(this)">
+      <div class="phase-badge" style="background:#0891b2">P3</div>
+      <div class="phase-todo-title">CLA (Closed Limited Alpha)</div>
+      <div class="phase-todo-date">2027.04 ~ 2027.06</div>
+      <span class="phase-todo-chevron">▶</span>
+    </div>
+    <div class="phase-todo-body">
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>Steam Playtest 진행 / 1,000명+ / D+7 리텐션 25%+, 크리티컬 버그 0건</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>CLA 결과 반영 패치 완료 → CBT 빌드 분기</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>SNF Oct 2027 참가 신청 완료 확인</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>WL 누적 목표: 80K+</div>
+      <div style="margin-top:12px;padding:10px 12px;background:#fef3c7;border-radius:6px;font-size:12px">
+        <strong>GO 기준:</strong> D+7 25%+, 크리티컬 0건 → CBT 진행<br>
+        <strong>HOLD 기준:</strong> 미달 → 소규모 CLA 재진행 후 판단
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 6 CBT -->
+  <div class="phase-todo">
+    <div class="phase-todo-head" onclick="toggleTodo(this)">
+      <div class="phase-badge" style="background:#7c3aed">P4</div>
+      <div class="phase-todo-title">CBT (Closed Beta Test)</div>
+      <div class="phase-todo-date">2027.06 ~ 2027.09</div>
+      <span class="phase-todo-chevron">▶</span>
+    </div>
+    <div class="phase-todo-body">
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>CBT 10,000명+ / D+7 리텐션 30%+, 서버 다운타임 4h↓</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>2주차 주말 스트리밍 NDA 해제 → 자연 바이럴 유도</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>Curator Connect 배포 리스트 확정 (FPS 큐레이터 30개+)</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>SNF Demo 빌드 착수 (온보딩 완료율 90%+ 목표)</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>WL 목표: P 150K+ / F2P 200K+</div>
+      <div style="margin-top:12px;padding:10px 12px;background:#fef3c7;border-radius:6px;font-size:12px">
+        <strong>GO 기준:</strong> D+7 30%+, 긍정 65%+ → SNF Demo 준비<br>
+        <strong>HOLD 기준:</strong> 미달 → SNF 포기, 다음 회차 재검토
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 8 SNF -->
+  <div class="phase-todo">
+    <div class="phase-todo-head" onclick="toggleTodo(this)">
+      <div class="phase-badge" style="background:#f59e0b">SNF</div>
+      <div class="phase-todo-title">★ Steam Next Fest Oct 2027 (7일)</div>
+      <div class="phase-todo-date">2027년 10월</div>
+      <span class="phase-todo-chevron">▶</span>
+    </div>
+    <div class="phase-todo-body">
+      <div style="margin-bottom:12px;padding:10px 14px;background:#fef9c3;border:1px solid #fde68a;border-radius:6px;font-size:12.5px">
+        🚨 <strong>D+1 절대 필수:</strong> SNF 시작 다음날 Steamworks에서 WL 이메일 발송 버튼 수동 클릭! 자동이 아님. 미클릭 시 기회 소실.
+      </div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">긴급</span>D+1 Steamworks 이메일 버튼 수동 클릭 (PM 캘린더 알람 필수)</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>D+1 Curator Connect 전체 배포 + 공식 SNS 동시 발행</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>D+2~3 FPS 전문 스트리머 라이브 집중 + Twitch Drops 운영</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>D+7 최종 WL 수치 확인 → 경로 분기 결정 데이터 준비</div>
+      <div style="margin-top:12px;padding:10px 12px;background:#fef3c7;border-radius:6px;font-size:12px">
+        <strong>Conservative 목표:</strong> P 300K+ / F2P 500K+ (SNF 후 누적)<br>
+        <strong>SNF +2주 이내:</strong> EA vs 직행 경로 결정 → 경영진 승인
+      </div>
+    </div>
+  </div>
+
+</section>
+
+</div><!-- /page -->
+
+<!-- ══ GANTT JS ══ -->
+<script>
+// ──────────────────────────────────────────────────────────────────
+// GANTT 차트 — SVG 제너레이터
+// 공통 경로: P0→P1→P2→P3→P4→★SNF (numbered step cards)
+// 포크 이후: EA 경로 / 직행 경로 (색상 구분)
+// ──────────────────────────────────────────────────────────────────
+(function() {
+  const SVG = document.getElementById('ganttSvg');
+  const CW  = SVG.parentElement.clientWidth - 32;
+
+  // ── 좌표 시스템 ──
+  // 타임라인: Jun'26(m=0) ~ Jul'28(m=25) = 25개월
+  const L = 90, TM = 25;
+  const R = CW - 20;
+  const PX = (R - L) / TM;
+  const X = m => Math.round(L + m * PX);
+
+  // ── Y 레이아웃 ──
+  // y=0-18:   연도 레이블
+  // y=18-28:  눈금자
+  // y=28-40:  분기 레이블
+  // y=42-180: 공통 경로 (Phase 카드들)
+  //   카드: y=55, H=70
+  //   step 커넥터선: y=90 (카드 중간)
+  // y=182-292: EA 경로
+  // y=296-406: 직행 경로
+  // y=420:     범례
+
+  const CARD_Y = 52, CARD_H = 72;   // 공통 phase 카드
+  const EA_Y   = 186, EA_H  = 56;   // EA 경로 바
+  const DR_Y   = 310, DR_H  = 56;   // 직행 경로 바
+  const TOTAL_H = DR_Y + DR_H + 60;
+
+  SVG.setAttribute('viewBox', `0 0 ${CW} ${TOTAL_H}`);
+  SVG.setAttribute('height', TOTAL_H);
+
+  let html = '';
+
+  // ── helpers ──
+  const rect = (x,y,w,h,fill,rx=6,extra='') =>
+    `<rect x="${x}" y="${y}" width="${Math.max(w,1)}" height="${h}" rx="${rx}" fill="${fill}" ${extra}/>`;
+  const text = (x,y,t,extra='') =>
+    `<text x="${x}" y="${y}" font-family="Pretendard,-apple-system,sans-serif" ${extra}>${t}</text>`;
+  const line = (x1,y1,x2,y2,extra='') =>
+    `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" ${extra}/>`;
+
+  // ── 배경 ──
+  html += rect(0, 0, CW, TOTAL_H, '#f8fafc', 0);
+
+  // ── 연도 배경 밴드 ──
+  html += rect(X(0), 0, X(6)-X(0),  TOTAL_H, '#eff6ff', 0, 'opacity="0.5"'); // 2026
+  html += rect(X(7), 0, X(16)-X(7), TOTAL_H, '#f5f3ff', 0, 'opacity="0.4"'); // 2027
+  html += rect(X(16),0, X(17)-X(16),TOTAL_H, '#fef9c3', 0, 'opacity="0.8"'); // SNF zone
+  html += rect(X(17),0, X(25)-X(17),TOTAL_H, '#f0fdf4', 0, 'opacity="0.4"'); // 2028
+
+  // ── 연도 레이블 ──
+  const yl = (m0,m1,lbl,col) =>
+    text((X(m0)+X(m1))/2|0, 14, lbl, `text-anchor="middle" font-size="12" font-weight="700" fill="${col}"`);
+  html += yl(0, 6, '2026', '#2563eb');
+  html += yl(7, 16,'2027', '#7c3aed');
+  html += text(X(16), 14, '★ SNF', 'text-anchor="middle" font-size="9.5" font-weight="800" fill="#d97706"');
+  html += yl(17,25, '2028', '#16a34a');
+
+  // ── 눈금자 ──
+  html += line(L, 22, R, 22, 'stroke="#e2e8f0" stroke-width="1"');
+  [[1,"Q3'26",'#94a3b8'],[4,"Q4'26",'#94a3b8'],
+   [7,"Q1'27",'#a5b4fc'],[10,"Q2'27",'#a5b4fc'],
+   [13,"Q3'27",'#a5b4fc'],[16,"Q4'27",'#fbbf24'],
+   [19,"Q1'28",'#6ee7b7'],[22,"Q2'28",'#6ee7b7'],
+  ].forEach(([m,lbl,col]) => {
+    html += line(X(m),20,X(m),24, `stroke="${col}" stroke-width="1.5"`);
+    html += line(X(m),27,X(m),TOTAL_H-12,
+      `stroke="${m===7?'#c4b5fd':m===16?'#fde68a':m===17?'#bbf7d0':'#f0f0f0'}" stroke-width="${m===16?1:0.5}"`);
+    html += text(X(m),36,lbl, `text-anchor="middle" font-size="${m===16?9:9}" fill="${col}" font-weight="${m===16?700:400}"`);
+  });
+
+  // ── 현재 마커 ──
+  html += line(L,22,L,TOTAL_H-12, 'stroke="#ef4444" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.6"');
+  html += `<polygon points="${L-5},22 ${L+5},22 ${L},30" fill="#ef4444" opacity="0.8"/>`;
+  html += text(L,18,'현재', 'text-anchor="middle" font-size="8.5" font-weight="800" fill="#ef4444"');
+
+  // ── 트랙 레이블 ──
+  html += rect(0, 42, L-4, TOTAL_H-54, '#fff', 0, 'opacity="1"');
+  // 공통
+  html += text(44, CARD_Y+CARD_H/2+5, '공통\n경로', 'text-anchor="middle" font-size="11" font-weight="800" fill="#1e293b"');
+  html += text(44, CARD_Y+CARD_H/2-6, '공통', 'text-anchor="middle" font-size="11" font-weight="800" fill="#1e293b"');
+  html += text(44, CARD_Y+CARD_H/2+8, '경로', 'text-anchor="middle" font-size="11" font-weight="800" fill="#1e293b"');
+  // EA
+  html += text(44, EA_Y+EA_H/2+5, 'EA', 'text-anchor="middle" font-size="13" font-weight="800" fill="#ea580c"');
+  // 직행
+  html += text(44, DR_Y+DR_H/2+5, '직행', 'text-anchor="middle" font-size="13" font-weight="800" fill="#16a34a"');
+
+  // ── 공통 경로 배경 ──
+  html += rect(L-2, 42, R-L+6, CARD_H+22, '#fff', 6, 'stroke="#e2e8f0" stroke-width="1"');
+
+  // ── 공통 Phase 카드 ──
+  const PHASES = [
+    {m0:1,  m1:6,  fill:'#3b82f6', step:'P0', name:'전사테스트\n+ FGT',  date:"Jul'26~Dec'26"},
+    {m0:7,  m1:9,  fill:'#0d9488', step:'P1', name:'CS 오픈',           date:"Jan~Mar'27"},
+    {m0:10, m1:12, fill:'#0891b2', step:'P2', name:'CLA',               date:"Apr~Jun'27"},
+    {m0:12, m1:15, fill:'#7c3aed', step:'P3', name:'CBT',               date:"Jun~Sep'27"},
+  ];
+
+  PHASES.forEach(({m0,m1,fill,step,name,date}, i) => {
+    const bx = X(m0)+1, bw = X(m1)-X(m0)-2;
+    const mcx = (bx + bw/2)|0;
+    const cy = CARD_Y + CARD_H/2;
+
+    // 카드 본체
+    html += rect(bx, CARD_Y, bw, CARD_H, fill, 8);
+
+    // Step 번호 뱃지 (카드 상단 왼쪽)
+    html += rect(bx+6, CARD_Y-10, 28, 20, '#fff', 10);
+    html += text(bx+20, CARD_Y+4, step, `text-anchor="middle" font-size="9" font-weight="800" fill="${fill}"`);
+
+    // Phase 이름 (카드 내부)
+    const nm = name.split('\n');
+    if (nm.length === 2 && bw > 60) {
+      html += text(mcx, CARD_Y+28, nm[0], `text-anchor="middle" font-size="${bw>120?12:10}" font-weight="700" fill="#fff"`);
+      html += text(mcx, CARD_Y+42, nm[1], `text-anchor="middle" font-size="${bw>120?11:9}" font-weight="700" fill="rgba(255,255,255,.85)"`);
+    } else {
+      const nm0 = name.replace('\n','+');
+      html += text(mcx, cy+4, nm0, `text-anchor="middle" font-size="${bw>120?12:bw>80?11:9.5}" font-weight="700" fill="#fff"`);
+    }
+
+    // 날짜 (카드 하단)
+    if (bw > 50) {
+      html += text(mcx, CARD_Y+CARD_H-6, date, `text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.75)"`);
+    }
+
+    // 화살표 → 다음 카드
+    if (i < PHASES.length - 1) {
+      const nextX = X(PHASES[i+1].m0);
+      const arrowX = bx + bw;
+      html += line(arrowX, cy, nextX-1, cy, 'stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="3,2"');
+      html += `<polygon points="${nextX},${cy} ${nextX-8},${cy-4} ${nextX-8},${cy+4}" fill="#94a3b8"/>`;
+    }
+  });
+
+  // 마지막 Phase → SNF 화살표
+  const lastM1 = PHASES[PHASES.length-1].m1;
+  const snfX = X(16);
+  const snfCY = CARD_Y + CARD_H/2;
+  html += line(X(lastM1), snfCY, snfX-24, snfCY, 'stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="3,2"');
+
+  // ── SNF 마커 ──
+  html += `<circle cx="${snfX}" cy="${snfCY}" r="26" fill="#fef3c7" stroke="#f59e0b" stroke-width="2.5"/>`;
+  html += `<circle cx="${snfX}" cy="${snfCY}" r="18" fill="#fbbf24"/>`;
+  html += text(snfX, snfCY-3, '★', `text-anchor="middle" font-size="19"`);
+  html += text(snfX, snfCY+12, 'SNF', `text-anchor="middle" font-size="9" font-weight="800" fill="#78350f"`);
+  html += rect(snfX-24, CARD_Y-10, 48, 20, '#f59e0b', 10);
+  html += text(snfX, CARD_Y+4, 'P4 · SNF', `text-anchor="middle" font-size="9" font-weight="800" fill="#fff"`);
+  html += text(snfX, CARD_Y+CARD_H+16, "Oct'27", `text-anchor="middle" font-size="11" font-weight="700" fill="#d97706"`);
+
+  // ── 포크 커넥터 ──
+  const forkX = X(17);
+  const eaCY  = EA_Y + EA_H/2;
+  const drCY  = DR_Y + DR_H/2;
+  const forkMidY = (eaCY + drCY) / 2;
+
+  html += line(snfX, snfCY+26, snfX, forkMidY, 'stroke="#9ca3af" stroke-width="1.5"');
+  html += line(snfX, forkMidY, forkX, forkMidY, 'stroke="#9ca3af" stroke-width="1.5"');
+  // EA
+  html += line(forkX, forkMidY, forkX, eaCY, 'stroke="#f97316" stroke-width="1.5"');
+  html += `<polygon points="${forkX},${eaCY} ${forkX-5},${eaCY-8} ${forkX+5},${eaCY-8}" fill="#f97316" opacity="0.7"/>`;
+  // 직행
+  html += line(forkX, forkMidY, forkX, drCY, 'stroke="#16a34a" stroke-width="1.5"');
+  html += `<polygon points="${forkX},${drCY} ${forkX-5},${drCY-8} ${forkX+5},${drCY-8}" fill="#16a34a" opacity="0.7"/>`;
+  // 분기 레이블
+  html += text(snfX+24, forkMidY+4, '경로 분기', `font-size="9.5" fill="#9ca3af" font-family="Pretendard,-apple-system,sans-serif"`);
+
+  // ── EA 경로 ──
+  html += rect(L-2, EA_Y-28, R-L+6, EA_H+60, '#fff7ed', 6, 'stroke="#fdba74" stroke-width="1" opacity="0.9"');
+  html += text(L+4, EA_Y-16, '◼ EA 론칭 경로', `font-size="10.5" font-weight="800" fill="#ea580c" font-family="Pretendard,-apple-system,sans-serif"`);
+
+  const EA_PHASES = [
+    {m0:17, m1:20, fill:'#f97316', name:'EA 준비',              date:"Nov'27~Feb'28"},
+    {m0:20, m1:25, fill:'#fb923c', name:'EA 운영 + LAUNCH 준비', date:"Feb~Jul'28"},
+  ];
+  EA_PHASES.forEach(({m0,m1,fill,name,date}, i) => {
+    const bx = X(m0)+1, bw = X(m1)-X(m0)-2, mcx = (bx+bw/2)|0;
+    html += rect(bx, EA_Y, bw, EA_H, fill, 8);
+    html += text(mcx, EA_Y+EA_H/2+2, name, `text-anchor="middle" font-size="${bw>140?12:11}" font-weight="700" fill="#fff"`);
+    html += text(mcx, EA_Y+EA_H-6, date, `text-anchor="middle" font-size="9" fill="rgba(255,255,255,.75)"`);
+    if (i < EA_PHASES.length-1) {
+      const nx = X(EA_PHASES[i+1].m0);
+      html += line(bx+bw, eaCY, nx-1, eaCY, 'stroke="#fb923c" stroke-width="1.5" stroke-dasharray="3,2"');
+      html += `<polygon points="${nx},${eaCY} ${nx-8},${eaCY-4} ${nx-8},${eaCY+4}" fill="#fb923c"/>`;
+    }
+  });
+  // EA LAUNCH
+  {
+    const lx = X(25), ly = eaCY;
+    html += `<circle cx="${lx}" cy="${ly}" r="18" fill="#ea580c" stroke="#fff" stroke-width="2"/>`;
+    html += text(lx, ly-3, '🚀', `text-anchor="middle" font-size="14"`);
+    html += text(lx, ly+10, 'EA', `text-anchor="middle" font-size="8" font-weight="800" fill="#fff"`);
+    html += text(lx, EA_Y+EA_H+16, "Jul'28", `text-anchor="middle" font-size="11" font-weight="700" fill="#ea580c" font-family="Pretendard"`);
+    html += text(lx, EA_Y+EA_H+28, '정식 LAUNCH', `text-anchor="middle" font-size="9.5" fill="#9ca3af" font-family="Pretendard"`);
+  }
+
+  // ── 직행 경로 ──
+  html += rect(L-2, DR_Y-28, R-L+6, DR_H+62, '#f0fdf4', 6, 'stroke="#86efac" stroke-width="1" opacity="0.9"');
+  html += text(L+4, DR_Y-16, '◼ 직행 론칭 경로', `font-size="10.5" font-weight="800" fill="#16a34a" font-family="Pretendard,-apple-system,sans-serif"`);
+
+  {
+    const bx = X(17)+1, bw = X(21)-X(17)-2, mcx = (X(17)+X(21))/2|0;
+    html += rect(bx, DR_Y, bw, DR_H, '#22c55e', 8);
+    html += text(mcx, DR_Y+DR_H/2+2, 'LAUNCH 준비 + 서버 검증', `text-anchor="middle" font-size="12" font-weight="700" fill="#fff"`);
+    html += text(mcx, DR_Y+DR_H-6, "Nov'27~Mar'28", `text-anchor="middle" font-size="9" fill="rgba(255,255,255,.75)"`);
+  }
+  // 직행 LAUNCH
+  {
+    const lx = X(21), ly = drCY;
+    html += `<circle cx="${lx}" cy="${ly}" r="18" fill="#16a34a" stroke="#fff" stroke-width="2"/>`;
+    html += text(lx, ly-3, '🚀', `text-anchor="middle" font-size="14"`);
+    html += text(lx, ly+10, '직행', `text-anchor="middle" font-size="8" font-weight="800" fill="#fff"`);
+    html += text(lx, DR_Y+DR_H+16, "Mar'28", `text-anchor="middle" font-size="11" font-weight="700" fill="#16a34a" font-family="Pretendard"`);
+    html += text(lx, DR_Y+DR_H+28, '정식 LAUNCH', `text-anchor="middle" font-size="9.5" fill="#9ca3af" font-family="Pretendard"`);
+  }
+
+  // ── 범례 ──
+  const LY = TOTAL_H - 28;
+  const LEGS = [
+    {col:'#3b82f6', lbl:'전사테스트+FGT'},
+    {col:'#7c3aed', lbl:'CLA→CBT'},
+    {col:'#fbbf24', lbl:'★ SNF Oct\'27'},
+    {col:'#f97316', lbl:'EA 경로'},
+    {col:'#22c55e', lbl:'직행 경로'},
+  ];
+  const legW = 110, legStart = (CW - LEGS.length * legW) / 2;
+  LEGS.forEach(({col,lbl}, i) => {
+    const lx = legStart + i * legW;
+    html += rect(lx, LY, 12, 10, col, 2);
+    html += text(lx+16, LY+9, lbl, `font-size="10.5" fill="#374151" font-family="Pretendard,-apple-system,sans-serif"`);
+  });
+
+  SVG.innerHTML = html;
+})();
+
+// ── To-Do 토글 ──
+function toggleTodo(el) {
+  el.classList.toggle('open');
+  const body = el.nextElementSibling;
+  if (body) body.classList.toggle('open');
+}
+
+// ── 섹션 내비 활성화 ──
+const navLinks = document.querySelectorAll('.sec-nav a');
+document.querySelectorAll('section[id]').forEach(sec => {
+  new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(a => {
+          const href = a.getAttribute('href');
+          const active = href === '#'+e.target.id;
+          a.style.color = active ? '' : '';
+        });
+      }
+    });
+  }, {threshold: 0.3}).observe(sec);
+});
+</script>
+
+</body>
+</html>
