@@ -311,18 +311,26 @@ body {
 .gd-bar-dot.start { left: -4px; }
 .gd-bar-dot.end   { right: -4px; }
 .gd-bar-lbl-start {
-  position: absolute; top: -17px; left: -2px;
+  /* 바 왼쪽(앞)에 표시 */
+  position: absolute;
+  right: 100%; margin-right: 5px;
+  top: 50%; transform: translateY(-50%);
   font-size: 9px; font-weight: 600; white-space: nowrap;
+  opacity: .85;
 }
 .gd-bar-lbl-end {
-  position: absolute; top: -17px; right: -2px;
+  /* 바 오른쪽(뒤)에 표시 */
+  position: absolute;
+  left: 100%; margin-left: 5px;
+  top: 50%; transform: translateY(-50%);
   font-size: 9px; font-weight: 600; white-space: nowrap;
-  transform: translateX(50%);
+  opacity: .85;
 }
 .gd-bar-lbl-mid {
+  /* 바 너비가 충분할 때 내부에도 날짜 범위 표시 */
   position: absolute; top: 50%; transform: translateY(-50%);
   left: 0; right: 0; text-align: center;
-  font-size: 9px; font-weight: 700; color: rgba(255,255,255,.9);
+  font-size: 8.5px; font-weight: 700; color: rgba(255,255,255,.9);
   white-space: nowrap; overflow: hidden;
 }
 /* LAUNCH 마커 */
@@ -1205,8 +1213,8 @@ function buildGantt() {
         </div>`;
       }
       const bw = Math.max((t.m1-t.m0)/TM*100, 0.5);
-      const showMid = bw > 8;
-      const showEnd = bw > 5;
+      const showMid = bw > 14; // 바가 충분히 넓을 때만 내부 텍스트
+      const showEnd = true;     // 종료일은 항상 바 오른쪽에 표시
       return `<div class="gd-task-row">
         <div class="gd-task-label">${t.name}</div>
         <div class="gd-task-track">
@@ -1217,7 +1225,7 @@ function buildGantt() {
             <div class="gd-bar-dot start"></div>
             ${t.m1>t.m0+0.2 ? '<div class="gd-bar-dot end"></div>' : ''}
             <div class="gd-bar-lbl-start" style="color:${ph.col}">${t.s}</div>
-            ${showEnd && t.e ? `<div class="gd-bar-lbl-end" style="color:${ph.col}">${t.e}</div>` : ''}
+            ${t.e ? `<div class="gd-bar-lbl-end" style="color:${ph.col}">${t.e}</div>` : ''}
             ${showMid ? `<div class="gd-bar-lbl-mid">${t.s}${t.e?` → ${t.e}`:''}</div>` : ''}
           </div>
         </div>
