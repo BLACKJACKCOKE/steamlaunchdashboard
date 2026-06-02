@@ -663,239 +663,337 @@ body {
 <!-- ══ GANTT JS ══ -->
 <script>
 function buildGantt() {
-  const SVG = document.getElementById('ganttSvg');
-  if (!SVG) return;
-  // clientWidth가 0이면 컨테이너 너비로 fallback
-  const containerW = SVG.parentElement.getBoundingClientRect().width || 900;
-  const CW = Math.max(containerW - 32, 600);
+  /* ═══════════════════════════════════════════════════════
+   GANTT v2 — 카드형 Phase 블록 + 단계별 상세 시각화
+   ─────────────────────────────────────────────────────────
+   레이아웃:
+     0-22   연도 배경 + 레이블
+     22-36  월 눈금자
+     36-70  WL 마일스톤 다이아몬드 행
+     74-204 공통 경로 (Phase 카드 height=126)
+     204-244 SNF 포크 존
+     248-360 EA 경로 (height=108)
+     368-480 직행 경로 (height=108)
+     488-510 범례
+   ═══════════════════════════════════════════════════════ */
+  const el = document.getElementById('ganttSvg');
+  if (!el) return;
+  const W  = Math.max(el.parentElement.getBoundingClientRect().width - 24, 720);
+  const H  = 520;
 
-  // ── 좌표 시스템 ──
-  // 타임라인: Jun'26(m=0) ~ Jul'28(m=25) = 25개월
-  const L = 90, TM = 25;
-  const R = CW - 20;
-  const PX = (R - L) / TM;
-  const X = m => Math.round(L + m * PX);
+  // 좌표 시스템 ─────────────────────────────────────────
+  const L = 96, R = W - 20, CW = R - L, TM = 25; // m=0=Jun'26 ~ m=25=Jul'28
+  const X  = m => Math.round(L + (m / TM) * CW);
+  const PX = CW / TM; // px per month
 
-  // ── Y 레이아웃 ──
-  // y=0-18:   연도 레이블
-  // y=18-28:  눈금자
-  // y=28-40:  분기 레이블
-  // y=42-180: 공통 경로 (Phase 카드들)
-  //   카드: y=55, H=70
-  //   step 커넥터선: y=90 (카드 중간)
-  // y=182-292: EA 경로
-  // y=296-406: 직행 경로
-  // y=420:     범례
+  // Y 상수 ──────────────────────────────────────────────
+  const COM_Y = 74,  COM_H = 126; // 공통 Phase 카드
+  const SNF_CY = COM_Y + COM_H/2; // SNF 원 중심 Y
+  const EA_Y  = 250, EA_H  = 108; // EA 경로
+  const DR_Y  = 370, DR_H  = 108; // 직행 경로
+  const WL_Y  = 54;               // WL 다이아몬드 중심 Y
+  const LEG_Y = H - 26;
 
-  const CARD_Y = 52, CARD_H = 72;   // 공통 phase 카드
-  const EA_Y   = 186, EA_H  = 56;   // EA 경로 바
-  const DR_Y   = 310, DR_H  = 56;   // 직행 경로 바
-  const TOTAL_H = DR_Y + DR_H + 60;
+  // 헬퍼 ────────────────────────────────────────────────
+  const rc = (x,y,w,h,fill,rx=0,xtra='') =>
+    `<rect x="${x}" y="${y}" width="${Math.max(w,1)}" height="${h}" rx="${rx}" fill="${fill}" ${xtra}/>`;
+  const tx = (x,y,t,xtra='') =>
+    `<text x="${x}" y="${y}" font-family="Pretendard,-apple-system,sans-serif" ${xtra}>${t}</text>`;
+  const ln = (x1,y1,x2,y2,xtra='') =>
+    `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" ${xtra}/>`;
+  const ci = (cx,cy,r,fill,xtra='') =>
+    `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${fill}" ${xtra}/>`;
+  const dm = (cx,cy,r,fill) =>
+    `<polygon points="${cx},${cy-r} ${cx+r},${cy} ${cx},${cy+r} ${cx-r},${cy}" fill="${fill}"/>`;
 
-  SVG.setAttribute('viewBox', `0 0 ${CW} ${TOTAL_H}`);
-  SVG.setAttribute('height', TOTAL_H);
+  // clipPath IDs
+  let clipDefs = '';
+  let g = '';
 
-  let html = '';
+  // ── 배경 ─────────────────────────────────────────────
+  g += rc(0, 0, W, H, '#f8fafc', 0);
 
-  // ── helpers ──
-  const rect = (x,y,w,h,fill,rx=6,extra='') =>
-    `<rect x="${x}" y="${y}" width="${Math.max(w,1)}" height="${h}" rx="${rx}" fill="${fill}" ${extra}/>`;
-  const text = (x,y,t,extra='') =>
-    `<text x="${x}" y="${y}" font-family="Pretendard,-apple-system,sans-serif" ${extra}>${t}</text>`;
-  const line = (x1,y1,x2,y2,extra='') =>
-    `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" ${extra}/>`;
+  // 연도 배경 밴드
+  g += rc(X(0), 0, X(7)-X(0),   H, '#eff6ff', 0, 'opacity="0.35"');
+  g += rc(X(7), 0, X(16)-X(7),  H, '#f5f3ff', 0, 'opacity="0.3"');
+  g += rc(X(16),0, X(17)-X(16), H, '#fef9c3', 0, 'opacity="0.8"');
+  g += rc(X(17),0, X(25)-X(17), H, '#f0fdf4', 0, 'opacity="0.25"');
 
-  // ── 배경 ──
-  html += rect(0, 0, CW, TOTAL_H, '#f8fafc', 0);
-
-  // ── 연도 배경 밴드 ──
-  html += rect(X(0), 0, X(6)-X(0),  TOTAL_H, '#eff6ff', 0, 'opacity="0.5"'); // 2026
-  html += rect(X(7), 0, X(16)-X(7), TOTAL_H, '#f5f3ff', 0, 'opacity="0.4"'); // 2027
-  html += rect(X(16),0, X(17)-X(16),TOTAL_H, '#fef9c3', 0, 'opacity="0.8"'); // SNF zone
-  html += rect(X(17),0, X(25)-X(17),TOTAL_H, '#f0fdf4', 0, 'opacity="0.4"'); // 2028
-
-  // ── 연도 레이블 ──
+  // ── 연도 레이블 ──────────────────────────────────────
   const yl = (m0,m1,lbl,col) =>
-    text((X(m0)+X(m1))/2|0, 14, lbl, `text-anchor="middle" font-size="12" font-weight="700" fill="${col}"`);
-  html += yl(0, 6, '2026', '#2563eb');
-  html += yl(7, 16,'2027', '#7c3aed');
-  html += text(X(16), 14, '★ SNF', 'text-anchor="middle" font-size="9.5" font-weight="800" fill="#d97706"');
-  html += yl(17,25, '2028', '#16a34a');
+    tx((X(m0)+X(m1))/2|0, 14, lbl, `text-anchor="middle" font-size="12.5" font-weight="700" fill="${col}" opacity="0.8"`);
+  g += yl(1, 6, '2026', '#2563eb');
+  g += yl(7,15, '2027', '#7c3aed');
+  g += tx(X(16), 14, '★ SNF', 'text-anchor="middle" font-size="9.5" font-weight="800" fill="#d97706"');
+  g += yl(17,25, '2028', '#16a34a');
 
-  // ── 눈금자 ──
-  html += line(L, 22, R, 22, 'stroke="#e2e8f0" stroke-width="1"');
-  [[1,"Q3'26",'#94a3b8'],[4,"Q4'26",'#94a3b8'],
-   [7,"Q1'27",'#a5b4fc'],[10,"Q2'27",'#a5b4fc'],
-   [13,"Q3'27",'#a5b4fc'],[16,"Q4'27",'#fbbf24'],
-   [19,"Q1'28",'#6ee7b7'],[22,"Q2'28",'#6ee7b7'],
-  ].forEach(([m,lbl,col]) => {
-    html += line(X(m),20,X(m),24, `stroke="${col}" stroke-width="1.5"`);
-    html += line(X(m),27,X(m),TOTAL_H-12,
-      `stroke="${m===7?'#c4b5fd':m===16?'#fde68a':m===17?'#bbf7d0':'#f0f0f0'}" stroke-width="${m===16?1:0.5}"`);
-    html += text(X(m),36,lbl, `text-anchor="middle" font-size="${m===16?9:9}" fill="${col}" font-weight="${m===16?700:400}"`);
+  // ── 월 눈금자 ─────────────────────────────────────────
+  g += ln(L, 24, R, 24, 'stroke="#e2e8f0" stroke-width="1"');
+  // 분기 단위로 표시
+  const QS = [
+    [1,"Q3'26",'#93c5fd'],[4,"Q4'26",'#93c5fd'],
+    [7,"Q1'27",'#c4b5fd'],[10,"Q2'27",'#c4b5fd'],
+    [13,"Q3'27",'#c4b5fd'],[16,"Q4'27 / SNF",'#fbbf24'],
+    [19,"Q1'28",'#6ee7b7'],[22,"Q2'28",'#6ee7b7'],
+  ];
+  QS.forEach(([m, lbl, col]) => {
+    const qx = X(m);
+    g += ln(qx, 22, qx, 26, `stroke="${col}" stroke-width="1.5"`);
+    g += ln(qx, 28, qx, H-24, `stroke="${m===7||m===17?'#e9d5ff':m===16?'#fde68a':'#f0f0f0'}" stroke-width="${m===16?1:0.4}"`);
+    g += tx(qx, 36, lbl, `text-anchor="middle" font-size="${m===16?9:9}" fill="${col}" font-weight="${m===16?700:400}"`);
   });
 
-  // ── 현재 마커 ──
-  html += line(L,22,L,TOTAL_H-12, 'stroke="#ef4444" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.6"');
-  html += `<polygon points="${L-5},22 ${L+5},22 ${L},30" fill="#ef4444" opacity="0.8"/>`;
-  html += text(L,18,'현재', 'text-anchor="middle" font-size="8.5" font-weight="800" fill="#ef4444"');
+  // ── 현재 마커 ─────────────────────────────────────────
+  g += ln(L, 22, L, H-24, 'stroke="#ef4444" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.55"');
+  g += `<polygon points="${L-5},22 ${L+5},22 ${L},30" fill="#ef4444" opacity="0.8"/>`;
+  g += tx(L, 18, '현재', 'text-anchor="middle" font-size="8.5" font-weight="800" fill="#ef4444"');
 
-  // ── 트랙 레이블 ──
-  html += rect(0, 42, L-4, TOTAL_H-54, '#fff', 0, 'opacity="1"');
-  // 공통
-  html += text(44, CARD_Y+CARD_H/2+5, '공통\n경로', 'text-anchor="middle" font-size="11" font-weight="800" fill="#1e293b"');
-  html += text(44, CARD_Y+CARD_H/2-6, '공통', 'text-anchor="middle" font-size="11" font-weight="800" fill="#1e293b"');
-  html += text(44, CARD_Y+CARD_H/2+8, '경로', 'text-anchor="middle" font-size="11" font-weight="800" fill="#1e293b"');
-  // EA
-  html += text(44, EA_Y+EA_H/2+5, 'EA', 'text-anchor="middle" font-size="13" font-weight="800" fill="#ea580c"');
-  // 직행
-  html += text(44, DR_Y+DR_H/2+5, '직행', 'text-anchor="middle" font-size="13" font-weight="800" fill="#16a34a"');
+  // ── WL 마일스톤 행 ────────────────────────────────────
+  // 연결선
+  const WL_NODES = [7,9,12,15,16]; // CS오픈, 30K, 80K, 150K, SNF 300K
+  for (let i=0;i<WL_NODES.length-1;i++)
+    g += ln(X(WL_NODES[i]),WL_Y,X(WL_NODES[i+1]),WL_Y,'stroke="#fde68a" stroke-width="0.8" stroke-dasharray="3,3"');
 
-  // ── 공통 경로 배경 ──
-  html += rect(L-2, 42, R-L+6, CARD_H+22, '#fff', 6, 'stroke="#e2e8f0" stroke-width="1"');
+  // WL 마일스톤 포인트
+  const WLS = [
+    {m:7,  lbl:'CS 오픈',         sub:'WL 수집 시작', col:'#0d9488', dot:true},
+    {m:9,  lbl:'🛡️ 30K+',        sub:'8주 목표',     col:'#0d9488'},
+    {m:12, lbl:'🛡️ 80K+',        sub:'CLA 완료',     col:'#7c3aed'},
+    {m:15, lbl:'🛡️ P150K+',      sub:'CBT 완료',     col:'#6d28d9'},
+    {m:16, lbl:'🛡️ P300K+',      sub:'SNF 후 목표',  col:'#d97706', hi:true},
+  ];
+  WLS.forEach(({m,lbl,sub,col,dot,hi}) => {
+    const mx = X(m), r2 = hi?8:5;
+    if (dot) g += ci(mx, WL_Y, 5, col);
+    else     g += dm(mx, WL_Y, r2, hi?'#f59e0b':col);
+    g += ln(mx, WL_Y+(dot?5:r2), mx, COM_Y-2, `stroke="${col}" stroke-width="0.7" stroke-dasharray="2,2" opacity="0.45"`);
+    g += tx(mx, WL_Y-r2-5, lbl, `text-anchor="middle" font-size="${hi?11:10}" font-weight="${hi?700:600}" fill="${col}"`);
+    g += tx(mx, WL_Y-r2-16, sub, `text-anchor="middle" font-size="8.5" fill="#9ca3af"`);
+  });
 
-  // ── 공통 Phase 카드 ──
+  // ── 트랙 레이블 영역 ──────────────────────────────────
+  g += rc(0, COM_Y-1, L-4, COM_H+2, '#ffffff', 0);
+  g += rc(0, EA_Y-1,  L-4, EA_H+2,  '#fff7ed', 0, 'opacity="0.9"');
+  g += rc(0, DR_Y-1,  L-4, DR_H+2,  '#f0fdf4', 0, 'opacity="0.9"');
+
+  g += tx(L/2|0, COM_Y+COM_H/2+4, '공통', 'text-anchor="middle" dominant-baseline="central" font-size="12" font-weight="800" fill="#1e293b"');
+  g += tx(L/2|0, EA_Y+EA_H/2+4,  'EA',   'text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="800" fill="#ea580c"');
+  g += tx(L/2|0, DR_Y+DR_H/2+4,  '직행', 'text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="800" fill="#16a34a"');
+
+  // ── 공통 Phase 카드 정의 ──────────────────────────────
   const PHASES = [
-    {m0:1,  m1:6,  fill:'#3b82f6', step:'P0', name:'전사테스트\n+ FGT',  date:"Jul'26~Dec'26"},
-    {m0:7,  m1:9,  fill:'#0d9488', step:'P1', name:'CS 오픈',           date:"Jan~Mar'27"},
-    {m0:10, m1:12, fill:'#0891b2', step:'P2', name:'CLA',               date:"Apr~Jun'27"},
-    {m0:12, m1:15, fill:'#7c3aed', step:'P3', name:'CBT',               date:"Jun~Sep'27"},
+    { m0:1,  m1:2,  fill:'#1d4ed8', step:'P0', name:'전사테스트',     date:"Jul'26",
+      sub:'장르 & 메커닉 확정',
+      items:['서브장르·핵심 메커닉 공식 확정','BM 방향 결정 (P/F2P)','FGT 설계서 완성','Steamworks 계정 셋업'] },
+    { m0:2,  m1:7,  fill:'#0891b2', step:'P1', name:'FGT 1·2차',     date:"Aug~Dec'26",
+      sub:'외부 유저 검증 2라운드',
+      items:['1차: 30명+ NDA / 재플레이 의향 7.0+','2차: 60명+ 세그먼트별 검증','BM Premium/F2P 최종 확정','스토어 에셋 제작 착수'] },
+    { m0:7,  m1:10, fill:'#0d9488', step:'P2', name:'CS 오픈',        date:"Jan~Mar'27",
+      sub:'Steam Coming Soon + WL 수집',
+      items:['Steam Coming Soon 페이지 오픈','4주 WL 목표: 25K+ / 8주: 50K+','Discord 커뮤니티 오픈','SNF Oct 2027 등록 신청'] },
+    { m0:10, m1:13, fill:'#7c3aed', step:'P3', name:'CLA',            date:"Apr~Jun'27",
+      sub:'Closed Limited Alpha',
+      items:['Steam Playtest 1,000명+','D+7 리텐션 25%+ / 크리티컬 0건','피드백 반영 패치 완료','WL 목표: 80K+'] },
+    { m0:13, m1:16, fill:'#6d28d9', step:'P4', name:'CBT',            date:"Jun~Sep'27",
+      sub:'Closed Beta Test',
+      items:['10,000명+ / D+7 리텐션 30%+','2주차 주말 스트리밍 NDA 해제','SNF Demo 빌드 완성 확인','WL 목표: P 150K+ / F2P 200K+'] },
   ];
 
-  PHASES.forEach(({m0,m1,fill,step,name,date}, i) => {
-    const bx = X(m0)+1, bw = X(m1)-X(m0)-2;
-    const mcx = (bx + bw/2)|0;
-    const cy = CARD_Y + CARD_H/2;
+  // 카드 렌더링 헬퍼
+  function phaseCard(phase, isEA, isDR) {
+    const {m0,m1,fill,step,name,date,sub,items} = phase;
+    const bx   = X(m0)+1;
+    const bw   = X(m1)-X(m0)-2;
+    const by   = isEA?EA_Y:isDR?DR_Y:COM_Y;
+    const bh   = isEA?EA_H:isDR?DR_H:COM_H;
+    const mcx  = (bx+bw/2)|0;
+    const hh   = 24; // 헤더 높이
+    const cid  = `cp${step||Math.random().toString(36).slice(2)}`;
 
-    // 카드 본체
-    html += rect(bx, CARD_Y, bw, CARD_H, fill, 8);
+    // clipPath 등록
+    clipDefs += `<clipPath id="${cid}"><rect x="${bx+1}" y="${by+1}" width="${bw-2}" height="${bh-2}" rx="7"/></clipPath>`;
 
-    // Step 번호 뱃지 (카드 상단 왼쪽)
-    html += rect(bx+6, CARD_Y-10, 28, 20, '#fff', 10);
-    html += text(bx+20, CARD_Y+4, step, `text-anchor="middle" font-size="9" font-weight="800" fill="${fill}"`);
+    let s = '';
+    // 그림자
+    s += rc(bx+2, by+3, bw, bh, 'rgba(0,0,0,0.08)', 8);
+    // 카드 배경
+    s += rc(bx, by, bw, bh, '#fff', 8, `stroke="${fill}" stroke-width="1.5"`);
+    // 헤더 밴드
+    s += `<rect x="${bx}" y="${by}" width="${bw}" height="${hh}" rx="8" fill="${fill}" clip-path="url(#${cid})"/>`;
+    s += rc(bx, by+hh-6, bw, 6, fill);
 
-    // Phase 이름 (카드 내부)
-    const nm = name.split('\n');
-    if (nm.length === 2 && bw > 60) {
-      html += text(mcx, CARD_Y+28, nm[0], `text-anchor="middle" font-size="${bw>120?12:10}" font-weight="700" fill="#fff"`);
-      html += text(mcx, CARD_Y+42, nm[1], `text-anchor="middle" font-size="${bw>120?11:9}" font-weight="700" fill="rgba(255,255,255,.85)"`);
-    } else {
-      const nm0 = name.replace('\n','+');
-      html += text(mcx, cy+4, nm0, `text-anchor="middle" font-size="${bw>120?12:bw>80?11:9.5}" font-weight="700" fill="#fff"`);
+    // Step 뱃지 (헤더 내)
+    if (step) {
+      s += rc(bx+7, by+6, bw>80?30:22, 13, 'rgba(255,255,255,0.22)', 6);
+      s += tx(bx+(bw>80?22:18), by+16, step, `text-anchor="middle" font-size="9" font-weight="800" fill="#fff"`);
+    }
+    // 날짜 (헤더 우측)
+    if (bw > 70) {
+      s += tx(bx+bw-8, by+16, date, `text-anchor="end" font-size="8.5" fill="rgba(255,255,255,0.85)"`);
     }
 
-    // 날짜 (카드 하단)
-    if (bw > 50) {
-      html += text(mcx, CARD_Y+CARD_H-6, date, `text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.75)"`);
+    // Phase 이름
+    const nameFS = bw>160?13.5:bw>100?12:bw>70?11:9.5;
+    s += tx(mcx, by+hh+14, name, `text-anchor="middle" font-size="${nameFS}" font-weight="800" fill="${fill}" clip-path="url(#${cid})"`);
+
+    // 부제
+    if (sub && bw > 80) {
+      s += tx(mcx, by+hh+25, sub, `text-anchor="middle" font-size="9" fill="#6b7280" clip-path="url(#${cid})"`);
     }
 
-    // 화살표 → 다음 카드
-    if (i < PHASES.length - 1) {
-      const nextX = X(PHASES[i+1].m0);
-      const arrowX = bx + bw;
-      html += line(arrowX, cy, nextX-1, cy, 'stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="3,2"');
-      html += `<polygon points="${nextX},${cy} ${nextX-8},${cy-4} ${nextX-8},${cy+4}" fill="#94a3b8"/>`;
+    // 구분선
+    if (bw > 60) {
+      s += ln(bx+10, by+hh+31, bx+bw-10, by+hh+31, `stroke="#e2e8f0" stroke-width="0.8"`);
+    }
+
+    // 항목 리스트
+    const itemStartY = by+hh+42;
+    const itemFS = bw>140?10:9.5;
+    items.forEach((item, i) => {
+      const iy = itemStartY + i*13;
+      if (iy < by+bh-8) {
+        s += ci(bx+12, iy-3, 2.5, fill, `opacity="0.7" clip-path="url(#${cid})"`);
+        s += `<text x="${bx+19}" y="${iy}" font-size="${itemFS}" fill="#374151" font-family="Pretendard,-apple-system,sans-serif" clip-path="url(#${cid})">${item}</text>`;
+      }
+    });
+    return s;
+  }
+
+  // ── 공통 Phase 카드 렌더링 ────────────────────────────
+  PHASES.forEach((ph, i) => {
+    g += phaseCard(ph, false, false);
+    // 화살표 (다음 카드로)
+    if (i < PHASES.length-1) {
+      const x1 = X(ph.m1)-1;
+      const x2 = X(PHASES[i+1].m0)+1;
+      const ay = COM_Y + COM_H/2;
+      if (x2 > x1+4) {
+        g += ln(x1, ay, x2-7, ay, 'stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="4,2"');
+        g += `<polygon points="${x2},${ay} ${x2-9},${ay-4} ${x2-9},${ay+4}" fill="#cbd5e1"/>`;
+      }
     }
   });
+
+  // ── SNF 마커 ─────────────────────────────────────────
+  const sx = X(16);
+  // SNF 박스 오버레이
+  g += `<filter id="snfGlow"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>`;
+  g += ci(sx, SNF_CY, 30, '#fef9c3', 'stroke="#f59e0b" stroke-width="3" filter="url(#snfGlow)"');
+  g += ci(sx, SNF_CY, 21, '#fbbf24', 'stroke="#f59e0b" stroke-width="1"');
+  g += tx(sx, SNF_CY-3, '★', 'text-anchor="middle" font-size="21"');
+  g += tx(sx, SNF_CY+12, 'SNF', 'text-anchor="middle" font-size="9" font-weight="800" fill="#78350f"');
+  // SNF 날짜 레이블
+  g += rc(sx-26, COM_Y-16, 52, 16, '#f59e0b', 8);
+  g += tx(sx, COM_Y-5, 'P5 · Oct\'27', 'text-anchor="middle" font-size="8.5" font-weight="800" fill="#fff"');
+  g += tx(sx, COM_Y+COM_H+16, "Oct 2027", 'text-anchor="middle" font-size="11" font-weight="700" fill="#d97706"');
+  g += tx(sx, COM_Y+COM_H+28, "Steam Next Fest", 'text-anchor="middle" font-size="9" fill="#9ca3af"');
 
   // 마지막 Phase → SNF 화살표
-  const lastM1 = PHASES[PHASES.length-1].m1;
-  const snfX = X(16);
-  const snfCY = CARD_Y + CARD_H/2;
-  html += line(X(lastM1), snfCY, snfX-24, snfCY, 'stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="3,2"');
+  {
+    const lastPh = PHASES[PHASES.length-1];
+    const x1 = X(lastPh.m1)-1, x2 = sx-30;
+    const ay = SNF_CY;
+    g += ln(x1, ay, x2, ay, 'stroke="#fbbf24" stroke-width="1.5" stroke-dasharray="4,2"');
+    g += `<polygon points="${x2+1},${ay} ${x2-7},${ay-4} ${x2-7},${ay+4}" fill="#fbbf24"/>`;
+  }
 
-  // ── SNF 마커 ──
-  html += `<circle cx="${snfX}" cy="${snfCY}" r="26" fill="#fef3c7" stroke="#f59e0b" stroke-width="2.5"/>`;
-  html += `<circle cx="${snfX}" cy="${snfCY}" r="18" fill="#fbbf24"/>`;
-  html += text(snfX, snfCY-3, '★', `text-anchor="middle" font-size="19"`);
-  html += text(snfX, snfCY+12, 'SNF', `text-anchor="middle" font-size="9" font-weight="800" fill="#78350f"`);
-  html += rect(snfX-24, CARD_Y-10, 48, 20, '#f59e0b', 10);
-  html += text(snfX, CARD_Y+4, 'P4 · SNF', `text-anchor="middle" font-size="9" font-weight="800" fill="#fff"`);
-  html += text(snfX, CARD_Y+CARD_H+16, "Oct'27", `text-anchor="middle" font-size="11" font-weight="700" fill="#d97706"`);
+  // ── 포크 커넥터 ──────────────────────────────────────
+  const forkX  = X(17);
+  const eaCY   = EA_Y + EA_H/2;
+  const drCY   = DR_Y + DR_H/2;
+  const forkMY = (EA_Y + DR_Y + DR_H) / 2 | 0; // 중간점
 
-  // ── 포크 커넥터 ──
-  const forkX = X(17);
-  const eaCY  = EA_Y + EA_H/2;
-  const drCY  = DR_Y + DR_H/2;
-  const forkMidY = (eaCY + drCY) / 2;
+  g += ln(sx, SNF_CY+30, sx, forkMY, 'stroke="#9ca3af" stroke-width="1.5"');
+  g += ln(sx, forkMY, forkX, forkMY, 'stroke="#9ca3af" stroke-width="1.5"');
+  g += ln(forkX, forkMY, forkX, eaCY, 'stroke="#f97316" stroke-width="1.5"');
+  g += `<polygon points="${forkX},${eaCY} ${forkX-6},${eaCY-9} ${forkX+6},${eaCY-9}" fill="#f97316" opacity="0.75"/>`;
+  g += ln(forkX, forkMY, forkX, drCY, 'stroke="#16a34a" stroke-width="1.5"');
+  g += `<polygon points="${forkX},${drCY} ${forkX-6},${drCY-9} ${forkX+6},${drCY-9}" fill="#16a34a" opacity="0.75"/>`;
 
-  html += line(snfX, snfCY+26, snfX, forkMidY, 'stroke="#9ca3af" stroke-width="1.5"');
-  html += line(snfX, forkMidY, forkX, forkMidY, 'stroke="#9ca3af" stroke-width="1.5"');
-  // EA
-  html += line(forkX, forkMidY, forkX, eaCY, 'stroke="#f97316" stroke-width="1.5"');
-  html += `<polygon points="${forkX},${eaCY} ${forkX-5},${eaCY-8} ${forkX+5},${eaCY-8}" fill="#f97316" opacity="0.7"/>`;
-  // 직행
-  html += line(forkX, forkMidY, forkX, drCY, 'stroke="#16a34a" stroke-width="1.5"');
-  html += `<polygon points="${forkX},${drCY} ${forkX-5},${drCY-8} ${forkX+5},${drCY-8}" fill="#16a34a" opacity="0.7"/>`;
-  // 분기 레이블
-  html += text(snfX+24, forkMidY+4, '경로 분기', `font-size="9.5" fill="#9ca3af" font-family="Pretendard,-apple-system,sans-serif"`);
+  // 분기 결정 레이블
+  g += tx(sx+24, forkMY+4, '⚡ 경로 분기 결정', `font-size="9.5" font-weight="600" fill="#9ca3af" font-family="Pretendard,-apple-system,sans-serif"`);
 
-  // ── EA 경로 ──
-  html += rect(L-2, EA_Y-28, R-L+6, EA_H+60, '#fff7ed', 6, 'stroke="#fdba74" stroke-width="1" opacity="0.9"');
-  html += text(L+4, EA_Y-16, '◼ EA 론칭 경로', `font-size="10.5" font-weight="800" fill="#ea580c" font-family="Pretendard,-apple-system,sans-serif"`);
+  // ── EA 경로 트랙 ─────────────────────────────────────
+  g += rc(L-2, EA_Y-22, R-L+4, EA_H+36, '#fff7ed', 6, 'stroke="#fdba74" stroke-width="1" opacity="0.85"');
+  g += tx(L+4, EA_Y-10, '◼ EA 론칭 경로 — SNF 후 8~9개월 · 정식 LAUNCH Jul\'28',
+    `font-size="10" font-weight="800" fill="#ea580c" font-family="Pretendard,-apple-system,sans-serif"`);
 
   const EA_PHASES = [
-    {m0:17, m1:20, fill:'#f97316', name:'EA 준비',              date:"Nov'27~Feb'28"},
-    {m0:20, m1:25, fill:'#fb923c', name:'EA 운영 + LAUNCH 준비', date:"Feb~Jul'28"},
+    { m0:17, m1:20, fill:'#f97316', step:'EA-1', name:'EA 준비',       date:"Nov'27~Feb'28",
+      sub:'Early Access 준비',
+      items:['EA GO 경영진 승인 (11월 내)','EA 가격·콘텐츠 범위 확정','EA 론칭 트레일러 제작','Season 1 로드맵 커뮤니티 공개'] },
+    { m0:20, m1:25, fill:'#fb923c', step:'EA-2', name:'EA 운영 + LAUNCH 준비', date:"Feb~Jul'28",
+      sub:'리뷰 기반 정식 LAUNCH 준비',
+      items:['EA 론칭 + WL 이메일 발송','Update Visibility Round 2차','Very Positive 80%+ 목표','LAUNCH 트레일러·Season 1 확정'] },
   ];
-  EA_PHASES.forEach(({m0,m1,fill,name,date}, i) => {
-    const bx = X(m0)+1, bw = X(m1)-X(m0)-2, mcx = (bx+bw/2)|0;
-    html += rect(bx, EA_Y, bw, EA_H, fill, 8);
-    html += text(mcx, EA_Y+EA_H/2+2, name, `text-anchor="middle" font-size="${bw>140?12:11}" font-weight="700" fill="#fff"`);
-    html += text(mcx, EA_Y+EA_H-6, date, `text-anchor="middle" font-size="9" fill="rgba(255,255,255,.75)"`);
+
+  EA_PHASES.forEach((ph, i) => {
+    g += phaseCard(ph, true, false);
     if (i < EA_PHASES.length-1) {
-      const nx = X(EA_PHASES[i+1].m0);
-      html += line(bx+bw, eaCY, nx-1, eaCY, 'stroke="#fb923c" stroke-width="1.5" stroke-dasharray="3,2"');
-      html += `<polygon points="${nx},${eaCY} ${nx-8},${eaCY-4} ${nx-8},${eaCY+4}" fill="#fb923c"/>`;
+      const x1 = X(ph.m1)-1, x2 = X(EA_PHASES[i+1].m0)+1, ay = eaCY;
+      g += ln(x1, ay, x2-7, ay, 'stroke="#fb923c" stroke-width="1.5" stroke-dasharray="3,2"');
+      g += `<polygon points="${x2},${ay} ${x2-9},${ay-4} ${x2-9},${ay+4}" fill="#fb923c"/>`;
     }
   });
-  // EA LAUNCH
+
+  // EA LAUNCH 마커
   {
     const lx = X(25), ly = eaCY;
-    html += `<circle cx="${lx}" cy="${ly}" r="18" fill="#ea580c" stroke="#fff" stroke-width="2"/>`;
-    html += text(lx, ly-3, '🚀', `text-anchor="middle" font-size="14"`);
-    html += text(lx, ly+10, 'EA', `text-anchor="middle" font-size="8" font-weight="800" fill="#fff"`);
-    html += text(lx, EA_Y+EA_H+16, "Jul'28", `text-anchor="middle" font-size="11" font-weight="700" fill="#ea580c" font-family="Pretendard"`);
-    html += text(lx, EA_Y+EA_H+28, '정식 LAUNCH', `text-anchor="middle" font-size="9.5" fill="#9ca3af" font-family="Pretendard"`);
+    g += ci(lx, ly, 20, '#ea580c', 'stroke="#fff" stroke-width="2.5"');
+    g += tx(lx, ly-2, '🚀', 'text-anchor="middle" font-size="16"');
+    g += tx(lx, ly+11, 'EA', 'text-anchor="middle" font-size="8" font-weight="800" fill="#fff"');
+    g += tx(lx, EA_Y+EA_H+16, "Jul'28", 'text-anchor="middle" font-size="12" font-weight="700" fill="#ea580c" font-family="Pretendard"');
+    g += tx(lx, EA_Y+EA_H+28, '정식 LAUNCH', 'text-anchor="middle" font-size="9.5" fill="#9ca3af" font-family="Pretendard"');
   }
 
-  // ── 직행 경로 ──
-  html += rect(L-2, DR_Y-28, R-L+6, DR_H+62, '#f0fdf4', 6, 'stroke="#86efac" stroke-width="1" opacity="0.9"');
-  html += text(L+4, DR_Y-16, '◼ 직행 론칭 경로', `font-size="10.5" font-weight="800" fill="#16a34a" font-family="Pretendard,-apple-system,sans-serif"`);
+  // ── 직행 경로 트랙 ────────────────────────────────────
+  g += rc(L-2, DR_Y-22, R-L+4, DR_H+42, '#f0fdf4', 6, 'stroke="#86efac" stroke-width="1" opacity="0.85"');
+  g += tx(L+4, DR_Y-10, '◼ 직행 론칭 경로 — SNF 후 4~5개월 · 정식 LAUNCH Mar\'28',
+    `font-size="10" font-weight="800" fill="#16a34a" font-family="Pretendard,-apple-system,sans-serif"`);
 
-  {
-    const bx = X(17)+1, bw = X(21)-X(17)-2, mcx = (X(17)+X(21))/2|0;
-    html += rect(bx, DR_Y, bw, DR_H, '#22c55e', 8);
-    html += text(mcx, DR_Y+DR_H/2+2, 'LAUNCH 준비 + 서버 검증', `text-anchor="middle" font-size="12" font-weight="700" fill="#fff"`);
-    html += text(mcx, DR_Y+DR_H-6, "Nov'27~Mar'28", `text-anchor="middle" font-size="9" fill="rgba(255,255,255,.75)"`);
-  }
-  // 직행 LAUNCH
-  {
-    const lx = X(21), ly = drCY;
-    html += `<circle cx="${lx}" cy="${ly}" r="18" fill="#16a34a" stroke="#fff" stroke-width="2"/>`;
-    html += text(lx, ly-3, '🚀', `text-anchor="middle" font-size="14"`);
-    html += text(lx, ly+10, '직행', `text-anchor="middle" font-size="8" font-weight="800" fill="#fff"`);
-    html += text(lx, DR_Y+DR_H+16, "Mar'28", `text-anchor="middle" font-size="11" font-weight="700" fill="#16a34a" font-family="Pretendard"`);
-    html += text(lx, DR_Y+DR_H+28, '정식 LAUNCH', `text-anchor="middle" font-size="9.5" fill="#9ca3af" font-family="Pretendard"`);
-  }
-
-  // ── 범례 ──
-  const LY = TOTAL_H - 28;
-  const LEGS = [
-    {col:'#3b82f6', lbl:'전사테스트+FGT'},
-    {col:'#7c3aed', lbl:'CLA→CBT'},
-    {col:'#fbbf24', lbl:'★ SNF Oct\'27'},
-    {col:'#f97316', lbl:'EA 경로'},
-    {col:'#22c55e', lbl:'직행 경로'},
+  const DR_PHASES = [
+    { m0:17, m1:21, fill:'#22c55e', step:'DR-1', name:'LAUNCH 준비 + 서버 검증', date:"Nov'27~Mar'28",
+      sub:'서버 부하 최종 검증 필수',
+      items:['직행 GO 경영진 승인 (11월 내)','빌드 완성도 90%+ 필수','서버 부하 검증 (피크 120%+, 크리티컬 0건)','LAUNCH 트레일러 + Season 1 동시 준비'] },
   ];
-  const legW = 110, legStart = (CW - LEGS.length * legW) / 2;
-  LEGS.forEach(({col,lbl}, i) => {
-    const lx = legStart + i * legW;
-    html += rect(lx, LY, 12, 10, col, 2);
-    html += text(lx+16, LY+9, lbl, `font-size="10.5" fill="#374151" font-family="Pretendard,-apple-system,sans-serif"`);
+
+  DR_PHASES.forEach((ph) => {
+    g += phaseCard(ph, false, true);
   });
 
-  SVG.innerHTML = html;
+  // 직행 LAUNCH 마커
+  {
+    const lx = X(21), ly = drCY;
+    g += ci(lx, ly, 20, '#16a34a', 'stroke="#fff" stroke-width="2.5"');
+    g += tx(lx, ly-2, '🚀', 'text-anchor="middle" font-size="16"');
+    g += tx(lx, ly+11, '직행', 'text-anchor="middle" font-size="8" font-weight="800" fill="#fff"');
+    g += tx(lx, DR_Y+DR_H+16, "Mar'28", 'text-anchor="middle" font-size="12" font-weight="700" fill="#16a34a" font-family="Pretendard"');
+    g += tx(lx, DR_Y+DR_H+28, '정식 LAUNCH', 'text-anchor="middle" font-size="9.5" fill="#9ca3af" font-family="Pretendard"');
+  }
+
+  // ── 범례 ─────────────────────────────────────────────
+  const LEGS = [
+    {col:'#1d4ed8',lbl:'P0 전사테스트'},
+    {col:'#0891b2',lbl:'P1 FGT'},
+    {col:'#0d9488',lbl:'P2 CS 오픈'},
+    {col:'#7c3aed',lbl:'P3 CLA'},
+    {col:'#6d28d9',lbl:'P4 CBT'},
+    {col:'#fbbf24',lbl:'★ SNF Oct\'27'},
+    {col:'#f97316',lbl:'EA 경로'},
+    {col:'#22c55e',lbl:'직행 경로'},
+  ];
+  const ITEM_W = 110, lx0 = (W - LEGS.length * ITEM_W) / 2;
+  LEGS.forEach(({col,lbl},i) => {
+    const lx = lx0 + i*ITEM_W;
+    g += rc(lx, LEG_Y, 12, 10, col, 2);
+    g += tx(lx+16, LEG_Y+9, lbl, `font-size="10" fill="#374151" font-family="Pretendard,-apple-system,sans-serif"`);
+  });
+
+  // ── SVG 조립 ─────────────────────────────────────────
+  const TOTAL_H = LEG_Y + 20;
+  el.setAttribute('viewBox', `0 0 ${W} ${TOTAL_H}`);
+  el.setAttribute('height', TOTAL_H);
+  el.innerHTML = `<defs>${clipDefs}<filter id="snfGlow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>${g}`;
 }
 
 // DOMContentLoaded 이후 실행 + 리사이즈 대응
