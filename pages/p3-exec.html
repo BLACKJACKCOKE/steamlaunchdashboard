@@ -923,9 +923,8 @@ function buildGantt() {
           const endX   = bx1;
           const labelSpace = bw;
 
+          const midX = (bx0 + bx1) / 2 | 0;
           if (labelSpace > 60) {
-            // 바가 충분히 넓으면 내부에 날짜 표시
-            const midX = (bx0 + bx1) / 2 | 0;
             g += tx(midX, barY+BAR_H-1, `${task.start_lbl} → ${task.end_lbl}`,
               `text-anchor='middle' font-size='8' fill='#fff' font-weight='600'`);
           } else if (labelSpace > 30) {
