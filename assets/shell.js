@@ -10,7 +10,7 @@
     p0:       { title: 'Flywheel',                     src: 'pages/p0.html',       internal: true,  num: 'P0' },
     p1:       { title: '글로벌 게임 마켓',              src: 'pages/p1.html',       internal: true,  num: 'P1' },
     p2:       { title: '스팀 마켓',                     src: 'pages/p2.html',       internal: true,  num: 'P2' },
-    p3:       { title: '마일스톤',                      src: 'pages/p3.html',       internal: true,  num: 'P3' },
+    p3:       { title: '마일스톤',                      src: 'pages/p3-exec.html',  internal: true,  num: 'P3' },
     p4:       { title: '스팀 정책 & 리스크',             src: 'pages/p4.html',       internal: true,  num: 'P4' },
     p5:       { title: 'Pain Point 분석',              src: 'https://project-s-dashboard.pages.dev/', internal: false, num: 'P5' },
     p6:       { title: 'BM 분석',                       src: 'https://pub-4710a252be1249c58617eed8ea869738.r2.dev/images/p6_projectsdashboard_BM.html', internal: false, num: 'P6' },
