@@ -185,7 +185,7 @@ body {
   width: 180px; min-width: 180px;
   padding: 0 14px;
   display: flex; align-items: center;
-  font-size: 10px; font-weight: 700; color: #8b949e;
+  font-size: 12px; font-weight: 700; color: #8b949e;
   text-transform: uppercase; letter-spacing: 1px;
   border-right: 1px solid #30363d;
 }
@@ -1318,8 +1318,8 @@ function buildGantt() {
     const col = rm.snf ? '#d29922' : '';
     const st  = col ? ` style="color:${col};font-weight:800"` : '';
     return `<div class="${cls}"${st} style="flex-direction:column;gap:1px${col?';color:'+col+';font-weight:800':''}">
-      <span style="font-size:8px;opacity:.65;line-height:1">${rm.yr}</span>
-      <span style="font-size:9.5px;line-height:1;font-weight:${rm.q?700:400}">${rm.mo}</span>
+      <span style="font-size:10px;opacity:.7;line-height:1">${rm.yr}</span>
+      <span style="font-size:11.5px;line-height:1;font-weight:${rm.q?700:400}">${rm.mo}</span>
     </div>`;
   }).join('');
 
