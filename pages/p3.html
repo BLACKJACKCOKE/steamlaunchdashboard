@@ -445,30 +445,54 @@ footer{background:#1a1a2e;color:#64748b;padding:24px 40px;font-size:11px;display
   .cl-items{grid-template-columns:1fr}
 }
 
-/* ── View Tab + Nav 통합 시스템 ──────────────────── */
-/* 탭 버튼 (page-nav 내부에 포함) */
-.view-tab{display:flex;align-items:center;gap:6px;padding:0 18px;height:46px;font-size:12.5px;font-weight:700;color:var(--text-sub2);border:none;border-bottom:3px solid transparent;cursor:pointer;background:none;margin-bottom:-2px;transition:color .15s,border-color .15s;white-space:nowrap;flex-shrink:0}
-.view-tab:hover{color:var(--text-h)}
-.view-tab.tab-exec.vt-active{color:var(--accent);border-bottom-color:var(--accent)}
-.view-tab.tab-ops.vt-active{color:#16a34a;border-bottom-color:#16a34a}
-.view-badge{font-size:9px;font-weight:800;padding:2px 6px;border-radius:8px;flex-shrink:0}
-.vb-exec{background:#dbeafe;color:#1e40af}
-.vb-ops{background:#dcfce7;color:#15803d}
-.view-sep{width:1px;height:22px;background:var(--border);margin:0 8px;flex-shrink:0;align-self:center}
+/* ═══════════════════════════════════════════════════
+   DESIGN SYSTEM v3 — 경영진 보고 최적화
+   ═══════════════════════════════════════════════════ */
 
-/* 실무 전용: 경영진 뷰에서 숨김 */
+/* ── 폰트 위계 (H1→H5→Body→Caption) ───────────────
+   H1 (페이지 제목):  이미 header에서 처리
+   H2 (섹션 제목):    sec-title → 22px / 800
+   H3 (서브 제목):    sl → 12px / 700 / uppercase
+   H4 (컴포넌트 제목): 13px / 700
+   Body:             13px / 400
+   Caption:          11px / 400 / sub2 색상
+   ─────────────────────────────────────────────── */
+.sec-num{font-size:10px!important;font-weight:800;letter-spacing:2.5px;color:var(--accent);text-transform:uppercase;margin-bottom:3px;opacity:.7}
+.sec-title{font-size:22px!important;font-weight:800;color:var(--text-h);margin-bottom:4px;line-height:1.2;letter-spacing:-.3px}
+.sec-sub{font-size:12.5px!important;color:var(--text-sub2);margin-bottom:20px;line-height:1.55}
+.sl{font-size:10.5px!important;font-weight:800;color:var(--accent);text-transform:uppercase;letter-spacing:.15em;margin:18px 0 10px;display:flex;align-items:center;gap:8px}
+.insight h3{font-size:10px!important;font-weight:800;color:var(--accent);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px}
+.insight li{font-size:13px!important;color:var(--text-sub1);line-height:1.6;padding:9px 16px!important}
+.decision-label{font-size:13px!important;font-weight:800;color:var(--purple)}
+.decision-sub{font-size:12.5px!important;color:var(--text-sub1);line-height:1.5}
+
+/* ── 탭 시스템 — 필(Pill) 스타일 ───────────────────
+   배경 채움 방식으로 활성/비활성 명확히 구분
+   ─────────────────────────────────────────────── */
+.view-tab{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:0 14px;height:30px;margin:8px 3px;
+  border-radius:8px;font-size:12px;font-weight:700;
+  cursor:pointer;border:none;transition:all .18s;
+  flex-shrink:0;white-space:nowrap;
+}
+/* 비활성: 연한 회색 배경 */
+.view-tab.tab-exec{background:#f1f5f9;color:#64748b}
+.view-tab.tab-ops{background:#f1f5f9;color:#64748b}
+/* 활성: 채움 색상 */
+.view-tab.tab-exec.vt-active{background:#4f46e5;color:#fff;box-shadow:0 2px 8px rgba(79,70,229,.25)}
+.view-tab.tab-ops.vt-active{background:#16a34a;color:#fff;box-shadow:0 2px 8px rgba(22,163,74,.25)}
+.view-tab:not(.vt-active):hover{background:#e2e8f0;color:#374151}
+
+.view-sep{width:1px;height:24px;background:var(--border);margin:0 10px;flex-shrink:0;align-self:center}
+
+/* ── 뷰 전환 — 실무 섹션 숨김 ───────────────────── */
 body.view-exec .ops-section{display:none!important}
 body.view-exec .ops-nav{display:none!important}
 
-/* 폰트 위계 최적화 */
-.sec-num{font-size:11px!important;font-weight:700;letter-spacing:2px;color:var(--accent);text-transform:uppercase;margin-bottom:4px}
-.sec-title{font-size:24px!important;font-weight:800;color:var(--text-h);margin-bottom:4px;line-height:1.25}
-.sec-sub{font-size:13px!important;color:var(--text-sub2);margin-bottom:24px}
-.sl{font-size:11px!important;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin:16px 0 8px}
-.insight h3{font-size:11px!important;font-weight:800;color:var(--accent);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px}
-.insight li{font-size:13px!important;color:var(--text-sub1);line-height:1.55}
-.decision-label{font-size:13px!important;font-weight:800;color:var(--purple)}
-.decision-sub{font-size:12.5px!important;color:var(--text-sub1);line-height:1.5}
+/* ── 섹션 시각 구분 강화 ─────────────────────────── */
+.section{padding:36px 40px 28px;border-bottom:1px solid var(--border)}
+.section:last-child{border-bottom:none}
 </style>
   <link rel="stylesheet" href="../assets/theme.css">
   <!-- Google tag (gtag.js) -->
@@ -555,20 +579,29 @@ body.view-exec .ops-nav{display:none!important}
   <div class="sec-title">전체 론칭 타임라인</div>
 
 
-  <!-- ── Executive Brief ── -->
-  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-bottom:24px;background:linear-gradient(135deg,#1e293b,#0f172a);border-radius:12px;overflow:hidden">
-    <div style="padding:18px 20px;text-align:center">
-      <div style="font-size:10px;font-weight:700;color:#64748b;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px">📍 현재 상태</div>
-      <div style="font-size:14px;font-weight:700;color:#fff;line-height:1.6">전사테스트 <span style="color:#f59e0b">2026.07 예정</span><br><span style="font-size:12px;color:#94a3b8">일정 조정 중</span></div>
+  <!-- ── Executive Brief v2 — 임팩트 강화 ── -->
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:28px">
+
+    <div style="background:#fff;border:1px solid #e2e8f0;border-top:3px solid #ef4444;border-radius:10px;padding:18px 20px">
+      <div style="font-size:9.5px;font-weight:800;color:#ef4444;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px">📍 현재 단계</div>
+      <div style="font-size:22px;font-weight:900;color:#1e293b;line-height:1">전사테스트</div>
+      <div style="font-size:14px;font-weight:700;color:#f59e0b;margin-top:4px">2026.07 예정</div>
+      <div style="font-size:12px;color:#94a3b8;margin-top:6px">일정 조정 중 · P0 진행 전</div>
     </div>
-    <div style="padding:18px 20px;text-align:center;border-left:1px solid rgba(255,255,255,.1);border-right:1px solid rgba(255,255,255,.1)">
-      <div style="font-size:10px;font-weight:700;color:#64748b;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px">⚡ 핵심 결정 시점</div>
-      <div style="font-size:14px;font-weight:700;color:#fff;line-height:1.6">SNF <span style="color:#f59e0b">Oct 2027</span> 종료 후 2주 이내<br><span style="font-size:12px;color:#94a3b8">EA vs 직행 경로 분기 결정</span></div>
+
+    <div style="background:#1e293b;border-radius:10px;padding:18px 20px">
+      <div style="font-size:9.5px;font-weight:800;color:#64748b;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px">⚡ 핵심 결정 시점</div>
+      <div style="font-size:20px;font-weight:900;color:#f59e0b;line-height:1">SNF Oct 2027</div>
+      <div style="font-size:13px;font-weight:600;color:#e2e8f0;margin-top:6px">종료 후 2주 이내</div>
+      <div style="font-size:12px;color:#64748b;margin-top:4px">EA vs 직행 경로 분기 결정</div>
     </div>
-    <div style="padding:18px 20px;text-align:center">
-      <div style="font-size:10px;font-weight:700;color:#64748b;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px">🛡️ Conservative 기준선</div>
-      <div style="font-size:14px;font-weight:700;color:#fff;line-height:1.6">PCCU avg <span style="color:#f59e0b">30~100K</span><br><span style="font-size:12px;color:#94a3b8">론치 직전 WL: P 500K / F2P 700K</span></div>
+
+    <div style="background:#fff;border:1px solid #e2e8f0;border-top:3px solid #22c55e;border-radius:10px;padding:18px 20px">
+      <div style="font-size:9.5px;font-weight:800;color:#22c55e;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px">🛡️ Conservative 기준선</div>
+      <div style="font-size:15px;font-weight:900;color:#1e293b;line-height:1.3">PCCU 30~100K</div>
+      <div style="font-size:12px;color:#64748b;margin-top:6px">WL 론치 직전: P 500K / F2P 700K</div>
     </div>
+
   </div>
 
   <!-- ── 경로 요약 3-Card ── -->
@@ -1877,17 +1910,19 @@ Chart.register(ChartDataLabels);
 
 /* ──── Gantt Roadmap (Option A — 비율형 타임라인) ──── */
 function initGantt() {
-  /* ── 좌표 ────────────────────────────────────────────
-     L=80  (left label col 0~76, center x=38)
-     R=1080, CW=1000, TM=27 (Jun'26 ~ Sep'28)
-     PX = 1000/27 = 37px/month  ← 더 넓어짐
-  ──────────────────────────────────────────────────── */
-  const L=50, R=1170, CW=R-L, TM=25;
+  /* ════════════════════════════════════════════════════════════
+     GANTT v4 — 심플·클린 경영진 보고용
+     - WL 다이아몬드 제거 (노이즈 감소)
+     - 트랙 간격 확대 (명확한 구분)
+     - 바 텍스트 모두 내부 + 날짜 바 아래 일관 배치
+     - 클린한 SNF/LAUNCH 마커
+     ════════════════════════════════════════════════════════════ */
+  const L=60, R=1160, CW=R-L, TM=25;
   const X = m => Math.round(L + (m/TM)*CW);
-  const LCX = 25;          // left column center x
   let g='', clips='';
 
-  const rc=(x,y,w,h,fill,rx=4,xtra='')=>
+  // Helpers
+  const rc=(x,y,w,h,fill,rx=6,xtra='')=>
     `<rect x="${x}" y="${y}" width="${Math.max(w,1)}" height="${h}" rx="${rx}" fill="${fill}" ${xtra}/>`;
   const tx=(x,y,text,xtra='')=>
     `<text x="${x}" y="${y}" font-family="Pretendard,-apple-system,sans-serif" ${xtra}>${text}</text>`;
@@ -1895,252 +1930,209 @@ function initGantt() {
     `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" ${xtra}/>`;
   const ci=(cx,cy,r,fill,xtra='')=>
     `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${fill}" ${xtra}/>`;
-  const dm=(cx,cy,r,fill)=>
-    `<polygon points="${cx},${cy-r} ${cx+r},${cy} ${cx},${cy+r} ${cx-r},${cy}" fill="${fill}"/>`;
 
-  /* ── Y 레이아웃 ────────────────────────────────────────
-     y=0~24:    연도 레이블 + 눈금자(y=22)
-     y=24~38:   분기 레이블
-     ── [📍현재 세로선: x=L, y=22~510] ──────────────────
-     y=38~52:   현재 삼각 마커 (눈금자와 동일 레이어)
-     ─────────────────────────────────────────────────────
-     [WL 목표 존]   y=54~116 (62px)  → WL 중심 y=85
-       다이아몬드 WY=85
-       레이블 위: y=70   아래: y=103
-       왼쪽 레이블 정중앙: y=(54+116)/2=85
+  /* ── Y 레이아웃 ─────────────────────────────────────────────
+     y=0~18:   연도 레이블
+     y=18~28:  눈금자
+     y=28~40:  분기 레이블
+     y=42~54:  현재 마커
 
-     [공통 밴드]    y=116~252 → 레이블 중심 y=(116+252)/2=184
-       바 위 날짜(dateAbove): DAY=131
-       bar: BY=146, BH=46 → bottom=192
-       바 아래 날짜: BY+BH+12=204
-       SNF center: BY+BH/2=169
-       SNF date: BY+BH+20=212
-       fkTop: BY+BH+4=196  fkMid: BY+BH+44=236
+     [공통 트랙]  y=58~168  (band 110px)
+       label center: y=113
+       bar: BY=76, BH=50  bottom=126
+       date: y=140
 
-     [EA 밴드]      y=252~392 → 레이블 중심 y=(252+392)/2=322
-       섹션 헤더: y=264
-       바 위 날짜: EAY=274
-       bar: EY=288, EH=46 → bottom=334
-       바 아래 날짜: EY+EH+12=346
-       LAUNCH: X(25)+26, date y=352, label y=366
+     [SNF 존]  y=168~232  (64px, SNF + fork)
 
-     [직행 밴드]    y=392~532 → 레이블 중심 y=(392+532)/2=462
-       섹션 헤더: y=404
-       바 위 날짜: DLY=414
-       bar: DY=428, DH=46 → bottom=474
-       바 아래 날짜: DY+DH+12=486
-       LAUNCH: X(21)+26, date y=492, label y=506
+     [EA 트랙]  y=232~364  (band 132px)
+       header: y=246
+       bar: EY=258, EH=50  bottom=308
+       date: y=322
+       LAUNCH: EY+EH/2=283
 
-     [범례]         y=DY+DH+62=536
-  ──────────────────────────────────────────────────── */
-  const WY=85;
-  const BY=146, BH=46;
-  const EY=288, EH=46;
-  const DY=428, DH=46;
-  const fkMid=BY+BH+44;   // =236
-  const TOTAL_H = DY+DH+80;  // =554
+     [직행 트랙]  y=364~500  (band 136px)
+       header: y=378
+       bar: DY=390, DH=50  bottom=440
+       date: y=454
+       LAUNCH: DY+DH/2=415
 
-  /* ── clipPath ───────────────────────────────────────── */
+     범례: y=518
+     viewBox H: 538
+  ──────────────────────────────────────────────────────────── */
+  const BY=76, BH=50;
+  const EY=258, EH=50;
+  const DY=390, DH=50;
+  const SNF_Y = BY+BH+30;   // 156 — SNF circle center y
+  const FORK_Y = BY+BH+56;  // 182 — fork split y
+
+  // ── clipPath 생성 ─────────────────────────────────────────
   const CBARS=[
-    {m0:1, m1:6,  fill:'#3b82f6',id:'cpf',lbl:'전사테스트 + FGT 1·2차',sub:"Jul'26~Dec'26",   da:true },
-    {m0:7, m1:9,  fill:'#0d9488',id:'cpc',lbl:'CS 오픈',               sub:"Jan~Mar'27",      da:false},
-    {m0:10,m1:12, fill:'#0891b2',id:'cpl',lbl:'CLA',                   sub:"Apr~Jun'27",      da:true },
-    {m0:12,m1:15, fill:'#7c3aed',id:'cpb',lbl:'CBT',                   sub:"Jun~Sep'27",      da:false},
+    {m0:1, m1:6,  fill:'#3b82f6',id:'gf', lbl:'전사테스트 + FGT 1·2차'},
+    {m0:7, m1:9,  fill:'#0d9488',id:'gc', lbl:'CS 오픈'},
+    {m0:10,m1:12, fill:'#0891b2',id:'gl', lbl:'CLA'},
+    {m0:12,m1:15, fill:'#7c3aed',id:'gb', lbl:'CBT'},
   ];
   const EA_BARS=[
-    {m0:17,m1:20,fill:'#f97316',id:'cpe1',lbl:'EA 준비',             sub:"Nov'27~Feb'28",da:true },
-    {m0:20,m1:25,fill:'#fb923c',id:'cpe2',lbl:'EA 운영 + LAUNCH 준비',sub:"Feb~Jul'28",  da:false},
+    {m0:17,m1:20,fill:'#f97316',id:'ge1',lbl:'EA 준비'},
+    {m0:20,m1:25,fill:'#fb923c',id:'ge2',lbl:'EA 운영 + LAUNCH 준비'},
   ];
   const DR_BARS=[
-    {m0:17,m1:21,fill:'#22c55e',id:'cpd1',lbl:'LAUNCH 준비 + 서버 검증',sub:"Nov'27~Mar'28",da:true},
+    {m0:17,m1:21,fill:'#22c55e',id:'gd1',lbl:'LAUNCH 준비 + 서버 검증'},
   ];
   const mkClip=(bars,ry,rh)=>{
     bars.forEach(b=>{
       const bx=X(b.m0), bw=X(b.m1)-X(b.m0);
-      clips+=`<clipPath id="${b.id}"><rect x="${bx+1}" y="${ry}" width="${bw-2}" height="${rh}"/></clipPath>`;
+      clips+=`<clipPath id="${b.id}"><rect x="${bx+2}" y="${ry}" width="${bw-4}" height="${rh}"/></clipPath>`;
     });
   };
   mkClip(CBARS,BY,BH); mkClip(EA_BARS,EY,EH); mkClip(DR_BARS,DY,DH);
 
-  /* ── 배경 밴드 ───────────────────────────────────────── */
-  // WL 목표 존 (amber)
-  g += rc(0, 54,1200, 62,'#fffbeb',0,'opacity="0.95"');
-  g += rc(0, 54,L-2,  62,'#fef3c7',0);
-  // 공통 (흰 배경)
-  g += rc(0,116,1200,136,'#ffffff',0);
-  g += rc(0,116,L-2, 136,'#f0f9ff',0);
-  // EA (주황 연)
-  g += rc(0,252,1200,140,'#fff7ed',0,'opacity="0.9"');
-  g += rc(0,252,L-2, 140,'#ffedd5',0);
-  // 직행 (초록 연)
-  g += rc(0,392,1200,140,'#f0fdf4',0,'opacity="0.9"');
-  g += rc(0,392,L-2, 140,'#dcfce7',0);
+  // ── 배경 밴드 (클린한 색상) ───────────────────────────────
+  // 공통 트랙 bg
+  g += rc(0, 58, 1200, 110, '#f8fafc', 0);
+  g += rc(0, 58, L-4,  110, '#e2e8f0', 0);
+  // EA 트랙 bg
+  g += rc(0,232, 1200, 132, '#fff7ed', 0, 'opacity="0.8"');
+  g += rc(0,232, L-4,  132, '#ffedd5', 0);
+  // 직행 트랙 bg
+  g += rc(0,364, 1200, 136, '#f0fdf4', 0, 'opacity="0.8"');
+  g += rc(0,364, L-4,  136, '#dcfce7', 0);
 
-  // 구분선
-  g += ln(0, 54,1200, 54,'stroke="#fde68a" stroke-width="1.5"');
-  g += ln(0,116,1200,116,'stroke="#e2e8f0" stroke-width="1.5"');
-  g += ln(0,252,1200,252,'stroke="#f97316" stroke-width="2" opacity="0.5"');
-  g += ln(0,392,1200,392,'stroke="#22c55e" stroke-width="2" opacity="0.5"');
-  g += ln(0,532,1200,532,'stroke="#e2e8f0" stroke-width="1"');
+  // 트랙 구분선
+  g += ln(0, 58,  1200, 58,  'stroke="#e2e8f0" stroke-width="1.5"');
+  g += ln(0,232,  1200,232,  'stroke="#f97316" stroke-width="1.5" opacity="0.5"');
+  g += ln(0,364,  1200,364,  'stroke="#22c55e" stroke-width="1.5" opacity="0.5"');
+  g += ln(0,500,  1200,500,  'stroke="#e2e8f0" stroke-width="1"');
 
-  /* ── 연도 배경 밴드 (SNF 음영 없음) ──────────────────── */
-  g += rc(X(0), 0, X(6) -X(0), TOTAL_H,'#eff6ff',0,'opacity="0.17"');
-  g += rc(X(7), 0, X(16)-X(7), TOTAL_H,'#f5f3ff',0,'opacity="0.15"');
-  // SNF 세로 음영 없음 (삭제)
-  g += rc(X(17),0, X(TM)-X(17),TOTAL_H,'#f0fdf4',0,'opacity="0.1"');
+  // ── 연도 배경 ─────────────────────────────────────────────
+  g += rc(X(0),  0, X(6) -X(0),  500, '#eff6ff', 0, 'opacity="0.15"');
+  g += rc(X(7),  0, X(16)-X(7),  500, '#f5f3ff', 0, 'opacity="0.13"');
+  g += rc(X(17), 0, X(25)-X(17), 500, '#f0fdf4', 0, 'opacity="0.08"');
 
-  /* ── 연도 레이블 ─────────────────────────────────────── */
+  // ── 연도 레이블 ───────────────────────────────────────────
   const yl=(m0,m1,lbl,col)=>tx((X(m0)+X(m1))/2|0,13,lbl,
-    `text-anchor="middle" font-size="13" font-weight="700" fill="${col}"`);
+    `text-anchor="middle" font-size="12.5" font-weight="700" fill="${col}" opacity="0.8"`);
   g += yl(0,6,'2026','#3b82f6');
   g += yl(7,16,'2027','#7c3aed');
-  g += tx(X(16),13,'★ SNF','text-anchor="middle" font-size="9.5" font-weight="800" fill="#d97706"');
-  g += yl(17,TM,'2028','#16a34a');
+  g += tx(X(16),13,'★SNF','text-anchor="middle" font-size="9.5" font-weight="800" fill="#d97706"');
+  g += yl(17,25,'2028','#16a34a');
 
-  /* ── 눈금자 + 분기 눈금 ─────────────────────────────── */
+  // ── 눈금자 + 분기 눈금 ────────────────────────────────────
   g += ln(L,22,R,22,'stroke="#e2e8f0" stroke-width="1"');
   [[1,"Q3'26",'#94a3b8'],[4,"Q4'26",'#94a3b8'],
-   [7,"Q1'27",'#7c3aed'],[10,"Q2'27",'#7c3aed'],
-   [13,"Q3'27",'#7c3aed'],[16,"Q4'27 / SNF",'#d97706'],
-   [19,"Q1'28",'#16a34a'],[22,"Q2'28",'#16a34a'],
+   [7,"Q1'27",'#a5b4fc'],[10,"Q2'27",'#a5b4fc'],
+   [13,"Q3'27",'#a5b4fc'],[16,"Q4'27",'#fbbf24'],
+   [19,"Q1'28",'#6ee7b7'],[22,"Q2'28",'#6ee7b7'],
   ].forEach(([m,lbl,col])=>{
     const qx=X(m);
-    g += ln(qx,20,qx,24,`stroke="${col}" stroke-width="${m===16?2:1.5}"`);
-    g += ln(qx,27,qx,532,`stroke="${m===7||m===17?'#ddd6fe':m===16?'#fde68a':'#f0f0f0'}" stroke-width="${m===16?0.8:m===7||m===17?0.6:0.3}"`);
-    g += tx(qx,36,lbl,`text-anchor="middle" font-size="${m===16?9:10}" fill="${col}" font-weight="${m===7||m===16||m===17?700:400}"`);
+    g += ln(qx,20,qx,24,`stroke="${col}" stroke-width="1.5"`);
+    g += ln(qx,27,qx,500,`stroke="${m===7||m===17?'#e0e7ff':'#f0f0f0'}" stroke-width="${m===7||m===17?0.7:0.35}"`);
+    g += tx(qx,36,lbl,`text-anchor="middle" font-size="9.5" fill="${col}"`);
   });
 
-  /* ── 현재 마커 — 세로형 (타임라인 레이어와 동일) ────────
-     눈금자(y=22)에 삼각 포인터 + 아래로 이어지는 점선
-  ──────────────────────────────────────────────────── */
-  // 세로 점선 (y=22부터 하단까지)
-  g += ln(L,22,L,532,'stroke="#ef4444" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.6"');
-  // 눈금자 위에 삼각 포인터
-  g += `<polygon points="${L-5},20 ${L+5},20 ${L},28" fill="#ef4444"/>`;
-  // "현재" 레이블 (삼각 위, 작게)
-  g += tx(L,17,'현재','text-anchor="middle" font-size="9.5" font-weight="800" fill="#ef4444" dominant-baseline="auto"');
+  // ── 현재 마커 (수직 세로형) ───────────────────────────────
+  g += ln(L,22,L,500,'stroke="#ef4444" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.5"');
+  g += `<polygon points="${L-5},22 ${L+5},22 ${L},30" fill="#ef4444" opacity="0.8"/>`;
+  g += tx(L,19,'현재','text-anchor="middle" font-size="8.5" font-weight="800" fill="#ef4444"');
 
-  /* ── WL 목표 존 왼쪽 레이블 — 정중앙 + 큰 폰트 ─────────
-     WL 존 y=54~116 중심=(54+116)/2=85
-     LCX=38 center
-  ──────────────────────────────────────────────────── */
-  g += tx(LCX,72, '위시리스트','text-anchor="middle" font-size="11" font-weight="800" fill="#92400e"');
-  g += tx(LCX,85, '목표값',     'text-anchor="middle" font-size="11" font-weight="800" fill="#92400e"');
-  g += tx(LCX,98, '🛡️ Cons.',   'text-anchor="middle" font-size="11" fill="#b45309"');
+  // ── 트랙 레이블 (정중앙) ─────────────────────────────────
+  const LCX=30;
+  // 공통: y=58~168 center=113
+  g += tx(LCX,113,'공통','text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="800" fill="#1e293b"');
+  // EA: y=232~364 center=298
+  g += tx(LCX,298,'EA', 'text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="800" fill="#ea580c"');
+  // 직행: y=364~500 center=432
+  g += tx(LCX,432,'직행','text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="800" fill="#16a34a"');
 
-  // WL 마일스톤 연결선
-  const WLS=[
-    {m:7,  val:'위시 시작',         col:'#0d9488', dot:true,  dn:false},
-    {m:9,  val:'위시 30K+',         col:'#0d9488',            dn:true },
-    {m:12, val:'위시 80K+',         col:'#0891b2',            dn:false},
-    {m:15, val:'P 150K / F2P 200K+',col:'#7c3aed',            dn:true },
-    {m:16, val:'P 300K / F2P 500K+',col:'#d97706', hi:true,  dn:false},
-  ];
-  for(let i=0;i<WLS.length-1;i++)
-    g += ln(X(WLS[i].m),WY,X(WLS[i+1].m),WY,'stroke="#fcd34d" stroke-width="1" stroke-dasharray="3,3"');
-  WLS.forEach(({m,val,col,dot,hi,dn})=>{
-    const mx=X(m), r2=hi?8:6;
-    if(dot) g += ci(mx,WY,5,col);
-    else    g += dm(mx,WY,r2,hi?'#f59e0b':col);
-    g += ln(mx,WY+(dot?5:r2),mx,BY-2,`stroke="${col}" stroke-width="0.8" stroke-dasharray="2,2" opacity="0.35"`);
-    g += tx(mx, dn?WY+r2+14:WY-r2-6, val,
-      `text-anchor="middle" font-size="${hi?11:10.5}" font-weight="${hi?700:600}" fill="${col}"`);
-  });
-
-  /* ── 트랙 레이블 — 각 밴드 정중앙 ──────────────────────
-     공통 (116+252)/2=184 / EA (252+392)/2=322 / 직행 (392+532)/2=462
-  ──────────────────────────────────────────────────── */
-  g += tx(LCX,184,'공통','text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="900" fill="#1e293b"');
-  g += tx(LCX,322,'EA',  'text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="900" fill="#ea580c"');
-  g += tx(LCX,462,'직행','text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="900" fill="#16a34a"');
-
-  /* ── 공통 바 — 이름 inside + 날짜 교번 위/아래 ──────────
-     da=true  → 날짜 바 위 (y=BY-9)
-     da=false → 날짜 바 아래 (y=BY+BH+13)
-  ──────────────────────────────────────────────────── */
-  CBARS.forEach(({m0,m1,fill,id,lbl,sub,da})=>{
+  // ── 공통 바 ───────────────────────────────────────────────
+  CBARS.forEach(({m0,m1,fill,id,lbl})=>{
     const bx=X(m0), bw=X(m1)-X(m0), mcx=(bx+bw/2)|0;
     g += rc(bx,BY,bw,BH,fill);
-    const fs=bw>170?12.5:bw>110?12:bw>65?11:9.5;
-    // 이름: 바 안 (clipPath로 오버플로우 차단)
+    const fs=bw>160?13:bw>100?12:bw>64?11:9.5;
     g += `<text x="${mcx}" y="${BY+BH/2+4}" clip-path="url(#${id})" text-anchor="middle" font-size="${fs}" font-weight="700" fill="#fff" font-family="Pretendard,-apple-system,sans-serif">${lbl}</text>`;
-    // 날짜: 교번 위/아래
-    const sy = da ? BY-9 : BY+BH+13;
-    g += tx(mcx,sy,sub,`text-anchor="middle" font-size="10" fill="${da?'#475569':'#64748b'}"`);
   });
-  // 점선 연결 (바와 바 사이 갭에만)
-  [[6,7],[9,10],[15,16]].forEach(([a,b])=>{  // CBT m=12~15 → SNF m=16
-    const x1=X(a), x2=b===16?X(b)-24:X(b);
-    g += ln(x1,BY+BH/2,x2,BY+BH/2,'stroke="#9ca3af" stroke-width="1.5" stroke-dasharray="3,2"');
+  // 공통 바 날짜 레이블 (바 아래)
+  const CDATES=[
+    {m0:1,m1:6,date:"Jul~Dec'26"},
+    {m0:7,m1:9,date:"Jan~Mar'27"},
+    {m0:10,m1:12,date:"Apr~Jun'27"},
+    {m0:12,m1:15,date:"Jun~Sep'27"},
+  ];
+  CDATES.forEach(({m0,m1,date})=>{
+    const mcx=((X(m0)+X(m1))/2)|0;
+    g += tx(mcx,BY+BH+12,date,'text-anchor="middle" font-size="9.5" fill="#64748b"');
   });
 
-  /* ── SNF 마커 ────────────────────────────────────────── */
-  const sx=X(16), sy=BY+BH/2;
-  g += ci(sx,sy,24,'#fef3c7','stroke="#f59e0b" stroke-width="3"');
-  g += ci(sx,sy,16,'#fbbf24');
-  g += tx(sx,sy-1,'★','text-anchor="middle" font-size="20"');
-  g += tx(sx,sy+13,'SNF','text-anchor="middle" font-size="9.5" font-weight="800" fill="#78350f"');
-  g += tx(sx,BY+BH+22,"Oct'27",'text-anchor="middle" font-size="13" font-weight="700" fill="#d97706"');
+  // 연결 점선 (공통 바 → SNF)
+  [[6,7],[9,10],[15,16]].forEach(([a,b])=>{
+    const x1=X(a), x2=b===16?X(b)-20:X(b);
+    g += ln(x1,BY+BH/2,x2,BY+BH/2,'stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="4,2"');
+  });
 
-  /* ── 포크 커넥터 ─────────────────────────────────────── */
-  const fkTop=BY+BH+4, esx=X(17);
-  g += ln(sx,fkTop,sx,fkMid,'stroke="#9ca3af" stroke-width="2"');
-  g += ln(sx,fkMid,esx,EY,`stroke="#ea580c" stroke-width="1.5"`);
-  g += ln(sx,fkMid,esx,DY,`stroke="#16a34a" stroke-width="1.5"`);
-  g += tx(sx+26,fkMid-6,'⚡ 경로 분기',
-    'font-size="11" font-weight="600" fill="#6b7280" font-family="Pretendard,-apple-system,sans-serif"');
+  // ── SNF 마커 ──────────────────────────────────────────────
+  const sx=X(16), snfcy=SNF_Y;
+  g += ci(sx,snfcy,22,'#fef3c7','stroke="#f59e0b" stroke-width="2.5"');
+  g += ci(sx,snfcy,14,'#fbbf24');
+  g += tx(sx,snfcy-2,'★','text-anchor="middle" font-size="16"');
+  g += tx(sx,snfcy+10,'SNF','text-anchor="middle" font-size="8" font-weight="800" fill="#78350f"');
+  g += tx(sx,snfcy+26,"Oct'27",'text-anchor="middle" font-size="11" font-weight="700" fill="#d97706"');
 
-  /* ── EA 바 ───────────────────────────────────────────── */
-  g += tx(L+4,264,'◼ EA 론칭 경로',
-    'font-size="14" font-weight="800" fill="#ea580c" font-family="Pretendard,-apple-system,sans-serif"');
-  EA_BARS.forEach(({m0,m1,fill,id,lbl,sub,da})=>{
+  // ── 포크 커넥터 ───────────────────────────────────────────
+  const esx=X(17);
+  g += ln(sx,snfcy+22,sx,FORK_Y,'stroke="#9ca3af" stroke-width="1.5"');
+  g += ln(sx,FORK_Y,esx,EY,'stroke="#ea580c" stroke-width="1.5" stroke-dasharray="1,0"');
+  g += ln(sx,FORK_Y,esx,DY,'stroke="#16a34a" stroke-width="1.5" stroke-dasharray="1,0"');
+  g += tx(sx+20,FORK_Y-5,'경로 분기',`font-size="9.5" fill="#9ca3af" font-family="Pretendard,-apple-system,sans-serif"`);
+
+  // ── EA 섹션 ───────────────────────────────────────────────
+  g += tx(L+4,246,'◼ EA 론칭 경로',`font-size="11" font-weight="800" fill="#ea580c" font-family="Pretendard,-apple-system,sans-serif"`);
+  EA_BARS.forEach(({m0,m1,fill,id,lbl})=>{
     const bx=X(m0), bw=X(m1)-X(m0), mcx=(bx+bw/2)|0;
     g += rc(bx,EY,bw,EH,fill);
     g += `<text x="${mcx}" y="${EY+EH/2+4}" clip-path="url(#${id})" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" font-family="Pretendard,-apple-system,sans-serif">${lbl}</text>`;
-    const sy = da ? EY-9 : EY+EH+13;
-    g += tx(mcx,sy,sub,`text-anchor="middle" font-size="10" fill="${da?'#475569':'#64748b'}"`);
+  });
+  [{m0:17,m1:20,date:"Nov'27~Feb'28"},{m0:20,m1:25,date:"Feb~Jul'28"}].forEach(({m0,m1,date})=>{
+    g += tx((X(m0)+X(m1))/2|0,EY+EH+12,date,'text-anchor="middle" font-size="9.5" fill="#64748b"');
   });
   // EA LAUNCH
   {const lx=X(25), ly=EY+EH/2;
-   g += ci(lx,ly,21,'#ea580c','stroke="#fff" stroke-width="2.5"');
-   g += tx(lx,ly-3,'🚀','text-anchor="middle" font-size="16"');
-   g += tx(lx,ly+11,'EA','text-anchor="middle" font-size="9" font-weight="800" fill="#fff" font-family="Pretendard,-apple-system,sans-serif"');
-   g += tx(lx,EY+EH+20,"Jul'28",'text-anchor="middle" font-size="13" font-weight="700" fill="#ea580c" font-family="Pretendard,-apple-system,sans-serif"');
-   g += tx(lx,EY+EH+34,'정식 LAUNCH','text-anchor="middle" font-size="11" fill="#64748b" font-family="Pretendard,-apple-system,sans-serif"');}
+   g += ci(lx,ly,18,'#ea580c','stroke="#fff" stroke-width="2"');
+   g += tx(lx,ly-2,'🚀','text-anchor="middle" font-size="14"');
+   g += tx(lx,ly+10,'EA','text-anchor="middle" font-size="8" font-weight="800" fill="#fff" font-family="Pretendard,-apple-system,sans-serif"');
+   g += tx(lx,EY+EH+18,"Jul'28",'text-anchor="middle" font-size="11.5" font-weight="700" fill="#ea580c" font-family="Pretendard,-apple-system,sans-serif"');
+   g += tx(lx,EY+EH+30,'정식 LAUNCH','text-anchor="middle" font-size="10" fill="#94a3b8" font-family="Pretendard,-apple-system,sans-serif"');}
 
-  /* ── 직행 바 ─────────────────────────────────────────── */
-  g += tx(L+4,404,'◼ 직행 론칭 경로',
-    'font-size="14" font-weight="800" fill="#16a34a" font-family="Pretendard,-apple-system,sans-serif"');
-  DR_BARS.forEach(({m0,m1,fill,id,lbl,sub,da})=>{
+  // ── 직행 섹션 ─────────────────────────────────────────────
+  g += tx(L+4,378,'◼ 직행 론칭 경로',`font-size="11" font-weight="800" fill="#16a34a" font-family="Pretendard,-apple-system,sans-serif"`);
+  DR_BARS.forEach(({m0,m1,fill,id,lbl})=>{
     const bx=X(m0), bw=X(m1)-X(m0), mcx=(bx+bw/2)|0;
     g += rc(bx,DY,bw,DH,fill);
     g += `<text x="${mcx}" y="${DY+DH/2+4}" clip-path="url(#${id})" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" font-family="Pretendard,-apple-system,sans-serif">${lbl}</text>`;
-    const sy = da ? DY-9 : DY+DH+13;
-    g += tx(mcx,sy,sub,`text-anchor="middle" font-size="10" fill="${da?'#475569':'#64748b'}"`);
   });
+  g += tx((X(17)+X(21))/2|0,DY+DH+12,"Nov'27~Mar'28",'text-anchor="middle" font-size="9.5" fill="#64748b"');
   // 직행 LAUNCH
   {const lx=X(21), ly=DY+DH/2;
-   g += ci(lx,ly,21,'#16a34a','stroke="#fff" stroke-width="2.5"');
-   g += tx(lx,ly-3,'🚀','text-anchor="middle" font-size="16"');
-   g += tx(lx,ly+11,'직행','text-anchor="middle" font-size="8.5" font-weight="800" fill="#fff" font-family="Pretendard,-apple-system,sans-serif"');
-   g += tx(lx,DY+DH+20,"Mar'28",'text-anchor="middle" font-size="13" font-weight="700" fill="#16a34a" font-family="Pretendard,-apple-system,sans-serif"');
-   g += tx(lx,DY+DH+34,'정식 LAUNCH','text-anchor="middle" font-size="11" fill="#64748b" font-family="Pretendard,-apple-system,sans-serif"');}
+   g += ci(lx,ly,18,'#16a34a','stroke="#fff" stroke-width="2"');
+   g += tx(lx,ly-2,'🚀','text-anchor="middle" font-size="14"');
+   g += tx(lx,ly+10,'직행','text-anchor="middle" font-size="8" font-weight="800" fill="#fff" font-family="Pretendard,-apple-system,sans-serif"');
+   g += tx(lx,DY+DH+18,"Mar'28",'text-anchor="middle" font-size="11.5" font-weight="700" fill="#16a34a" font-family="Pretendard,-apple-system,sans-serif"');
+   g += tx(lx,DY+DH+30,'정식 LAUNCH','text-anchor="middle" font-size="10" fill="#94a3b8" font-family="Pretendard,-apple-system,sans-serif"');}
 
-  /* ── 범례 (가운데 정렬) ─────────────────────────────── */
+  // ── 범례 (가운데 정렬) ────────────────────────────────────
   const LEGS=[
     {col:'#3b82f6',lbl:'FGT (검증)'},
-    {col:'#0d9488',lbl:'CS 오픈·WL'},
+    {col:'#0d9488',lbl:'CS 오픈'},
     {col:'#7c3aed',lbl:'CBT'},
     {col:'#fbbf24',lbl:"★ SNF Oct'27"},
     {col:'#f97316',lbl:'EA 경로'},
     {col:'#22c55e',lbl:'직행 경로'},
   ];
-  const ITEM_W=116, LY=DY+DH+60;
+  const LY=DY+DH+54, ITEM_W=112;
   const legX0=(1200-LEGS.length*ITEM_W)/2;
   LEGS.forEach(({col,lbl},i)=>{
     const lx=legX0+i*ITEM_W;
-    g += rc(lx,LY,14,12,col,2);
-    g += tx(lx+18,LY+11,lbl,'font-size="11.5" fill="#374151" font-family="Pretendard,-apple-system,sans-serif"');
+    g += rc(lx,LY,12,10,col,2);
+    g += tx(lx+16,LY+9,lbl,'font-size="11" fill="#374151" font-family="Pretendard,-apple-system,sans-serif"');
   });
 
   const vbH=LY+20;
@@ -2149,6 +2141,7 @@ function initGantt() {
     `<svg viewBox="0 0 1200 ${vbH}" width="100%" xmlns="http://www.w3.org/2000/svg" style="display:block">${defs}${g}</svg>`;
 }
 initGantt();
+
 
 
 
