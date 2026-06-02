@@ -171,8 +171,7 @@ body {
 .gd-root {
   background: #0d1117;
   font-family: 'Pretendard', -apple-system, sans-serif;
-  overflow-x: auto;
-  min-width: 700px;
+  overflow-x: clip;
 }
 /* 눈금자 */
 .gd-ruler {
@@ -204,9 +203,9 @@ body {
   display: flex; flex: 1;
 }
 .gd-ruler-month {
-  flex: 1; display: flex; align-items: center; justify-content: center;
+  flex: 1; min-width: 0; display: flex; align-items: center; justify-content: center;
   font-size: 9px; color: #6e7681; border-right: 1px solid #21262d;
-  white-space: nowrap;
+  overflow: hidden;
 }
 .gd-ruler-month.major { color: #8b949e; font-weight: 600; }
 .gd-ruler-snf {
@@ -271,24 +270,25 @@ body {
 /* Task 행 */
 .gd-tasks { overflow: hidden; }
 .gd-task-row {
-  display: flex; align-items: center;
+  display: flex; align-items: stretch;
   border-bottom: 1px solid #21262d;
-  min-height: 36px;
+  min-height: 40px;
 }
 .gd-task-row:nth-child(odd)  { background: #161b22; }
 .gd-task-row:nth-child(even) { background: #0d1117; }
 .gd-task-label {
   width: 180px; min-width: 180px;
-  padding: 8px 12px 8px 20px;
+  padding: 8px 12px;
   font-size: 12px; color: #c9d1d9;
   border-right: 1px solid #21262d;
-  line-height: 1.4;
+  line-height: 1.5;
+  display: flex; align-items: center;
 }
 .gd-task-label.launch-lbl {
   color: #f0f6fc; font-weight: 700;
 }
 .gd-task-track {
-  flex: 1; position: relative; height: 36px;
+  flex: 1; position: relative; min-height: 36px; align-self: stretch;
 }
 .gd-track-bg {
   position: absolute; top: 50%; transform: translateY(-50%);
@@ -348,6 +348,7 @@ body {
   padding: 14px 16px;
   background: #161b22; border-top: 1px solid #30363d;
   font-size: 11px; color: #8b949e;
+  justify-content: center;
 }
 .gd-leg-item { display: flex; align-items: center; gap: 6px; }
 .gd-leg-dot { width: 12px; height: 12px; border-radius: 3px; }
@@ -913,7 +914,7 @@ const PHASES = [
     ]
   },
   {
-    step:'EA', name:'EA 론칭 경로', date:"Nov'27~Jul'28", col:'#c05621',
+    step:'EA', name:'A안) EA 론칭 경로', date:"Nov'27~Jul'28", col:'#3730a3',
     tasks:[
       {name:'EA 준비 (가격·콘텐츠·트레일러)',   m0:17.0,m1:20.0, s:"Nov'27",   e:"Feb'28"},
       {name:'Early Access 론칭·WL 이메일 발송', m0:20.0,m1:20.5, s:"Feb'28",   e:"Feb'28"},
@@ -922,7 +923,7 @@ const PHASES = [
     ]
   },
   {
-    step:'직행', name:'직행 론칭 경로', date:"Nov'27~Mar'28", col:'#166534',
+    step:'직행', name:'B안) 직행 론칭 경로', date:"Nov'27~Mar'28", col:'#1e40af',
     tasks:[
       {name:'직행 GO 승인·빌드 완성도 90%+ 확인',m0:17.0,m1:18.5,s:"Nov'27",   e:"Jan'28"},
       {name:'서버 부하 최종 검증 (피크 120%+)',  m0:18.5,m1:20.5,s:"Jan'28",   e:"Mar'28"},
@@ -983,12 +984,8 @@ function buildGantt() {
       <div class="gd-ruler-months" style="display:flex;flex:1;height:100%">
         ${rulerMonthsHtml}
       </div>
-      <div class="gd-ruler-snf" style="left:${snfPct}">
-        <div class="gd-ruler-snf-lbl" style="left:0">★ SNF<br>Oct'27</div>
-      </div>
-      <div class="gd-ruler-now" style="left:${nowPct}">
-        <div class="gd-ruler-now-lbl" style="left:0">현재</div>
-      </div>
+      <div class="gd-ruler-snf" style="left:${snfPct}"></div>
+
     </div>
   </div>`;
 
@@ -1022,8 +1019,8 @@ function buildGantt() {
         <div class="gd-task-label">${t.name}</div>
         <div class="gd-task-track">
           <div class="gd-track-bg"></div>
-          <div class="gd-vline" style="left:${lp(16)};background:#d29922;opacity:.2"></div>
-          <div class="gd-vline" style="left:${lp(0)};background:#f85149;opacity:.25"></div>
+
+
           <div class="gd-task-bar" style="left:${lp(t.m0)};width:${wp(t.m0,Math.max(t.m1,t.m0+0.3))}">
             <div class="gd-task-bar-inner" style="background:${ph.col}"></div>
             <div class="gd-bar-dot start"></div>
@@ -1041,15 +1038,11 @@ function buildGantt() {
     if (ph.step === 'EA') {
       const eaLaunchPct = lp(25);
       launchIcon = `<div style="position:absolute;left:${eaLaunchPct};top:50%;transform:translate(-50%,-50%);
-        font-size:16px;filter:drop-shadow(0 0 4px rgba(255,255,255,.4));z-index:5">🚀</div>
-        <div style="position:absolute;left:${eaLaunchPct};top:4px;transform:translateX(-50%);
-        font-size:9px;font-weight:700;color:#fed7aa;white-space:nowrap">Jul'28 LAUNCH</div>`;
+        font-size:18px;filter:drop-shadow(0 0 6px rgba(99,102,241,.8));z-index:5" title="Jul'28 정식 LAUNCH">🚀</div>`;
     } else if (ph.step === '직행') {
       const drLaunchPct = lp(21);
       launchIcon = `<div style="position:absolute;left:${drLaunchPct};top:50%;transform:translate(-50%,-50%);
-        font-size:16px;filter:drop-shadow(0 0 4px rgba(255,255,255,.4));z-index:5">🚀</div>
-        <div style="position:absolute;left:${drLaunchPct};top:4px;transform:translateX(-50%);
-        font-size:9px;font-weight:700;color:#bbf7d0;white-space:nowrap">Mar'28 LAUNCH</div>`;
+        font-size:18px;filter:drop-shadow(0 0 6px rgba(37,99,235,.8));z-index:5" title="Mar'28 정식 LAUNCH">🚀</div>`;
     }
 
     html += `
@@ -1064,7 +1057,7 @@ function buildGantt() {
           <span class="gd-phase-date">${ph.date}</span>
         </div>
         <div class="gd-phase-header-track">
-          <div class="gd-vline" style="left:${snfPct};background:#d29922;opacity:.3"></div>
+
           ${headerBar}
           ${launchIcon}
         </div>
@@ -1076,6 +1069,18 @@ function buildGantt() {
   });
 
   // ── 범례 ───────────────────────────────────────────────────────────
+  // A안/B안 배타 관계 안내 배너
+  html += `<div style="background:#1e2a3a;border-top:1px solid #30363d;padding:10px 16px;
+    font-size:11.5px;color:#93c5fd;display:flex;align-items:center;gap:8px">
+    <span style="font-size:14px">⚡</span>
+    <strong>SNF 결과에 따라 A안 또는 B안 중 하나만 선택</strong>
+    <span style="color:#4b5563;margin:0 4px">—</span>
+    <span style="color:#818cf8">A안 EA 론칭 경로 선택 시 B안 배제</span>
+    <span style="color:#4b5563">|</span>
+    <span style="color:#60a5fa">B안 직행 론칭 경로 선택 시 A안 배제</span>
+    <span style="color:#4b5563;margin-left:auto;font-size:10px">SNF Oct'27 종료 후 2주 이내 결정</span>
+  </div>`;
+
   html += `<div class="gd-legend">
     ${PHASES.map(ph=>`<div class="gd-leg-item">
       <div class="gd-leg-dot" style="background:${ph.col}"></div>
@@ -1085,9 +1090,7 @@ function buildGantt() {
       <div class="gd-leg-dot" style="background:#d29922"></div>
       <span>★ SNF Oct'27</span>
     </div>
-    <div class="gd-leg-item" style="color:#f85149">
-      <span>│ 현재(Jun'26)</span>
-    </div>
+
   </div>`;
 
   root.innerHTML = html;
