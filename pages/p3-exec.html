@@ -523,38 +523,51 @@ body {
     </div>
   </div>
 
-  <!-- ── SNF 분기 결정 기준 ── -->
-  <div class="mt24 card">
-    <div class="card-h">⚡ SNF Oct 2027 종료 후 2주 이내 — 경로 분기 결정 기준</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px">
-      <div>
-        <div style="font-size:11px;font-weight:700;color:#f97316;margin-bottom:6px">◼ EA 론칭 선택 조건</div>
-        <ul style="font-size:12.5px;color:var(--text2);line-height:1.7;padding-left:16px">
-          <li>SNF WL 목표의 70~100% 달성</li>
-          <li>Demo D+7 리텐션 25~35%</li>
-          <li>빌드 완성도 80% 수준</li>
+
+</section>
+
+<!-- SNF 분기 결정 기준 — 섹션 외부 독립 카드 (계층 분리) -->
+<div style="background:#fff7ed;border-top:3px solid #f59e0b;border-bottom:3px solid #f59e0b;padding:28px 40px;margin:0">
+  <div style="max-width:1280px;margin:0 auto">
+    <div style="font-size:11px;font-weight:800;color:#92400e;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px">⚡ SNF Oct 2027 종료 후 2주 이내 — 경로 분기 결정 기준</div>
+    <div class="g3">
+
+      <div style="background:#fff;border:2px solid #3730a3;border-radius:10px;padding:20px 22px">
+        <div style="font-size:12px;font-weight:800;color:#3730a3;letter-spacing:.5px;margin-bottom:12px">A안 ◼ EA 론칭 경로 선택</div>
+        <ul style="font-size:13px;color:var(--text1);line-height:1.8;padding-left:18px;margin-bottom:14px">
+          <li>SNF WL 목표의 <strong>70~100% 달성</strong></li>
+          <li>Demo D+7 리텐션 <strong>25~35%</strong></li>
+          <li>빌드 완성도 <strong>80%</strong> 수준</li>
+          <li>추가 보강 3~6개월 필요 판단</li>
         </ul>
+        <div style="font-size:11px;font-weight:700;color:#3730a3;background:#eef2ff;padding:8px 12px;border-radius:6px">🚀 정식 LAUNCH 목표: <strong>Jul'28</strong></div>
       </div>
-      <div>
-        <div style="font-size:11px;font-weight:700;color:#16a34a;margin-bottom:6px">◼ 직행 론칭 선택 조건</div>
-        <ul style="font-size:12.5px;color:var(--text2);line-height:1.7;padding-left:16px">
-          <li>SNF WL 목표 달성·초과</li>
-          <li>Demo D+7 리텐션 35%+</li>
-          <li>빌드 완성도 90%+ 필수</li>
+
+      <div style="background:#fff;border:2px solid #1e40af;border-radius:10px;padding:20px 22px">
+        <div style="font-size:12px;font-weight:800;color:#1e40af;letter-spacing:.5px;margin-bottom:12px">B안 ◼ 직행 론칭 경로 선택</div>
+        <ul style="font-size:13px;color:var(--text1);line-height:1.8;padding-left:18px;margin-bottom:14px">
+          <li>SNF WL 목표 <strong>달성·초과</strong></li>
+          <li>Demo D+7 리텐션 <strong>35%+</strong></li>
+          <li>빌드 완성도 <strong>90%+</strong> 필수</li>
           <li>CBT 서버 검증 완료</li>
         </ul>
+        <div style="font-size:11px;font-weight:700;color:#1e40af;background:#dbeafe;padding:8px 12px;border-radius:6px">🚀 정식 LAUNCH 목표: <strong>Mar'28</strong></div>
       </div>
-      <div>
-        <div style="font-size:11px;font-weight:700;color:#dc2626;margin-bottom:6px">🔴 재검토 조건</div>
-        <ul style="font-size:12.5px;color:var(--text2);line-height:1.7;padding-left:16px">
-          <li>Conservative 미달 (Survival/Failure)</li>
-          <li>BM 전환 또는 출시 재검토</li>
-          <li>다음 SNF 참가 재평가</li>
+
+      <div style="background:#fff;border:2px solid #dc2626;border-radius:10px;padding:20px 22px">
+        <div style="font-size:12px;font-weight:800;color:#dc2626;letter-spacing:.5px;margin-bottom:12px">🔴 재검토 조건</div>
+        <ul style="font-size:13px;color:var(--text1);line-height:1.8;padding-left:18px;margin-bottom:14px">
+          <li>Conservative <strong>미달</strong> (Survival/Failure 구간)</li>
+          <li>BM 전환 또는 출시 전략 재검토</li>
+          <li>다음 SNF 회차 재참가 평가</li>
+          <li>WL 증분 50% 미만 → 전략 전환</li>
         </ul>
+        <div style="font-size:11px;font-weight:700;color:#dc2626;background:#fee2e2;padding:8px 12px;border-radius:6px">⚠️ A안·B안 모두 배제 → 론칭 전략 재수립</div>
       </div>
+
     </div>
   </div>
-</section>
+</div>
 
 <!-- ══════════════════════════════════════════════════════════
      SECTION 2 — 지표 & KPI
@@ -656,18 +669,16 @@ body {
             <th>시나리오</th>
             <th>WL (Combined)</th>
             <th>PCCU avg</th>
-            <th>Week1 매출</th>
           </tr>
         </thead>
         <tbody>
-          <tr><td>🔴 Failure</td><td>50-300K</td><td>&lt;5K</td><td>&lt;$1M</td></tr>
-          <tr><td>🟠 Survival</td><td>300-700K</td><td>5-30K</td><td>$1-3M</td></tr>
-          <tr class="hl"><td>🛡️ Conservative</td><td>700K-1.5M</td><td>30-100K</td><td>~$3M</td></tr>
-          <tr><td>⭐ Target</td><td>1.5M-3M</td><td>100-300K</td><td>~$12M+</td></tr>
-          <tr><td>🚀 Stretch</td><td>3M-5M+</td><td>300K+</td><td>$50M+</td></tr>
+          <tr><td>🔴 Failure</td><td>50-300K</td><td>&lt;5K</td></tr>
+          <tr><td>🟠 Survival</td><td>300-700K</td><td>5-30K</td></tr>
+          <tr class="hl"><td>🛡️ Conservative</td><td>700K-1.5M</td><td>30-100K</td></tr>
+          <tr><td>⭐ Target</td><td>1.5M-3M</td><td>100-300K</td></tr>
+          <tr><td>🚀 Stretch</td><td>3M-5M+</td><td>300K+</td></tr>
         </tbody>
       </table>
-      <div style="margin-top:10px;font-size:11px;color:var(--text3)">* Steam 30% 수수료 전 기준 · 환율 1,450원/$ 기준</div>
     </div>
   </div>
 
