@@ -571,7 +571,7 @@ body.view-exec .ops-nav{display:none!important}
 
 <script>
 /* ── 탭 전환 (인라인, DOM 준비 전 정의) ── */
-function switchView(v){
+window.switchView=function switchView(v){
   /* 실무 전용 섹션 show/hide */
   var os=document.querySelectorAll('.ops-section');
   for(var i=0;i<os.length;i++) os[i].style.display=(v==='ops')?'':'none';
@@ -587,7 +587,7 @@ function switchView(v){
   try{localStorage.setItem('ps_view_tab',v);}catch(e){}
 }
 /* DOM 준비 후 저장값 복원 */
-function _initView(){
+window._initView=function _initView(){
   var s='exec';
   try{s=localStorage.getItem('ps_view_tab')||'exec';}catch(e){}
   switchView(s);
@@ -696,16 +696,89 @@ document.addEventListener('DOMContentLoaded',function(){
     </div>
   </div>
 
-  <!-- ══ GANTT ROADMAP ══ -->
-  <div class="sl">2026–2028 론칭 로드맵 <span style="font-size:10px;font-weight:600;color:var(--purple);background:#f5f3ff;padding:2px 7px;border-radius:10px;margin-left:6px">비율형 Gantt · Phase 기간 · WL 마일스톤 · 경로 분기</span></div>
-  <div id="ganttWrap" style="background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:14px 8px 12px;margin-bottom:14px;overflow-x:auto">
-    <!-- initGantt() 가 SVG 주입 -->
+  <!-- 공통 Phase Flow -->
+  <div class="sl">공통 경로 (전사테스트 → SNF) <span style="font-size:10px;font-weight:600;color:var(--amber);background:#fef3c7;padding:2px 7px;border-radius:10px;margin-left:6px">🛡️ Conservative 기본값 WL 표시 — 5-Tier 전체 분포는 아래 표 참조</span></div>
+  <div class="phase-flow" style="margin-bottom:8px">
+    <div class="phase-card cur">
+      <span class="ph-status ps-plan">▷ 지연</span>
+      <div class="ph-num">PHASE 0</div>
+      <div class="ph-name">전사테스트<br>장르 확정</div>
+      <div class="ph-date">2026.07</div>
+    </div>
+    <div class="ph-arr">→</div>
+    <div class="phase-card">
+      <span class="ph-status ps-plan">▷</span>
+      <div class="ph-num">PHASE 1</div>
+      <div class="ph-name">FGT 1차·2차<br>외부 검증</div>
+      <div class="ph-date">2026.08~12</div>
+    </div>
+    <div class="ph-arr">→</div>
+    <div class="phase-card">
+      <span class="ph-status ps-plan">▷</span>
+      <div class="ph-num">PHASE 2~3</div>
+      <div class="ph-name">Coming Soon<br>WL 수집</div>
+      <div class="ph-date">2027.04~06</div>
+      <div class="ph-wl-p">30K+</div>
+      <div class="ph-wl-l"><span class="chip-p">P</span>&amp;<span class="chip-f">F2P</span> 8주 🛡️ Conservative</div>
+    </div>
+    <div class="ph-arr">→</div>
+    <div class="phase-card">
+      <span class="ph-status ps-plan">▷</span>
+      <div class="ph-num">PHASE 4~5</div>
+      <div class="ph-name">CLA 1,000명+<br>결과 반영 패치</div>
+      <div class="ph-date">2027.04~06</div>
+      <div class="ph-wl-p">80K+</div>
+      <div class="ph-wl-l"><span class="chip-p">P</span>&amp;<span class="chip-f">F2P</span> 누적 🛡️ Conservative</div>
+    </div>
+    <div class="ph-arr">→</div>
+    <div class="phase-card">
+      <span class="ph-status ps-plan">▷</span>
+      <div class="ph-num">PHASE 6</div>
+      <div class="ph-name">CBT 10,000명+</div>
+      <div class="ph-date">2027.07~09</div>
+      <div class="ph-wl-p">150K+</div>
+      <div class="ph-wl-f">200K+</div>
+      <div class="ph-wl-l"><span class="chip-p">P</span> / <span class="chip-f">F2P</span> 분기 🛡️ Conservative</div>
+    </div>
+    <div class="ph-arr">→</div>
+    <div class="phase-card">
+      <span class="ph-status ps-plan">▷</span>
+      <div class="ph-num">PHASE 7</div>
+      <div class="ph-name">SNF Demo<br>준비</div>
+      <div class="ph-date">2027.10~11</div>
+      <div class="ph-wl-p">200K+</div>
+      <div class="ph-wl-f">300K+</div>
+      <div class="ph-wl-l"><span class="chip-p">P</span> / <span class="chip-f">F2P</span> 🛡️ Conservative</div>
+    </div>
+    <div class="ph-arr">→</div>
+    <div class="phase-card snf">
+      <span class="ph-status ps-snf">★ SNF</span>
+      <div class="ph-num">PHASE 8</div>
+      <div class="ph-name">Steam Next Fest<br>Oct 2027 (7일)</div>
+      <div class="ph-date">2027.12</div>
+      <div class="ph-wl-p">300K+</div>
+      <div class="ph-wl-f">500K+</div>
+      <div class="ph-wl-l">SNF 후 누적 🛡️ Conservative</div>
+    </div>
   </div>
 
-  <!-- SNF 경로 분기 결정 (compact) -->
-  <div class="decision-box" style="margin-bottom:20px">
+  <!-- 5-Tier 참조 안내 -->
+  <div style="margin-top:6px;margin-bottom:18px;padding:8px 14px;background:#fef3c7;border:1px solid #fde68a;border-radius:8px;font-size:10.5px;color:var(--text-sub1);line-height:1.5">
+    💡 위 Phase Flow WL 수치는 <strong>🛡️ Conservative 시나리오 (Top 20 진입, 10% 확률) 기본값</strong>. <strong>5-Tier 전체 분포</strong> (🔴 Failure 58% · 🟠 Survival 27% · 🛡️ Conservative 10% · ⭐ Target 4% · 🚀 Stretch 1%) 는 <strong>아래 5-Tier 마스터 표 + Phase trajectory 표</strong> 참조.
+  </div>
+
+  <!-- ▼ Arrow: SNF → 경로 분기 결정 -->
+  <div class="arrow-down">
+    <div class="arrow-down-inner">
+      <div class="arrow-vert" style="background:var(--purple)"></div>
+      <div class="arrow-tri" style="border-top:9px solid var(--purple)"></div>
+    </div>
+  </div>
+
+  <!-- Decision Point -->
+  <div class="decision-box">
     <div class="decision-inner">
-      <div class="decision-label">⚡ SNF Oct 2027 종료 후 2주 이내 — 경로 분기 결정</div>
+      <div class="decision-label">⚡ SNF 종료 후 2주 이내 — 경로 분기 결정</div>
       <div class="decision-sub">
         <span style="color:var(--opt-a);font-weight:700">◼ EA 론칭 경로</span>: 🛡️ Conservative 위시 70~100% + 완성도 80%
         &nbsp;|&nbsp;
@@ -716,11 +789,107 @@ document.addEventListener('DOMContentLoaded',function(){
     </div>
   </div>
 
+  <!-- ▼ SVG 분기 화살표: decision → A(orange) + B(green) -->
+  <div class="fork-svg-wrap" style="height:44px">
+    <svg width="100%" height="44" viewBox="0 0 800 44" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- center down line -->
+      <line x1="400" y1="0" x2="400" y2="16" stroke="#9ca3af" stroke-width="2"/>
+      <!-- split horizontal -->
+      <line x1="170" y1="16" x2="630" y2="16" stroke="#9ca3af" stroke-width="2"/>
+      <!-- A branch (left, orange) -->
+      <line x1="170" y1="16" x2="170" y2="34" stroke="#ea580c" stroke-width="2.5"/>
+      <polygon points="163,34 177,34 170,44" fill="#ea580c"/>
+      <!-- B branch (right, green) -->
+      <line x1="630" y1="16" x2="630" y2="34" stroke="#16a34a" stroke-width="2.5"/>
+      <polygon points="623,34 637,34 630,44" fill="#16a34a"/>
+      <!-- Labels -->
+      <text x="50" y="28" font-size="11" font-weight="700" fill="#ea580c">↙ EA 론칭 경로</text>
+      <text x="650" y="28" font-size="11" font-weight="700" fill="#16a34a">직행 론칭 경로 ↘</text>
+    </svg>
+  </div>
+
+  <!-- 분기 경로 카드 -->
+  <div class="fork-branches">
+    <div class="branch-col col-a">
+      <div class="branch-head a">◼ EA 론칭 경로 &nbsp;·&nbsp; SNF~LAUNCH 8~9개월 &nbsp;·&nbsp; 정식 LAUNCH 2028.08~09</div>
+      <div class="branch-phases">
+        <div class="bph a"><div class="bph-name">EA 준비</div><div class="bph-date">2028.01~03</div></div>
+        <div class="bph-arr">→</div>
+        <div class="bph a"><div class="bph-name">Early Access<br>론칭</div><div class="bph-date">2028.04</div></div>
+        <div class="bph-arr">→</div>
+        <div class="bph a"><div class="bph-name">EA 운영 +<br>LAUNCH 준비</div><div class="bph-date">2028.05~07</div></div>
+        <div class="bph-arr">→</div>
+        <div class="bph la"><div class="bph-name" style="font-size:12px">🚀 LAUNCH</div><div class="bph-date" style="opacity:.9">2028.08~09</div></div>
+      </div>
+      <div style="padding:6px 14px 10px;font-size:11px;color:var(--opt-a)">리스크 낮음 · EA에서 Review 기반 구축 · 완성도 80% · 모멘텀 약화 우려</div>
+    </div>
+    <div class="branch-col col-b">
+      <div class="branch-head b">◼ 직행 론칭 경로 &nbsp;·&nbsp; SNF~LAUNCH 4~5개월 &nbsp;·&nbsp; 정식 LAUNCH 2028.04~05</div>
+      <div class="branch-phases">
+        <div class="bph b"><div class="bph-name">LAUNCH<br>준비</div><div class="bph-date">2028.01~02</div></div>
+        <div class="bph-arr">→</div>
+        <div class="bph b"><div class="bph-name">서버 부하<br>최종 검증</div><div class="bph-date">2028.03 (1~2주)</div></div>
+        <div class="bph-arr">→</div>
+        <div class="bph lb"><div class="bph-name" style="font-size:12px">🚀 LAUNCH</div><div class="bph-date" style="opacity:.9">2028.04~05</div></div>
+        <div class="bph-arr">→</div>
+        <div class="bph b"><div class="bph-name">Post-launch<br>Live Ops</div><div class="bph-date">2028.04~ 지속</div></div>
+      </div>
+      <div style="padding:6px 14px 10px;font-size:11px;color:var(--opt-b)">리스크 중간 · SNF 모멘텀 최대 활용 · 완성도 90%+ 필수 · Season 1 동시 필수</div>
+    </div>
+  </div>
+
+  <!-- ══ CALENDAR 3-ROW GRID ══ -->
+  <div class="sl">2026~2028 캘린더 앵커 — 공통 경로 → SNF 후 경로 분기</div>
+  <div class="c3-wrapper">
+    <div class="c3-grid">
+
+      <!-- ROW A: EA 론칭 경로 (top) — 새 일정: SNF Oct'27 후 → 정식 LAUNCH 2028.09 -->
+      <div class="c3-empty" style="background:transparent"></div>
+      <div class="c3-invis c3-m"></div><div class="c3-invis c3-m"></div><div class="c3-invis c3-m"></div><div class="c3-invis c3-m"></div><div class="c3-invis c3-m"></div><div class="c3-invis c3-m"></div><div class="c3-invis c3-m"></div><div class="c3-invis c3-m"></div><div class="c3-invis c3-m"></div><div class="c3-invis c3-m"></div><div class="c3-invis c3-m"></div>
+      <div class="c3-m c3-a"><div class="c3-mn">Jan'28</div><div class="c3-evs"><div class="c3-ev" style="background:var(--opt-a);color:#fff;font-size:7px">EA 준비</div></div><div class="c3-bar cb-a"></div></div>
+      <div class="c3-m c3-a"><div class="c3-mn">Apr'28</div><div class="c3-evs"><div class="c3-ev ce-a">EA 론칭</div><div class="c3-ev ce-sale" style="font-size:7px">Spring</div></div><div class="c3-bar cb-a"></div></div>
+      <div class="c3-m c3-a"><div class="c3-mn">Jun'28</div><div class="c3-evs"><div class="c3-ev ce-a" style="font-size:7px">EA 운영</div><div class="c3-ev ce-sale" style="font-size:7px">Summer</div></div><div class="c3-bar cb-a"></div></div>
+      <div class="c3-m c3-a"><div class="c3-mn">Aug'28</div><div class="c3-evs"><div class="c3-ev ce-a" style="font-size:7px">LAUNCH 준비</div></div><div class="c3-bar cb-a"></div></div>
+      <div class="c3-m c3-a"><div class="c3-mn">Sep'28★</div><div class="c3-evs"><div class="c3-ev" style="background:var(--opt-a);color:#fff;font-size:7px">🚀 LAUNCH</div></div><div class="c3-bar cb-a"></div></div>
+      <div class="c3-m c3-a"><div class="c3-mn">Nov'28~</div><div class="c3-evs"><div class="c3-ev ce-sale" style="font-size:7px">Autumn</div></div><div class="c3-bar cb-a"></div></div>
+      <!-- ROW COMMON (middle) — 2026.07 전사테스트 → 2027.12 SNF -->
+      <div class="c3-cm-lbl">공통</div>
+      <div class="c3-m c3-cm"><div class="c3-mn">Jun'26</div><div class="c3-evs"><div class="c3-ev ce-now">📍현재</div></div><div class="c3-bar cb-gray"></div></div>
+      <div class="c3-m c3-cm"><div class="c3-mn">Jul'26</div><div class="c3-evs"><div class="c3-ev ce-ph" style="font-size:7px">전사테스트</div></div><div class="c3-bar cb-blue"></div></div>
+      <div class="c3-m c3-cm"><div class="c3-mn">Aug'26</div><div class="c3-evs"><div class="c3-ev ce-ph">FGT 1차</div></div><div class="c3-bar cb-blue"></div></div>
+      <div class="c3-m c3-cm"><div class="c3-mn">Dec'26</div><div class="c3-evs"><div class="c3-ev ce-ph">FGT 2차</div><div class="c3-ev ce-sale" style="font-size:7px">Winter</div></div><div class="c3-bar cb-blue"></div></div>
+      <div class="c3-m c3-cm"><div class="c3-mn">Jan'27</div><div class="c3-evs"><div class="c3-ev ce-ph">CS 오픈</div></div><div class="c3-bar cb-teal"></div></div>
+      <div class="c3-m c3-cm"><div class="c3-mn">Mar'27</div><div class="c3-evs"><div class="c3-ev ce-sale" style="font-size:7px">Spring Sale</div></div><div class="c3-bar cb-teal"></div></div>
+      <div class="c3-m c3-cm"><div class="c3-mn">Apr'27</div><div class="c3-evs"><div class="c3-ev ce-ph">CLA 시작</div></div><div class="c3-bar cb-teal"></div></div>
+      <div class="c3-m c3-cm"><div class="c3-mn">Jul'27</div><div class="c3-evs"><div class="c3-ev ce-ph">CBT 시작</div></div><div class="c3-bar cb-purple"></div></div>
+      <div class="c3-m c3-cm"><div class="c3-mn">Oct'27</div><div class="c3-evs"><div class="c3-ev ce-ph">Demo 준비</div><div class="c3-ev ce-sale" style="font-size:7px">Autumn</div></div><div class="c3-bar cb-purple"></div></div>
+      <div class="c3-m c3-cm"><div class="c3-mn">Nov'27</div><div class="c3-evs"><div class="c3-ev ce-ph" style="font-size:7px">Demo 완성</div></div><div class="c3-bar cb-purple"></div></div>
+      <div class="c3-m c3-snf"><div class="c3-mn">Oct'27★</div><div class="c3-evs"><div class="c3-ev ce-snf">★ SNF!</div><div class="c3-ev" style="background:var(--purple);color:#fff;font-size:7px">경로 분기</div></div><div class="c3-bar cb-snf"></div></div>
+      <div class="c3-invis c3-m"></div><div class="c3-invis c3-m"></div><div class="c3-invis c3-m"></div><div class="c3-invis c3-m"></div><div class="c3-invis c3-m"></div><div class="c3-invis c3-m"></div>
+      <!-- ROW B: 직행 론칭 경로 (bottom) — SNF Oct'27 후 → 정식 LAUNCH 2028.04~05 -->
+      <div class="c3-empty" style="background:transparent"></div>
+      <div class="c3-invis c3-m"></div><div class="c3-invis c3-m"></div><div class="c3-invis c3-m"></div><div class="c3-invis c3-m"></div><div class="c3-invis c3-m"></div><div class="c3-invis c3-m"></div><div class="c3-invis c3-m"></div><div class="c3-invis c3-m"></div><div class="c3-invis c3-m"></div><div class="c3-invis c3-m"></div><div class="c3-invis c3-m"></div>
+      <div class="c3-m c3-b"><div class="c3-mn">Jan'28</div><div class="c3-evs"><div class="c3-ev" style="background:var(--opt-b);color:#fff;font-size:7px">Launch 준비</div></div><div class="c3-bar cb-b"></div></div>
+      <div class="c3-m c3-b"><div class="c3-mn">Mar'28</div><div class="c3-evs"><div class="c3-ev ce-b">서버검증</div></div><div class="c3-bar cb-b"></div></div>
+      <div class="c3-m c3-b"><div class="c3-mn">Apr'28</div><div class="c3-evs"><div class="c3-ev ce-sale" style="font-size:7px">Spring Sale</div></div><div class="c3-bar cb-b"></div></div>
+      <div class="c3-m c3-b" style="border-color:var(--opt-b)"><div class="c3-mn" style="font-weight:900;color:var(--opt-b)">May'28★</div><div class="c3-evs"><div class="c3-ev" style="background:var(--opt-b);color:#fff;font-size:7px">🚀 LAUNCH</div></div><div class="c3-bar cb-b"></div></div>
+      <div class="c3-m c3-b"><div class="c3-mn">Jun'28</div><div class="c3-evs"><div class="c3-ev ce-b" style="font-size:7px">Live Ops</div><div class="c3-ev ce-sale" style="font-size:7px">Summer</div></div><div class="c3-bar cb-b"></div></div>
+      <div class="c3-m c3-b"><div class="c3-mn">Nov'28~</div><div class="c3-evs"><div class="c3-ev ce-b" style="font-size:7px">Season 2</div><div class="c3-ev ce-sale" style="font-size:7px">Autumn</div></div><div class="c3-bar cb-b"></div></div>
+
+    </div>
+  </div>
+
+  <div class="cal-legend">
+    <div class="cal-leg-i"><div class="cld" style="background:var(--purple)"></div>Steam Next Fest</div>
+    <div class="cal-leg-i"><div class="cld" style="background:#dbeafe"></div>Steam 대형 세일</div>
+    <div class="cal-leg-i"><div class="cld" style="background:var(--amber-bg)"></div>공통 Phase 이벤트</div>
+    <div class="cal-leg-i"><div class="cld" style="background:var(--opt-a)"></div>EA 론칭 경로</div>
+    <div class="cal-leg-i"><div class="cld" style="background:var(--opt-b)"></div>직행 론칭 경로</div>
+  </div>
 
 
 
-
-  <!-- ━━━━━━━━━━ 5-Tier Industry-Realistic Model (V6 update — PCCU 정합 + 직관적 분포) ━━━━━━━━━━ -->
+    <!-- ━━━━━━━━━━ 5-Tier Industry-Realistic Model (V6 update — PCCU 정합 + 직관적 분포) ━━━━━━━━━━ -->
   <!-- 출처: vault SoT 2026-05-06_wl-kpi-validation.md (GameDiscoverCo + Steam Charts 2026 + 2025 live-service failure analysis) -->
   <div class="sl" style="margin-top:20px">5-Tier Industry-Realistic 시나리오 — Steam Shooter launch 분포</div>
 
@@ -1948,208 +2117,7 @@ Chart.register(ChartDataLabels);
 
 
 /* ──── Gantt Roadmap (Option A — 비율형 타임라인) ──── */
-function initGantt(){
-  /* ═══════════════════════════════════════════════════════════════
-     Gantt v5 — 노드 플로우 다이어그램
-     - 공통: 수평 phase 카드 (Jul'26 → SNF Oct'27)
-     - 포크: SNF 이후 EA / 직행 두 행으로 분기
-     - 카드: 이름 + 날짜 일체형, 화살표 연결
-     ═══════════════════════════════════════════════════════════════ */
-  const SVG_W=1200, L=84, R=1160, CW=R-L, TM=25;
-  const X=m=>Math.round(L+(m/TM)*CW);
-  let g='',clips='';
-
-  const rc=(x,y,w,h,fill,rx=8,xtra='')=>`<rect x="${x}" y="${y}" width="${Math.max(w,1)}" height="${h}" rx="${rx}" fill="${fill}" ${xtra}/>`;
-  const tx=(x,y,t,xtra='')=>`<text x="${x}" y="${y}" font-family="Pretendard,-apple-system,sans-serif" ${xtra}>${t}</text>`;
-  const ln=(x1,y1,x2,y2,xtra='')=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" ${xtra}/>`;
-  const ci=(cx,cy,r,fill,xtra='')=>`<circle cx="${cx}" cy="${cy}" r="${r}" fill="${fill}" ${xtra}/>`;
-  const arr=(x1,y1,x2,y2,col)=>{
-    /* 수평 화살표 */
-    const mx=(x1+x2)/2;
-    return `<line x1="${x1}" y1="${y1}" x2="${x2-6}" y2="${y2}" stroke="${col}" stroke-width="1.5" opacity="0.5"/>
-            <polygon points="${x2},${y2} ${x2-8},${y2-4} ${x2-8},${y2+4}" fill="${col}" opacity="0.5"/>`;
-  };
-
-  /* ── 연도 배경 밴드 ── */
-  const TOTAL_H=430;
-  g+=rc(X(0),0,X(6)-X(0),TOTAL_H,'#eff6ff',0,'opacity="0.12"');
-  g+=rc(X(7),0,X(16)-X(7),TOTAL_H,'#f5f3ff',0,'opacity="0.1"');
-  g+=rc(X(17),0,X(25)-X(17),TOTAL_H,'#f0fdf4',0,'opacity="0.07"');
-
-  /* ── 연도 레이블 ── */
-  g+=tx((X(0)+X(6))/2|0,14,'2026','text-anchor="middle" font-size="12" font-weight="700" fill="#3b82f6" opacity="0.7"');
-  g+=tx((X(7)+X(16))/2|0,14,'2027','text-anchor="middle" font-size="12" font-weight="700" fill="#7c3aed" opacity="0.7"');
-  g+=tx(X(16),14,'★SNF','text-anchor="middle" font-size="9" font-weight="800" fill="#d97706"');
-  g+=tx((X(17)+X(25))/2|0,14,'2028','text-anchor="middle" font-size="12" font-weight="700" fill="#16a34a" opacity="0.7"');
-
-  /* ── 눈금자 + 분기 마크 ── */
-  g+=ln(L,22,R,22,'stroke="#e2e8f0" stroke-width="1"');
-  [[1,"Q3'26",'#94a3b8'],[4,"Q4'26",'#94a3b8'],[7,"Q1'27",'#a5b4fc'],
-   [10,"Q2'27",'#a5b4fc'],[13,"Q3'27",'#a5b4fc'],[16,"★Oct'27",'#f59e0b'],
-   [19,"Q1'28",'#6ee7b7'],[22,"Q2'28",'#6ee7b7']].forEach(([m,lbl,col])=>{
-    const qx=X(m);
-    g+=ln(qx,20,qx,24,`stroke="${col}" stroke-width="1.5"`);
-    g+=ln(qx,27,qx,TOTAL_H,`stroke="${m===16?'#fde68a':m===7||m===17?'#e9d5ff':'#f4f4f5'}" stroke-width="${m===16?1:0.4}"`);
-    g+=tx(qx,35,lbl,`text-anchor="middle" font-size="${m===16?9:9}" fill="${col}" font-weight="${m===16?800:400}"`);
-  });
-
-  /* ── 현재 마커 ── */
-  g+=ln(L,22,L,TOTAL_H,'stroke="#ef4444" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.45"');
-  g+=`<polygon points="${L-5},22 ${L+5},22 ${L},30" fill="#ef4444" opacity="0.75"/>`;
-  g+=tx(L,18,'현재','text-anchor="middle" font-size="8.5" font-weight="800" fill="#ef4444"');
-
-  /* ══════════════════════════════════════════════════
-     공통 경로 트랙  y=45 ~ 140
-  ══════════════════════════════════════════════════ */
-  /* 배경 */
-  g+=rc(0,45,SVG_W,95,'#f8fafc',0);
-  g+=rc(0,45,L-4,95,'#e2e8f0',0);
-  /* 트랙 레이블 */
-  g+=tx(42,93,'공통\n경로','text-anchor="middle" dominant-baseline="central" font-size="12" font-weight="800" fill="#1e293b"');
-  // 멀티라인 처리
-  g+=tx(42,80,'공통','text-anchor="middle" font-size="12" font-weight="800" fill="#1e293b"');
-  g+=tx(42,96,'경로','text-anchor="middle" font-size="12" font-weight="800" fill="#1e293b"');
-
-  /* 공통 phase 카드 */
-  const PH_Y=60, PH_H=54;
-  const PHASES=[
-    {m0:1,m1:6,  fill:'#3b82f6', lbl:'전사테스트 + FGT', sub:"Jul~Dec '26"},
-    {m0:7,m1:9,  fill:'#0d9488', lbl:'CS 오픈',           sub:"Jan~Mar '27"},
-    {m0:10,m1:12,fill:'#0891b2', lbl:'CLA',               sub:"Apr~Jun '27"},
-    {m0:12,m1:15,fill:'#7c3aed', lbl:'CBT',               sub:"Jun~Sep '27"},
-  ];
-  PHASES.forEach(({m0,m1,fill,lbl,sub},i)=>{
-    const bx=X(m0)+1, bw=X(m1)-X(m0)-2, mcx=(X(m0)+X(m1))/2|0;
-    const clipId=`phClip${i}`;
-    clips+=`<clipPath id="${clipId}"><rect x="${bx+2}" y="${PH_Y}" width="${bw-4}" height="${PH_H}"/></clipPath>`;
-    /* 카드 */
-    g+=rc(bx,PH_Y,bw,PH_H,fill,8);
-    /* 이름 */
-    const fs=bw>180?12.5:bw>120?12:bw>80?11:9.5;
-    g+=`<text x="${mcx}" y="${PH_Y+23}" clip-path="url(#${clipId})" text-anchor="middle" font-size="${fs}" font-weight="700" fill="#fff" font-family="Pretendard,-apple-system,sans-serif">${lbl}</text>`;
-    /* 날짜 */
-    g+=`<text x="${mcx}" y="${PH_Y+38}" clip-path="url(#${clipId})" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.8)" font-family="Pretendard,-apple-system,sans-serif">${sub}</text>`;
-    /* 화살표 (다음 카드로) */
-    if(i<PHASES.length-1){
-      const nx=X(PHASES[i+1].m0)+1;
-      g+=arr(bx+bw,PH_Y+PH_H/2,nx,PH_Y+PH_H/2,'#94a3b8');
-    }
-  });
-
-  /* 마지막 카드 → SNF 화살표 */
-  const lastPhEnd=X(15);
-  const snfX=X(16);
-  g+=arr(lastPhEnd,PH_Y+PH_H/2,snfX-24,PH_Y+PH_H/2,'#f59e0b');
-
-  /* ── SNF 마커 (공통 트랙 끝) ── */
-  const snfCY=PH_Y+PH_H/2;
-  g+=ci(snfX,snfCY,24,'#fef3c7','stroke="#f59e0b" stroke-width="2.5"');
-  g+=ci(snfX,snfCY,16,'#fbbf24');
-  g+=tx(snfX,snfCY-3,'★','text-anchor="middle" font-size="17"');
-  g+=tx(snfX,snfCY+10,'SNF','text-anchor="middle" font-size="8" font-weight="800" fill="#78350f"');
-  g+=tx(snfX,PH_Y+PH_H+16,"Oct'27",'text-anchor="middle" font-size="11" font-weight="700" fill="#d97706"');
-
-  /* ══════════════════════════════════════════════════
-     포크 커넥터 (SNF → EA / 직행)
-  ══════════════════════════════════════════════════ */
-  const FORK_X=X(17); // 분기 시작 X
-  const EA_Y=155+22;  // EA 카드 중심 Y
-  const DR_Y=290+22;  // 직행 카드 중심 Y
-  const FORK_MID_Y=(EA_Y+DR_Y)/2|0;
-
-  /* SNF → 수직선 → 포크 */
-  g+=ln(snfX,snfCY+24,snfX,FORK_MID_Y,'stroke="#9ca3af" stroke-width="1.5"');
-  /* 포크 수평선 */
-  g+=ln(snfX,FORK_MID_Y,FORK_X,FORK_MID_Y,'stroke="#9ca3af" stroke-width="1.5"');
-  /* EA 분기 */
-  g+=ln(FORK_X,FORK_MID_Y,FORK_X,EA_Y,'stroke="#ea580c" stroke-width="1.5"');
-  g+=`<polygon points="${FORK_X},${EA_Y} ${FORK_X-5},${EA_Y-8} ${FORK_X+5},${EA_Y-8}" fill="#ea580c" opacity="0.7"/>`;
-  /* 직행 분기 */
-  g+=ln(FORK_X,FORK_MID_Y,FORK_X,DR_Y,'stroke="#16a34a" stroke-width="1.5"');
-  g+=`<polygon points="${FORK_X},${DR_Y} ${FORK_X-5},${DR_Y-8} ${FORK_X+5},${DR_Y-8}" fill="#16a34a" opacity="0.7"/>`;
-  /* 포크 레이블 */
-  g+=tx(snfX+28,FORK_MID_Y+2,'경로 분기','font-size="9.5" fill="#9ca3af" font-family="Pretendard,-apple-system,sans-serif"');
-
-  /* ══════════════════════════════════════════════════
-     EA 경로 트랙  y=145 ~ 250
-  ══════════════════════════════════════════════════ */
-  g+=rc(0,145,SVG_W,105,'#fff7ed',0,'opacity="0.9"');
-  g+=rc(0,145,L-4,105,'#ffedd5',0);
-  /* 섹션 헤더 */
-  g+=tx(L+6,158,'◼ EA 론칭 경로','font-size="10.5" font-weight="800" fill="#ea580c" font-family="Pretendard,-apple-system,sans-serif"');
-  /* 트랙 레이블 */
-  g+=tx(42,198,'EA','text-anchor="middle" font-size="14" font-weight="900" fill="#ea580c"');
-
-  const EA_PH_Y=162, EA_PH_H=50;
-  const EA_PHASES=[
-    {m0:17,m1:20,fill:'#f97316',lbl:'EA 준비',       sub:"Nov'27~Feb'28"},
-    {m0:20,m1:25,fill:'#fb923c',lbl:'EA 운영+LAUNCH 준비',sub:"Feb~Jul'28"},
-  ];
-  EA_PHASES.forEach(({m0,m1,fill,lbl,sub},i)=>{
-    const bx=X(m0)+1, bw=X(m1)-X(m0)-2, mcx=(X(m0)+X(m1))/2|0;
-    const clipId=`eaClip${i}`;
-    clips+=`<clipPath id="${clipId}"><rect x="${bx+2}" y="${EA_PH_Y}" width="${bw-4}" height="${EA_PH_H}"/></clipPath>`;
-    g+=rc(bx,EA_PH_Y,bw,EA_PH_H,fill,8);
-    g+=`<text x="${mcx}" y="${EA_PH_Y+20}" clip-path="url(#${clipId})" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" font-family="Pretendard,-apple-system,sans-serif">${lbl}</text>`;
-    g+=`<text x="${mcx}" y="${EA_PH_Y+35}" clip-path="url(#${clipId})" text-anchor="middle" font-size="9.5" fill="rgba(255,255,255,0.8)" font-family="Pretendard,-apple-system,sans-serif">${sub}</text>`;
-    if(i<EA_PHASES.length-1){
-      const nx=X(EA_PHASES[i+1].m0)+1;
-      g+=arr(bx+bw,EA_PH_Y+EA_PH_H/2,nx,EA_PH_Y+EA_PH_H/2,'#f97316');
-    }
-  });
-  /* EA LAUNCH */
-  {const lx=X(25),ly=EA_PH_Y+EA_PH_H/2;
-   g+=arr(X(25)+1,ly,lx+22,ly,'#ea580c');
-   g+=ci(lx+22,ly,18,'#ea580c','stroke="#fff" stroke-width="2"');
-   g+=tx(lx+22,ly-2,'🚀','text-anchor="middle" font-size="14"');
-   g+=tx(lx+22,ly+10,'EA','text-anchor="middle" font-size="8" font-weight="800" fill="#fff" font-family="Pretendard,-apple-system,sans-serif"');
-   g+=tx(lx+22,EA_PH_Y+EA_PH_H+14,"Jul'28",'text-anchor="middle" font-size="11" font-weight="700" fill="#ea580c" font-family="Pretendard,-apple-system,sans-serif"');
-   g+=tx(lx+22,EA_PH_Y+EA_PH_H+26,'정식 LAUNCH','text-anchor="middle" font-size="9.5" fill="#94a3b8" font-family="Pretendard,-apple-system,sans-serif"');}
-
-  /* ══════════════════════════════════════════════════
-     직행 경로 트랙  y=278 ~ 380
-  ══════════════════════════════════════════════════ */
-  g+=rc(0,278,SVG_W,102,'#f0fdf4',0,'opacity="0.9"');
-  g+=rc(0,278,L-4,102,'#dcfce7',0);
-  g+=tx(L+6,290,'◼ 직행 론칭 경로','font-size="10.5" font-weight="800" fill="#16a34a" font-family="Pretendard,-apple-system,sans-serif"');
-  g+=tx(42,330,'직행','text-anchor="middle" font-size="14" font-weight="900" fill="#16a34a"');
-
-  const DR_PH_Y=295, DR_PH_H=50;
-  const DR_PHASES=[
-    {m0:17,m1:21,fill:'#22c55e',lbl:'LAUNCH 준비 + 서버 검증',sub:"Nov'27~Mar'28"},
-  ];
-  DR_PHASES.forEach(({m0,m1,fill,lbl,sub},i)=>{
-    const bx=X(m0)+1, bw=X(m1)-X(m0)-2, mcx=(X(m0)+X(m1))/2|0;
-    const clipId=`drClip${i}`;
-    clips+=`<clipPath id="${clipId}"><rect x="${bx+2}" y="${DR_PH_Y}" width="${bw-4}" height="${DR_PH_H}"/></clipPath>`;
-    g+=rc(bx,DR_PH_Y,bw,DR_PH_H,fill,8);
-    g+=`<text x="${mcx}" y="${DR_PH_Y+20}" clip-path="url(#${clipId})" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" font-family="Pretendard,-apple-system,sans-serif">${lbl}</text>`;
-    g+=`<text x="${mcx}" y="${DR_PH_Y+35}" clip-path="url(#${clipId})" text-anchor="middle" font-size="9.5" fill="rgba(255,255,255,0.8)" font-family="Pretendard,-apple-system,sans-serif">${sub}</text>`;
-  });
-  /* 직행 LAUNCH */
-  {const lx=X(21),ly=DR_PH_Y+DR_PH_H/2;
-   g+=arr(X(21)+1,ly,lx+22,ly,'#16a34a');
-   g+=ci(lx+22,ly,18,'#16a34a','stroke="#fff" stroke-width="2"');
-   g+=tx(lx+22,ly-2,'🚀','text-anchor="middle" font-size="14"');
-   g+=tx(lx+22,ly+10,'직행','text-anchor="middle" font-size="8" font-weight="800" fill="#fff" font-family="Pretendard,-apple-system,sans-serif"');
-   g+=tx(lx+22,DR_PH_Y+DR_PH_H+14,"Mar'28",'text-anchor="middle" font-size="11" font-weight="700" fill="#16a34a" font-family="Pretendard,-apple-system,sans-serif"');
-   g+=tx(lx+22,DR_PH_Y+DR_PH_H+26,'정식 LAUNCH','text-anchor="middle" font-size="9.5" fill="#94a3b8" font-family="Pretendard,-apple-system,sans-serif"');}
-
-  /* ── 범례 ── */
-  const LEGS=[{col:'#3b82f6',lbl:'전사테스트+FGT'},{col:'#0d9488',lbl:'CS 오픈'},{col:'#7c3aed',lbl:'CBT'},{col:'#fbbf24',lbl:"★ SNF Oct'27"},{col:'#f97316',lbl:'EA 경로'},{col:'#22c55e',lbl:'직행 경로'}];
-  const LY=DR_PH_Y+DR_PH_H+44,ITEM_W=114;
-  const lx0=(SVG_W-LEGS.length*ITEM_W)/2;
-  LEGS.forEach(({col,lbl},i)=>{
-    const lx=lx0+i*ITEM_W;
-    g+=rc(lx,LY,11,10,col,2);
-    g+=tx(lx+15,LY+9,lbl,'font-size="10.5" fill="#374151" font-family="Pretendard,-apple-system,sans-serif"');
-  });
-
-  const vbH=LY+20;
-  document.getElementById('ganttWrap').innerHTML=
-    `<svg viewBox="0 0 ${SVG_W} ${vbH}" width="100%" xmlns="http://www.w3.org/2000/svg" style="display:block"><defs>${clips}</defs>${g}</svg>`;
-}
-initGantt();
+/* initGantt removed — Phase Flow 복원 */
 
 
 
