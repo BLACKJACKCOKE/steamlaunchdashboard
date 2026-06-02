@@ -445,19 +445,30 @@ footer{background:#1a1a2e;color:#64748b;padding:24px 40px;font-size:11px;display
   .cl-items{grid-template-columns:1fr}
 }
 
-/* ── View Tab System ───────────────────────────── */
-.view-tabs{display:flex;align-items:center;gap:0;background:#fff;border-bottom:2px solid var(--border);padding:0 40px;position:sticky;top:96px;z-index:190;height:46px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
-.view-tab{display:flex;align-items:center;gap:7px;padding:0 22px;height:46px;font-size:13px;font-weight:700;color:var(--text-sub2);border:none;border-bottom:3px solid transparent;cursor:pointer;background:none;margin-bottom:-2px;transition:color .15s,border-color .15s;white-space:nowrap}
+/* ── View Tab + Nav 통합 시스템 ──────────────────── */
+/* 탭 버튼 (page-nav 내부에 포함) */
+.view-tab{display:flex;align-items:center;gap:6px;padding:0 18px;height:46px;font-size:12.5px;font-weight:700;color:var(--text-sub2);border:none;border-bottom:3px solid transparent;cursor:pointer;background:none;margin-bottom:-2px;transition:color .15s,border-color .15s;white-space:nowrap;flex-shrink:0}
 .view-tab:hover{color:var(--text-h)}
 .view-tab.tab-exec.vt-active{color:var(--accent);border-bottom-color:var(--accent)}
 .view-tab.tab-ops.vt-active{color:#16a34a;border-bottom-color:#16a34a}
-.view-badge{font-size:9px;font-weight:800;padding:2px 7px;border-radius:8px}
+.view-badge{font-size:9px;font-weight:800;padding:2px 6px;border-radius:8px;flex-shrink:0}
 .vb-exec{background:#dbeafe;color:#1e40af}
 .vb-ops{background:#dcfce7;color:#15803d}
+.view-sep{width:1px;height:22px;background:var(--border);margin:0 8px;flex-shrink:0;align-self:center}
 
 /* 실무 전용: 경영진 뷰에서 숨김 */
 body.view-exec .ops-section{display:none!important}
 body.view-exec .ops-nav{display:none!important}
+
+/* 폰트 위계 최적화 */
+.sec-num{font-size:11px!important;font-weight:700;letter-spacing:2px;color:var(--accent);text-transform:uppercase;margin-bottom:4px}
+.sec-title{font-size:24px!important;font-weight:800;color:var(--text-h);margin-bottom:4px;line-height:1.25}
+.sec-sub{font-size:13px!important;color:var(--text-sub2);margin-bottom:24px}
+.sl{font-size:11px!important;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin:16px 0 8px}
+.insight h3{font-size:11px!important;font-weight:800;color:var(--accent);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px}
+.insight li{font-size:13px!important;color:var(--text-sub1);line-height:1.55}
+.decision-label{font-size:13px!important;font-weight:800;color:var(--purple)}
+.decision-sub{font-size:12.5px!important;color:var(--text-sub1);line-height:1.5}
 </style>
   <link rel="stylesheet" href="../assets/theme.css">
   <!-- Google tag (gtag.js) -->
@@ -506,31 +517,32 @@ body.view-exec .ops-nav{display:none!important}
   <div class="lb-item"><span class="lb-chip lb-b">◼</span>&nbsp;직행 론칭 경로 — SNF 후 4~5개월, 정식 LAUNCH 2028.03</div>
 </div>
 <!-- VIEW TAB BAR -->
-<div class="view-tabs" id="viewTabs">
+<!-- 탭 + 네비게이션 통합 바 (sticky 충돌 없음) -->
+<nav class="page-nav" id="pageNav" style="gap:0;padding:0 32px">
+  <!-- 경영진/실무 탭 버튼 -->
   <button class="view-tab tab-exec vt-active" id="tabExec" onclick="switchView('exec')">
-    📊 경영진 보고
-    <span class="view-badge vb-exec">EXEC</span>
+    📊 경영진 보고<span class="view-badge vb-exec">EXEC</span>
   </button>
-  <div style="width:1px;height:22px;background:var(--border);margin:0 4px"></div>
   <button class="view-tab tab-ops" id="tabOps" onclick="switchView('ops')">
-    🔧 상세 실무
-    <span class="view-badge vb-ops">OPS</span>
+    🔧 상세 실무<span class="view-badge vb-ops">OPS</span>
   </button>
-  <div style="flex:1"></div>
-  <span style="font-size:11px;color:var(--text-sub2);font-weight:600" id="viewLabel">경영진 보고 핵심 지표만 표시 중</span>
-</div>
-<nav class="page-nav" id="pageNav">
-  <a class="pnav-item" href="#sec1"><span class="pnav-num">01</span> 타임라인 + 5-Tier KPI</a>
+  <div class="view-sep"></div>
+  <!-- 경영진 뷰 네비게이션 -->
+  <a class="pnav-item" href="#sec1" style="font-size:12px">타임라인</a>
   <div class="pnav-div"></div>
-  <a class="pnav-item" href="#sec5"><span class="pnav-num">02</span> 역산 플래너</a>
+  <a class="pnav-item" href="#sec5" style="font-size:12px">역산 플래너</a>
+  <!-- 실무 뷰 추가 네비게이션 -->
   <div class="pnav-div ops-nav"></div>
-  <a class="pnav-item ops-nav" href="#sec3"><span class="pnav-num">03</span> 단계별 액션 &amp; 마케팅</a>
+  <a class="pnav-item ops-nav" href="#sec3" style="font-size:12px">액션 플랜</a>
   <div class="pnav-div ops-nav"></div>
-  <a class="pnav-item ops-nav" href="#sec4"><span class="pnav-num">04</span> 체크리스트</a>
+  <a class="pnav-item ops-nav" href="#sec4" style="font-size:12px">체크리스트</a>
   <div class="pnav-div ops-nav"></div>
-  <a class="pnav-item ops-nav" href="#sec6"><span class="pnav-num">05</span> 스팀 프로모션 협상</a>
+  <a class="pnav-item ops-nav" href="#sec6" style="font-size:12px">협상 타임라인</a>
   <div class="pnav-div ops-nav"></div>
-  <a class="pnav-item ops-nav" href="#part2"><span class="pnav-num">↓</span> 상세 Phase 플랜</a>
+  <a class="pnav-item ops-nav" href="#part2" style="font-size:12px">↓ 상세 플랜</a>
+  <!-- 우측 상태 표시 -->
+  <div style="flex:1"></div>
+  <span style="font-size:11px;color:var(--text-sub2);font-weight:500;padding-right:4px;white-space:nowrap" id="viewLabel">경영진 보고</span>
 </nav>
 
 <div class="page-wrap">
@@ -790,7 +802,7 @@ body.view-exec .ops-nav{display:none!important}
   </div>
 
   <!-- 가정 + 출처 + 정직성 disclaimer (collapsible, default closed) -->
-  <details style="background:var(--blue-bg);border:1px solid var(--blue-bdr);border-radius:var(--radius);margin-bottom:14px">
+  <details class="ops-section" style="background:var(--blue-bg);border:1px solid var(--blue-bdr);border-radius:var(--radius);margin-bottom:14px">
     <summary style="font-weight:800;color:var(--accent);font-size:12px;padding:12px 16px;cursor:pointer;list-style:none;display:flex;align-items:center;gap:6px;user-select:none">
       <span style="display:inline-block;transition:transform .2s">▶</span>
       📊 5-Tier 모델 산정 근거 (산업 데이터 정합) — 클릭해서 펼치기
@@ -852,8 +864,8 @@ body.view-exec .ops-nav{display:none!important}
   </details>
 
   <!-- Phase 별 WL trajectory (5-Tier × 4 milestones) -->
-  <div class="sl" style="margin-top:8px">Phase별 WL trajectory — 5-Tier 시나리오</div>
-  <div style="overflow-x:auto;margin-bottom:14px">
+  <div class="sl ops-section" style="margin-top:8px">Phase별 WL trajectory — 5-Tier 시나리오</div>
+  <div style="overflow-x:auto;margin-bottom:14px" class="ops-section">
   <table style="width:100%;border-collapse:collapse;font-size:11.5px;background:#fff;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden">
     <thead>
       <tr style="background:var(--card-bg)">
@@ -2143,19 +2155,28 @@ initGantt();
 
 
 
-/* ── View Tab Switcher ── */
+/* ── View Tab Switcher v2 (page-nav 통합) ── */
 function switchView(v){
+  // body 클래스로 CSS 제어
   document.body.classList.remove('view-exec','view-ops');
   document.body.classList.add('view-'+v);
-  document.getElementById('tabExec').classList.toggle('vt-active',v==='exec');
-  document.getElementById('tabOps').classList.toggle('vt-active',v==='ops');
+  // 탭 버튼 활성화
+  const te=document.getElementById('tabExec');
+  const to=document.getElementById('tabOps');
+  if(te) te.classList.toggle('vt-active',v==='exec');
+  if(to) to.classList.toggle('vt-active',v==='ops');
+  // 상태 레이블
   const lbl=document.getElementById('viewLabel');
-  if(lbl)lbl.textContent=v==='exec'?'경영진 보고 핵심 지표만 표시 중':'전체 상세 실무 자료 표시 중';
+  if(lbl) lbl.textContent=v==='exec'?'경영진 보고':'상세 실무';
+  // 저장
   try{localStorage.setItem('ps_view_tab',v);}catch(e){}
 }
+// 저장된 탭 또는 기본값(exec) 복원
 (function(){
-  const saved=localStorage.getItem('ps_view_tab')||'exec';
-  switchView(saved);
+  try{
+    const saved=localStorage.getItem('ps_view_tab')||'exec';
+    switchView(saved);
+  }catch(e){switchView('exec');}
 })();
 
 /* WL Grouped Horizontal Bar Chart removed in V4 5-Tier refactor (sec2 삭제) — wlChart canvas no longer exists */
