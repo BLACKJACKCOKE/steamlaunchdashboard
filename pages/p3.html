@@ -342,10 +342,10 @@ header{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.97);backdr
 .planner-row.pl-warn{border-color:var(--amber)}
 .planner-row.pl-a{border-color:var(--opt-a-bdr);background:var(--opt-a-bg)}
 .planner-row.pl-b{border-color:var(--opt-b-bdr);background:var(--opt-b-bg)}
-.planner-time{background:#1a1a2e;color:#a5b4fc;font-size:11px;font-weight:700;font-family:monospace;padding:10px 12px;min-width:75px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.planner-date{background:var(--card-bg);padding:10px 12px;font-size:12px;font-weight:700;color:var(--text-h);font-family:monospace;min-width:105px;display:flex;align-items:center;flex-shrink:0;border-right:1px solid var(--border)}
-.planner-action{padding:10px 14px;font-size:12px;color:var(--text-sub1);flex:1;display:flex;align-items:center}
-.planner-badge{padding:10px 12px;display:flex;align-items:center;min-width:80px;justify-content:flex-end}
+.planner-time{background:#1a1a2e;color:#a5b4fc;font-size:11.5px;font-weight:700;font-family:monospace;padding:11px 14px;width:110px;min-width:110px;display:flex;align-items:center;justify-content:center;flex-shrink:0;text-align:center}
+.planner-date{background:var(--card-bg);padding:11px 14px;font-size:12.5px;font-weight:700;color:var(--text-h);font-family:monospace;width:130px;min-width:130px;display:flex;align-items:center;flex-shrink:0;border-right:1px solid var(--border)}
+.planner-action{padding:11px 16px;font-size:12.5px;color:var(--text-sub1);flex:1;display:flex;align-items:center;line-height:1.5}
+.planner-badge{padding:11px 14px;display:flex;align-items:center;width:90px;min-width:90px;justify-content:flex-end}
 
 /* SUBSEC LABEL */
 .sl{font-size:13px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.12em;margin:14px 0 8px;display:flex;align-items:center;gap:8px}
@@ -491,7 +491,7 @@ body.view-exec .ops-section{display:none!important}
 body.view-exec .ops-nav{display:none!important}
 
 /* ── 섹션 시각 구분 강화 ─────────────────────────── */
-.section{padding:36px 40px 28px;border-bottom:1px solid var(--border)}
+.section{padding:28px 40px 24px;border-bottom:1px solid var(--border)}
 .section:last-child{border-bottom:none}
 </style>
   <link rel="stylesheet" href="../assets/theme.css">
@@ -568,6 +568,45 @@ body.view-exec .ops-nav{display:none!important}
   <div style="flex:1"></div>
   <span style="font-size:11px;color:var(--text-sub2);font-weight:500;padding-right:4px;white-space:nowrap" id="viewLabel">경영진 보고</span>
 </nav>
+
+<script>
+/* ── 탭 전환 (인라인, DOM 준비 전 정의) ── */
+function switchView(v){
+  /* 실무 전용 섹션 show/hide */
+  var os=document.querySelectorAll('.ops-section');
+  for(var i=0;i<os.length;i++) os[i].style.display=(v==='ops')?'':'none';
+  var on=document.querySelectorAll('.ops-nav');
+  for(var j=0;j<on.length;j++) on[j].style.display=(v==='ops')?'':'none';
+  /* 탭 버튼 스타일 */
+  var te=document.getElementById('tabExec');
+  var to=document.getElementById('tabOps');
+  var lbl=document.getElementById('viewLabel');
+  if(te){te.style.background=v==='exec'?'#4f46e5':'#f1f5f9';te.style.color=v==='exec'?'#fff':'#64748b';te.style.boxShadow=v==='exec'?'0 2px 8px rgba(79,70,229,.3)':'none';}
+  if(to){to.style.background=v==='ops'?'#16a34a':'#f1f5f9';to.style.color=v==='ops'?'#fff':'#64748b';to.style.boxShadow=v==='ops'?'0 2px 8px rgba(22,163,74,.3)':'none';}
+  if(lbl)lbl.textContent=v==='exec'?'경영진 보고':'상세 실무';
+  try{localStorage.setItem('ps_view_tab',v);}catch(e){}
+}
+/* DOM 준비 후 저장값 복원 */
+function _initView(){
+  var s='exec';
+  try{s=localStorage.getItem('ps_view_tab')||'exec';}catch(e){}
+  switchView(s);
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',_initView);}
+else{_initView();}
+</script>
+<script>
+/* 구조 재편: 역산 플래너를 Decision Box 바로 다음으로 이동 (일정 그룹) */
+document.addEventListener('DOMContentLoaded',function(){
+  var sec5=document.getElementById('sec5');
+  var decBox=document.querySelector('.decision-box');
+  if(!sec5||!decBox)return;
+  decBox.parentNode.insertBefore(sec5,decBox.nextSibling);
+  sec5.style.borderTop='2px dashed #e2e8f0';
+  sec5.style.paddingTop='20px';
+  sec5.style.marginTop='8px';
+});
+</script>
 
 <div class="page-wrap">
 
@@ -696,7 +735,7 @@ body.view-exec .ops-nav{display:none!important}
         <div style="font-size:11px;font-weight:800;color:#fff;margin-top:4px;letter-spacing:.5px">Failure</div>
       </div>
       <div style="background:#fff5f5;padding:12px 8px;text-align:center">
-        <div style="font-size:30px;font-weight:900;color:var(--red);line-height:1">58%</div>
+        <div style="font-size:22px;font-weight:900;color:var(--red);line-height:1">58%</div>
         <div style="font-size:12px;color:var(--red);font-weight:700;margin-top:3px">58개 / 100</div>
         <div style="margin-top:8px;font-size:11px;color:var(--text-sub2);line-height:1.5">PCCU avg<br><strong style="color:#dc2626;font-size:12px">&lt;5K</strong><br>1년 90%+ 이탈</div>
       </div>
@@ -709,7 +748,7 @@ body.view-exec .ops-nav{display:none!important}
         <div style="font-size:11px;font-weight:800;color:#fff;margin-top:4px;letter-spacing:.5px">Survival</div>
       </div>
       <div style="background:#fff7ed;padding:12px 8px;text-align:center">
-        <div style="font-size:30px;font-weight:900;color:var(--opt-a);line-height:1">27%</div>
+        <div style="font-size:22px;font-weight:900;color:var(--opt-a);line-height:1">27%</div>
         <div style="font-size:12px;color:var(--opt-a);font-weight:700;margin-top:3px">27개 / 100</div>
         <div style="margin-top:8px;font-size:11px;color:var(--text-sub2);line-height:1.5">PCCU avg<br><strong style="color:var(--opt-a);font-size:12px">5-30K</strong><br>지속 가능 커뮤니티</div>
       </div>
@@ -723,7 +762,7 @@ body.view-exec .ops-nav{display:none!important}
         <div style="font-size:11px;font-weight:800;color:#fff;margin-top:4px;letter-spacing:.5px">Conservative</div>
       </div>
       <div style="background:#fefce8;padding:12px 8px;text-align:center">
-        <div style="font-size:30px;font-weight:900;color:var(--amber);line-height:1">10%</div>
+        <div style="font-size:22px;font-weight:900;color:var(--amber);line-height:1">10%</div>
         <div style="font-size:12px;color:var(--amber);font-weight:700;margin-top:3px">10개 / 100</div>
         <div style="margin-top:8px;font-size:11px;color:var(--text-sub2);line-height:1.5">PCCU avg<br><strong style="color:var(--amber);font-size:12px">30-100K</strong><br>Top 20 진입</div>
       </div>
@@ -736,7 +775,7 @@ body.view-exec .ops-nav{display:none!important}
         <div style="font-size:11px;font-weight:800;color:#fff;margin-top:4px;letter-spacing:.5px">Target</div>
       </div>
       <div style="background:#eff6ff;padding:12px 8px;text-align:center">
-        <div style="font-size:30px;font-weight:900;color:var(--accent);line-height:1">4%</div>
+        <div style="font-size:22px;font-weight:900;color:var(--accent);line-height:1">4%</div>
         <div style="font-size:12px;color:var(--accent);font-weight:700;margin-top:3px">4개 / 100</div>
         <div style="margin-top:8px;font-size:11px;color:var(--text-sub2);line-height:1.5">PCCU avg<br><strong style="color:var(--accent);font-size:12px">100-300K</strong><br>Top 10 진입</div>
       </div>
@@ -749,7 +788,7 @@ body.view-exec .ops-nav{display:none!important}
         <div style="font-size:11px;font-weight:800;color:#fff;margin-top:4px;letter-spacing:.5px">Stretch</div>
       </div>
       <div style="background:#f5f3ff;padding:12px 8px;text-align:center">
-        <div style="font-size:30px;font-weight:900;color:var(--purple);line-height:1">1%</div>
+        <div style="font-size:22px;font-weight:900;color:var(--purple);line-height:1">1%</div>
         <div style="font-size:12px;color:var(--purple);font-weight:700;margin-top:3px">1개 / 100</div>
         <div style="margin-top:8px;font-size:11px;color:var(--text-sub2);line-height:1.5">PCCU avg<br><strong style="color:var(--purple);font-size:12px">300K+</strong><br>Top 5 mega-hit</div>
       </div>
@@ -1406,7 +1445,7 @@ body.view-exec .ops-nav{display:none!important}
 <div class="section" id="sec5">
   <div class="sec-num">Section 04</div>
   <div class="sec-title">역산 타임라인 플래너</div>
-  <div class="sec-sub">목표 론칭일 입력 → 경로 자동 감지 후 마일스톤 역산 · <span style="color:var(--opt-b);font-weight:700">2027년 이내</span> 입력 → 직행 론칭 경로 기준 · <span style="color:var(--opt-a);font-weight:700">2028년 이후</span> 입력 → EA 론칭 경로 기준</div>
+
 
   <div class="planner-input">
     <label>🎯 목표 정식 론칭일</label>
@@ -1909,236 +1948,206 @@ Chart.register(ChartDataLabels);
 
 
 /* ──── Gantt Roadmap (Option A — 비율형 타임라인) ──── */
-function initGantt() {
-  /* ════════════════════════════════════════════════════════════
-     GANTT v4 — 심플·클린 경영진 보고용
-     - WL 다이아몬드 제거 (노이즈 감소)
-     - 트랙 간격 확대 (명확한 구분)
-     - 바 텍스트 모두 내부 + 날짜 바 아래 일관 배치
-     - 클린한 SNF/LAUNCH 마커
-     ════════════════════════════════════════════════════════════ */
-  const L=60, R=1160, CW=R-L, TM=25;
-  const X = m => Math.round(L + (m/TM)*CW);
-  let g='', clips='';
+function initGantt(){
+  /* ═══════════════════════════════════════════════════════════════
+     Gantt v5 — 노드 플로우 다이어그램
+     - 공통: 수평 phase 카드 (Jul'26 → SNF Oct'27)
+     - 포크: SNF 이후 EA / 직행 두 행으로 분기
+     - 카드: 이름 + 날짜 일체형, 화살표 연결
+     ═══════════════════════════════════════════════════════════════ */
+  const SVG_W=1200, L=84, R=1160, CW=R-L, TM=25;
+  const X=m=>Math.round(L+(m/TM)*CW);
+  let g='',clips='';
 
-  // Helpers
-  const rc=(x,y,w,h,fill,rx=6,xtra='')=>
-    `<rect x="${x}" y="${y}" width="${Math.max(w,1)}" height="${h}" rx="${rx}" fill="${fill}" ${xtra}/>`;
-  const tx=(x,y,text,xtra='')=>
-    `<text x="${x}" y="${y}" font-family="Pretendard,-apple-system,sans-serif" ${xtra}>${text}</text>`;
-  const ln=(x1,y1,x2,y2,xtra='')=>
-    `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" ${xtra}/>`;
-  const ci=(cx,cy,r,fill,xtra='')=>
-    `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${fill}" ${xtra}/>`;
-
-  /* ── Y 레이아웃 ─────────────────────────────────────────────
-     y=0~18:   연도 레이블
-     y=18~28:  눈금자
-     y=28~40:  분기 레이블
-     y=42~54:  현재 마커
-
-     [공통 트랙]  y=58~168  (band 110px)
-       label center: y=113
-       bar: BY=76, BH=50  bottom=126
-       date: y=140
-
-     [SNF 존]  y=168~232  (64px, SNF + fork)
-
-     [EA 트랙]  y=232~364  (band 132px)
-       header: y=246
-       bar: EY=258, EH=50  bottom=308
-       date: y=322
-       LAUNCH: EY+EH/2=283
-
-     [직행 트랙]  y=364~500  (band 136px)
-       header: y=378
-       bar: DY=390, DH=50  bottom=440
-       date: y=454
-       LAUNCH: DY+DH/2=415
-
-     범례: y=518
-     viewBox H: 538
-  ──────────────────────────────────────────────────────────── */
-  const BY=76, BH=50;
-  const EY=258, EH=50;
-  const DY=390, DH=50;
-  const SNF_Y = BY+BH+30;   // 156 — SNF circle center y
-  const FORK_Y = BY+BH+56;  // 182 — fork split y
-
-  // ── clipPath 생성 ─────────────────────────────────────────
-  const CBARS=[
-    {m0:1, m1:6,  fill:'#3b82f6',id:'gf', lbl:'전사테스트 + FGT 1·2차'},
-    {m0:7, m1:9,  fill:'#0d9488',id:'gc', lbl:'CS 오픈'},
-    {m0:10,m1:12, fill:'#0891b2',id:'gl', lbl:'CLA'},
-    {m0:12,m1:15, fill:'#7c3aed',id:'gb', lbl:'CBT'},
-  ];
-  const EA_BARS=[
-    {m0:17,m1:20,fill:'#f97316',id:'ge1',lbl:'EA 준비'},
-    {m0:20,m1:25,fill:'#fb923c',id:'ge2',lbl:'EA 운영 + LAUNCH 준비'},
-  ];
-  const DR_BARS=[
-    {m0:17,m1:21,fill:'#22c55e',id:'gd1',lbl:'LAUNCH 준비 + 서버 검증'},
-  ];
-  const mkClip=(bars,ry,rh)=>{
-    bars.forEach(b=>{
-      const bx=X(b.m0), bw=X(b.m1)-X(b.m0);
-      clips+=`<clipPath id="${b.id}"><rect x="${bx+2}" y="${ry}" width="${bw-4}" height="${rh}"/></clipPath>`;
-    });
+  const rc=(x,y,w,h,fill,rx=8,xtra='')=>`<rect x="${x}" y="${y}" width="${Math.max(w,1)}" height="${h}" rx="${rx}" fill="${fill}" ${xtra}/>`;
+  const tx=(x,y,t,xtra='')=>`<text x="${x}" y="${y}" font-family="Pretendard,-apple-system,sans-serif" ${xtra}>${t}</text>`;
+  const ln=(x1,y1,x2,y2,xtra='')=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" ${xtra}/>`;
+  const ci=(cx,cy,r,fill,xtra='')=>`<circle cx="${cx}" cy="${cy}" r="${r}" fill="${fill}" ${xtra}/>`;
+  const arr=(x1,y1,x2,y2,col)=>{
+    /* 수평 화살표 */
+    const mx=(x1+x2)/2;
+    return `<line x1="${x1}" y1="${y1}" x2="${x2-6}" y2="${y2}" stroke="${col}" stroke-width="1.5" opacity="0.5"/>
+            <polygon points="${x2},${y2} ${x2-8},${y2-4} ${x2-8},${y2+4}" fill="${col}" opacity="0.5"/>`;
   };
-  mkClip(CBARS,BY,BH); mkClip(EA_BARS,EY,EH); mkClip(DR_BARS,DY,DH);
 
-  // ── 배경 밴드 (클린한 색상) ───────────────────────────────
-  // 공통 트랙 bg
-  g += rc(0, 58, 1200, 110, '#f8fafc', 0);
-  g += rc(0, 58, L-4,  110, '#e2e8f0', 0);
-  // EA 트랙 bg
-  g += rc(0,232, 1200, 132, '#fff7ed', 0, 'opacity="0.8"');
-  g += rc(0,232, L-4,  132, '#ffedd5', 0);
-  // 직행 트랙 bg
-  g += rc(0,364, 1200, 136, '#f0fdf4', 0, 'opacity="0.8"');
-  g += rc(0,364, L-4,  136, '#dcfce7', 0);
+  /* ── 연도 배경 밴드 ── */
+  const TOTAL_H=430;
+  g+=rc(X(0),0,X(6)-X(0),TOTAL_H,'#eff6ff',0,'opacity="0.12"');
+  g+=rc(X(7),0,X(16)-X(7),TOTAL_H,'#f5f3ff',0,'opacity="0.1"');
+  g+=rc(X(17),0,X(25)-X(17),TOTAL_H,'#f0fdf4',0,'opacity="0.07"');
 
-  // 트랙 구분선
-  g += ln(0, 58,  1200, 58,  'stroke="#e2e8f0" stroke-width="1.5"');
-  g += ln(0,232,  1200,232,  'stroke="#f97316" stroke-width="1.5" opacity="0.5"');
-  g += ln(0,364,  1200,364,  'stroke="#22c55e" stroke-width="1.5" opacity="0.5"');
-  g += ln(0,500,  1200,500,  'stroke="#e2e8f0" stroke-width="1"');
+  /* ── 연도 레이블 ── */
+  g+=tx((X(0)+X(6))/2|0,14,'2026','text-anchor="middle" font-size="12" font-weight="700" fill="#3b82f6" opacity="0.7"');
+  g+=tx((X(7)+X(16))/2|0,14,'2027','text-anchor="middle" font-size="12" font-weight="700" fill="#7c3aed" opacity="0.7"');
+  g+=tx(X(16),14,'★SNF','text-anchor="middle" font-size="9" font-weight="800" fill="#d97706"');
+  g+=tx((X(17)+X(25))/2|0,14,'2028','text-anchor="middle" font-size="12" font-weight="700" fill="#16a34a" opacity="0.7"');
 
-  // ── 연도 배경 ─────────────────────────────────────────────
-  g += rc(X(0),  0, X(6) -X(0),  500, '#eff6ff', 0, 'opacity="0.15"');
-  g += rc(X(7),  0, X(16)-X(7),  500, '#f5f3ff', 0, 'opacity="0.13"');
-  g += rc(X(17), 0, X(25)-X(17), 500, '#f0fdf4', 0, 'opacity="0.08"');
-
-  // ── 연도 레이블 ───────────────────────────────────────────
-  const yl=(m0,m1,lbl,col)=>tx((X(m0)+X(m1))/2|0,13,lbl,
-    `text-anchor="middle" font-size="12.5" font-weight="700" fill="${col}" opacity="0.8"`);
-  g += yl(0,6,'2026','#3b82f6');
-  g += yl(7,16,'2027','#7c3aed');
-  g += tx(X(16),13,'★SNF','text-anchor="middle" font-size="9.5" font-weight="800" fill="#d97706"');
-  g += yl(17,25,'2028','#16a34a');
-
-  // ── 눈금자 + 분기 눈금 ────────────────────────────────────
-  g += ln(L,22,R,22,'stroke="#e2e8f0" stroke-width="1"');
-  [[1,"Q3'26",'#94a3b8'],[4,"Q4'26",'#94a3b8'],
-   [7,"Q1'27",'#a5b4fc'],[10,"Q2'27",'#a5b4fc'],
-   [13,"Q3'27",'#a5b4fc'],[16,"Q4'27",'#fbbf24'],
-   [19,"Q1'28",'#6ee7b7'],[22,"Q2'28",'#6ee7b7'],
-  ].forEach(([m,lbl,col])=>{
+  /* ── 눈금자 + 분기 마크 ── */
+  g+=ln(L,22,R,22,'stroke="#e2e8f0" stroke-width="1"');
+  [[1,"Q3'26",'#94a3b8'],[4,"Q4'26",'#94a3b8'],[7,"Q1'27",'#a5b4fc'],
+   [10,"Q2'27",'#a5b4fc'],[13,"Q3'27",'#a5b4fc'],[16,"★Oct'27",'#f59e0b'],
+   [19,"Q1'28",'#6ee7b7'],[22,"Q2'28",'#6ee7b7']].forEach(([m,lbl,col])=>{
     const qx=X(m);
-    g += ln(qx,20,qx,24,`stroke="${col}" stroke-width="1.5"`);
-    g += ln(qx,27,qx,500,`stroke="${m===7||m===17?'#e0e7ff':'#f0f0f0'}" stroke-width="${m===7||m===17?0.7:0.35}"`);
-    g += tx(qx,36,lbl,`text-anchor="middle" font-size="9.5" fill="${col}"`);
+    g+=ln(qx,20,qx,24,`stroke="${col}" stroke-width="1.5"`);
+    g+=ln(qx,27,qx,TOTAL_H,`stroke="${m===16?'#fde68a':m===7||m===17?'#e9d5ff':'#f4f4f5'}" stroke-width="${m===16?1:0.4}"`);
+    g+=tx(qx,35,lbl,`text-anchor="middle" font-size="${m===16?9:9}" fill="${col}" font-weight="${m===16?800:400}"`);
   });
 
-  // ── 현재 마커 (수직 세로형) ───────────────────────────────
-  g += ln(L,22,L,500,'stroke="#ef4444" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.5"');
-  g += `<polygon points="${L-5},22 ${L+5},22 ${L},30" fill="#ef4444" opacity="0.8"/>`;
-  g += tx(L,19,'현재','text-anchor="middle" font-size="8.5" font-weight="800" fill="#ef4444"');
+  /* ── 현재 마커 ── */
+  g+=ln(L,22,L,TOTAL_H,'stroke="#ef4444" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.45"');
+  g+=`<polygon points="${L-5},22 ${L+5},22 ${L},30" fill="#ef4444" opacity="0.75"/>`;
+  g+=tx(L,18,'현재','text-anchor="middle" font-size="8.5" font-weight="800" fill="#ef4444"');
 
-  // ── 트랙 레이블 (정중앙) ─────────────────────────────────
-  const LCX=30;
-  // 공통: y=58~168 center=113
-  g += tx(LCX,113,'공통','text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="800" fill="#1e293b"');
-  // EA: y=232~364 center=298
-  g += tx(LCX,298,'EA', 'text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="800" fill="#ea580c"');
-  // 직행: y=364~500 center=432
-  g += tx(LCX,432,'직행','text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="800" fill="#16a34a"');
+  /* ══════════════════════════════════════════════════
+     공통 경로 트랙  y=45 ~ 140
+  ══════════════════════════════════════════════════ */
+  /* 배경 */
+  g+=rc(0,45,SVG_W,95,'#f8fafc',0);
+  g+=rc(0,45,L-4,95,'#e2e8f0',0);
+  /* 트랙 레이블 */
+  g+=tx(42,93,'공통\n경로','text-anchor="middle" dominant-baseline="central" font-size="12" font-weight="800" fill="#1e293b"');
+  // 멀티라인 처리
+  g+=tx(42,80,'공통','text-anchor="middle" font-size="12" font-weight="800" fill="#1e293b"');
+  g+=tx(42,96,'경로','text-anchor="middle" font-size="12" font-weight="800" fill="#1e293b"');
 
-  // ── 공통 바 ───────────────────────────────────────────────
-  CBARS.forEach(({m0,m1,fill,id,lbl})=>{
-    const bx=X(m0), bw=X(m1)-X(m0), mcx=(bx+bw/2)|0;
-    g += rc(bx,BY,bw,BH,fill);
-    const fs=bw>160?13:bw>100?12:bw>64?11:9.5;
-    g += `<text x="${mcx}" y="${BY+BH/2+4}" clip-path="url(#${id})" text-anchor="middle" font-size="${fs}" font-weight="700" fill="#fff" font-family="Pretendard,-apple-system,sans-serif">${lbl}</text>`;
-  });
-  // 공통 바 날짜 레이블 (바 아래)
-  const CDATES=[
-    {m0:1,m1:6,date:"Jul~Dec'26"},
-    {m0:7,m1:9,date:"Jan~Mar'27"},
-    {m0:10,m1:12,date:"Apr~Jun'27"},
-    {m0:12,m1:15,date:"Jun~Sep'27"},
+  /* 공통 phase 카드 */
+  const PH_Y=60, PH_H=54;
+  const PHASES=[
+    {m0:1,m1:6,  fill:'#3b82f6', lbl:'전사테스트 + FGT', sub:"Jul~Dec '26"},
+    {m0:7,m1:9,  fill:'#0d9488', lbl:'CS 오픈',           sub:"Jan~Mar '27"},
+    {m0:10,m1:12,fill:'#0891b2', lbl:'CLA',               sub:"Apr~Jun '27"},
+    {m0:12,m1:15,fill:'#7c3aed', lbl:'CBT',               sub:"Jun~Sep '27"},
   ];
-  CDATES.forEach(({m0,m1,date})=>{
-    const mcx=((X(m0)+X(m1))/2)|0;
-    g += tx(mcx,BY+BH+12,date,'text-anchor="middle" font-size="9.5" fill="#64748b"');
+  PHASES.forEach(({m0,m1,fill,lbl,sub},i)=>{
+    const bx=X(m0)+1, bw=X(m1)-X(m0)-2, mcx=(X(m0)+X(m1))/2|0;
+    const clipId=`phClip${i}`;
+    clips+=`<clipPath id="${clipId}"><rect x="${bx+2}" y="${PH_Y}" width="${bw-4}" height="${PH_H}"/></clipPath>`;
+    /* 카드 */
+    g+=rc(bx,PH_Y,bw,PH_H,fill,8);
+    /* 이름 */
+    const fs=bw>180?12.5:bw>120?12:bw>80?11:9.5;
+    g+=`<text x="${mcx}" y="${PH_Y+23}" clip-path="url(#${clipId})" text-anchor="middle" font-size="${fs}" font-weight="700" fill="#fff" font-family="Pretendard,-apple-system,sans-serif">${lbl}</text>`;
+    /* 날짜 */
+    g+=`<text x="${mcx}" y="${PH_Y+38}" clip-path="url(#${clipId})" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.8)" font-family="Pretendard,-apple-system,sans-serif">${sub}</text>`;
+    /* 화살표 (다음 카드로) */
+    if(i<PHASES.length-1){
+      const nx=X(PHASES[i+1].m0)+1;
+      g+=arr(bx+bw,PH_Y+PH_H/2,nx,PH_Y+PH_H/2,'#94a3b8');
+    }
   });
 
-  // 연결 점선 (공통 바 → SNF)
-  [[6,7],[9,10],[15,16]].forEach(([a,b])=>{
-    const x1=X(a), x2=b===16?X(b)-20:X(b);
-    g += ln(x1,BY+BH/2,x2,BY+BH/2,'stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="4,2"');
-  });
+  /* 마지막 카드 → SNF 화살표 */
+  const lastPhEnd=X(15);
+  const snfX=X(16);
+  g+=arr(lastPhEnd,PH_Y+PH_H/2,snfX-24,PH_Y+PH_H/2,'#f59e0b');
 
-  // ── SNF 마커 ──────────────────────────────────────────────
-  const sx=X(16), snfcy=SNF_Y;
-  g += ci(sx,snfcy,22,'#fef3c7','stroke="#f59e0b" stroke-width="2.5"');
-  g += ci(sx,snfcy,14,'#fbbf24');
-  g += tx(sx,snfcy-2,'★','text-anchor="middle" font-size="16"');
-  g += tx(sx,snfcy+10,'SNF','text-anchor="middle" font-size="8" font-weight="800" fill="#78350f"');
-  g += tx(sx,snfcy+26,"Oct'27",'text-anchor="middle" font-size="11" font-weight="700" fill="#d97706"');
+  /* ── SNF 마커 (공통 트랙 끝) ── */
+  const snfCY=PH_Y+PH_H/2;
+  g+=ci(snfX,snfCY,24,'#fef3c7','stroke="#f59e0b" stroke-width="2.5"');
+  g+=ci(snfX,snfCY,16,'#fbbf24');
+  g+=tx(snfX,snfCY-3,'★','text-anchor="middle" font-size="17"');
+  g+=tx(snfX,snfCY+10,'SNF','text-anchor="middle" font-size="8" font-weight="800" fill="#78350f"');
+  g+=tx(snfX,PH_Y+PH_H+16,"Oct'27",'text-anchor="middle" font-size="11" font-weight="700" fill="#d97706"');
 
-  // ── 포크 커넥터 ───────────────────────────────────────────
-  const esx=X(17);
-  g += ln(sx,snfcy+22,sx,FORK_Y,'stroke="#9ca3af" stroke-width="1.5"');
-  g += ln(sx,FORK_Y,esx,EY,'stroke="#ea580c" stroke-width="1.5" stroke-dasharray="1,0"');
-  g += ln(sx,FORK_Y,esx,DY,'stroke="#16a34a" stroke-width="1.5" stroke-dasharray="1,0"');
-  g += tx(sx+20,FORK_Y-5,'경로 분기',`font-size="9.5" fill="#9ca3af" font-family="Pretendard,-apple-system,sans-serif"`);
+  /* ══════════════════════════════════════════════════
+     포크 커넥터 (SNF → EA / 직행)
+  ══════════════════════════════════════════════════ */
+  const FORK_X=X(17); // 분기 시작 X
+  const EA_Y=155+22;  // EA 카드 중심 Y
+  const DR_Y=290+22;  // 직행 카드 중심 Y
+  const FORK_MID_Y=(EA_Y+DR_Y)/2|0;
 
-  // ── EA 섹션 ───────────────────────────────────────────────
-  g += tx(L+4,246,'◼ EA 론칭 경로',`font-size="11" font-weight="800" fill="#ea580c" font-family="Pretendard,-apple-system,sans-serif"`);
-  EA_BARS.forEach(({m0,m1,fill,id,lbl})=>{
-    const bx=X(m0), bw=X(m1)-X(m0), mcx=(bx+bw/2)|0;
-    g += rc(bx,EY,bw,EH,fill);
-    g += `<text x="${mcx}" y="${EY+EH/2+4}" clip-path="url(#${id})" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" font-family="Pretendard,-apple-system,sans-serif">${lbl}</text>`;
-  });
-  [{m0:17,m1:20,date:"Nov'27~Feb'28"},{m0:20,m1:25,date:"Feb~Jul'28"}].forEach(({m0,m1,date})=>{
-    g += tx((X(m0)+X(m1))/2|0,EY+EH+12,date,'text-anchor="middle" font-size="9.5" fill="#64748b"');
-  });
-  // EA LAUNCH
-  {const lx=X(25), ly=EY+EH/2;
-   g += ci(lx,ly,18,'#ea580c','stroke="#fff" stroke-width="2"');
-   g += tx(lx,ly-2,'🚀','text-anchor="middle" font-size="14"');
-   g += tx(lx,ly+10,'EA','text-anchor="middle" font-size="8" font-weight="800" fill="#fff" font-family="Pretendard,-apple-system,sans-serif"');
-   g += tx(lx,EY+EH+18,"Jul'28",'text-anchor="middle" font-size="11.5" font-weight="700" fill="#ea580c" font-family="Pretendard,-apple-system,sans-serif"');
-   g += tx(lx,EY+EH+30,'정식 LAUNCH','text-anchor="middle" font-size="10" fill="#94a3b8" font-family="Pretendard,-apple-system,sans-serif"');}
+  /* SNF → 수직선 → 포크 */
+  g+=ln(snfX,snfCY+24,snfX,FORK_MID_Y,'stroke="#9ca3af" stroke-width="1.5"');
+  /* 포크 수평선 */
+  g+=ln(snfX,FORK_MID_Y,FORK_X,FORK_MID_Y,'stroke="#9ca3af" stroke-width="1.5"');
+  /* EA 분기 */
+  g+=ln(FORK_X,FORK_MID_Y,FORK_X,EA_Y,'stroke="#ea580c" stroke-width="1.5"');
+  g+=`<polygon points="${FORK_X},${EA_Y} ${FORK_X-5},${EA_Y-8} ${FORK_X+5},${EA_Y-8}" fill="#ea580c" opacity="0.7"/>`;
+  /* 직행 분기 */
+  g+=ln(FORK_X,FORK_MID_Y,FORK_X,DR_Y,'stroke="#16a34a" stroke-width="1.5"');
+  g+=`<polygon points="${FORK_X},${DR_Y} ${FORK_X-5},${DR_Y-8} ${FORK_X+5},${DR_Y-8}" fill="#16a34a" opacity="0.7"/>`;
+  /* 포크 레이블 */
+  g+=tx(snfX+28,FORK_MID_Y+2,'경로 분기','font-size="9.5" fill="#9ca3af" font-family="Pretendard,-apple-system,sans-serif"');
 
-  // ── 직행 섹션 ─────────────────────────────────────────────
-  g += tx(L+4,378,'◼ 직행 론칭 경로',`font-size="11" font-weight="800" fill="#16a34a" font-family="Pretendard,-apple-system,sans-serif"`);
-  DR_BARS.forEach(({m0,m1,fill,id,lbl})=>{
-    const bx=X(m0), bw=X(m1)-X(m0), mcx=(bx+bw/2)|0;
-    g += rc(bx,DY,bw,DH,fill);
-    g += `<text x="${mcx}" y="${DY+DH/2+4}" clip-path="url(#${id})" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" font-family="Pretendard,-apple-system,sans-serif">${lbl}</text>`;
-  });
-  g += tx((X(17)+X(21))/2|0,DY+DH+12,"Nov'27~Mar'28",'text-anchor="middle" font-size="9.5" fill="#64748b"');
-  // 직행 LAUNCH
-  {const lx=X(21), ly=DY+DH/2;
-   g += ci(lx,ly,18,'#16a34a','stroke="#fff" stroke-width="2"');
-   g += tx(lx,ly-2,'🚀','text-anchor="middle" font-size="14"');
-   g += tx(lx,ly+10,'직행','text-anchor="middle" font-size="8" font-weight="800" fill="#fff" font-family="Pretendard,-apple-system,sans-serif"');
-   g += tx(lx,DY+DH+18,"Mar'28",'text-anchor="middle" font-size="11.5" font-weight="700" fill="#16a34a" font-family="Pretendard,-apple-system,sans-serif"');
-   g += tx(lx,DY+DH+30,'정식 LAUNCH','text-anchor="middle" font-size="10" fill="#94a3b8" font-family="Pretendard,-apple-system,sans-serif"');}
+  /* ══════════════════════════════════════════════════
+     EA 경로 트랙  y=145 ~ 250
+  ══════════════════════════════════════════════════ */
+  g+=rc(0,145,SVG_W,105,'#fff7ed',0,'opacity="0.9"');
+  g+=rc(0,145,L-4,105,'#ffedd5',0);
+  /* 섹션 헤더 */
+  g+=tx(L+6,158,'◼ EA 론칭 경로','font-size="10.5" font-weight="800" fill="#ea580c" font-family="Pretendard,-apple-system,sans-serif"');
+  /* 트랙 레이블 */
+  g+=tx(42,198,'EA','text-anchor="middle" font-size="14" font-weight="900" fill="#ea580c"');
 
-  // ── 범례 (가운데 정렬) ────────────────────────────────────
-  const LEGS=[
-    {col:'#3b82f6',lbl:'FGT (검증)'},
-    {col:'#0d9488',lbl:'CS 오픈'},
-    {col:'#7c3aed',lbl:'CBT'},
-    {col:'#fbbf24',lbl:"★ SNF Oct'27"},
-    {col:'#f97316',lbl:'EA 경로'},
-    {col:'#22c55e',lbl:'직행 경로'},
+  const EA_PH_Y=162, EA_PH_H=50;
+  const EA_PHASES=[
+    {m0:17,m1:20,fill:'#f97316',lbl:'EA 준비',       sub:"Nov'27~Feb'28"},
+    {m0:20,m1:25,fill:'#fb923c',lbl:'EA 운영+LAUNCH 준비',sub:"Feb~Jul'28"},
   ];
-  const LY=DY+DH+54, ITEM_W=112;
-  const legX0=(1200-LEGS.length*ITEM_W)/2;
+  EA_PHASES.forEach(({m0,m1,fill,lbl,sub},i)=>{
+    const bx=X(m0)+1, bw=X(m1)-X(m0)-2, mcx=(X(m0)+X(m1))/2|0;
+    const clipId=`eaClip${i}`;
+    clips+=`<clipPath id="${clipId}"><rect x="${bx+2}" y="${EA_PH_Y}" width="${bw-4}" height="${EA_PH_H}"/></clipPath>`;
+    g+=rc(bx,EA_PH_Y,bw,EA_PH_H,fill,8);
+    g+=`<text x="${mcx}" y="${EA_PH_Y+20}" clip-path="url(#${clipId})" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" font-family="Pretendard,-apple-system,sans-serif">${lbl}</text>`;
+    g+=`<text x="${mcx}" y="${EA_PH_Y+35}" clip-path="url(#${clipId})" text-anchor="middle" font-size="9.5" fill="rgba(255,255,255,0.8)" font-family="Pretendard,-apple-system,sans-serif">${sub}</text>`;
+    if(i<EA_PHASES.length-1){
+      const nx=X(EA_PHASES[i+1].m0)+1;
+      g+=arr(bx+bw,EA_PH_Y+EA_PH_H/2,nx,EA_PH_Y+EA_PH_H/2,'#f97316');
+    }
+  });
+  /* EA LAUNCH */
+  {const lx=X(25),ly=EA_PH_Y+EA_PH_H/2;
+   g+=arr(X(25)+1,ly,lx+22,ly,'#ea580c');
+   g+=ci(lx+22,ly,18,'#ea580c','stroke="#fff" stroke-width="2"');
+   g+=tx(lx+22,ly-2,'🚀','text-anchor="middle" font-size="14"');
+   g+=tx(lx+22,ly+10,'EA','text-anchor="middle" font-size="8" font-weight="800" fill="#fff" font-family="Pretendard,-apple-system,sans-serif"');
+   g+=tx(lx+22,EA_PH_Y+EA_PH_H+14,"Jul'28",'text-anchor="middle" font-size="11" font-weight="700" fill="#ea580c" font-family="Pretendard,-apple-system,sans-serif"');
+   g+=tx(lx+22,EA_PH_Y+EA_PH_H+26,'정식 LAUNCH','text-anchor="middle" font-size="9.5" fill="#94a3b8" font-family="Pretendard,-apple-system,sans-serif"');}
+
+  /* ══════════════════════════════════════════════════
+     직행 경로 트랙  y=278 ~ 380
+  ══════════════════════════════════════════════════ */
+  g+=rc(0,278,SVG_W,102,'#f0fdf4',0,'opacity="0.9"');
+  g+=rc(0,278,L-4,102,'#dcfce7',0);
+  g+=tx(L+6,290,'◼ 직행 론칭 경로','font-size="10.5" font-weight="800" fill="#16a34a" font-family="Pretendard,-apple-system,sans-serif"');
+  g+=tx(42,330,'직행','text-anchor="middle" font-size="14" font-weight="900" fill="#16a34a"');
+
+  const DR_PH_Y=295, DR_PH_H=50;
+  const DR_PHASES=[
+    {m0:17,m1:21,fill:'#22c55e',lbl:'LAUNCH 준비 + 서버 검증',sub:"Nov'27~Mar'28"},
+  ];
+  DR_PHASES.forEach(({m0,m1,fill,lbl,sub},i)=>{
+    const bx=X(m0)+1, bw=X(m1)-X(m0)-2, mcx=(X(m0)+X(m1))/2|0;
+    const clipId=`drClip${i}`;
+    clips+=`<clipPath id="${clipId}"><rect x="${bx+2}" y="${DR_PH_Y}" width="${bw-4}" height="${DR_PH_H}"/></clipPath>`;
+    g+=rc(bx,DR_PH_Y,bw,DR_PH_H,fill,8);
+    g+=`<text x="${mcx}" y="${DR_PH_Y+20}" clip-path="url(#${clipId})" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" font-family="Pretendard,-apple-system,sans-serif">${lbl}</text>`;
+    g+=`<text x="${mcx}" y="${DR_PH_Y+35}" clip-path="url(#${clipId})" text-anchor="middle" font-size="9.5" fill="rgba(255,255,255,0.8)" font-family="Pretendard,-apple-system,sans-serif">${sub}</text>`;
+  });
+  /* 직행 LAUNCH */
+  {const lx=X(21),ly=DR_PH_Y+DR_PH_H/2;
+   g+=arr(X(21)+1,ly,lx+22,ly,'#16a34a');
+   g+=ci(lx+22,ly,18,'#16a34a','stroke="#fff" stroke-width="2"');
+   g+=tx(lx+22,ly-2,'🚀','text-anchor="middle" font-size="14"');
+   g+=tx(lx+22,ly+10,'직행','text-anchor="middle" font-size="8" font-weight="800" fill="#fff" font-family="Pretendard,-apple-system,sans-serif"');
+   g+=tx(lx+22,DR_PH_Y+DR_PH_H+14,"Mar'28",'text-anchor="middle" font-size="11" font-weight="700" fill="#16a34a" font-family="Pretendard,-apple-system,sans-serif"');
+   g+=tx(lx+22,DR_PH_Y+DR_PH_H+26,'정식 LAUNCH','text-anchor="middle" font-size="9.5" fill="#94a3b8" font-family="Pretendard,-apple-system,sans-serif"');}
+
+  /* ── 범례 ── */
+  const LEGS=[{col:'#3b82f6',lbl:'전사테스트+FGT'},{col:'#0d9488',lbl:'CS 오픈'},{col:'#7c3aed',lbl:'CBT'},{col:'#fbbf24',lbl:"★ SNF Oct'27"},{col:'#f97316',lbl:'EA 경로'},{col:'#22c55e',lbl:'직행 경로'}];
+  const LY=DR_PH_Y+DR_PH_H+44,ITEM_W=114;
+  const lx0=(SVG_W-LEGS.length*ITEM_W)/2;
   LEGS.forEach(({col,lbl},i)=>{
-    const lx=legX0+i*ITEM_W;
-    g += rc(lx,LY,12,10,col,2);
-    g += tx(lx+16,LY+9,lbl,'font-size="11" fill="#374151" font-family="Pretendard,-apple-system,sans-serif"');
+    const lx=lx0+i*ITEM_W;
+    g+=rc(lx,LY,11,10,col,2);
+    g+=tx(lx+15,LY+9,lbl,'font-size="10.5" fill="#374151" font-family="Pretendard,-apple-system,sans-serif"');
   });
 
   const vbH=LY+20;
-  const defs=`<defs>${clips}</defs>`;
   document.getElementById('ganttWrap').innerHTML=
-    `<svg viewBox="0 0 1200 ${vbH}" width="100%" xmlns="http://www.w3.org/2000/svg" style="display:block">${defs}${g}</svg>`;
+    `<svg viewBox="0 0 ${SVG_W} ${vbH}" width="100%" xmlns="http://www.w3.org/2000/svg" style="display:block"><defs>${clips}</defs>${g}</svg>`;
 }
 initGantt();
 
@@ -2148,29 +2157,8 @@ initGantt();
 
 
 
-/* ── View Tab Switcher v2 (page-nav 통합) ── */
-function switchView(v){
-  // body 클래스로 CSS 제어
-  document.body.classList.remove('view-exec','view-ops');
-  document.body.classList.add('view-'+v);
-  // 탭 버튼 활성화
-  const te=document.getElementById('tabExec');
-  const to=document.getElementById('tabOps');
-  if(te) te.classList.toggle('vt-active',v==='exec');
-  if(to) to.classList.toggle('vt-active',v==='ops');
-  // 상태 레이블
-  const lbl=document.getElementById('viewLabel');
-  if(lbl) lbl.textContent=v==='exec'?'경영진 보고':'상세 실무';
-  // 저장
-  try{localStorage.setItem('ps_view_tab',v);}catch(e){}
-}
-// 저장된 탭 또는 기본값(exec) 복원
-(function(){
-  try{
-    const saved=localStorage.getItem('ps_view_tab')||'exec';
-    switchView(saved);
-  }catch(e){switchView('exec');}
-})();
+
+/* Tab switcher moved to inline script above nav */
 
 /* WL Grouped Horizontal Bar Chart removed in V4 5-Tier refactor (sec2 삭제) — wlChart canvas no longer exists */
 
