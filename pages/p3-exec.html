@@ -715,129 +715,310 @@ body {
 <section class="section" id="s3">
   <div class="sec-eyebrow">Section 03</div>
   <h2 class="sec-h2">Phase별 실행 To-Do</h2>
-  <p class="sec-desc">각 Phase의 핵심 실행 항목과 Go/Hold 기준을 정리했습니다. 체크박스는 로컬에 저장됩니다.</p>
+  <p class="sec-desc">각 Phase의 핵심 실행 항목과 Go/Hold 기준을 정리했습니다. 헤더 클릭으로 펼치기/접기 가능합니다.</p>
 
-  <!-- Phase 0 -->
+  <!-- ── 공통 스타일 헬퍼 ── -->
+  <style>
+  .todo-section { font-size:11px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.8px;margin:14px 0 6px;padding-bottom:4px;border-bottom:1px solid #f3f4f6; }
+  .todo-kpi { display:inline-flex;align-items:center;gap:6px;background:#f0f9ff;border:1px solid #bae6fd;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;color:#0369a1;margin-top:8px;margin-right:6px; }
+  .todo-warn { margin-top:10px;padding:10px 14px;background:#fef9c3;border:1px solid #fde68a;border-radius:6px;font-size:12.5px; }
+  .todo-gate { display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px; }
+  .todo-go   { padding:10px 12px;background:#f0fdf4;border:1px solid #86efac;border-radius:6px;font-size:12px; }
+  .todo-hold { padding:10px 12px;background:#fff7ed;border:1px solid #fdba74;border-radius:6px;font-size:12px; }
+  .todo-gate strong { display:block;margin-bottom:3px; }
+  </style>
+
+  <!-- ═══ P0 전사테스트 ═══ -->
   <div class="phase-todo">
     <div class="phase-todo-head" onclick="toggleTodo(this)">
-      <div class="phase-badge" style="background:#3b82f6">P0</div>
+      <div class="phase-badge" style="background:#1d4ed8">P0</div>
       <div class="phase-todo-title">전사테스트 &amp; 장르 확정</div>
       <div class="phase-todo-date">2026.07</div>
       <span class="phase-todo-chevron">▶</span>
     </div>
     <div class="phase-todo-body">
-      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">긴급</span>Steamworks 파트너 계정 생성 + NDA + SDA 서명</div>
-      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">긴급</span>앱 deposit 납부 ($100 · 30일 대기 역산 필수)</div>
-      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">긴급</span>세금정보 제출 (W-8BEN-E) + 은행계좌 연동</div>
-      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>전사테스트 완료 → 서브장르·핵심 메커닉 공식 확정</div>
-      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>BM 방향 초안 결정 (Premium vs F2P)</div>
-      <div style="margin-top:12px;padding:10px 12px;background:#fef3c7;border-radius:6px;font-size:12px">
-        <strong>GO 기준:</strong> 서브장르 확정 + 핵심 메커닉 플레이어블 빌드 완성 → FGT 진입
+
+      <div class="todo-section">🏢 Steamworks 사전 준비 (즉시 착수)</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">긴급</span>Steamworks 파트너 계정 생성 — partner.steamgames.com 접속, NDA + SDA(Steam Distribution Agreement) 서명</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">긴급</span>앱 deposit $100 납부 — 납부 후 <strong>30일 대기</strong> 발생, 론칭 일정에서 역산 필수</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">긴급</span>세금정보 제출 (한국 법인 → W-8BEN-E) — 검토 2~7 영업일, 추가 서류 이메일 확인 필수</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">긴급</span>USD 수취 은행계좌 연동 (SWIFT 코드 필요)</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>App ID 발급 (게임 본체) — DLC·대형 업데이트는 동일 App ID 사용</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>팀 멤버 권한 설정 — "Publish App Changes" + "Manage Pricing" 2개 권한 필수</div>
+
+      <div class="todo-section">🎮 장르·메커닉 확정</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>전사테스트 실시 — 내부 전원 대상, 서브장르 체감 검증</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>서브장르 공식 확정 — Arena Shooter / Extraction / Battle Royale 중 1개 확정</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>핵심 메커닉(Core Loop) 문서화 — "왜 우리 게임인가" 1장 요약본 작성</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>BM 방향 초안 결정 — Premium($29.99+) vs F2P(IAP 중심) 내부 합의</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>경쟁작 포지셔닝 분석 — Arena Shooter 29개 타이틀 vs 우리 차별점 정리</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-low">일반</span>FGT 설계서 초안 작성 — 1차 30명 선발 기준, NDA 양식, 설문지 초안</div>
+
+      <div class="todo-gate">
+        <div class="todo-go"><strong>✅ GO 기준</strong>서브장르 확정 + 핵심 메커닉 플레이어블 빌드 완성 + Steamworks 계정 활성화 → FGT 진입</div>
+        <div class="todo-hold"><strong>⏸ HOLD 기준</strong>장르 내 차별화 요소 미확보 → 추가 프로토타입 개발 후 재검토</div>
       </div>
     </div>
   </div>
 
-  <!-- Phase 1 -->
+  <!-- ═══ P1 FGT ═══ -->
   <div class="phase-todo">
     <div class="phase-todo-head" onclick="toggleTodo(this)">
       <div class="phase-badge" style="background:#0891b2">P1</div>
-      <div class="phase-todo-title">FGT 1차 · 2차 (외부 유저 검증)</div>
+      <div class="phase-todo-title">FGT 1차 · 2차 — 외부 유저 검증</div>
       <div class="phase-todo-date">2026.08 ~ 2026.12</div>
       <span class="phase-todo-chevron">▶</span>
     </div>
     <div class="phase-todo-body">
-      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>FGT 1차: 외부 30명+ / NDA / 재플레이 의향 7.0+, NPS 40+</div>
-      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>FGT 2차: 60명+ 세그먼트별 / 1차 피드백 반영 빌드로 진행</div>
-      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>BM Premium/F2P 최종 확정 + 가격 정책 수립</div>
-      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>스토어 에셋 제작 착수 (캡슐 4종 + 트레일러)</div>
-      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-low">일반</span>Steam Playtest Child App ID 생성 (CLA/CBT용)</div>
-      <div style="margin-top:12px;padding:10px 12px;background:#fef3c7;border-radius:6px;font-size:12px">
-        <strong>GO 기준:</strong> 재플레이 의향 7.5+, NPS 50+, 1차 대비 개선 확인 → CS 오픈 준비<br>
-        <strong>HOLD 기준:</strong> 핵심 메커닉 부족 → CS 연기 + 추가 FGT 검토
+
+      <div class="todo-section">🧪 FGT 1차 (Aug~Sep'26)</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>외부 플레이어 30명+ 선발 — NDA 서명, 서브장르 경험자 우선, 지역 다양성 확보</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>핵심 KPI 측정 — 재플레이 의향 7.0+ / NPS 40+ / D+1 리텐션 40%+</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>정성 피드백 수집 — 직접 인터뷰 최소 10명, 매치메이킹·밸런스·UI 집중</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>크리티컬 버그 리스트 작성 + 우선순위별 패치 계획 수립</div>
+
+      <div class="todo-section">🧪 FGT 2차 (Oct~Nov'26)</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>60명+ 세그먼트별 선발 — 하드코어/캐주얼/스트리머 비율 설정</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>1차 피드백 반영 빌드 사용 — 주요 개선사항 3개 이상 적용 확인</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>BM Premium/F2P 최종 확정 — 2차 FGT 결과 기반 구매 의향 조사 포함</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>가격 정책 수립 — $29.99 / $39.99 / F2P+시즌패스 옵션 중 결정</div>
+
+      <div class="todo-section">📦 스토어 사전 준비 (Nov~Dec'26)</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>스토어 에셋 제작 착수 — 헤더 캡슐(460×215) · 소형 캡슐(231×87) · 메인 캡슐(616×353)</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>트레일러 기획·촬영 착수 — Coming Soon용 60초 이내, 핵심 메커닉 집중</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>Steam Playtest Child App ID 생성 — CLA/CBT 전용, 메인 앱과 분리</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-low">일반</span>태그(Tag) 전략 수립 — 서브장르 1개 + 보조 태그 4개 이내, 중복계산 방지</div>
+
+      <div class="todo-gate">
+        <div class="todo-go"><strong>✅ GO 기준</strong>재플레이 의향 7.5+ / NPS 50+ / 1차 대비 핵심 지표 개선 확인 → CS 오픈 준비</div>
+        <div class="todo-hold"><strong>⏸ HOLD 기준</strong>핵심 메커닉 체감 미흡 → 추가 개발 후 FGT 3차 or CS 연기 검토</div>
       </div>
     </div>
   </div>
 
-  <!-- Phase 2~3 -->
+  <!-- ═══ P2 CS 오픈 ═══ -->
   <div class="phase-todo">
     <div class="phase-todo-head" onclick="toggleTodo(this)">
       <div class="phase-badge" style="background:#0d9488">P2</div>
-      <div class="phase-todo-title">Coming Soon 오픈 &amp; WL 수집</div>
+      <div class="phase-todo-title">CS 오픈 &amp; WL 수집</div>
       <div class="phase-todo-date">2027.01 ~ 2027.03</div>
       <span class="phase-todo-chevron">▶</span>
     </div>
     <div class="phase-todo-body">
-      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>Steam Coming Soon 페이지 오픈 (캡슐 4종+트레일러 제출 7일 전)</div>
-      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>WL 수집 시작 / 4주 목표: 25K+ / 8주 목표: 50K+</div>
-      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>커뮤니티 허브 개설 + Discord 공식 서버 운영 시작</div>
-      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>SNF Oct 2027 등록 신청 준비 (참가 조건 사전 확인)</div>
-      <div style="margin-top:12px;padding:10px 12px;background:#fef3c7;border-radius:6px;font-size:12px">
-        <strong>GO 기준:</strong> 4주 WL 25K+ → CLA 일정 유지<br>
-        <strong>HOLD 기준:</strong> 15K 미만 → 트레일러 교체 + 태그 재검토
+
+      <div class="todo-section">🏪 Steam Coming Soon 오픈</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>스토어 에셋 최종본 Valve 제출 — CS 오픈 <strong>7 영업일 전</strong>, 검토 기간 확보 필수</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>게임 설명(Description) 완성 — 장르·핵심 메커닉·특징 명확히, 키워드 최적화</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>스크린샷 최소 5장 업로드 — 게임플레이 장면 위주, 텍스트 오버레이 금지</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>시스템 요구사항 입력 — Minimum / Recommended 모두 작성</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>한국어 / 영어 이중 언어 지원 확인 (번역 QA)</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>가격 설정 완료 및 지역별 가격 확인 (CNY 30~50% 할인 고려)</div>
+
+      <div class="todo-section">📣 WL 캠페인 (Jan~Mar'27)</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>WL 수집 캠페인 시작 — CS 오픈 당일 SNS/Discord 동시 발표</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>WL 4주 25K+ / 8주 50K+ 달성 여부 주간 모니터링</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>Visibility Round 활용 — Coming Soon 등록 직후 자동 부여, 타이밍 최대화</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>커뮤니티 허브(Community Hub) 개설 — 공식 공지 채널, 주 1회 이상 업데이트</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>Discord 공식 서버 운영 시작 — WL 인증 역할 부여, 얼리 액세스 채널 준비</div>
+
+      <div class="todo-section">🎮 SNF 사전 준비</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>SNF Oct 2027 참가 자격 확인 — Coming Soon 페이지 있어야 신청 가능</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>SNF 등록 신청 준비 — 신청 기간 놓치지 않도록 Valve 발표 모니터링</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-low">일반</span>SNF Demo 범위 사전 기획 — 어느 모드/맵을 공개할지 내부 결정</div>
+
+      <div class="todo-gate">
+        <div class="todo-go"><strong>✅ GO 기준</strong>4주 WL 25K+ / Discord 2,000명+ → CLA 일정 유지</div>
+        <div class="todo-hold"><strong>⏸ HOLD 기준</strong>4주 15K 미만 → 트레일러 교체·태그 재검토·인플루언서 캠페인 강화</div>
       </div>
     </div>
   </div>
 
-  <!-- Phase 4~5 -->
+  <!-- ═══ P3 CLA ═══ -->
   <div class="phase-todo">
     <div class="phase-todo-head" onclick="toggleTodo(this)">
-      <div class="phase-badge" style="background:#0891b2">P3</div>
-      <div class="phase-todo-title">CLA (Closed Limited Alpha)</div>
+      <div class="phase-badge" style="background:#7c3aed">P3</div>
+      <div class="phase-todo-title">CLA — Closed Limited Alpha</div>
       <div class="phase-todo-date">2027.04 ~ 2027.06</div>
       <span class="phase-todo-chevron">▶</span>
     </div>
     <div class="phase-todo-body">
-      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>Steam Playtest 진행 / 1,000명+ / D+7 리텐션 25%+, 크리티컬 버그 0건</div>
-      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>CLA 결과 반영 패치 완료 → CBT 빌드 분기</div>
+
+      <div class="todo-section">⚙️ CLA 준비</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>Steam Playtest 활성화 — 메인 App ID와 분리된 Playtest Child App 사용</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>1,000명+ 선발 기준 확정 — WL 등록자 우선, Steam 게임 시간 50h+ 필터</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>NDA 폼 준비 — 스트리밍 금지, 유출 방지 조항 포함</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>피드백 수집 도구 세팅 — 인게임 설문 + Discord 채널 + 버그 리포트 시스템</div>
+
+      <div class="todo-section">🧪 CLA 실행 (Apr~Jun'27)</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>D+1 리텐션 40%+ / D+7 리텐션 25%+ 달성 여부 확인</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>크리티컬 버그 0건 유지 — 일일 버그 모니터링 담당자 지정</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>매치메이킹 성공률 90%+ / 평균 대기 60초↓ 확인</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>평균 세션 30분+ / 일일 플레이 횟수 2회+ 분석</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>CLA 결과 반영 핵심 패치 완료 → CBT 빌드 분기</div>
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>SNF Oct 2027 참가 신청 완료 확인</div>
-      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>WL 누적 목표: 80K+</div>
-      <div style="margin-top:12px;padding:10px 12px;background:#fef3c7;border-radius:6px;font-size:12px">
-        <strong>GO 기준:</strong> D+7 25%+, 크리티컬 0건 → CBT 진행<br>
-        <strong>HOLD 기준:</strong> 미달 → 소규모 CLA 재진행 후 판단
+
+      <div class="todo-kpi">🎯 WL 목표: 80K+</div>
+      <div class="todo-kpi">💬 긍정 반응: 65%+</div>
+
+      <div class="todo-gate">
+        <div class="todo-go"><strong>✅ GO 기준</strong>D+7 리텐션 25%+ / 크리티컬 버그 0건 → CBT 진행</div>
+        <div class="todo-hold"><strong>⏸ HOLD 기준</strong>리텐션 미달 → 소규모 CLA 재진행 (500명 추가) 후 재판단</div>
       </div>
     </div>
   </div>
 
-  <!-- Phase 6 CBT -->
+  <!-- ═══ P4 CBT ═══ -->
   <div class="phase-todo">
     <div class="phase-todo-head" onclick="toggleTodo(this)">
-      <div class="phase-badge" style="background:#7c3aed">P4</div>
-      <div class="phase-todo-title">CBT (Closed Beta Test)</div>
+      <div class="phase-badge" style="background:#6d28d9">P4</div>
+      <div class="phase-todo-title">CBT — Closed Beta Test</div>
       <div class="phase-todo-date">2027.06 ~ 2027.09</div>
       <span class="phase-todo-chevron">▶</span>
     </div>
     <div class="phase-todo-body">
-      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>CBT 10,000명+ / D+7 리텐션 30%+, 서버 다운타임 4h↓</div>
-      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>2주차 주말 스트리밍 NDA 해제 → 자연 바이럴 유도</div>
-      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>Curator Connect 배포 리스트 확정 (FPS 큐레이터 30개+)</div>
-      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>SNF Demo 빌드 착수 (온보딩 완료율 90%+ 목표)</div>
-      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>WL 목표: P 150K+ / F2P 200K+</div>
-      <div style="margin-top:12px;padding:10px 12px;background:#fef3c7;border-radius:6px;font-size:12px">
-        <strong>GO 기준:</strong> D+7 30%+, 긍정 65%+ → SNF Demo 준비<br>
-        <strong>HOLD 기준:</strong> 미달 → SNF 포기, 다음 회차 재검토
+
+      <div class="todo-section">⚙️ CBT 준비</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>10,000명+ 베타 키 배포 — WL 등록자·CLA 참여자·커뮤니티 활성 유저 우선</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>서버 인프라 확장 — CBT 피크 2배 용량 확보, 오토스케일 설정</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>CS 체계 구축 — 인게임 신고 시스템 + Discord CS 채널 + 응답 SLA 48h↓</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>안티치트 시스템 적용 (EAC / BattleEye 중 선택)</div>
+
+      <div class="todo-section">🧪 CBT 실행 (Jun~Sep'27)</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>D+7 리텐션 30%+ / 서버 다운타임 전체 기간 4h↓</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>매치메이킹 대기시간 60초↓ / 성공률 90%+ 유지</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>스트리밍 허용일(2주차 주말) 스트리머 동시 집중 배포 — NDA 해제 타이밍 PR팀 공유</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>SNF Demo 빌드 완성 — 온보딩 완료율 90%+, Demo 마지막 화면 WL CTA 필수</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>Curator Connect 배포 리스트 확정 — FPS 큐레이터 30개+, 스트리머 50명+</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>SNF D+1 이메일 버튼 클릭 PM 캘린더 사전 등록 (절대 필수)</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-low">일반</span>CBT 기간 WL 증분 +50K+ 목표 모니터링</div>
+
+      <div class="todo-kpi">🎯 WL 목표: P 150K+ / F2P 200K+</div>
+      <div class="todo-kpi">📺 CBT 기간 스트리밍 동시 시청 10,000+</div>
+
+      <div class="todo-gate">
+        <div class="todo-go"><strong>✅ GO 기준</strong>D+7 리텐션 30%+ / 긍정 65%+ / 서버 안정 → SNF Demo 준비 완료</div>
+        <div class="todo-hold"><strong>⏸ HOLD 기준</strong>리텐션 미달 → SNF 포기 후 다음 SNF 회차(2028.06) 재검토</div>
       </div>
     </div>
   </div>
 
-  <!-- Phase 8 SNF -->
+  <!-- ═══ SNF ═══ -->
   <div class="phase-todo">
     <div class="phase-todo-head" onclick="toggleTodo(this)">
-      <div class="phase-badge" style="background:#f59e0b">SNF</div>
-      <div class="phase-todo-title">★ Steam Next Fest Oct 2027 (7일)</div>
-      <div class="phase-todo-date">2027년 10월</div>
+      <div class="phase-badge" style="background:#b45309">SNF</div>
+      <div class="phase-todo-title">★ Steam Next Fest (SNF) — Oct 2027</div>
+      <div class="phase-todo-date">2027년 10월 · 7일간</div>
       <span class="phase-todo-chevron">▶</span>
     </div>
     <div class="phase-todo-body">
-      <div style="margin-bottom:12px;padding:10px 14px;background:#fef9c3;border:1px solid #fde68a;border-radius:6px;font-size:12.5px">
-        🚨 <strong>D+1 절대 필수:</strong> SNF 시작 다음날 Steamworks에서 WL 이메일 발송 버튼 수동 클릭! 자동이 아님. 미클릭 시 기회 소실.
+
+      <div class="todo-warn">
+        🚨 <strong>D+1 절대 필수:</strong> SNF 시작 다음날 Steamworks에서 위시리스터 전원 Demo 이메일 발송 버튼 <strong>수동 클릭</strong>! 자동 아님. 2주 이내 미클릭 시 기회 영구 소실. PM 캘린더 알람 D-30 사전 등록.
       </div>
-      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">긴급</span>D+1 Steamworks 이메일 버튼 수동 클릭 (PM 캘린더 알람 필수)</div>
-      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>D+1 Curator Connect 전체 배포 + 공식 SNS 동시 발행</div>
-      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>D+2~3 FPS 전문 스트리머 라이브 집중 + Twitch Drops 운영</div>
-      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>D+7 최종 WL 수치 확인 → 경로 분기 결정 데이터 준비</div>
-      <div style="margin-top:12px;padding:10px 12px;background:#fef3c7;border-radius:6px;font-size:12px">
-        <strong>Conservative 목표:</strong> P 300K+ / F2P 500K+ (SNF 후 누적)<br>
-        <strong>SNF +2주 이내:</strong> EA vs 직행 경로 결정 → 경영진 승인
+
+      <div class="todo-section">📋 SNF 전 준비 (D-7 이전)</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>Demo 빌드 최종 QA 완료 — 온보딩 완료율 90%+, 마지막 화면 WL 등록 CTA 필수</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>Curator Connect 배포 리스트 최종 확정 — FPS 큐레이터 30개+, 스트리머 50명+</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>Twitch Drops 설정 완료 — 연동 승인까지 1~2주 소요, 미리 신청</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>공식 SNS 예약 포스팅 준비 (Twitter/X, TikTok, YouTube 동시)</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>Press Preview 엠바고 해제 일정 미디어 공지</div>
+
+      <div class="todo-section">📅 SNF 기간 실행 (D+0 ~ D+7)</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">🚨 긴급</span>D+1 오전: Steamworks 이메일 버튼 수동 클릭 (위시리스터 전원 발송)</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>D+1: Curator Connect 전체 즉시 배포 + 공식 SNS 동시 발행</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>D+2~3: FPS 전문 스트리머 라이브 집중 + 개발팀 공식 라이브 2~3시간</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>D+3~5: 리뷰 미디어 기사 발행 일정 확인 + 추가 PR 대응</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>D+7 마지막 날: 최종 WL 수치 집계 → 경로 분기 결정 데이터 준비</div>
+
+      <div class="todo-section">⚡ SNF 종료 후 2주 이내</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>WL 증분 집계 + 5-Tier 대조 (Conservative P300K+ / F2P 500K+)</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>Demo D+7 리텐션 측정 → A안(EA) vs B안(직행) 경로 최종 결정</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>경영진 승인 회의 개최 → A안 또는 B안 공식 결정</div>
+
+      <div class="todo-kpi">🎯 Conservative 목표: P 300K+ / F2P 500K+</div>
+      <div class="todo-kpi">📊 Demo D+7 리텐션 30%+ → A안 / 35%+ → B안 우선 검토</div>
+
+      <div class="todo-gate">
+        <div class="todo-go"><strong>✅ A안(EA) 선택 기준</strong>WL 목표 70~100% 달성 + Demo D+7 리텐션 25~35% + 빌드 완성도 80%</div>
+        <div class="todo-hold"><strong>✅ B안(직행) 선택 기준</strong>WL 목표 초과 달성 + D+7 리텐션 35%+ + 빌드 완성도 90%+ + 서버 검증 완료</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ A안 EA 론칭 경로 ═══ -->
+  <div class="phase-todo">
+    <div class="phase-todo-head" onclick="toggleTodo(this)">
+      <div class="phase-badge" style="background:#3730a3">A안</div>
+      <div class="phase-todo-title">A안) EA 론칭 경로 — Early Access</div>
+      <div class="phase-todo-date">Nov'27 → Jul'28 정식 LAUNCH</div>
+      <span class="phase-todo-chevron">▶</span>
+    </div>
+    <div class="phase-todo-body">
+
+      <div class="todo-section">📋 EA 준비 (Nov'27~Feb'28)</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>EA GO 공식 경영진 승인 (11월 이내)</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>EA 가격 확정 — 정식 출시보다 10~20% 낮게 설정, "EA 가격" 명시</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>EA 콘텐츠 범위 확정 — 어느 모드/맵/기능이 EA에 포함되는지 공개 로드맵 작성</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>EA 론칭 트레일러 제작 — EA임을 명시, 지속적인 업데이트 약속 포함</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>Season 1 로드맵 커뮤니티 공개 (Discord·SNS)</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>CS·모더레이션 체계 구축 — EA 론칭 후 리뷰 폭탄 대응 준비</div>
+
+      <div class="todo-section">🚀 EA 론칭 (Feb'28)</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>WL 전체 론칭 이메일 자동 발송 확인</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>D+1 CCU 목표: P 15,000+ / F2P 50,000+</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>EA 론칭 72h 워룸 운영 — 서버 다운타임 2h↓, 크리티컬 버그 즉시 패치</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>긍정 리뷰 70%+ 목표 — Mostly Positive 달성 후 정식 LAUNCH 결정</div>
+
+      <div class="todo-section">📈 EA 운영 → 정식 LAUNCH 준비 (Feb~Jul'28)</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>Update Visibility Round 2차 활용 (첫 번째 대형 패치 시)</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>정식 LAUNCH 트레일러·가격·Season 1 공식 발표 준비</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>Valve Takeover 슬롯 사전 협상 — 정식 LAUNCH 6개월 전부터 시작</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>WL Launch 직전 목표: P 500K+ / F2P 700K+</div>
+
+      <div class="todo-gate">
+        <div class="todo-go"><strong>✅ 정식 LAUNCH GO</strong>EA 리뷰 Very Positive 80%+ / D+7 리텐션 35%+ / WL 500K+</div>
+        <div class="todo-hold"><strong>⏸ HOLD</strong>리뷰 Mixed 이하 → 긴급 패치 우선, LAUNCH 1~2개월 추가 연기</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ B안 직행 론칭 경로 ═══ -->
+  <div class="phase-todo">
+    <div class="phase-todo-head" onclick="toggleTodo(this)">
+      <div class="phase-badge" style="background:#1e40af">B안</div>
+      <div class="phase-todo-title">B안) 직행 론칭 경로 — 정식 LAUNCH</div>
+      <div class="phase-todo-date">Nov'27 → Mar'28 정식 LAUNCH</div>
+      <span class="phase-todo-chevron">▶</span>
+    </div>
+    <div class="phase-todo-body">
+
+      <div class="todo-section">🔧 LAUNCH 준비 (Nov'27~Feb'28)</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>직행 GO 공식 경영진 승인 (11월 이내)</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>빌드 완성도 90%+ 최종 확인 — 미달 시 A안(EA 경로) 전환</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>LAUNCH 가격·BM 최종 확정 — 정식 출시 가격 공식화</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>LAUNCH 트레일러 제작 — 정식 1.0 출시, Season 1 동시 시작 강조</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>Valve Publisher Manager 협상 시작 — LAUNCH 4개월 전 컨택</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>CS·모더레이션 풀 체계 구축 — LAUNCH 규모 대비 인력 확보</div>
+
+      <div class="todo-section">🖥️ 서버 부하 최종 검증 (Dec'27~Jan'28)</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>SNF Demo 참가자 + Discord 공개 모집으로 서버 부하 테스트 실시</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>LAUNCH 예상 피크 CCU 120%+ 달성 확인</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>서버 다운타임 30분↓ / 크리티컬 이슈 0건 확인</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>NDA 없음 — 자유 스트리밍 허용으로 사전 홍보 효과 극대화</div>
+
+      <div class="todo-section">🚀 정식 LAUNCH (Mar'28)</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>WL 전체 론칭 이메일 자동 발송 확인</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>Steam Store Takeover 슬롯 확보 (성사 시 첫 주 매출 5~10x)</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>Season 1 동시 시작 — 콘텐츠 공백 없이 즉시 라이브 오퍼레이션 돌입</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>72시간 워룸 운영 — 서버·리뷰·CS 실시간 모니터링</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>부정 리뷰 48h 이내 공식 답변 처리</div>
+
+      <div class="todo-kpi">🎯 WL Launch 직전 목표: P 500K+ / F2P 700K+</div>
+      <div class="todo-kpi">📊 Launch +1주 PCCU: P 60K+ / F2P 80K+ (Conservative)</div>
+
+      <div class="todo-gate">
+        <div class="todo-go"><strong>✅ LAUNCH 성공 기준</strong>Week1 리뷰 Very Positive 80%+ / PCCU 목표 달성 / 서버 안정</div>
+        <div class="todo-hold"><strong>⏸ 긴급 대응</strong>리뷰 Mixed 이하·서버 불안정 → 긴급 패치 + 커뮤니티 직접 소통</div>
       </div>
     </div>
   </div>
@@ -1119,6 +1300,13 @@ if (document.readyState === 'loading') {
   buildGantt();
 }
 window.addEventListener('resize', buildGantt);
+
+/* ── To-Do 아코디언 토글 ── */
+function toggleTodo(el) {
+  el.classList.toggle('open');
+  const body = el.nextElementSibling;
+  if (body) body.classList.toggle('open');
+}
 
 </script>
 </body>
