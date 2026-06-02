@@ -5,8 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Project S — 경영진 보고 | 마일스톤 & 론칭 전략</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 
 <style>
 /* ═══════════════════════════════════════════════════════════
@@ -663,14 +662,12 @@ body {
 
 <!-- ══ GANTT JS ══ -->
 <script>
-// ──────────────────────────────────────────────────────────────────
-// GANTT 차트 — SVG 제너레이터
-// 공통 경로: P0→P1→P2→P3→P4→★SNF (numbered step cards)
-// 포크 이후: EA 경로 / 직행 경로 (색상 구분)
-// ──────────────────────────────────────────────────────────────────
-(function() {
+function buildGantt() {
   const SVG = document.getElementById('ganttSvg');
-  const CW  = SVG.parentElement.clientWidth - 32;
+  if (!SVG) return;
+  // clientWidth가 0이면 컨테이너 너비로 fallback
+  const containerW = SVG.parentElement.getBoundingClientRect().width || 900;
+  const CW = Math.max(containerW - 32, 600);
 
   // ── 좌표 시스템 ──
   // 타임라인: Jun'26(m=0) ~ Jul'28(m=25) = 25개월
@@ -899,7 +896,16 @@ body {
   });
 
   SVG.innerHTML = html;
-})();
+}
+
+// DOMContentLoaded 이후 실행 + 리사이즈 대응
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', buildGantt);
+} else {
+  // 레이아웃 완료 후 실행
+  requestAnimationFrame(function() { requestAnimationFrame(buildGantt); });
+}
+window.addEventListener('resize', buildGantt);
 
 // ── To-Do 토글 ──
 function toggleTodo(el) {
