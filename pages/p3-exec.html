@@ -204,9 +204,11 @@ body {
   display: flex; flex: 1;
 }
 .gd-ruler-month {
-  flex: 1; min-width: 0; display: flex; align-items: center; justify-content: center;
-  font-size: 9px; color: #6e7681; border-right: 1px solid #21262d;
-  overflow: hidden;
+  flex: 1; min-width: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 2px;
+  color: #6e7681; border-right: 1px solid #21262d;
+  overflow: hidden; padding: 2px 0;
 }
 .gd-ruler-month.major { color: #8b949e; font-weight: 600; }
 .gd-ruler-snf {
@@ -1275,33 +1277,34 @@ const PHASES = [
 ];
 
 /* ── 눈금자 구성 ─── */
+/* 눈금자: 모든 셀을 연도('xx) + 월(Jan…) 2줄 형태로 통일 */
 const RULER_MONTHS = [
-  {m:0, lbl:'Jun',   yr:'2026', q:false},
-  {m:1, lbl:"Jul'26",yr:'',    q:true},
-  {m:2, lbl:'Aug',   yr:'',    q:false},
-  {m:3, lbl:'Sep',   yr:'',    q:false},
-  {m:4, lbl:"Oct'26",yr:'',    q:true},
-  {m:5, lbl:'Nov',   yr:'',    q:false},
-  {m:6, lbl:'Dec',   yr:'',    q:false},
-  {m:7, lbl:"Jan'27",yr:'2027',q:true},
-  {m:8, lbl:'Feb',   yr:'',    q:false},
-  {m:9, lbl:'Mar',   yr:'',    q:false},
-  {m:10,lbl:"Apr'27",yr:'',    q:true},
-  {m:11,lbl:'May',   yr:'',    q:false},
-  {m:12,lbl:'Jun',   yr:'',    q:false},
-  {m:13,lbl:"Jul'27",yr:'',    q:true},
-  {m:14,lbl:'Aug',   yr:'',    q:false},
-  {m:15,lbl:'Sep',   yr:'',    q:false},
-  {m:16,lbl:"Oct'27",yr:'',    q:true, snf:true},
-  {m:17,lbl:'Nov',   yr:'',    q:false},
-  {m:18,lbl:'Dec',   yr:'',    q:false},
-  {m:19,lbl:"Jan'28",yr:'2028',q:true},
-  {m:20,lbl:'Feb',   yr:'',    q:false},
-  {m:21,lbl:"Mar'28",yr:'',    q:true},
-  {m:22,lbl:'Apr',   yr:'',    q:false},
-  {m:23,lbl:'May',   yr:'',    q:false},
-  {m:24,lbl:"Jun'28",yr:'',    q:true},
-  {m:25,lbl:"Jul'28",yr:'',    q:true},
+  {m:0,  mo:'Jun', yr:"'26", q:false},
+  {m:1,  mo:'Jul', yr:"'26", q:true},
+  {m:2,  mo:'Aug', yr:"'26", q:false},
+  {m:3,  mo:'Sep', yr:"'26", q:false},
+  {m:4,  mo:'Oct', yr:"'26", q:true},
+  {m:5,  mo:'Nov', yr:"'26", q:false},
+  {m:6,  mo:'Dec', yr:"'26", q:false},
+  {m:7,  mo:'Jan', yr:"'27", q:true},
+  {m:8,  mo:'Feb', yr:"'27", q:false},
+  {m:9,  mo:'Mar', yr:"'27", q:false},
+  {m:10, mo:'Apr', yr:"'27", q:true},
+  {m:11, mo:'May', yr:"'27", q:false},
+  {m:12, mo:'Jun', yr:"'27", q:false},
+  {m:13, mo:'Jul', yr:"'27", q:true},
+  {m:14, mo:'Aug', yr:"'27", q:false},
+  {m:15, mo:'Sep', yr:"'27", q:false},
+  {m:16, mo:'Oct', yr:"'27", q:true, snf:true},
+  {m:17, mo:'Nov', yr:"'27", q:false},
+  {m:18, mo:'Dec', yr:"'27", q:false},
+  {m:19, mo:'Jan', yr:"'28", q:true},
+  {m:20, mo:'Feb', yr:"'28", q:false},
+  {m:21, mo:'Mar', yr:"'28", q:true},
+  {m:22, mo:'Apr', yr:"'28", q:false},
+  {m:23, mo:'May', yr:"'28", q:false},
+  {m:24, mo:'Jun', yr:"'28", q:true},
+  {m:25, mo:'Jul', yr:"'28", q:true},
 ];
 
 function buildGantt() {
@@ -1309,11 +1312,15 @@ function buildGantt() {
   if (!root) return;
 
   // ── 눈금자 ────────────────────────────────────────────────────────
+  // 2줄: 연도('26) + 월(Jan) — 전 셀 통일
   const rulerMonthsHtml = RULER_MONTHS.map(rm => {
     const cls = rm.q ? 'gd-ruler-month major' : 'gd-ruler-month';
-    const color = rm.snf ? '#d29922' : '';
-    const style = color ? ` style="color:${color};font-weight:800"` : '';
-    return `<div class="${cls}"${style}>${rm.lbl}</div>`;
+    const col = rm.snf ? '#d29922' : '';
+    const st  = col ? ` style="color:${col};font-weight:800"` : '';
+    return `<div class="${cls}"${st} style="flex-direction:column;gap:1px${col?';color:'+col+';font-weight:800':''}">
+      <span style="font-size:8px;opacity:.65;line-height:1">${rm.yr}</span>
+      <span style="font-size:9.5px;line-height:1;font-weight:${rm.q?700:400}">${rm.mo}</span>
+    </div>`;
   }).join('');
 
   const snfPct = lp(16);
