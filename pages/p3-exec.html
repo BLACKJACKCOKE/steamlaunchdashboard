@@ -158,18 +158,198 @@ body {
 .path-date  { font-size: 14px; font-weight: 800; }
 
 /* ── GANTT ── */
+/* ── Dark Gantt ────────────────────── */
 .gantt-wrap {
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  padding: 20px 16px 16px;
-  overflow-x: auto;
-  box-shadow: var(--shadow);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0,0,0,.18);
 }
 .gantt-label {
-  font-size: 14px; font-weight: 800; color: var(--text2); text-transform: uppercase; letter-spacing: 1px;
-  margin-bottom: 16px;
+  font-size: 15px; font-weight: 800; color: #e6edf3;
+  letter-spacing: .5px; margin-bottom: 12px;
 }
+.gd-root {
+  background: #0d1117;
+  font-family: 'Pretendard', -apple-system, sans-serif;
+  overflow-x: auto;
+  min-width: 700px;
+}
+/* 눈금자 */
+.gd-ruler {
+  display: flex;
+  background: #161b22;
+  border-bottom: 1px solid #30363d;
+  position: sticky; top: 0; z-index: 10;
+}
+.gd-ruler-label {
+  width: 220px; min-width: 220px;
+  padding: 0 16px;
+  display: flex; align-items: center;
+  font-size: 10px; font-weight: 700; color: #8b949e;
+  text-transform: uppercase; letter-spacing: 1px;
+  border-right: 1px solid #30363d;
+}
+.gd-ruler-timeline {
+  flex: 1; display: flex; position: relative; height: 52px;
+}
+.gd-ruler-year {
+  display: flex; flex-direction: column;
+  border-right: 1px solid #30363d;
+}
+.gd-ruler-year-lbl {
+  font-size: 10px; font-weight: 700;
+  padding: 4px 8px 2px;
+}
+.gd-ruler-months {
+  display: flex; flex: 1;
+}
+.gd-ruler-month {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  font-size: 9px; color: #6e7681; border-right: 1px solid #21262d;
+  white-space: nowrap;
+}
+.gd-ruler-month.major { color: #8b949e; font-weight: 600; }
+.gd-ruler-snf {
+  position: absolute; top: 0; bottom: 0; width: 2px;
+  background: #d29922;
+}
+.gd-ruler-snf-lbl {
+  position: absolute; top: 4px;
+  font-size: 9px; font-weight: 800; color: #d29922;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+.gd-ruler-now {
+  position: absolute; top: 0; bottom: 0; width: 2px;
+  background: #f85149;
+}
+.gd-ruler-now-lbl {
+  position: absolute; bottom: 4px;
+  font-size: 9px; font-weight: 800; color: #f85149;
+  transform: translateX(-50%);
+}
+/* Phase 블록 */
+.gd-phase { border-bottom: 1px solid #21262d; }
+.gd-phase-header {
+  display: flex; align-items: center;
+  cursor: pointer; user-select: none;
+  transition: background .15s;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+.gd-phase-header:hover { filter: brightness(1.1); }
+.gd-phase-header-label {
+  width: 220px; min-width: 220px;
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 14px;
+  border-right: 1px solid rgba(255,255,255,.12);
+}
+.gd-phase-badge {
+  font-size: 10px; font-weight: 800;
+  padding: 2px 8px; border-radius: 10px;
+  background: rgba(255,255,255,.2); color: #fff;
+  white-space: nowrap;
+}
+.gd-phase-name {
+  font-size: 13px; font-weight: 700; color: #fff; flex: 1;
+}
+.gd-phase-date {
+  font-size: 10px; color: rgba(255,255,255,.65); white-space: nowrap;
+}
+.gd-phase-arrow {
+  font-size: 11px; color: rgba(255,255,255,.6);
+  margin-left: 6px; transition: transform .2s;
+}
+.gd-phase-header-track {
+  flex: 1; position: relative; height: 40px;
+}
+.gd-phase-range-bar {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  height: 6px; border-radius: 3px;
+  opacity: .25;
+}
+/* Task 행 */
+.gd-tasks { overflow: hidden; }
+.gd-task-row {
+  display: flex; align-items: center;
+  border-bottom: 1px solid #21262d;
+  min-height: 36px;
+}
+.gd-task-row:nth-child(odd)  { background: #161b22; }
+.gd-task-row:nth-child(even) { background: #0d1117; }
+.gd-task-label {
+  width: 220px; min-width: 220px;
+  padding: 8px 14px 8px 24px;
+  font-size: 12px; color: #c9d1d9;
+  border-right: 1px solid #21262d;
+  line-height: 1.4;
+}
+.gd-task-label.launch-lbl {
+  color: #f0f6fc; font-weight: 700;
+}
+.gd-task-track {
+  flex: 1; position: relative; height: 36px;
+}
+.gd-track-bg {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  left: 0; right: 0; height: 4px;
+  background: #21262d; border-radius: 2px;
+}
+.gd-task-bar {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  height: 14px; border-radius: 4px;
+  display: flex; align-items: center; overflow: visible;
+}
+.gd-task-bar-inner {
+  position: absolute; inset: 0; border-radius: 4px; opacity: .88;
+}
+.gd-bar-dot {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #fff; z-index: 2;
+}
+.gd-bar-dot.start { left: -4px; }
+.gd-bar-dot.end   { right: -4px; }
+.gd-bar-lbl-start {
+  position: absolute; top: -17px; left: -2px;
+  font-size: 9px; font-weight: 600; white-space: nowrap;
+}
+.gd-bar-lbl-end {
+  position: absolute; top: -17px; right: -2px;
+  font-size: 9px; font-weight: 600; white-space: nowrap;
+  transform: translateX(50%);
+}
+.gd-bar-lbl-mid {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  left: 0; right: 0; text-align: center;
+  font-size: 9px; font-weight: 700; color: rgba(255,255,255,.9);
+  white-space: nowrap; overflow: hidden;
+}
+/* LAUNCH 마커 */
+.gd-launch-marker {
+  position: absolute; top: 50%; transform: translate(-50%, -50%);
+  width: 28px; height: 28px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; border: 2px solid rgba(255,255,255,.3);
+  z-index: 5;
+}
+.gd-launch-lbl {
+  position: absolute; top: -18px; left: 50%; transform: translateX(-50%);
+  font-size: 9.5px; font-weight: 700; white-space: nowrap;
+}
+/* SNF/현재 수직선 */
+.gd-vline {
+  position: absolute; top: 0; bottom: 0; width: 1px; z-index: 4;
+  pointer-events: none;
+}
+/* 범례 */
+.gd-legend {
+  display: flex; flex-wrap: wrap; gap: 10px 20px;
+  padding: 14px 16px;
+  background: #161b22; border-top: 1px solid #30363d;
+  font-size: 11px; color: #8b949e;
+}
+.gd-leg-item { display: flex; align-items: center; gap: 6px; }
+.gd-leg-dot { width: 12px; height: 12px; border-radius: 3px; }
 
 /* ══════════════════════════════════════════════════════════
    SECTION 2 — 지표 / KPI
@@ -331,9 +511,13 @@ body {
 
   <!-- ── GANTT 차트 ── -->
   <div class="mt24">
-    <div class="gantt-label">2026–2028 론칭 로드맵 — 단계별 마일스톤</div>
+    <div class="gantt-label">2026–2028 론칭 로드맵 — 단계별 마일스톤
+      <span style="font-size:11px;font-weight:600;color:#8b949e;margin-left:12px;text-transform:none;letter-spacing:0">
+        (Phase 헤더 클릭 → 접기/펼치기)
+      </span>
+    </div>
     <div class="gantt-wrap">
-      <svg id="ganttSvg" width="100%" style="display:block"></svg>
+      <div id="ganttDark" class="gd-root"></div>
     </div>
   </div>
 
@@ -662,384 +846,244 @@ body {
 
 <!-- ══ GANTT JS ══ -->
 <script>
-/* ── Phase 접기/펼치기 전역 상태 ── */
-const ganttCollapse = {};  // { 'P0': false, 'P1': true, ... }  true = 접힘
+/* ──────────────────────────────────────────────────────────────────
+   다크 Gantt — HTML/CSS 기반 (onclick 신뢰성 보장)
+   TM=25 개월: m=0=Jun'26 ~ m=25=Jul'28
+   leftPct(m) = (m/25)*100 + '%'
+   widthPct(m0,m1) = ((m1-m0)/25)*100 + '%'
+   ────────────────────────────────────────────────────────────────── */
 
-function toggleGanttPhase(step) {
-  ganttCollapse[step] = !ganttCollapse[step];
-  buildGantt();
-}
+const TM = 25;
+const lp = m => ((m/TM)*100).toFixed(2)+'%';
+const wp = (m0,m1) => (((m1-m0)/TM)*100).toFixed(2)+'%';
+
+/* ── Phase 데이터 ─── */
+const PHASES = [
+  {
+    step:'P0', name:'전사테스트', date:"Jul'26", col:'#1f6feb',
+    tasks:[
+      {name:'서브장르·핵심 메커닉 공식 확정', m0:1.0,  m1:1.5,  s:"Jul 1주",  e:"Jul 2주"},
+      {name:'BM 방향 결정 (Premium / F2P)',    m0:1.0,  m1:1.75, s:"Jul 1주",  e:"Jul 3주"},
+      {name:'FGT 설계서 완성',                 m0:1.25, m1:2.0,  s:"Jul 2주",  e:"Jul 4주"},
+      {name:'Steamworks 계정 셋업 + deposit',  m0:1.0,  m1:1.25, s:"Jul 1주",  e:"즉시"},
+    ]
+  },
+  {
+    step:'P1', name:'FGT 1차·2차', date:"Aug~Dec'26", col:'#0e7490',
+    tasks:[
+      {name:'FGT 1차 (외부 30명+, NDA)',      m0:2.0, m1:4.0,  s:"Aug'26",  e:"Sep'26"},
+      {name:'FGT 2차 (60명+, 세그먼트별)',    m0:4.0, m1:6.0,  s:"Oct'26",  e:"Nov'26"},
+      {name:'BM Premium/F2P 최종 확정',       m0:5.5, m1:6.5,  s:"Nov'26",  e:"Dec'26"},
+      {name:'스토어 에셋 제작 착수',           m0:4.0, m1:7.0,  s:"Oct'26",  e:"Dec'26"},
+    ]
+  },
+  {
+    step:'P2', name:'CS 오픈·WL 수집', date:"Jan~Mar'27", col:'#0d9488',
+    tasks:[
+      {name:'Steam Coming Soon 페이지 오픈',  m0:7.0, m1:7.5,  s:"Jan'27",   e:"Jan'27"},
+      {name:'WL 수집 — 4주 25K+ / 8주 50K+', m0:7.0, m1:10.0, s:"Jan'27",   e:"Mar'27"},
+      {name:'Discord 커뮤니티 오픈·운영',     m0:7.0, m1:8.5,  s:"Jan'27",   e:"Feb'27"},
+      {name:'SNF Oct 2027 참가 신청 완료',    m0:8.5, m1:10.0, s:"Feb'27",   e:"Mar'27"},
+    ]
+  },
+  {
+    step:'P3', name:'CLA', date:"Apr~Jun'27", col:'#7c3aed',
+    tasks:[
+      {name:'Steam Playtest 1,000명+',         m0:10.0,m1:12.0, s:"Apr'27",   e:"Jun'27"},
+      {name:'D+7 리텐션 25%+ / 크리티컬 0건', m0:10.0,m1:13.0, s:"Apr'27",   e:"Jun'27"},
+      {name:'CLA 피드백 반영 패치 완료',       m0:11.5,m1:13.0, s:"May'27",   e:"Jun'27"},
+    ]
+  },
+  {
+    step:'P4', name:'CBT', date:"Jun~Sep'27", col:'#6d28d9',
+    tasks:[
+      {name:'CBT 10,000명+ / 스트리밍 NDA 해제',m0:13.0,m1:15.0,s:"Jun'27",   e:"Aug'27"},
+      {name:'SNF Demo 빌드 완성·확인',           m0:14.0,m1:16.0,s:"Jul'27",   e:"Sep'27"},
+      {name:'WL 목표 P 150K+ / F2P 200K+',      m0:13.0,m1:16.0,s:"Jun'27",   e:"Sep'27"},
+    ]
+  },
+  {
+    step:'EA', name:'EA 론칭 경로', date:"Nov'27~Jul'28", col:'#c05621',
+    tasks:[
+      {name:'EA 준비 (가격·콘텐츠·트레일러)',   m0:17.0,m1:20.0, s:"Nov'27",   e:"Feb'28"},
+      {name:'Early Access 론칭·WL 이메일 발송', m0:20.0,m1:20.5, s:"Feb'28",   e:"Feb'28"},
+      {name:'EA 운영·Update Visibility',        m0:20.0,m1:25.0, s:"Feb'28",   e:"Jul'28"},
+      {name:'🚀 정식 LAUNCH (EA 졸업)',          m0:25.0,m1:25.0, s:"Jul'28",   e:"",     launch:true},
+    ]
+  },
+  {
+    step:'직행', name:'직행 론칭 경로', date:"Nov'27~Mar'28", col:'#166534',
+    tasks:[
+      {name:'직행 GO 승인·빌드 완성도 90%+ 확인',m0:17.0,m1:18.5,s:"Nov'27",   e:"Jan'28"},
+      {name:'서버 부하 최종 검증 (피크 120%+)',  m0:18.5,m1:20.5,s:"Jan'28",   e:"Mar'28"},
+      {name:'🚀 정식 LAUNCH (Season 1 동시)',    m0:21.0,m1:21.0,s:"Mar'28",   e:"",     launch:true},
+    ]
+  },
+];
+
+/* ── 눈금자 구성 ─── */
+const RULER_MONTHS = [
+  {m:0, lbl:'Jun',   yr:'2026', q:false},
+  {m:1, lbl:"Jul'26",yr:'',    q:true},
+  {m:2, lbl:'Aug',   yr:'',    q:false},
+  {m:3, lbl:'Sep',   yr:'',    q:false},
+  {m:4, lbl:"Oct'26",yr:'',    q:true},
+  {m:5, lbl:'Nov',   yr:'',    q:false},
+  {m:6, lbl:'Dec',   yr:'',    q:false},
+  {m:7, lbl:"Jan'27",yr:'2027',q:true},
+  {m:8, lbl:'Feb',   yr:'',    q:false},
+  {m:9, lbl:'Mar',   yr:'',    q:false},
+  {m:10,lbl:"Apr'27",yr:'',    q:true},
+  {m:11,lbl:'May',   yr:'',    q:false},
+  {m:12,lbl:'Jun',   yr:'',    q:false},
+  {m:13,lbl:"Jul'27",yr:'',    q:true},
+  {m:14,lbl:'Aug',   yr:'',    q:false},
+  {m:15,lbl:'Sep',   yr:'',    q:false},
+  {m:16,lbl:"Oct'27",yr:'',    q:true, snf:true},
+  {m:17,lbl:'Nov',   yr:'',    q:false},
+  {m:18,lbl:'Dec',   yr:'',    q:false},
+  {m:19,lbl:"Jan'28",yr:'2028',q:true},
+  {m:20,lbl:'Feb',   yr:'',    q:false},
+  {m:21,lbl:"Mar'28",yr:'',    q:true},
+  {m:22,lbl:'Apr',   yr:'',    q:false},
+  {m:23,lbl:'May',   yr:'',    q:false},
+  {m:24,lbl:"Jun'28",yr:'',    q:true},
+  {m:25,lbl:"Jul'28",yr:'',    q:true},
+];
 
 function buildGantt() {
-  /* ═══════════════════════════════════════════════════════════════
-     GANTT v3 — 행(Row) 기반 프로젝트 스케줄 Gantt
-     구조: 왼쪽 레이블 열 + 오른쪽 타임라인
-     각 Phase → 헤더 행 + 세부 항목 행들
-     각 항목 행 → 컬러 바로 시작~끝 기간 시각화
-     ═══════════════════════════════════════════════════════════════ */
-  const el = document.getElementById('ganttSvg');
-  if (!el) return;
-  const W = Math.max(el.parentElement.getBoundingClientRect().width - 24, 760);
+  const root = document.getElementById('ganttDark');
+  if (!root) return;
 
-  // ── 좌표 상수 ──────────────────────────────────────────────────
-  const LW  = 220;          // 왼쪽 레이블 열 너비 (폰트 확대로 확장)
-  const PAD = 12;           // 우측 여백
-  const TW  = W - LW - PAD; // 타임라인 너비
-  const TM  = 25;           // 총 개월 (m=0=Jun'26 ~ m=25=Jul'28)
-  const PX  = TW / TM;      // 1개월당 픽셀
+  // ── 눈금자 ────────────────────────────────────────────────────────
+  const rulerMonthsHtml = RULER_MONTHS.map(rm => {
+    const cls = rm.q ? 'gd-ruler-month major' : 'gd-ruler-month';
+    const color = rm.snf ? '#d29922' : '';
+    const style = color ? ` style="color:${color};font-weight:800"` : '';
+    return `<div class="${cls}"${style}>${rm.lbl}</div>`;
+  }).join('');
 
-  const TX = m => Math.round(LW + (m / TM) * TW); // 절대 X 좌표
+  const snfPct = lp(16);
+  const nowPct = lp(0);
 
-  // ── 행 레이아웃 상수 ────────────────────────────────────────────
-  const RULER_H  = 52;  // 눈금자 높이
-  const PH_H     = 34;  // Phase 헤더 행 높이 (폰트 확대)
-  const TASK_H   = 26;  // 개별 항목 행 높이 (폰트 확대)
-  const BAR_PAD  = 5;   // 바 상하 여백
-  const BAR_H    = TASK_H - BAR_PAD * 2;  // = 16
-  const GAP      = 8;   // Phase 간 여백
-  const LEG_H    = 34;  // 범례 높이
+  let html = `
+  <div class="gd-ruler">
+    <div class="gd-ruler-label">단계 / 항목</div>
+    <div class="gd-ruler-timeline" style="position:relative">
+      <div class="gd-ruler-months" style="display:flex;flex:1;height:100%">
+        ${rulerMonthsHtml}
+      </div>
+      <div class="gd-ruler-snf" style="left:${snfPct}">
+        <div class="gd-ruler-snf-lbl" style="left:0">★ SNF<br>Oct'27</div>
+      </div>
+      <div class="gd-ruler-now" style="left:${nowPct}">
+        <div class="gd-ruler-now-lbl" style="left:0">현재</div>
+      </div>
+    </div>
+  </div>`;
 
-  // ── 폰트/색상 헬퍼 ──────────────────────────────────────────────
-  const F = "font-family='Pretendard,-apple-system,sans-serif'";
-  const rc  = (x,y,w,h,fill,rx=0,xtra='') =>
-    `<rect x='${x}' y='${y}' width='${Math.max(w,0.5)}' height='${h}' rx='${rx}' fill='${fill}' ${xtra}/>`;
-  const tx  = (x,y,t,xtra='') => `<text x='${x}' y='${y}' ${F} ${xtra}>${t}</text>`;
-  const ln  = (x1,y1,x2,y2,xtra='') => `<line x1='${x1}' y1='${y1}' x2='${x2}' y2='${y2}' ${xtra}/>`;
-
-  // ── 데이터 정의 ─────────────────────────────────────────────────
-  // m: 절대 월 (m=0=Jun'26)
-  // 색상: Phase 테마 색 기반 shade
-
-  const PHASES = [
-    {
-      step:'P0', name:'전사테스트', date:"Jul'26", fill:'#1d4ed8',
-      tasks:[
-        {name:'서브장르·핵심 메커닉 공식 확정', m0:1.0, m1:1.5,  col:'#1d4ed8', start_lbl:"Jul 1주",  end_lbl:"Jul 2주"},
-        {name:'BM 방향 결정 (Premium / F2P)',    m0:1.0, m1:1.75, col:'#2563eb', start_lbl:"Jul 1주",  end_lbl:"Jul 3주"},
-        {name:'FGT 설계서 완성',                 m0:1.25,m1:2.0,  col:'#3b82f6', start_lbl:"Jul 2주",  end_lbl:"Jul 4주"},
-        {name:'Steamworks 계정 셋업 + deposit',  m0:1.0, m1:1.25, col:'#60a5fa', start_lbl:"Jul 1주",  end_lbl:"즉시"},
-      ]
-    },
-    {
-      step:'P1', name:'FGT 1차·2차', date:"Aug~Dec'26", fill:'#0891b2',
-      tasks:[
-        {name:'FGT 1차 (외부 30명+, NDA)',       m0:2.0, m1:4.0,  col:'#0891b2', start_lbl:"Aug'26",   end_lbl:"Sep'26"},
-        {name:'FGT 2차 (60명+, 세그먼트별)',     m0:4.0, m1:6.0,  col:'#0e7490', start_lbl:"Oct'26",   end_lbl:"Nov'26"},
-        {name:'BM Premium/F2P 최종 확정',        m0:5.5, m1:6.5,  col:'#155e75', start_lbl:"Nov'26",   end_lbl:"Dec'26"},
-        {name:'스토어 에셋 제작 착수',            m0:4.0, m1:7.0,  col:'#22d3ee', start_lbl:"Oct'26",   end_lbl:"Dec'26"},
-      ]
-    },
-    {
-      step:'P2', name:'CS 오픈·WL 수집', date:"Jan~Mar'27", fill:'#0d9488',
-      tasks:[
-        {name:'Steam Coming Soon 페이지 오픈',   m0:7.0, m1:7.5,  col:'#0d9488', start_lbl:"Jan'27",   end_lbl:"Jan'27"},
-        {name:'WL 수집 — 4주 25K+/8주 50K+',   m0:7.0, m1:10.0, col:'#0f766e', start_lbl:"Jan'27",   end_lbl:"Mar'27"},
-        {name:'Discord 커뮤니티 오픈·운영',      m0:7.0, m1:8.0,  col:'#14b8a6', start_lbl:"Jan'27",   end_lbl:"Feb'27"},
-        {name:'SNF Oct 2027 참가 신청 준비',     m0:8.5, m1:10.0, col:'#2dd4bf', start_lbl:"Feb'27",   end_lbl:"Mar'27"},
-      ]
-    },
-    {
-      step:'P3', name:'CLA', date:"Apr~Jun'27", fill:'#7c3aed',
-      tasks:[
-        {name:'Steam Playtest 1,000명+',         m0:10.0,m1:12.0, col:'#7c3aed', start_lbl:"Apr'27",   end_lbl:"Jun'27"},
-        {name:'D+7 리텐션 25%+·크리티컬 0건',   m0:10.0,m1:13.0, col:'#9333ea', start_lbl:"Apr'27",   end_lbl:"Jun'27"},
-        {name:'CLA 피드백 반영 패치 완료',       m0:11.5,m1:13.0, col:'#a855f7', start_lbl:"May'27",   end_lbl:"Jun'27"},
-      ]
-    },
-    {
-      step:'P4', name:'CBT', date:"Jun~Sep'27", fill:'#6d28d9',
-      tasks:[
-        {name:'CBT 10,000명+·스트리밍 NDA 해제', m0:13.0,m1:15.0, col:'#6d28d9', start_lbl:"Jun'27",   end_lbl:"Aug'27"},
-        {name:'SNF Demo 빌드 완성·확인',          m0:14.0,m1:16.0, col:'#7e22ce', start_lbl:"Jul'27",   end_lbl:"Sep'27"},
-        {name:'WL 목표 P150K+·F2P 200K+',        m0:13.0,m1:16.0, col:'#8b5cf6', start_lbl:"Jun'27",   end_lbl:"Sep'27"},
-      ]
-    },
-    // SNF는 별도 마커 — 여기선 포함 X
-    {
-      step:'EA', name:'EA 론칭 경로', date:"Nov'27~Jul'28", fill:'#ea580c',
-      tasks:[
-        {name:'EA 준비 (가격·콘텐츠·트레일러)',  m0:17.0,m1:20.0, col:'#ea580c', start_lbl:"Nov'27",   end_lbl:"Feb'28"},
-        {name:'Early Access 론칭·WL 이메일',     m0:20.0,m1:20.5, col:'#f97316', start_lbl:"Feb'28",   end_lbl:"Feb'28"},
-        {name:'EA 운영·Update Visibility',       m0:20.0,m1:25.0, col:'#fb923c', start_lbl:"Feb'28",   end_lbl:"Jul'28"},
-        {name:'🚀 정식 LAUNCH (EA 졸업)',         m0:25.0,m1:25.0, col:'#ea580c', start_lbl:"Jul'28",   end_lbl:"Jul'28"},
-      ]
-    },
-    {
-      step:'직행', name:'직행 론칭 경로', date:"Nov'27~Mar'28", fill:'#16a34a',
-      tasks:[
-        {name:'직행 GO 승인·빌드 완성도 90%+ 확인',m0:17.0,m1:18.0,col:'#16a34a', start_lbl:"Nov'27",   end_lbl:"Dec'27"},
-        {name:'서버 부하 최종 검증 (피크 120%+)',  m0:18.0,m1:19.5,col:'#15803d', start_lbl:"Dec'27",   end_lbl:"Jan'28"},
-        {name:'🚀 정식 LAUNCH (Season 1 동시)',    m0:21.0,m1:21.0,col:'#16a34a', start_lbl:"Mar'28",   end_lbl:"Mar'28"},
-      ]
-    },
-  ];
-
-  // ── 총 높이 계산 ────────────────────────────────────────────────
-  // 접기 상태 반영한 총 높이 계산
-  let estH = RULER_H + LEG_H + 20;
+  // ── Phase 블록들 ───────────────────────────────────────────────────
   PHASES.forEach(ph => {
-    estH += PH_H + GAP;
-    if (!ganttCollapse[ph.step]) estH += ph.tasks.length * TASK_H;
-  });
+    const isOpen = !phaseState[ph.step];
+    const arrow = isOpen ? '▼' : '▶';
+    const phM0 = Math.min(...ph.tasks.map(t=>t.m0));
+    const phM1 = Math.max(...ph.tasks.map(t=>t.m1===t.m0 ? t.m0+0.3 : t.m1));
 
-  el.setAttribute('viewBox', `0 0 ${W} ${estH}`);
-  el.setAttribute('height', estH);
+    // Phase 헤더 타임라인 바
+    const headerBar = `<div class="gd-phase-range-bar" style="left:${lp(phM0)};width:${wp(phM0,phM1)};background:${ph.col}"></div>`;
 
-  let g = '';
-  let clipDefs = '';
-
-  // ── 배경 ────────────────────────────────────────────────────────
-  g += rc(0, 0, W, estH, '#f8fafc', 0);
-
-  // ── 타임라인 눈금자 ─────────────────────────────────────────────
-  // 연도 레이블
-  g += tx((TX(0)+TX(7))/2|0, 13, '2026',
-    "text-anchor='middle' font-size='11.5' font-weight='700' fill='#3b82f6' opacity='0.8'");
-  g += tx((TX(7)+TX(16))/2|0, 13, '2027',
-    "text-anchor='middle' font-size='11.5' font-weight='700' fill='#7c3aed' opacity='0.8'");
-  g += tx(TX(16), 13, '★SNF',
-    "text-anchor='middle' font-size='9' font-weight='800' fill='#d97706'");
-  g += tx((TX(17)+TX(25))/2|0, 13, '2028',
-    "text-anchor='middle' font-size='11.5' font-weight='700' fill='#16a34a' opacity='0.8'");
-
-  // 월 눈금자 라인
-  g += ln(LW, 18, LW+TW, 18, "stroke='#e2e8f0' stroke-width='1'");
-
-  // 월 레이블 + 격자선
-  const MONTHS = [
-    [1,"Jul'26",'#93c5fd'],[2,"Aug",'#94a3b8'],[3,"Sep",'#94a3b8'],
-    [4,"Oct'26",'#94a3b8'],[5,"Nov",'#94a3b8'],[6,"Dec",'#94a3b8'],
-    [7,"Jan'27",'#c4b5fd'],[8,"Feb",'#94a3b8'],[9,"Mar",'#94a3b8'],
-    [10,"Apr'27",'#94a3b8'],[11,"May",'#94a3b8'],[12,"Jun",'#94a3b8'],
-    [13,"Jul'27",'#94a3b8'],[14,"Aug",'#94a3b8'],[15,"Sep",'#94a3b8'],
-    [16,"Oct'27",'#fbbf24'],[17,"Nov",'#94a3b8'],[18,"Dec",'#94a3b8'],
-    [19,"Jan'28",'#6ee7b7'],[20,"Feb",'#94a3b8'],[21,"Mar",'#94a3b8'],
-    [22,"Apr'28",'#94a3b8'],[23,"May",'#94a3b8'],[24,"Jun",'#94a3b8'],
-    [25,"Jul'28",'#6ee7b7'],
-  ];
-  MONTHS.forEach(([m, lbl, col]) => {
-    const mx = TX(m);
-    g += ln(mx, 16, mx, 22, `stroke='${col}' stroke-width='1.5'`);
-    g += tx(mx, 32, lbl, `text-anchor='middle' font-size='${lbl.includes("'")?"8.5":"7.5"}' fill='${col}' font-weight='${lbl.includes("'")?600:400}'`);
-    // 격자선 (전체 높이)
-    if (m % 1 === 0) {
-      const isMajor = lbl.includes("'") || lbl === '★SNF';
-      g += ln(mx, RULER_H, mx, estH - LEG_H - 10,
-        `stroke='${isMajor?"#e5e7eb":"#f3f4f6"}' stroke-width='${isMajor?0.8:0.4}'`);
-    }
-  });
-
-  // SNF 수직선 강조
-  g += ln(TX(16), RULER_H, TX(16), estH-LEG_H-10,
-    "stroke='#fde68a' stroke-width='1.5' stroke-dasharray='6,3'");
-
-  // 현재 마커
-  g += ln(TX(0), 16, TX(0), estH-LEG_H-10,
-    "stroke='#ef4444' stroke-width='1.5' stroke-dasharray='4,3' opacity='0.55'");
-  g += `<polygon points='${TX(0)-5},18 ${TX(0)+5},18 ${TX(0)},26' fill='#ef4444' opacity='0.8'/>`;
-  g += tx(TX(0), 12, '현재', "text-anchor='middle' font-size='8' font-weight='800' fill='#ef4444'");
-
-  // ── Phase 행 렌더링 ──────────────────────────────────────────────
-  let curY = RULER_H;
-
-  PHASES.forEach((phase, pi) => {
-    if (pi > 0) curY += GAP;
-
-    const isCollapsed = !!ganttCollapse[phase.step];
-    const visibleTaskH = isCollapsed ? 0 : phase.tasks.length * TASK_H;
-    const phaseH = PH_H + visibleTaskH;
-
-    // 배경 (레이블 영역)
-    g += rc(0, curY, LW-2, phaseH, phase.fill + '18', 4);
-
-    // 배경 (타임라인 기간 하이라이트)
-    const ph_m0 = phase.tasks.length ? Math.min(...phase.tasks.map(t=>t.m0)) : 0;
-    const ph_m1 = phase.tasks.length ? Math.max(...phase.tasks.map(t=>t.m1)) : TM;
-    if (ph_m0 < ph_m1 && !isCollapsed) {
-      g += rc(TX(ph_m0), curY, TX(ph_m1)-TX(ph_m0), phaseH, phase.fill+'0d', 0);
-    }
-
-    // ── Phase 헤더 행 (클릭 가능) ─────────────────────────────────
-    // 클릭 투명 오버레이 (전체 헤더 너비)
-    g += `<rect x='0' y='${curY}' width='${W}' height='${PH_H}' fill='transparent'
-      onclick="toggleGanttPhase('${phase.step}')" style='cursor:pointer'/>`;
-    // 헤더 배경 (레이블 영역)
-    g += rc(0, curY, LW-2, PH_H, phase.fill, 4);
-
-    // Step 뱃지
-    const badgeW = phase.step.length <= 2 ? 28 : 38;
-    g += rc(8, curY+7, badgeW, 20, 'rgba(255,255,255,0.25)', 8);
-    g += tx(8+badgeW/2|0, curY+20, phase.step,
-      `text-anchor='middle' font-size='10' font-weight='800' fill='#fff'`);
-    // Phase 이름 (폰트 확대)
-    g += tx(badgeW+16, curY+21, phase.name,
-      `font-size='14' font-weight='800' fill='#fff'`);
-    // 날짜
-    g += tx(LW-32, curY+21, phase.date,
-      `text-anchor='end' font-size='10.5' fill='rgba(255,255,255,0.85)'`);
-
-    // 접기/펼치기 화살표 (▼/▶)
-    const arrow = isCollapsed ? '▶' : '▼';
-    g += tx(LW-14, curY+21, arrow,
-      `text-anchor='middle' font-size='10' fill='rgba(255,255,255,0.85)'`);
-
-    // 헤더 우측 — 기간 바
-    if (ph_m0 < ph_m1) {
-      g += rc(TX(ph_m0), curY+5, TX(ph_m1)-TX(ph_m0), PH_H-10,
-        phase.fill, 4, `opacity='0.18'`);
-    }
-
-    curY += PH_H;
-
-    // ── 세부 항목 행들 (접힘 시 생략) ────────────────────────────
-    if (isCollapsed) return; // 접힌 Phase는 행 렌더링 건너뜀
-
-    phase.tasks.forEach((task, ti) => {
-      const rowY = curY;
-      const barY = rowY + BAR_PAD;
-
-      // 행 배경 (교번)
-      g += rc(0, rowY, W, TASK_H, ti%2===0?'#ffffff':'#f9fafb', 0);
-
-      // 레이블 열 — 항목 이름
-      // LAUNCH 마커는 특별 처리
-      const isLaunch = task.name.includes('🚀');
-      if (isLaunch) {
-        g += tx(10, rowY+TASK_H-5, task.name,
-          `font-size='12' font-weight='800' fill='${task.col}'`);
-      } else {
-        g += tx(10, rowY+TASK_H-5, task.name,
-          `font-size='12' fill='#374151'`);
+    // Task 행들
+    const tasksHtml = ph.tasks.map((t, ti) => {
+      if (t.launch) {
+        return `<div class="gd-task-row">
+          <div class="gd-task-label launch-lbl">${t.name}</div>
+          <div class="gd-task-track">
+            <div class="gd-track-bg"></div>
+            <div class="gd-vline" style="left:${lp(t.m0)};background:${ph.col};opacity:.6"></div>
+            <div class="gd-launch-marker" style="left:${lp(t.m0)};background:${ph.col}">🚀</div>
+            <div class="gd-launch-lbl" style="left:${lp(t.m0)};color:${ph.col}">${t.s}</div>
+          </div>
+        </div>`;
       }
+      const bw = Math.max((t.m1-t.m0)/TM*100, 0.5);
+      const showMid = bw > 8;
+      const showEnd = bw > 5;
+      return `<div class="gd-task-row">
+        <div class="gd-task-label">${t.name}</div>
+        <div class="gd-task-track">
+          <div class="gd-track-bg"></div>
+          <div class="gd-vline" style="left:${lp(16)};background:#d29922;opacity:.2"></div>
+          <div class="gd-vline" style="left:${lp(0)};background:#f85149;opacity:.25"></div>
+          <div class="gd-task-bar" style="left:${lp(t.m0)};width:${wp(t.m0,Math.max(t.m1,t.m0+0.3))}">
+            <div class="gd-task-bar-inner" style="background:${ph.col}"></div>
+            <div class="gd-bar-dot start"></div>
+            ${t.m1>t.m0+0.2 ? '<div class="gd-bar-dot end"></div>' : ''}
+            <div class="gd-bar-lbl-start" style="color:${ph.col}">${t.s}</div>
+            ${showEnd && t.e ? `<div class="gd-bar-lbl-end" style="color:${ph.col}">${t.e}</div>` : ''}
+            ${showMid ? `<div class="gd-bar-lbl-mid">${t.s}${t.e?` → ${t.e}`:''}</div>` : ''}
+          </div>
+        </div>
+      </div>`;
+    }).join('');
 
-      // 타임라인 열 — 기간 바
-      if (isLaunch) {
-        // LAUNCH는 다이아몬드 마커
-        const lx = TX(task.m0);
-        const ly = rowY + TASK_H/2;
-        g += `<polygon points='${lx},${ly-7} ${lx+7},${ly} ${lx},${ly+7} ${lx-7},${ly}' fill='${task.col}'/>`;
-        g += tx(lx+12, ly+4, task.start_lbl,
-          `font-size='9.5' font-weight='700' fill='${task.col}'`);
-      } else {
-        const bx0 = TX(task.m0);
-        const bx1 = TX(task.m1);
-        const bw = bx1 - bx0;
-
-        // 배경 트랙 (전체 타임라인)
-        g += rc(LW, barY, TW, BAR_H, '#f3f4f6', 3);
-
-        if (bw > 0.5) {
-          // 기간 바
-          g += rc(bx0, barY, bw, BAR_H, task.col, 3, `opacity='0.9'`);
-
-          // 시작점 마커 (작은 원)
-          g += `<circle cx='${bx0+1}' cy='${barY+BAR_H/2}' r='4' fill='${task.col}'/>`;
-          // 끝점 마커
-          g += `<circle cx='${bx1-1}' cy='${barY+BAR_H/2}' r='4' fill='${task.col}'/>`;
-
-          // 시작 날짜 레이블 (바 왼쪽 또는 바 내부)
-          const startX = bx0;
-          const endX   = bx1;
-          const labelSpace = bw;
-
-          const midX = (bx0 + bx1) / 2 | 0;
-          if (labelSpace > 60) {
-            g += tx(midX, barY+BAR_H-1, `${task.start_lbl} → ${task.end_lbl}`,
-              `text-anchor='middle' font-size='9.5' fill='#fff' font-weight='600'`);
-          } else if (labelSpace > 30) {
-            g += tx(midX, barY+BAR_H-1, task.start_lbl,
-              `text-anchor='middle' font-size='9' fill='#fff' font-weight='600'`);
-          }
-
-          // 시작 날짜 (바 위)
-          if (bw > 10) {
-            g += tx(bx0, barY-1, task.start_lbl,
-              `font-size='9' fill='${task.col}' font-weight='600' opacity='0.9'`);
-          }
-          // 끝 날짜 (바 끝 오른쪽, 공간 있을 때만)
-          if (bw > 40) {
-            g += tx(bx1+3, barY+BAR_H-1, task.end_lbl,
-              `font-size='9' fill='${task.col}' opacity='0.8'`);
-          }
-        }
-      }
-
-      // 행 구분선
-      g += ln(0, rowY+TASK_H, W, rowY+TASK_H, "stroke='#f1f5f9' stroke-width='0.5'");
-
-      curY += TASK_H;
-    });
-
-    // Phase 하단 구분선
-    g += ln(0, curY, W, curY, `stroke='${phase.fill}' stroke-width='0.5' opacity='0.3'`);
+    html += `
+    <div class="gd-phase" data-step="${ph.step}">
+      <div class="gd-phase-header" style="background:${ph.col}22"
+           onclick="togglePhase('${ph.step}')">
+        <div class="gd-phase-header-label" style="background:${ph.col}">
+          <span class="gd-phase-badge">${ph.step}</span>
+          <span class="gd-phase-name">${ph.name}</span>
+          <span class="gd-phase-date">${ph.date}</span>
+          <span class="gd-phase-arrow">${arrow}</span>
+        </div>
+        <div class="gd-phase-header-track">
+          <div class="gd-vline" style="left:${snfPct};background:#d29922;opacity:.3"></div>
+          ${headerBar}
+        </div>
+      </div>
+      <div class="gd-tasks" id="tasks-${ph.step}" style="display:${isOpen?'block':'none'}">
+        ${tasksHtml}
+      </div>
+    </div>`;
   });
 
-  // ── SNF 마커 (수직 황금색 강조) ─────────────────────────────────
-  const snfX = TX(16);
-  g += rc(snfX-20, RULER_H, 40, curY-RULER_H, '#fef9c3', 0, `opacity='0.3'`);
-  g += tx(snfX, RULER_H+14, '★ SNF Oct\'27',
-    "text-anchor='middle' font-size='12' font-weight='800' fill='#d97706'");
-  g += tx(snfX, RULER_H+25, '경로 분기 결정',
-    "text-anchor='middle' font-size='11' fill='#92400e'");
+  // ── 범례 ───────────────────────────────────────────────────────────
+  html += `<div class="gd-legend">
+    ${PHASES.map(ph=>`<div class="gd-leg-item">
+      <div class="gd-leg-dot" style="background:${ph.col}"></div>
+      <span>${ph.step} ${ph.name}</span>
+    </div>`).join('')}
+    <div class="gd-leg-item">
+      <div class="gd-leg-dot" style="background:#d29922"></div>
+      <span>★ SNF Oct'27</span>
+    </div>
+    <div class="gd-leg-item" style="color:#f85149">
+      <span>│ 현재(Jun'26)</span>
+    </div>
+  </div>`;
 
-  // ── 범례 ────────────────────────────────────────────────────────
-  const LY = curY + 14;
-  const LEGS = [
-    {col:'#1d4ed8',lbl:'P0 전사테스트'},
-    {col:'#0891b2',lbl:'P1 FGT'},
-    {col:'#0d9488',lbl:'P2 CS 오픈'},
-    {col:'#7c3aed',lbl:'P3 CLA'},
-    {col:'#6d28d9',lbl:'P4 CBT'},
-    {col:'#fbbf24',lbl:'★ SNF Oct\'27'},
-    {col:'#ea580c',lbl:'EA 경로'},
-    {col:'#16a34a',lbl:'직행 경로'},
-  ];
-  const ITEM_W = 102, legX0 = (W - LEGS.length*ITEM_W)/2;
-  LEGS.forEach(({col,lbl},i)=>{
-    const lx = legX0+i*ITEM_W;
-    g += rc(lx, LY, 12, 10, col, 2);
-    g += tx(lx+16, LY+9, lbl, `font-size='11' fill='#374151'`);
-  });
-
-  // ── SVG 조립 ────────────────────────────────────────────────────
-  const finalH = LY + LEG_H;
-  el.setAttribute('viewBox', `0 0 ${W} ${finalH}`);
-  el.setAttribute('height', finalH);
-  el.innerHTML = `<defs>${clipDefs}</defs>${g}`;
+  root.innerHTML = html;
 }
 
-// DOMContentLoaded 이후 실행 + 리사이즈 대응
+/* ── 접기/펼치기 (HTML onclick — 신뢰성 보장) ── */
+const phaseState = {}; // true = 접힘
+
+function togglePhase(step) {
+  phaseState[step] = !phaseState[step];
+  const tasks = document.getElementById('tasks-' + step);
+  const header = document.querySelector('[data-step="' + step + '"] .gd-phase-arrow');
+  if (tasks) tasks.style.display = phaseState[step] ? 'none' : 'block';
+  if (header) header.textContent = phaseState[step] ? '▶' : '▼';
+}
+
+/* ── 초기화 ── */
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', buildGantt);
 } else {
-  // 레이아웃 완료 후 실행
-  requestAnimationFrame(function() { requestAnimationFrame(buildGantt); });
+  buildGantt();
 }
 window.addEventListener('resize', buildGantt);
 
-// ── To-Do 토글 ──
-function toggleTodo(el) {
-  el.classList.toggle('open');
-  const body = el.nextElementSibling;
-  if (body) body.classList.toggle('open');
-}
-
-// ── 섹션 내비 활성화 ──
-const navLinks = document.querySelectorAll('.sec-nav a');
-document.querySelectorAll('section[id]').forEach(sec => {
-  new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        navLinks.forEach(a => {
-          const href = a.getAttribute('href');
-          const active = href === '#'+e.target.id;
-          a.style.color = active ? '' : '';
-        });
-      }
-    });
-  }, {threshold: 0.3}).observe(sec);
-});
-</script>
 
 </body>
 </html>
