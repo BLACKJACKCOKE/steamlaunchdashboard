@@ -113,7 +113,7 @@ body {
   padding: 24px 28px;
   box-shadow: var(--shadow);
 }
-.card-h { font-size: 13px; font-weight: 800; color: var(--text2); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
+.card-h { font-size: 15px; font-weight: 800; color: var(--text2); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
 
 /* ── 그리드 ── */
 .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
@@ -167,7 +167,7 @@ body {
   box-shadow: var(--shadow);
 }
 .gantt-label {
-  font-size: 11px; font-weight: 800; color: var(--text2); text-transform: uppercase; letter-spacing: 1px;
+  font-size: 14px; font-weight: 800; color: var(--text2); text-transform: uppercase; letter-spacing: 1px;
   margin-bottom: 16px;
 }
 
@@ -379,7 +379,7 @@ body {
   <p class="sec-desc">신규 Steam Shooter 론칭의 업계 현실과 Project S의 목표 구간을 데이터 기반으로 제시합니다. Conservative 기준을 베이스라인으로 설정합니다.</p>
 
   <!-- 5-Tier 분포 -->
-  <div class="card-h" style="font-size:11px;font-weight:800;color:var(--text2);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px">
+  <div class="card-h">
     📊 신규 Steam Shooter 100개 론칭 중 1년 후 도달 분포 (업계 실측)
   </div>
   <div class="g5">
@@ -662,6 +662,14 @@ body {
 
 <!-- ══ GANTT JS ══ -->
 <script>
+/* ── Phase 접기/펼치기 전역 상태 ── */
+const ganttCollapse = {};  // { 'P0': false, 'P1': true, ... }  true = 접힘
+
+function toggleGanttPhase(step) {
+  ganttCollapse[step] = !ganttCollapse[step];
+  buildGantt();
+}
+
 function buildGantt() {
   /* ═══════════════════════════════════════════════════════════════
      GANTT v3 — 행(Row) 기반 프로젝트 스케줄 Gantt
@@ -674,7 +682,7 @@ function buildGantt() {
   const W = Math.max(el.parentElement.getBoundingClientRect().width - 24, 760);
 
   // ── 좌표 상수 ──────────────────────────────────────────────────
-  const LW  = 195;          // 왼쪽 레이블 열 너비
+  const LW  = 220;          // 왼쪽 레이블 열 너비 (폰트 확대로 확장)
   const PAD = 12;           // 우측 여백
   const TW  = W - LW - PAD; // 타임라인 너비
   const TM  = 25;           // 총 개월 (m=0=Jun'26 ~ m=25=Jul'28)
@@ -683,13 +691,13 @@ function buildGantt() {
   const TX = m => Math.round(LW + (m / TM) * TW); // 절대 X 좌표
 
   // ── 행 레이아웃 상수 ────────────────────────────────────────────
-  const RULER_H  = 48;  // 눈금자 높이
-  const PH_H     = 26;  // Phase 헤더 행 높이
-  const TASK_H   = 20;  // 개별 항목 행 높이
-  const BAR_PAD  = 4;   // 바 상하 여백
-  const BAR_H    = TASK_H - BAR_PAD * 2;  // = 12
-  const GAP      = 6;   // Phase 간 여백
-  const LEG_H    = 30;  // 범례 높이
+  const RULER_H  = 52;  // 눈금자 높이
+  const PH_H     = 34;  // Phase 헤더 행 높이 (폰트 확대)
+  const TASK_H   = 26;  // 개별 항목 행 높이 (폰트 확대)
+  const BAR_PAD  = 5;   // 바 상하 여백
+  const BAR_H    = TASK_H - BAR_PAD * 2;  // = 16
+  const GAP      = 8;   // Phase 간 여백
+  const LEG_H    = 34;  // 범례 높이
 
   // ── 폰트/색상 헬퍼 ──────────────────────────────────────────────
   const F = "font-family='Pretendard,-apple-system,sans-serif'";
@@ -767,21 +775,21 @@ function buildGantt() {
   ];
 
   // ── 총 높이 계산 ────────────────────────────────────────────────
-  let totalRows = 0;
-  PHASES.forEach(ph => { totalRows += 1 + ph.tasks.length; });
-  const TOTAL_H = RULER_H + totalRows * TASK_H + (PHASES.length-1) * GAP +
-                  PHASES.reduce((a,ph) => a + (ph.tasks.length?0:0), 0) + // PH_H 추가
-                  PHASES.length * (PH_H - TASK_H) + // Phase 헤더가 더 높음
-                  LEG_H + 20;
+  // 접기 상태 반영한 총 높이 계산
+  let estH = RULER_H + LEG_H + 20;
+  PHASES.forEach(ph => {
+    estH += PH_H + GAP;
+    if (!ganttCollapse[ph.step]) estH += ph.tasks.length * TASK_H;
+  });
 
-  el.setAttribute('viewBox', `0 0 ${W} ${TOTAL_H}`);
-  el.setAttribute('height', TOTAL_H);
+  el.setAttribute('viewBox', `0 0 ${W} ${estH}`);
+  el.setAttribute('height', estH);
 
   let g = '';
   let clipDefs = '';
 
   // ── 배경 ────────────────────────────────────────────────────────
-  g += rc(0, 0, W, TOTAL_H, '#f8fafc', 0);
+  g += rc(0, 0, W, estH, '#f8fafc', 0);
 
   // ── 타임라인 눈금자 ─────────────────────────────────────────────
   // 연도 레이블
@@ -816,17 +824,17 @@ function buildGantt() {
     // 격자선 (전체 높이)
     if (m % 1 === 0) {
       const isMajor = lbl.includes("'") || lbl === '★SNF';
-      g += ln(mx, RULER_H, mx, TOTAL_H - LEG_H - 10,
+      g += ln(mx, RULER_H, mx, estH - LEG_H - 10,
         `stroke='${isMajor?"#e5e7eb":"#f3f4f6"}' stroke-width='${isMajor?0.8:0.4}'`);
     }
   });
 
   // SNF 수직선 강조
-  g += ln(TX(16), RULER_H, TX(16), TOTAL_H-LEG_H-10,
+  g += ln(TX(16), RULER_H, TX(16), estH-LEG_H-10,
     "stroke='#fde68a' stroke-width='1.5' stroke-dasharray='6,3'");
 
   // 현재 마커
-  g += ln(TX(0), 16, TX(0), TOTAL_H-LEG_H-10,
+  g += ln(TX(0), 16, TX(0), estH-LEG_H-10,
     "stroke='#ef4444' stroke-width='1.5' stroke-dasharray='4,3' opacity='0.55'");
   g += `<polygon points='${TX(0)-5},18 ${TX(0)+5},18 ${TX(0)},26' fill='#ef4444' opacity='0.8'/>`;
   g += tx(TX(0), 12, '현재', "text-anchor='middle' font-size='8' font-weight='800' fill='#ef4444'");
@@ -835,46 +843,57 @@ function buildGantt() {
   let curY = RULER_H;
 
   PHASES.forEach((phase, pi) => {
-    if (pi > 0) curY += GAP; // Phase 간 여백
+    if (pi > 0) curY += GAP;
 
-    // Phase 배경 블록 (전체 행 높이)
-    const phaseRows = 1 + phase.tasks.length;
-    const phaseH = PH_H + phase.tasks.length * TASK_H;
+    const isCollapsed = !!ganttCollapse[phase.step];
+    const visibleTaskH = isCollapsed ? 0 : phase.tasks.length * TASK_H;
+    const phaseH = PH_H + visibleTaskH;
 
     // 배경 (레이블 영역)
     g += rc(0, curY, LW-2, phaseH, phase.fill + '18', 4);
 
-    // 배경 (타임라인 영역) — 해당 Phase 기간만 살짝 하이라이트
+    // 배경 (타임라인 기간 하이라이트)
     const ph_m0 = phase.tasks.length ? Math.min(...phase.tasks.map(t=>t.m0)) : 0;
     const ph_m1 = phase.tasks.length ? Math.max(...phase.tasks.map(t=>t.m1)) : TM;
-    if (ph_m0 < ph_m1) {
-      g += rc(TX(ph_m0), curY, TX(ph_m1)-TX(ph_m0), phaseH,
-        phase.fill+'0d', 0);
+    if (ph_m0 < ph_m1 && !isCollapsed) {
+      g += rc(TX(ph_m0), curY, TX(ph_m1)-TX(ph_m0), phaseH, phase.fill+'0d', 0);
     }
 
-    // ── Phase 헤더 행 ─────────────────────────────────────────────
+    // ── Phase 헤더 행 (클릭 가능) ─────────────────────────────────
+    // 클릭 투명 오버레이 (전체 헤더 너비)
+    g += `<rect x='0' y='${curY}' width='${W}' height='${PH_H}' fill='transparent'
+      onclick="toggleGanttPhase('${phase.step}')" style='cursor:pointer'/>`;
+    // 헤더 배경 (레이블 영역)
     g += rc(0, curY, LW-2, PH_H, phase.fill, 4);
-    // Step 뱃지
-    const badgeW = phase.step.length <= 2 ? 24 : 32;
-    g += rc(8, curY+5, badgeW, 16, 'rgba(255,255,255,0.25)', 8);
-    g += tx(8+badgeW/2|0, curY+16, phase.step,
-      `text-anchor='middle' font-size='8.5' font-weight='800' fill='#fff'`);
-    // Phase 이름
-    g += tx(badgeW+14, curY+16, phase.name,
-      `font-size='12' font-weight='800' fill='#fff'`);
-    // 날짜
-    g += tx(LW-6, curY+16, phase.date,
-      `text-anchor='end' font-size='9' fill='rgba(255,255,255,0.8)'`);
 
-    // 헤더 우측 — 기간 바 (배경)
+    // Step 뱃지
+    const badgeW = phase.step.length <= 2 ? 28 : 38;
+    g += rc(8, curY+7, badgeW, 20, 'rgba(255,255,255,0.25)', 8);
+    g += tx(8+badgeW/2|0, curY+20, phase.step,
+      `text-anchor='middle' font-size='10' font-weight='800' fill='#fff'`);
+    // Phase 이름 (폰트 확대)
+    g += tx(badgeW+16, curY+21, phase.name,
+      `font-size='14' font-weight='800' fill='#fff'`);
+    // 날짜
+    g += tx(LW-32, curY+21, phase.date,
+      `text-anchor='end' font-size='10.5' fill='rgba(255,255,255,0.85)'`);
+
+    // 접기/펼치기 화살표 (▼/▶)
+    const arrow = isCollapsed ? '▶' : '▼';
+    g += tx(LW-14, curY+21, arrow,
+      `text-anchor='middle' font-size='10' fill='rgba(255,255,255,0.85)'`);
+
+    // 헤더 우측 — 기간 바
     if (ph_m0 < ph_m1) {
-      g += rc(TX(ph_m0), curY+4, TX(ph_m1)-TX(ph_m0), PH_H-8,
-        phase.fill, 4, `opacity='0.2'`);
+      g += rc(TX(ph_m0), curY+5, TX(ph_m1)-TX(ph_m0), PH_H-10,
+        phase.fill, 4, `opacity='0.18'`);
     }
 
     curY += PH_H;
 
-    // ── 세부 항목 행들 ────────────────────────────────────────────
+    // ── 세부 항목 행들 (접힘 시 생략) ────────────────────────────
+    if (isCollapsed) return; // 접힌 Phase는 행 렌더링 건너뜀
+
     phase.tasks.forEach((task, ti) => {
       const rowY = curY;
       const barY = rowY + BAR_PAD;
@@ -887,10 +906,10 @@ function buildGantt() {
       const isLaunch = task.name.includes('🚀');
       if (isLaunch) {
         g += tx(10, rowY+TASK_H-5, task.name,
-          `font-size='10' font-weight='800' fill='${task.col}'`);
+          `font-size='12' font-weight='800' fill='${task.col}'`);
       } else {
         g += tx(10, rowY+TASK_H-5, task.name,
-          `font-size='10' fill='#374151'`);
+          `font-size='12' fill='#374151'`);
       }
 
       // 타임라인 열 — 기간 바
@@ -926,21 +945,21 @@ function buildGantt() {
           const midX = (bx0 + bx1) / 2 | 0;
           if (labelSpace > 60) {
             g += tx(midX, barY+BAR_H-1, `${task.start_lbl} → ${task.end_lbl}`,
-              `text-anchor='middle' font-size='8' fill='#fff' font-weight='600'`);
+              `text-anchor='middle' font-size='9.5' fill='#fff' font-weight='600'`);
           } else if (labelSpace > 30) {
             g += tx(midX, barY+BAR_H-1, task.start_lbl,
-              `text-anchor='middle' font-size='7.5' fill='#fff' font-weight='600'`);
+              `text-anchor='middle' font-size='9' fill='#fff' font-weight='600'`);
           }
 
           // 시작 날짜 (바 위)
           if (bw > 10) {
             g += tx(bx0, barY-1, task.start_lbl,
-              `font-size='7.5' fill='${task.col}' font-weight='600' opacity='0.9'`);
+              `font-size='9' fill='${task.col}' font-weight='600' opacity='0.9'`);
           }
           // 끝 날짜 (바 끝 오른쪽, 공간 있을 때만)
           if (bw > 40) {
             g += tx(bx1+3, barY+BAR_H-1, task.end_lbl,
-              `font-size='7.5' fill='${task.col}' opacity='0.8'`);
+              `font-size='9' fill='${task.col}' opacity='0.8'`);
           }
         }
       }
@@ -959,9 +978,9 @@ function buildGantt() {
   const snfX = TX(16);
   g += rc(snfX-20, RULER_H, 40, curY-RULER_H, '#fef9c3', 0, `opacity='0.3'`);
   g += tx(snfX, RULER_H+14, '★ SNF Oct\'27',
-    "text-anchor='middle' font-size='9.5' font-weight='800' fill='#d97706'");
+    "text-anchor='middle' font-size='12' font-weight='800' fill='#d97706'");
   g += tx(snfX, RULER_H+25, '경로 분기 결정',
-    "text-anchor='middle' font-size='8' fill='#92400e'");
+    "text-anchor='middle' font-size='11' fill='#92400e'");
 
   // ── 범례 ────────────────────────────────────────────────────────
   const LY = curY + 14;
@@ -979,7 +998,7 @@ function buildGantt() {
   LEGS.forEach(({col,lbl},i)=>{
     const lx = legX0+i*ITEM_W;
     g += rc(lx, LY, 12, 10, col, 2);
-    g += tx(lx+16, LY+9, lbl, `font-size='9.5' fill='#374151'`);
+    g += tx(lx+16, LY+9, lbl, `font-size='11' fill='#374151'`);
   });
 
   // ── SVG 조립 ────────────────────────────────────────────────────
