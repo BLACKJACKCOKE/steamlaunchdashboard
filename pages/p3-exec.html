@@ -770,27 +770,50 @@ body {
       </div>
     </div>
   </div>
-  <div style="margin-top:10px;background:#f8fafc;border:1px solid var(--border);border-radius:8px;padding:14px 18px">
-    <div style="font-size:10px;font-weight:800;color:var(--text3);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px">📚 데이터 근거 — 4개 출처 교차검증</div>
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
-      <div>
-        <div style="font-size:11px;font-weight:800;color:var(--text1);margin-bottom:3px">GameDiscoverCo 2024–2025</div>
-        <div style="font-size:11px;color:var(--text2);line-height:1.6">Simon Carless가 운영하는 Steam 전문 분석 뉴스레터. 매주 실제 런칭 타이틀의 WL 전환율·CCU 추이를 추적 발행하며, 본 5-Tier 분포의 <strong>핵심 통계 기반</strong>. Shooter 장르 100개 코호트의 1년 후 생존율 데이터 직접 인용.</div>
+  <details style="margin-top:10px;background:#f8fafc;border:1px solid var(--border);border-radius:8px;overflow:hidden" id="src-detail">
+    <summary style="padding:12px 18px;cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;flex-wrap:wrap;user-select:none" onclick="this.parentElement.querySelector('.src-cards').style.display=this.parentElement.open?'none':'grid'">
+      <span style="font-size:10px;font-weight:800;color:var(--text3);letter-spacing:1.5px;text-transform:uppercase;white-space:nowrap">📚 데이터 근거 — 4개 출처 교차검증</span>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">
+        <span style="font-size:9.5px;font-weight:700;background:#e0f2fe;color:#0369a1;padding:3px 9px;border-radius:20px;white-space:nowrap">GameDiscoverCo 2024–25</span>
+        <span style="font-size:9.5px;font-weight:700;background:#f0fdf4;color:#166534;padding:3px 9px;border-radius:20px;white-space:nowrap">SteamSpy</span>
+        <span style="font-size:9.5px;font-weight:700;background:#fef3c7;color:#92400e;padding:3px 9px;border-radius:20px;white-space:nowrap">Steam Charts 역산</span>
+        <span style="font-size:9.5px;font-weight:700;background:#ede9fe;color:#5b21b6;padding:3px 9px;border-radius:20px;white-space:nowrap">Newzoo Shooter 리포트</span>
       </div>
-      <div>
-        <div style="font-size:11px;font-weight:800;color:var(--text1);margin-bottom:3px">SteamSpy</div>
-        <div style="font-size:11px;color:var(--text2);line-height:1.6">Steam 공개 API 기반 소유권·플레이어 수 추정 도구. 장르별 게임 집합의 소유자 수 분포를 집계해 <strong>Tier 경계값(5K / 30K / 100K / 300K)</strong> 산정의 크로스체크 근거로 활용. 개별 타이틀 정밀도는 낮으나 코호트 분포 경향성 파악에 유효.</div>
+      <span style="margin-left:auto;font-size:10px;color:var(--text3);white-space:nowrap">▼ 펼치기</span>
+    </summary>
+    <style>
+      #src-detail summary::-webkit-details-marker{display:none}
+      #src-detail[open] summary span:last-child{transform:rotate(180deg)}
+      .src-cards{display:none;grid-template-columns:repeat(4,1fr);gap:12px;padding:0 18px 16px}
+      #src-detail[open] .src-cards{display:grid}
+    </style>
+    <div class="src-cards">
+      <div style="background:#fff;border:1px solid #bae6fd;border-radius:8px;padding:12px 13px">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">
+          <span style="font-size:9.5px;font-weight:700;background:#e0f2fe;color:#0369a1;padding:2px 8px;border-radius:20px">GameDiscoverCo 2024–25</span>
+        </div>
+        <div style="font-size:11px;color:var(--text2);line-height:1.65">Simon Carless가 운영하는 Steam 전문 분석 뉴스레터. 매주 실제 런칭 타이틀의 WL 전환율·CCU 추이를 추적 발행하며, 본 5-Tier 분포의 <strong>핵심 통계 기반</strong>. Shooter 장르 100개 코호트의 1년 후 생존율 데이터 직접 인용.</div>
       </div>
-      <div>
-        <div style="font-size:11px;font-weight:800;color:var(--text1);margin-bottom:3px">Steam Charts 역산</div>
-        <div style="font-size:11px;color:var(--text2);line-height:1.6">Steam Charts의 공개 PCCU 데이터를 기준으로, 각 타이틀의 런칭 시점 WL 대비 PCCU 비율을 <strong>개별 역산</strong>. HD2·BF6·Concord 등 벤치마크 타이틀의 실측 전환율(6~55%)을 도출해 장르 평균 6~15% 구간 검증에 사용.</div>
+      <div style="background:#fff;border:1px solid #bbf7d0;border-radius:8px;padding:12px 13px">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">
+          <span style="font-size:9.5px;font-weight:700;background:#f0fdf4;color:#166534;padding:2px 8px;border-radius:20px">SteamSpy</span>
+        </div>
+        <div style="font-size:11px;color:var(--text2);line-height:1.65">Steam 공개 API 기반 소유권·플레이어 수 추정 도구. 장르별 게임 집합의 소유자 수 분포를 집계해 <strong>Tier 경계값(5K / 30K / 100K / 300K)</strong> 산정의 크로스체크 근거로 활용. 개별 타이틀 정밀도는 낮으나 코호트 분포 경향성 파악에 유효.</div>
       </div>
-      <div>
-        <div style="font-size:11px;font-weight:800;color:var(--text1);margin-bottom:3px">Newzoo Shooter 장르 리포트</div>
-        <div style="font-size:11px;color:var(--text2);line-height:1.6">글로벌 게임 시장 조사 기관 Newzoo의 FPS·TPS 장르 연간 리포트. <strong>시장 전체 성과 분포</strong>(상위 1% / 5% / 15% 구간)의 매크로 기준선을 제공해 GameDiscoverCo 미시 데이터와의 정합성을 검증. 5-Tier 비율(1/4/10/27/58%) 확정의 최종 근거.</div>
+      <div style="background:#fff;border:1px solid #fde68a;border-radius:8px;padding:12px 13px">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">
+          <span style="font-size:9.5px;font-weight:700;background:#fef3c7;color:#92400e;padding:2px 8px;border-radius:20px">Steam Charts 역산</span>
+        </div>
+        <div style="font-size:11px;color:var(--text2);line-height:1.65">Steam Charts의 공개 PCCU 데이터를 기준으로 각 타이틀의 런칭 시점 WL 대비 PCCU 비율을 <strong>개별 역산</strong>. HD2·BF6·Concord 등 벤치마크 타이틀의 실측 전환율(6~55%)을 도출해 장르 평균 6~15% 구간 검증에 사용.</div>
+      </div>
+      <div style="background:#fff;border:1px solid #ddd6fe;border-radius:8px;padding:12px 13px">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">
+          <span style="font-size:9.5px;font-weight:700;background:#ede9fe;color:#5b21b6;padding:2px 8px;border-radius:20px">Newzoo Shooter 리포트</span>
+        </div>
+        <div style="font-size:11px;color:var(--text2);line-height:1.65">글로벌 게임 시장 조사 기관 Newzoo의 FPS·TPS 장르 연간 리포트. <strong>시장 전체 성과 분포</strong>(상위 1% / 5% / 15% 구간)의 매크로 기준선을 제공해 GameDiscoverCo 미시 데이터와의 정합성을 검증. 5-Tier 비율(1/4/10/27/58%) 확정의 최종 근거.</div>
       </div>
     </div>
-  </div>
+  </details>
 
   <!-- WL 목표 & 시나리오 테이블 -->
   <div class="mt24 g2" style="align-items:stretch">
