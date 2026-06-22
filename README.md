@@ -19,7 +19,7 @@
 │   ├── p2.html             스팀 마켓
 │   ├── p3.html             마일스톤
 │   ├── p4.html             스팀 정책 & 리스크
-│   ├── appendix.html       매치메이킹 CCU 계산기
+│   ├── ccu-calculator.html 매치메이킹 CCU 계산기 (#ccu-calculator · 옛 #appendix alias)
 │   ├── steam_china.html    P4 내부 iframe (중국 리스크 상세)
 │   └── steam_russia.html   P4 내부 iframe (러시아 리스크 상세)
 ├── _headers                Cloudflare Pages CSP/보안 헤더

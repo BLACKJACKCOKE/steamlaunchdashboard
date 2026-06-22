@@ -15,8 +15,11 @@
     p5:       { title: 'Pain Point 분석',              src: 'https://project-s-dashboard.pages.dev/', internal: false, num: 'P5' },
     p6:       { title: 'BM 분석',                       src: 'https://pub-4710a252be1249c58617eed8ea869738.r2.dev/images/p6_projectsdashboard_BM.html', internal: false, num: 'P6' },
     p7:       { title: '경쟁작 캘린더',                 src: 'https://fps-dashboard.misty-haze-7fc4.workers.dev/', internal: false, num: 'P7' },
-    appendix: { title: '매치메이킹 CCU 계산기',          src: 'pages/appendix.html', internal: true,  num: 'APX' },
+    'ccu-calculator': { title: '매치메이킹 CCU 계산기',  src: 'pages/ccu-calculator.html', internal: true,  num: 'APX' },
   };
+
+  // 옛 #appendix 공유 링크 호환 — 신규 라우트로 매핑
+  const ROUTE_ALIASES = { appendix: 'ccu-calculator' };
 
   const DEFAULT_ROUTE = 'p0';
 
@@ -37,7 +40,8 @@
   }
 
   function getRouteKey() {
-    const key = (location.hash || '').replace(/^#/, '').trim();
+    let key = (location.hash || '').replace(/^#/, '').trim();
+    if (ROUTE_ALIASES[key]) key = ROUTE_ALIASES[key];
     return ROUTES[key] ? key : DEFAULT_ROUTE;
   }
 

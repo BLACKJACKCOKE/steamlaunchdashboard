@@ -13,7 +13,8 @@ test('shell.js exports routing table mapping hashes to page configs', () => {
   assert.match(source, /p5/);
   assert.match(source, /p6/);
   assert.match(source, /p7/);
-  assert.match(source, /appendix/);
+  assert.match(source, /ccu-calculator/);
+  assert.match(source, /appendix/); // 옛 링크 호환 alias 유지 확인
 });
 
 test('shell.js references both internal and external iframe sources', () => {
