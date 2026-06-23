@@ -834,6 +834,12 @@ body {
     #src-detail[open] .src-toggle-text::before{content:'접기'}
     .src-cards{display:none;grid-template-columns:repeat(4,1fr);gap:12px;padding:0 18px 16px}
     #src-detail[open] .src-cards{display:grid}
+    #wlpccu-detail summary::-webkit-details-marker{display:none}
+    #wlpccu-detail summary{padding:12px 18px;cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;flex-wrap:wrap;user-select:none}
+    #wlpccu-detail[open] .src-toggle-arrow{transform:rotate(180deg)}
+    #wlpccu-detail[open] .src-toggle-text::before{content:'접기'}
+    .wlpccu-cards{display:none;grid-template-columns:repeat(6,1fr);gap:12px;padding:0 18px 16px}
+    #wlpccu-detail[open] .wlpccu-cards{display:grid}
   </style>
   <details style="margin-top:10px;background:#f8fafc;border:1px solid var(--border);border-radius:8px;overflow:hidden" id="src-detail">
     <summary>
@@ -891,25 +897,25 @@ body {
     <div style="display:flex;align-items:stretch;gap:5px;margin-top:14px">
       <div style="flex:1;background:#f8fafc;border:1px solid #e5e7eb;border-radius:10px;padding:13px 11px;text-align:center;display:flex;flex-direction:column;gap:4px">
         <div style="font-size:11px;font-weight:800;letter-spacing:.06em;color:#2563eb">STAGE 1 · 수요</div>
-        <div style="font-size:21px;font-weight:800;color:var(--text1)">위시 1.3M</div>
+        <div style="font-size:21px;font-weight:800;color:var(--text1)">위시리스트 1.3M</div>
         <div style="font-size:11.5px;color:var(--text3);line-height:1.45">SNF 직전 0.85M → 〔SNF 증폭〕 → 론칭 1.3M</div>
       </div>
       <div style="align-self:center;font-size:17px;font-weight:800;color:#94a3b8">→</div>
       <div style="flex:1;background:#f8fafc;border:1px solid #e5e7eb;border-radius:10px;padding:13px 11px;text-align:center;display:flex;flex-direction:column;gap:4px">
         <div style="font-size:11px;font-weight:800;letter-spacing:.06em;color:#2563eb">STAGE 2 · 데뷔</div>
-        <div style="font-size:21px;font-weight:800;color:var(--text1)">피크 150K</div>
+        <div style="font-size:21px;font-weight:800;color:var(--text1)">Peak CCU 150K</div>
         <div style="font-size:11.5px;color:var(--text3);line-height:1.45"><strong style="color:var(--text2)">FPS Top 5-7</strong> · 72h 스파이크로 피쳐링 점화</div>
       </div>
       <div style="align-self:center;font-size:17px;font-weight:800;color:#94a3b8">→</div>
       <div style="flex:1;background:#eff6ff;border:1.5px solid #2563eb;border-radius:10px;padding:13px 11px;text-align:center;display:flex;flex-direction:column;gap:4px">
         <div style="font-size:11px;font-weight:800;letter-spacing:.06em;color:#2563eb">STAGE 3 · 안착 ★</div>
-        <div style="font-size:21px;font-weight:800;color:#2563eb">avg 50K</div>
+        <div style="font-size:21px;font-weight:800;color:#2563eb">avg. CCU 50K</div>
         <div style="font-size:11.5px;color:var(--text3);line-height:1.45"><strong style="color:var(--text2)">FPS Top10</strong> · +1개월 · sustain 33%</div>
       </div>
       <div style="align-self:center;font-size:17px;font-weight:800;color:#94a3b8">→</div>
       <div style="flex:1;background:#f8fafc;border:1px solid #e5e7eb;border-radius:10px;padding:13px 11px;text-align:center;display:flex;flex-direction:column;gap:4px">
         <div style="font-size:11px;font-weight:800;letter-spacing:.06em;color:#7c3aed">STAGE 4 · 확장</div>
-        <div style="font-size:21px;font-weight:800;color:var(--text1)">avg 80K+</div>
+        <div style="font-size:21px;font-weight:800;color:var(--text1)">avg. CCU 80K+</div>
         <div style="font-size:11.5px;color:var(--text3);line-height:1.45"><strong style="color:var(--text2)">FPS Top5</strong> · LiveOps·콘솔·e-sports</div>
       </div>
     </div>
@@ -966,9 +972,9 @@ body {
   <!-- 론칭 Top-rank 매핑 + 4 플라이휠 -->
   <div class="mt24 g2" style="align-items:stretch">
     <div class="card" style="display:flex;flex-direction:column">
-      <div class="card-h">론칭 72h Top-rank 매핑 (최근 FPS peak 대비)</div>
+      <div class="card-h">론칭 72h Top-rank 매핑 (2026년 6월 기준 FPS peak)</div>
       <table class="wl-table" style="flex:1;height:100%">
-        <thead><tr><th>순위</th><th>게임</th><th>최근 peak</th></tr></thead>
+        <thead><tr><th>순위</th><th>게임</th><th>peak (26.06)</th></tr></thead>
         <tbody>
           <tr><td>1</td><td>CS2</td><td>~1.5M <span style="color:#9aa8b8;font-size:11px">별도 리그</span></td></tr>
           <tr><td>2</td><td>PUBG</td><td>~852K</td></tr>
@@ -984,24 +990,47 @@ body {
     </div>
     <div class="card" style="display:flex;flex-direction:column">
       <div class="card-h">왜 72h 피크를 극대화하는가 — 4 플라이휠</div>
-      <div style="display:flex;flex-direction:column;gap:9px;flex:1;margin-top:8px">
-        <div style="display:flex;gap:10px;align-items:flex-start"><span style="font-size:19px">🔝</span><div style="font-size:12.5px;line-height:1.5;color:var(--text2)"><strong style="color:var(--text1)">① Steam 알고리즘 피쳐링</strong> — 첫 48-72h sales velocity가 <strong>New&amp;Trending</strong>(최상단 슬롯) 배치 결정. <a href="https://secondstage.io/academy/steam-marketing/launch-week-steam" target="_blank" style="color:#2563eb;text-decoration:none">출처 ↗</a></div></div>
-        <div style="display:flex;gap:10px;align-items:flex-start"><span style="font-size:19px">💰</span><div style="font-size:12.5px;line-height:1.5;color:var(--text2)"><strong style="color:var(--text1)">② CCU = 매출 신호 → Top Sellers</strong> — Day1 피크 × 21.8 = Week1 판매. <a href="https://newsletter.gamediscover.co/p/how-your-steam-launch-players-relate" target="_blank" style="color:#2563eb;text-decoration:none">출처 ↗</a></div></div>
-        <div style="display:flex;gap:10px;align-items:flex-start"><span style="font-size:19px">📣</span><div style="font-size:12.5px;line-height:1.5;color:var(--text2)"><strong style="color:var(--text1)">③ 이슈 몰이·스트리머 플라이휠</strong> — 공개 동접 = "다들 하는 게임" 사회적 증거 → 화제 → 추가 유입.</div></div>
-        <div style="display:flex;gap:10px;align-items:flex-start"><span style="font-size:19px">🎮</span><div style="font-size:12.5px;line-height:1.5;color:var(--text2)"><strong style="color:var(--text1)">④ 매치메이킹 유동성</strong> — FPS는 critical-mass. 피크가 두꺼워야 매칭·첫 경험이 살아 retention 전환. <a href="https://arxiv.org/html/2604.13390" target="_blank" style="color:#2563eb;text-decoration:none">출처 ↗</a></div></div>
+      <div style="display:flex;flex-direction:column;flex:1;margin-top:10px">
+        <div style="display:flex;gap:13px;align-items:flex-start;flex:1;padding:11px 0;border-bottom:1px solid #eef1f5">
+          <span style="font-size:23px;line-height:1.1;flex-shrink:0">🔝</span>
+          <div><div style="font-size:14px;font-weight:800;color:var(--text1);margin-bottom:3px">① Steam 알고리즘 피쳐링</div>
+          <div style="font-size:12.5px;line-height:1.55;color:var(--text2)">첫 48-72h sales velocity가 <strong>New&amp;Trending</strong>(스토어 최상단 슬롯) 배치를 결정. <a href="https://secondstage.io/academy/steam-marketing/launch-week-steam" target="_blank" style="color:#2563eb;text-decoration:none;font-weight:600">SecondStage — Launch Week ↗</a></div></div>
+        </div>
+        <div style="display:flex;gap:13px;align-items:flex-start;flex:1;padding:11px 0;border-bottom:1px solid #eef1f5">
+          <span style="font-size:23px;line-height:1.1;flex-shrink:0">💰</span>
+          <div><div style="font-size:14px;font-weight:800;color:var(--text1);margin-bottom:3px">② CCU = 매출 신호 → Top Sellers</div>
+          <div style="font-size:12.5px;line-height:1.55;color:var(--text2)">Day1 피크 CCU × 21.8 = Week1 판매 → Top Sellers 차트 진입. <a href="https://newsletter.gamediscover.co/p/how-your-steam-launch-players-relate" target="_blank" style="color:#2563eb;text-decoration:none;font-weight:600">GameDiscoverCo ↗</a></div></div>
+        </div>
+        <div style="display:flex;gap:13px;align-items:flex-start;flex:1;padding:11px 0;border-bottom:1px solid #eef1f5">
+          <span style="font-size:23px;line-height:1.1;flex-shrink:0">📣</span>
+          <div><div style="font-size:14px;font-weight:800;color:var(--text1);margin-bottom:3px">③ 이슈 몰이·스트리머 플라이휠</div>
+          <div style="font-size:12.5px;line-height:1.55;color:var(--text2)">Steam 공개 CCU 차트 = "다들 하는 게임" 사회적 증거 → 스트리머·미디어 화제 → 추가 유입. <a href="https://steamdb.info/charts/" target="_blank" style="color:#2563eb;text-decoration:none;font-weight:600">SteamDB Charts ↗</a></div></div>
+        </div>
+        <div style="display:flex;gap:13px;align-items:flex-start;flex:1;padding:11px 0">
+          <span style="font-size:23px;line-height:1.1;flex-shrink:0">🎮</span>
+          <div><div style="font-size:14px;font-weight:800;color:var(--text1);margin-bottom:3px">④ 매치메이킹 유동성</div>
+          <div style="font-size:12.5px;line-height:1.55;color:var(--text2)">FPS는 critical-mass — 피크가 두꺼워야 매칭·첫 경험이 살아 retention으로 전환. <a href="https://arxiv.org/html/2604.13390" target="_blank" style="color:#2563eb;text-decoration:none;font-weight:600">arXiv 2604.13390 ↗</a></div></div>
+        </div>
       </div>
       <div style="font-size:12px;color:var(--text2);line-height:1.5;margin-top:8px;padding-top:8px;border-top:1px solid #e5e7eb">→ 피크 150K = 피쳐링·차트·화제·매칭을 <strong>동시 점화</strong>하는 점화 플러그. Day30 sustain의 전제.</div>
     </div>
   </div>
 
   <!-- WL→PCCU 전환 벤치마크 (접기/펼치기) -->
-  <details class="mt16 card" open>
-    <summary class="card-h" style="cursor:pointer;list-style:none;display:flex;align-items:center;flex-wrap:wrap;gap:8px">WL→PCCU% 업계 실측 벤치마크 <span style="font-size:12.5px;font-weight:600;color:#6b7280">내림차순 정렬 · PCCU=출시 후 최고 동접 ÷ 출시 전 WL · ⚠️ ARC·Delta=2M+ WL mega-awareness outlier(T5, Project S 직접 목표 비교 금지)</span><span style="margin-left:auto;font-size:11px;font-weight:700;color:var(--text3)">▾ 접기/펼치기</span></summary>
-    <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:12px">
+  <details class="mt16" id="wlpccu-detail" style="background:#f8fafc;border:1px solid var(--border);border-radius:8px;overflow:hidden">
+    <summary>
+      <span style="font-size:12.5px;font-weight:800;color:var(--text3);letter-spacing:1.5px;text-transform:uppercase;white-space:nowrap">📊 WL→PCCU% 업계 실측 벤치마크</span>
+      <span style="font-size:12px;font-weight:600;color:#6b7280">내림차순 · PCCU=출시 후 최고 동접 ÷ 출시 전 WL · ⚠️ ARC·Delta=2M+ WL mega-awareness outlier(Project S 직접 목표 비교 금지)</span>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:4px;white-space:nowrap">
+        <span class="src-toggle-arrow">▼</span>
+        <span class="src-toggle-text"></span>
+      </div>
+    </summary>
+    <div class="wlpccu-cards">
 
       <!-- 1위: Marvel Rivals ~50% -->
-      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:12px;background:#f8fafc;border-radius:8px">
-        <div style="font-size:13.5px;font-weight:700;color:#d97706;margin-bottom:3px">⚠️ Steam단독 vs +Epic 충돌</div>
+      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:12px;background:#fafbfc;border:1px solid #eaedf1;border-radius:8px">
+        <div style="font-size:13.5px;font-weight:700;color:var(--text3);margin-bottom:3px">⚠️ Steam단독 vs +Epic 충돌</div>
         <div style="font-size:14px;font-weight:800;color:var(--text1);margin-bottom:6px"><span style="font-size:9px;font-weight:800;padding:1px 5px;border-radius:6px;background:#dcfce7;color:#166534;margin-right:4px;vertical-align:middle">F2P</span>Marvel Rivals</div>
         <div style="font-size:20px;font-weight:800;color:#16a34a">~50%</div>
         <div style="font-size:13px;color:var(--text3)">644K ÷ 1M+ WL · 상한</div>
@@ -1017,8 +1046,8 @@ body {
       </div>
 
       <!-- 2위: BF6 28% -->
-      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:12px;background:#f0fdf4;border:1px solid #86efac;border-radius:8px">
-        <div style="font-size:13.5px;font-weight:700;color:#16a34a;margin-bottom:3px">✅ 양쪽 검증</div>
+      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:12px;background:#fafbfc;border:1px solid #eaedf1;border-radius:8px">
+        <div style="font-size:13.5px;font-weight:700;color:var(--text3);margin-bottom:3px">✅ 양쪽 검증</div>
         <div style="font-size:14px;font-weight:800;color:var(--text1);margin-bottom:6px"><span style="font-size:9px;font-weight:800;padding:1px 5px;border-radius:6px;background:#dbeafe;color:#1d4ed8;margin-right:4px;vertical-align:middle">Premium</span>BF6</div>
         <div style="font-size:20px;font-weight:800;color:#3b82f6">28%</div>
         <div style="font-size:13px;color:var(--text3)">747K ÷ 2.7M WL</div>
@@ -1034,8 +1063,8 @@ body {
       </div>
 
       <!-- 3위: ARC Raiders ~27% (Gray Zone 대체·우리 벤치마크) -->
-      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:12px;background:#f0fdf4;border:1px solid #86efac;border-radius:8px">
-        <div style="font-size:13.5px;font-weight:700;color:#d97706;margin-bottom:3px">⚠️ WL 2.5M 추정(#3)</div>
+      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:12px;background:#fafbfc;border:1px solid #eaedf1;border-radius:8px">
+        <div style="font-size:13.5px;font-weight:700;color:var(--text3);margin-bottom:3px">⚠️ WL 2.5M 추정(#3)</div>
         <div style="font-size:14px;font-weight:800;color:var(--text1);margin-bottom:6px"><span style="font-size:9px;font-weight:800;padding:1px 5px;border-radius:6px;background:#dbeafe;color:#1d4ed8;margin-right:4px;vertical-align:middle">Premium</span>ARC Raiders</div>
         <div style="font-size:20px;font-weight:800;color:#16a34a">~19%</div>
         <div style="font-size:13px;color:var(--text3)">481K ÷ 2.5M WL</div>
@@ -1051,42 +1080,42 @@ body {
       </div>
 
       <!-- 4위: Concord 17% (Premium 반면교사) -->
-      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:12px;background:#fef2f2;border:1px solid #fca5a5;border-radius:8px">
-        <div style="font-size:13.5px;font-weight:700;color:#16a34a;margin-bottom:3px">✅ 양쪽 검증</div>
+      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:12px;background:#fafbfc;border:1px solid #eaedf1;border-radius:8px">
+        <div style="font-size:13.5px;font-weight:700;color:var(--text3);margin-bottom:3px">✅ 양쪽 검증</div>
         <div style="font-size:14px;font-weight:800;color:var(--text1);margin-bottom:6px"><span style="font-size:9px;font-weight:800;padding:1px 5px;border-radius:6px;background:#dbeafe;color:#1d4ed8;margin-right:4px;vertical-align:middle">Premium</span>Concord</div>
         <div style="font-size:20px;font-weight:800;color:#dc2626">17%</div>
         <div style="font-size:13px;color:var(--text3)">697 ÷ 4,129 WL</div>
         <div style="font-size:12.5px;color:var(--text3)">2주 만에 종료 · Aug'24</div>
         <div style="margin-top:7px;width:100%;text-align:left;font-size:11.5px;line-height:1.8">
-          <div style="padding:2px 6px;background:#e2e8f0;border-radius:4px;margin-bottom:2px">
-            <span style="color:#475569;font-weight:700">PCCU:</span> <a href="https://steamdb.info/app/2507950/charts/" target="_blank" style="color:#4f46e5;text-decoration:none">SteamDB 247K ✅</a>
+          <div style="padding:2px 6px;background:#eef1f5;border-radius:4px;margin-bottom:2px">
+            <span style="color:var(--text2);font-weight:700">PCCU:</span> <a href="https://gameworldobserver.com/2024/08/26/concord-697-peak-ccu-steam-sony-live-service-flop" target="_blank" style="color:#2563eb;text-decoration:none">GWO 697 ✅</a>
           </div>
-          <div style="padding:2px 6px;background:#fef3c7;border-radius:4px">
-            <span style="color:#92400e;font-weight:700">WL:</span> <a href="https://www.pcgamesn.com/delta-force-hawk-ops/steam-wishlists-2-million" target="_blank" style="color:#b45309;text-decoration:none">PCGamesN 2.1M ✅(#5)</a>
+          <div style="padding:2px 6px;background:#eef1f5;border-radius:4px">
+            <span style="color:var(--text2);font-weight:700">WL:</span> <a href="https://insider-gaming.com/nobody-wishlist-concord-on-steam/" target="_blank" style="color:#2563eb;text-decoration:none">Insider 4,129 ✅</a>
           </div>
         </div>
       </div>
 
       <!-- 5위: Delta Force ~12% (2.1M WL · T5 outlier) -->
-      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:12px;background:#f8fafc;border-radius:8px">
-        <div style="font-size:13.5px;font-weight:700;color:#16a34a;margin-bottom:3px">✅ 공식성 최강(Team Jade)</div>
+      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:12px;background:#eff6ff;border:1.5px solid #2563eb;border-radius:8px">
+        <div style="font-size:12px;font-weight:800;color:#2563eb;margin-bottom:3px">★ 본 분석 WL→피크 기준</div>
         <div style="font-size:14px;font-weight:800;color:var(--text1);margin-bottom:6px"><span style="font-size:9px;font-weight:800;padding:1px 5px;border-radius:6px;background:#dcfce7;color:#166534;margin-right:4px;vertical-align:middle">F2P</span>Delta Force</div>
         <div style="font-size:20px;font-weight:800;color:#16a34a">~12%</div>
         <div style="font-size:13px;color:var(--text3)">247K ÷ 2.1M WL</div>
         <div style="font-size:12.5px;color:var(--text3)">F2P · #5 most-wishlisted</div>
         <div style="margin-top:7px;width:100%;text-align:left;font-size:11.5px;line-height:1.8">
-          <div style="padding:2px 6px;background:#fee2e2;border-radius:4px;margin-bottom:2px">
-            <span style="color:#b91c1c;font-weight:700">PCCU:</span> <a href="https://gameworldobserver.com/2024/08/26/concord-697-peak-ccu-steam-sony-live-service-flop" target="_blank" style="color:#b91c1c;text-decoration:none">GWO 697 ✅</a>
+          <div style="padding:2px 6px;background:#dbe7fb;border-radius:4px;margin-bottom:2px">
+            <span style="color:var(--text2);font-weight:700">PCCU:</span> <a href="https://steamdb.info/app/2507950/charts/" target="_blank" style="color:#2563eb;text-decoration:none">SteamDB 247K ✅</a>
           </div>
-          <div style="padding:2px 6px;background:#fee2e2;border-radius:4px">
-            <span style="color:#b91c1c;font-weight:700">WL:</span> <a href="https://insider-gaming.com/nobody-wishlist-concord-on-steam/" target="_blank" style="color:#b91c1c;text-decoration:none">Insider Gaming 4,129 ✅</a>
+          <div style="padding:2px 6px;background:#dbe7fb;border-radius:4px">
+            <span style="color:var(--text2);font-weight:700">WL:</span> <a href="https://www.pcgamesn.com/delta-force-hawk-ops/steam-wishlists-2-million" target="_blank" style="color:#2563eb;text-decoration:none">PCGamesN 2.1M ✅</a>
           </div>
         </div>
       </div>
 
       <!-- 6위: Shooter 장르 평균 6~15% -->
-      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:12px;background:#f0f4ff;border:1.5px solid #c7d2fe;border-radius:8px">
-        <div style="font-size:13.5px;font-weight:700;color:#d97706;margin-bottom:3px">⚠️ WL→Sales 기반 추정</div>
+      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:12px;background:#fafbfc;border:1px solid #eaedf1;border-radius:8px">
+        <div style="font-size:13.5px;font-weight:700;color:var(--text3);margin-bottom:3px">⚠️ WL→Sales 기반 추정</div>
         <div style="font-size:14px;font-weight:800;color:#4f46e5;margin-bottom:6px">Shooter 장르 평균</div>
         <div style="font-size:20px;font-weight:900;color:#4f46e5">6~15%</div>
         <div style="font-size:13px;color:#6366f1;margin-top:4px;font-weight:600">Mid-tier AA 기준</div>
