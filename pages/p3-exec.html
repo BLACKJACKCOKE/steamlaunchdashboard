@@ -120,7 +120,7 @@ body {
 .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
 .g4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; }
-.g5 { display: grid; grid-template-columns: repeat(5,1fr); gap: 12px; }
+.g5 { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; }
 
 /* ══════════════════════════════════════════════════════════
    SECTION 1 — 일정 / 마일스톤
@@ -387,7 +387,7 @@ body {
    SECTION 2 — 지표 / KPI
    ══════════════════════════════════════════════════════════ */
 
-/* 5-Tier 카드 */
+/* 4-Tier 카드 */
 .tier-card {
   background: var(--white);
   border: 1px solid var(--border);
@@ -617,7 +617,7 @@ body {
     </div>
     <div class="stat-card" style="--accent-color:#3730a3">
       <div class="stat-label">B안 ◼ 공개 보류·폴리싱</div>
-      <div class="stat-value" style="color:#3730a3;font-size:17px">지표 게이팅</div>
+      <div class="stat-value" style="color:#3730a3;font-size:17px">지표 충족 시 출시</div>
       <div class="stat-sub">지표 충족 시 공개 출시 · 일정 재산정(2029 백스톱)</div>
     </div>
   </div>
@@ -644,7 +644,7 @@ body {
       <div class="path-body">🛡️ WL 70~100% + 빌드 80%<br><strong>공개 F2P EA 금지</strong> → 클로즈드(CBT) 연장 폴리싱 → 지표 도달 시 공개 출시</div>
       <div class="path-footer">
         <span class="path-gap">일정 재산정 · 2029 백스톱</span>
-        <span class="path-date" style="color:#3730a3">🚀 지표 게이팅</span>
+        <span class="path-date" style="color:#3730a3">🚀 지표 충족 시 출시</span>
       </div>
     </div>
   </div>
@@ -674,7 +674,7 @@ body {
         <div style="font-size:14.5px;font-weight:800;color:#1e40af;letter-spacing:.5px;margin-bottom:12px">A안 ◼ 직행 론칭 경로 선택 — 더 빠른 LAUNCH</div>
         <ul style="font-size:14.5px;color:var(--text1);line-height:1.8;padding-left:18px;margin-bottom:14px">
           <li>SNF WL 목표 <strong>달성·초과</strong></li>
-          <li>Demo D7 리텐션 <strong>15%+</strong>(top5)</li>
+          <li>Demo D7 리텐션 <strong>15%+</strong>(도전 목표)</li>
           <li>빌드 완성도 <strong>90%+</strong> 필수</li>
           <li>CBT 서버 부하 검증 완료</li>
         </ul>
@@ -682,10 +682,10 @@ body {
       </div>
 
       <div style="background:#fff;border:2px solid #3730a3;border-radius:10px;padding:20px 22px">
-        <div style="font-size:14.5px;font-weight:800;color:#3730a3;letter-spacing:.5px;margin-bottom:12px">B안 ◼ 공개 보류 → 폴리싱 선택 — 지표 게이팅</div>
+        <div style="font-size:14.5px;font-weight:800;color:#3730a3;letter-spacing:.5px;margin-bottom:12px">B안 ◼ 공개 보류 → 폴리싱 선택 — 지표 충족 시 출시</div>
         <ul style="font-size:14.5px;color:var(--text1);line-height:1.8;padding-left:18px;margin-bottom:14px">
           <li>SNF WL 목표의 <strong>70~100% 달성</strong></li>
-          <li>Demo D7 리텐션 <strong>12~15%</strong>(top10)</li>
+          <li>Demo D7 리텐션 <strong>12~15%</strong>(론칭 목표)</li>
           <li>빌드 완성도 <strong>80%</strong> 수준</li>
           <li><strong>공개 F2P EA 금지</strong> → 클로즈드(CBT) 폴리싱</li>
         </ul>
@@ -695,7 +695,7 @@ body {
       <div style="background:#fff;border:2px solid #dc2626;border-radius:10px;padding:20px 22px">
         <div style="font-size:14.5px;font-weight:800;color:#dc2626;letter-spacing:.5px;margin-bottom:12px">🔴 재검토 조건</div>
         <ul style="font-size:14.5px;color:var(--text1);line-height:1.8;padding-left:18px;margin-bottom:14px">
-          <li>보수 목표 <strong>미달</strong> (생존선/미달 구간)</li>
+          <li>론칭 목표 <strong>미달</strong> (생존선/미달 구간)</li>
           <li>BM 전환 또는 출시 전략 재검토</li>
           <li>다음 SNF 회차 재참가 평가</li>
           <li>WL 증분 50% 미만 → 전략 전환</li>
@@ -713,37 +713,28 @@ body {
 <section class="section" id="s2">
   <div class="sec-eyebrow">Section 02</div>
   <h2 class="sec-h2">지표 &amp; KPI</h2>
-  <p class="sec-desc">신규 Steam Shooter 론칭의 업계 현실과 Project S의 목표 구간을 데이터 기반으로 제시합니다. 보수 목표 기준을 베이스라인으로 설정합니다.</p>
+  <p class="sec-desc">신규 Steam Shooter 론칭의 업계 현실과 Project S의 목표 구간을 데이터 기반으로 제시합니다. 론칭 목표 기준을 베이스라인으로 설정합니다.</p>
 
-  <!-- 5-Tier 분포 -->
+  <!-- 4-Tier 분포 -->
   <div class="card-h">
     📊 신규 Steam Shooter 100개 론칭 중 1년 후 도달 분포 (업계 실측)
+    <span style="font-size:12px;font-weight:600;margin-left:8px"><a href="https://newsletter.gamediscover.co/" target="_blank" style="color:#0369a1;text-decoration:none">GameDiscoverCo ↗</a> · <a href="https://newzoo.com/resources/rankings/top-25-public-game-companies-by-game-revenues" target="_blank" style="color:#0369a1;text-decoration:none">Newzoo ↗</a></span>
   </div>
   <div class="g5">
     <div class="tier-card">
       <div class="tier-head" style="background:#f0fdf4">
         <div class="tier-emoji">🚀</div>
         <div class="tier-name" style="color:#16a34a">도전 목표</div>
-        <div class="tier-stat" style="color:#16a34a">1% &nbsp;·&nbsp; 1개 / 100</div>
+        <div class="tier-stat" style="color:#16a34a">5% &nbsp;·&nbsp; 5개 / 100</div>
       </div>
       <div class="tier-body">
-        <div class="tier-pccu">PCCU avg<br><strong style="color:#16a34a">300K+</strong><br>Top 1-3 mega-hit</div>
-      </div>
-    </div>
-    <div class="tier-card">
-      <div class="tier-head" style="background:#eff6ff">
-        <div class="tier-emoji">⭐</div>
-        <div class="tier-name" style="color:#2563eb">핵심 목표</div>
-        <div class="tier-stat" style="color:#2563eb">4% &nbsp;·&nbsp; 4개 / 100</div>
-      </div>
-      <div class="tier-body">
-        <div class="tier-pccu">PCCU avg<br><strong style="color:#2563eb">100-300K</strong><br>Top 4-7</div>
+        <div class="tier-pccu">PCCU avg<br><strong style="color:#16a34a">100K+</strong><br>Top 1-7</div>
       </div>
     </div>
     <div class="tier-card" style="border:2px solid #f59e0b">
       <div class="tier-head" style="background:#fefce8">
         <div class="tier-emoji">🛡️</div>
-        <div class="tier-name" style="color:#d97706">보수 목표 <span style="font-size:9px;background:#fbbf24;color:#78350f;padding:1px 4px;border-radius:6px;font-weight:700">기본</span></div>
+        <div class="tier-name" style="color:#d97706">론칭 목표 <span style="font-size:9px;background:#fbbf24;color:#78350f;padding:1px 4px;border-radius:6px;font-weight:700">기본</span></div>
         <div class="tier-stat" style="color:#d97706">10% &nbsp;·&nbsp; 10개 / 100</div>
       </div>
       <div class="tier-body">
@@ -805,10 +796,10 @@ body {
         </tr>
         <tr style="background:#fffbeb;outline:2px solid #f59e0b;outline-offset:-1px">
           <td style="padding:9px 12px;border-bottom:2px solid #fbbf24;font-weight:800">
-            <span style="background:#f59e0b;color:#fff;padding:2px 7px;border-radius:12px;font-size:12.5px;font-weight:800">🛡️ Top 8-20</span>
-            <div style="font-size:11.5px;color:#92400e;margin-top:3px;font-weight:700">← 보수 목표</div>
+            <span style="background:#f59e0b;color:#fff;padding:2px 7px;border-radius:12px;font-size:12.5px;font-weight:800">🛡️ Top 8-15</span>
+            <div style="font-size:11.5px;color:#92400e;margin-top:3px;font-weight:700">← 론칭 목표</div>
           </td>
-          <td style="padding:9px 12px;border-bottom:2px solid #fbbf24;text-align:center;font-weight:800;color:#d97706;font-size:14.5px">30-70K</td>
+          <td style="padding:9px 12px;border-bottom:2px solid #fbbf24;text-align:center;font-weight:800;color:#d97706;font-size:14.5px">35-70K</td>
           <td style="padding:9px 12px;border-bottom:2px solid #fbbf24;color:var(--text2)">
             <strong>Destiny 2</strong> (~60K avg) &nbsp;·&nbsp; <strong>R6 Siege</strong> (~47K avg · Siege X 이벤트 ~108K) &nbsp;·&nbsp; <strong>BF6</strong> (~37K avg · 747K→−95%)<br>
             <span class="gsub" style="font-size:12px;color:#92400e">진입선 30K avg ≈ R6 Siege 하위 시즌 수준 · 100K avg ≈ Apex 하위 수준</span>
@@ -816,8 +807,8 @@ body {
           <td style="padding:9px 12px;border-bottom:2px solid #fbbf24;text-align:center"><a href="https://steamcharts.com/app/1085660" target="_blank" style="color:#92400e;font-size:12.5px">Destiny</a> · <a href="https://steamcharts.com/app/359550" target="_blank" style="color:#92400e;font-size:12.5px">R6</a> · <a href="https://steamcharts.com/app/2807960" target="_blank" style="color:#92400e;font-size:12.5px">BF6</a></td>
         </tr>
         <tr>
-          <td style="padding:8px 12px;border-bottom:1px solid #e2e8f0;font-weight:800;color:var(--text3)">Top 21-40</td>
-          <td style="padding:8px 12px;border-bottom:1px solid #e2e8f0;text-align:center;font-weight:700;color:var(--text3)">10-30K</td>
+          <td style="padding:8px 12px;border-bottom:1px solid #e2e8f0;font-weight:800;color:var(--text3)">Top 16-30</td>
+          <td style="padding:8px 12px;border-bottom:1px solid #e2e8f0;text-align:center;font-weight:700;color:var(--text3)">15-35K</td>
           <td style="padding:8px 12px;border-bottom:1px solid #e2e8f0;color:var(--text3)">
             <strong>Hunt: Showdown 1896</strong> (~17K avg 30d 2026)
             <span style="color:#dc2626;font-size:12px"> · ⚠️ 60K는 Aug 2024 1회성 peak</span>
@@ -825,21 +816,13 @@ body {
           <td style="padding:8px 12px;border-bottom:1px solid #e2e8f0;text-align:center"><a href="https://steamcharts.com/app/594650" target="_blank" style="color:#0369a1;font-size:12.5px">Hunt<br>SteamCharts</a></td>
         </tr>
         <tr style="background:#f8fafc">
-          <td style="padding:8px 12px;font-weight:800;color:#94a3b8">Top 41+</td>
-          <td style="padding:8px 12px;text-align:center;font-weight:700;color:#94a3b8">1-10K</td>
+          <td style="padding:8px 12px;font-weight:800;color:#94a3b8">Top 30+</td>
+          <td style="padding:8px 12px;text-align:center;font-weight:700;color:#94a3b8">&lt;15K</td>
           <td style="padding:8px 12px;color:#94a3b8">Hell Let Loose &nbsp;·&nbsp; Squad &nbsp;·&nbsp; Battlebit Remastered</td>
           <td style="padding:8px 12px;text-align:center"><a href="https://steamcharts.com/top" target="_blank" style="color:#64748b;font-size:12.5px">SteamCharts</a></td>
         </tr>
       </tbody>
     </table>
-    </div>
-    <div style="background:#fffbeb;border:1px solid #fbbf24;border-radius:7px;padding:10px 14px">
-      <div style="font-weight:800;color:#d97706;font-size:13.5px;margin-bottom:4px">🎯 결론</div>
-      <div style="font-size:13px;color:var(--text2);line-height:1.7">
-        <strong>진입선 30K avg</strong> = R6 Siege 하위 시즌 수준 → 멀티플레이어 슈터 <strong>Top 15-20 포지션</strong> &nbsp;·&nbsp;
-        <strong>상한 ~120K avg</strong> = Apex 수준 → <strong>Top 4-7 포지션</strong><br>
-        → Conservative 30-100K avg는 슈터 장르 <strong>Top 4-20 전 구간</strong>을 커버. "Top 20 진입"은 하한선 기준의 보수적 표현.
-      </div>
     </div>
   </div>
 
@@ -875,7 +858,7 @@ body {
           <span style="font-size:12px;font-weight:700;background:#e0f2fe;color:#0369a1;padding:2px 8px;border-radius:20px">GameDiscoverCo 2024–25</span>
           <a href="https://newsletter.gamediscover.co/" target="_blank" style="font-size:12px;color:#0369a1;text-decoration:none;white-space:nowrap;opacity:.8">↗ 바로가기</a>
         </div>
-        <div style="font-size:13.5px;color:var(--text2);line-height:1.65">Simon Carless가 운영하는 Steam 전문 분석 뉴스레터. 매주 실제 런칭 타이틀의 WL 전환율·CCU 추이를 추적 발행하며, 본 5-Tier 분포의 <strong>핵심 통계 기반</strong>. Shooter 장르 100개 코호트의 1년 후 생존율 데이터 직접 인용.</div>
+        <div style="font-size:13.5px;color:var(--text2);line-height:1.65">Simon Carless가 운영하는 Steam 전문 분석 뉴스레터. 매주 실제 런칭 타이틀의 WL 전환율·CCU 추이를 추적 발행하며, 본 4-Tier 분포의 <strong>핵심 통계 기반</strong>. Shooter 장르 100개 코호트의 1년 후 생존율 데이터 직접 인용.</div>
       </div>
       <!-- SteamSpy -->
       <div style="background:#fff;border:1px solid #bbf7d0;border-radius:8px;padding:12px 13px;display:flex;flex-direction:column;gap:8px">
@@ -899,7 +882,7 @@ body {
           <span style="font-size:12px;font-weight:700;background:#ede9fe;color:#5b21b6;padding:2px 8px;border-radius:20px">Newzoo Shooter 리포트</span>
           <a href="https://newzoo.com/resources/rankings/top-25-public-game-companies-by-game-revenues" target="_blank" style="font-size:12px;color:#5b21b6;text-decoration:none;white-space:nowrap;opacity:.8">↗ 바로가기</a>
         </div>
-        <div style="font-size:13.5px;color:var(--text2);line-height:1.65">글로벌 게임 시장 조사 기관 Newzoo의 FPS·TPS 장르 연간 리포트. <strong>시장 전체 성과 분포</strong>(상위 1% / 5% / 15% 구간)의 매크로 기준선을 제공해 GameDiscoverCo 미시 데이터와의 정합성을 검증. 5-Tier 비율(1/4/10/27/58%) 확정의 최종 근거.</div>
+        <div style="font-size:13.5px;color:var(--text2);line-height:1.65">글로벌 게임 시장 조사 기관 Newzoo의 FPS·TPS 장르 연간 리포트. <strong>시장 전체 성과 분포</strong>(상위 1% / 5% / 15% 구간)의 매크로 기준선을 제공해 GameDiscoverCo 미시 데이터와의 정합성을 검증. 4-Tier 비율(5/10/27/58%) 확정의 최종 근거.</div>
       </div>
     </div>
   </details>
@@ -907,7 +890,7 @@ body {
   <!-- WL 목표 & 시나리오 테이블 -->
   <div class="mt24 g2" style="align-items:stretch">
     <div class="card" style="display:flex;flex-direction:column">
-      <div class="card-h">Wishlist 단계별 목표 (보수 목표 기준)</div>
+      <div class="card-h">Wishlist 단계별 목표 (론칭 목표 기준)</div>
       <table class="wl-table" style="flex:1;height:100%">
         <thead>
           <tr>
@@ -938,16 +921,14 @@ body {
         <thead>
           <tr>
             <th>시나리오</th>
-            <th>WL (Combined)</th>
-            <th>PCCU avg</th>
+            <th>누적 위시(F2P)</th>
+            <th>Day30 평균 CCU</th>
           </tr>
         </thead>
         <tbody>
-          <tr style="height:1px"><td>🔴 미달</td><td>&lt;200K</td><td>&lt;5K</td></tr>
-          <tr style="height:1px"><td>🟠 생존선</td><td>200K-500K</td><td>5-30K</td></tr>
-          <tr class="hl" style="height:1px"><td>🛡️ 보수 목표</td><td>500K-700K</td><td>30-100K</td></tr>
-          <tr style="height:1px"><td>⭐ 핵심 목표</td><td>700K-2M</td><td>100-300K</td></tr>
-          <tr style="height:1px"><td>🚀 도전 목표</td><td>2M-5M+</td><td>300K+</td></tr>
+          <tr style="height:1px"><td>🔴 미달</td><td>&lt;1.0M</td><td>&lt;35K</td></tr>
+          <tr style="height:1px"><td>🟠 생존선</td><td>1.0–1.5M</td><td>35–50K</td></tr>
+          <tr class="hl" style="height:1px"><td>🛡️ 론칭 목표(Top10)</td><td>1.5M+</td><td>50K+</td></tr>
         </tbody>
       </table>
     </div>
@@ -1317,16 +1298,16 @@ body {
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>D+7 마지막 날: 최종 WL 수치 집계 → 경로 분기 결정 데이터 준비</div>
 
       <div class="todo-section">⚡ SNF 종료 후 2주 이내</div>
-      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>WL 증분 집계 + 5-Tier 대조 (보수 목표 P900K+ / F2P 500K+)</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>WL 증분 집계 + 4-Tier 대조 (론칭 목표 P900K+ / F2P 500K+)</div>
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>Demo D+7 리텐션 측정 → A안(직행) vs B안(공개 보류·폴리싱) 경로 최종 결정</div>
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>경영진 승인 회의 개최 → A안 또는 B안 공식 결정</div>
 
-      <div class="todo-kpi">🎯 보수 목표: P 900K+ / F2P 500K+</div>
-      <div class="todo-kpi">📊 Demo D7 15%+(top5) + 빌드 90%+ → A안(직행 공개 출시) / 12~15%(top10) + 빌드 80% → B안(공개 보류·폴리싱) <span style="font-size:11.5px;color:var(--text3)">(데모=공개 코호트라 클로즈드 베타 CLA 25%·CBT 20%보다 낮은 15% 수준 — 본 런칭에 근접. 코호트가 넓어질수록 D7 자연 하락)</span></div>
+      <div class="todo-kpi">🎯 론칭 목표: P 900K+ / F2P 500K+</div>
+      <div class="todo-kpi">📊 Demo D7 15%+(도전 목표) + 빌드 90%+ → A안(직행 공개 출시) / 12~15%(론칭 목표) + 빌드 80% → B안(공개 보류·폴리싱) <span style="font-size:11.5px;color:var(--text3)">(데모=공개 코호트라 클로즈드 베타 CLA 25%·CBT 20%보다 낮은 15% 수준 — 본 런칭에 근접. 코호트가 넓어질수록 D7 자연 하락)</span></div>
 
       <div class="todo-gate">
-        <div class="todo-go"><strong>✅ A안(직행) 선택 기준</strong>WL 목표 달성·초과 + Demo D7 15%+(top5) + 빌드 90%+ + 서버 검증 완료</div>
-        <div class="todo-hold"><strong>✅ B안(공개 보류·폴리싱) 선택 기준</strong>WL 70~100% + Demo D7 12~15%(top10) + 빌드 80% → 공개 F2P EA 금지 · 클로즈드 폴리싱 후 지표 도달 시 공개(재산정)</div>
+        <div class="todo-go"><strong>✅ A안(직행) 선택 기준</strong>WL 목표 달성·초과 + Demo D7 15%+(도전 목표) + 빌드 90%+ + 서버 검증 완료</div>
+        <div class="todo-hold"><strong>✅ B안(공개 보류·폴리싱) 선택 기준</strong>WL 70~100% + Demo D7 12~15%(론칭 목표) + 빌드 80% → 공개 F2P EA 금지 · 클로즈드 폴리싱 후 지표 도달 시 공개(재산정)</div>
       </div>
     </div>
   </div>
@@ -1376,7 +1357,7 @@ body {
   <div class="phase-todo">
     <div class="phase-todo-head" onclick="toggleTodo(this)">
       <div class="phase-badge" style="background:#3730a3">B안</div>
-      <div class="phase-todo-title">B안) 공개 보류 → 폴리싱 경로 — 지표 게이팅 (재산정)</div>
+      <div class="phase-todo-title">B안) 공개 보류 → 폴리싱 경로 — 지표 충족 시 출시 (재산정)</div>
       <div class="phase-todo-date">공개 F2P EA 금지 · 지표 도달 시 공개(2029 백스톱)</div>
       <span class="phase-todo-chevron">▶</span>
     </div>
@@ -1393,7 +1374,7 @@ body {
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>WL 캠페인 지속 — 공개 직전 누적 위시 F2P 150만 회복</div>
 
       <div class="todo-section">🚀 지표 도달 시 공개 출시 (일정 재산정)</div>
-      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>A안과 동일 게이트 충족 시 공개 출시(직행과 동일 절차) — 고정일 없이 지표로 게이팅</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>A안과 동일 게이트 충족 시 공개 출시(직행과 동일 절차) — 고정일 없이 지표 충족 시 출시</div>
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>2029 백스톱 — 이때까지 미충족 시 스코프 축소 강제 출시 또는 전략 피벗 결정</div>
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>공백 닫힘 리스크(2029+ 떠난 수요 타 장르 이동·경쟁자 선점) 모니터링</div>
 
@@ -1412,7 +1393,7 @@ body {
 <script>
 /* ──────────────────────────────────────────────────────────────────
    다크 Gantt — HTML/CSS 기반 (onclick 신뢰성 보장)
-   TM=26 개월: m=0=Jun'26 ~ m=26=Aug'28 (A안 직행 LAUNCH m21=Mar'28 · B안 공개는 지표 게이팅)
+   TM=26 개월: m=0=Jun'26 ~ m=26=Aug'28 (A안 직행 LAUNCH m21=Mar'28 · B안 공개는 지표 충족 시 출시)
    leftPct(m) = (m/25)*100 + '%'
    widthPct(m0,m1) = ((m1-m0)/25)*100 + '%'
    ────────────────────────────────────────────────────────────────── */
@@ -1473,7 +1454,7 @@ const PHASES = [
       {name:'★ SNF 7일간 — D+1 WL 이메일 수동 클릭 필수!', m0:16.0,m1:16.5,s:"Oct'27",  e:"Oct'27"},
       {name:'Curator Connect 전체 배포 + SNS 동시 발행',    m0:16.0,m1:16.3,s:"D+1",     e:"D+2"},
       {name:'Demo D+7 리텐션·WL 증분 집계 → 경로 분기 결정',m0:16.5,m1:17.0,s:"D+7",     e:"D+14"},
-      {name:'🛡️ 보수 목표: P 900K+ / F2P 500K+',    m0:16.0,m1:17.0,s:"SNF 중",  e:"SNF 후"},
+      {name:'🛡️ 론칭 목표: P 900K+ / F2P 500K+',    m0:16.0,m1:17.0,s:"SNF 중",  e:"SNF 후"},
     ]
   },
   {
@@ -1485,11 +1466,11 @@ const PHASES = [
     ]
   },
   {
-    step:'폴리싱', name:'B안) 공개 보류 → 폴리싱 (재산정)', date:"Nov'27 ~ 지표 게이팅", col:'#3730a3',
+    step:'폴리싱', name:'B안) 공개 보류 → 폴리싱 (재산정)', date:"Nov'27 ~ 지표 충족 시", col:'#3730a3',
     tasks:[
       {name:'공개 F2P EA 금지 — 클로즈드(CBT) 연장 폴리싱 (지표 끌어올리기)', m0:17.0,m1:24.5, s:"Nov'27",   e:"지표 도달 시"},
       {name:'WL 캠페인 지속·재가속 (위시 F2P 150만 회복)',  m0:17.0,m1:23.0, s:"Nov'27",   e:"재산정"},
-      {name:'🚀 공개 출시 — 지표 게이팅 (고정일 X · 2029 백스톱)', m0:25.0,m1:25.0, s:"게이팅", e:"",     launch:true},
+      {name:'🚀 공개 출시 — 지표 충족 시 (고정일 X · 2029 백스톱)', m0:25.0,m1:25.0, s:"지표충족", e:"",     launch:true},
     ]
   },
 ];
@@ -1604,7 +1585,7 @@ function buildGantt() {
     if (ph.step === '폴리싱') {
       const eaLaunchPct = lp(25);
       launchIcon = `<div style="position:absolute;left:${eaLaunchPct};top:50%;transform:translate(-50%,-50%);
-        font-size:18px;filter:drop-shadow(0 0 6px rgba(99,102,241,.8));z-index:5" title="공개 출시 (지표 게이팅 · 재산정)">🚀</div>`;
+        font-size:18px;filter:drop-shadow(0 0 6px rgba(99,102,241,.8));z-index:5" title="공개 출시 (지표 충족 시 · 재산정)">🚀</div>`;
     } else if (ph.step === '직행') {
       const drLaunchPct = lp(21);
       launchIcon = `<div style="position:absolute;left:${drLaunchPct};top:50%;transform:translate(-50%,-50%);
