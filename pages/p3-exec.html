@@ -1405,6 +1405,16 @@ const wp = (m0,m1) => (((m1-m0)/TM)*100).toFixed(2)+'%';
 /* ── Phase 데이터 ─── */
 const PHASES = [
   {
+    step:'빌드', name:'빌드 아웃', date:"각 단계 빌드 전달(-2W~3M)", col:'#475569',
+    build:[
+      {m:0,  label:'전사 빌드', date:"Jun'26"},
+      {m:2,  label:'FGT 빌드',  date:"Aug'26"},
+      {m:9,  label:'CLA 빌드',  date:"Mar'27"},
+      {m:11, label:'CBT 빌드',  date:"May'27"},
+      {m:12, label:'SNF 빌드',  date:"Jun'27"},
+    ]
+  },
+  {
     step:'P0', name:'전사테스트', date:"Jul'26", col:'#1f6feb',
     tasks:[
       {name:'Steamworks 계정 셋업 + deposit',  m0:1.0,  m1:2.0,  s:"Jul 1주",  e:"Jul 4주"},
@@ -1541,14 +1551,34 @@ function buildGantt() {
   PHASES.forEach(ph => {
     const isOpen = !phaseState[ph.step];
     const arrow = isOpen ? '▼' : '▶';
-    const phM0 = Math.min(...ph.tasks.map(t=>t.m0));
-    const phM1 = Math.max(...ph.tasks.map(t=>t.m1===t.m0 ? t.m0+0.3 : t.m1));
+    const _items = ph.build || ph.tasks;
+    const phM0 = Math.min(..._items.map(t=> t.m!==undefined ? t.m : t.m0));
+    const phM1 = Math.max(..._items.map(t=> t.m!==undefined ? t.m+0.3 : (t.m1===t.m0 ? t.m0+0.3 : t.m1)));
 
     // Phase 헤더 타임라인 바
     const headerBar = `<div class="gd-phase-range-bar" style="left:${lp(phM0)};width:${wp(phM0,phM1)};background-color:${ph.col}"></div>`;
 
     // Task 행들
-    const tasksHtml = ph.tasks.map((t, ti) => {
+    let tasksHtml;
+    if (ph.build) {
+      const markers = ph.build.map((b,bi) => {
+        const top = bi % 2 === 0 ? '6px' : '36px';
+        const tx = b.m < 0.5 ? 'translateX(0)' : (b.m > TM-0.5 ? 'translateX(-100%)' : 'translateX(-50%)');
+        return `<div style="position:absolute;left:${lp(b.m)};top:6px;bottom:6px;width:0;border-left:2px dashed ${ph.col};opacity:.45;z-index:1"></div>
+          <div style="position:absolute;left:${lp(b.m)};top:${top};transform:${tx};text-align:left;white-space:nowrap;z-index:3">
+            <span style="display:inline-block;background:${ph.col};color:#fff;font-size:10px;font-weight:800;padding:2px 7px;border-radius:10px">📦 ${b.label}</span>
+            <div style="font-size:9px;font-weight:700;color:#9aa8b8;margin-top:2px">${b.date}</div>
+          </div>`;
+      }).join('');
+      tasksHtml = `<div class="gd-task-row" style="height:72px">
+        <div class="gd-task-label">빌드 전달 시점</div>
+        <div class="gd-task-track" style="position:relative">
+          <div class="gd-track-bg"></div>
+          ${markers}
+        </div>
+      </div>`;
+    } else {
+    tasksHtml = ph.tasks.map((t, ti) => {
       if (t.launch) {
         return `<div class="gd-task-row">
           <div class="gd-task-label launch-lbl">${t.name}</div>
@@ -1579,6 +1609,7 @@ function buildGantt() {
         </div>
       </div>`;
     }).join('');
+    }
 
     // EA/직행 헤더 트랙에 LAUNCH 시점 아이콘 추가
     let launchIcon = '';
@@ -1648,6 +1679,7 @@ const phaseState = {}; // true = 접힘 (기본값)
 
 function initPhaseState() {
   PHASES.forEach(ph => { phaseState[ph.step] = true; }); // 기본 닫힘
+  phaseState['빌드'] = false; // 빌드 아웃은 기본 펼침(빌드 일정 노출)
 }
 
 function togglePhase(step) {
