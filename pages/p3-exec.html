@@ -1654,16 +1654,15 @@ function buildGantt() {
     if (ph.build) {
       const cLine = `<div style="position:absolute;left:10px;right:10px;top:50%;height:2px;transform:translateY(-50%);background:linear-gradient(90deg,transparent,${ph.col}cc 12%,${ph.col}cc 88%,transparent);z-index:1"></div>`;
       const markers = ph.build.map((b,bi) => {
-        const lvl = bi % 3;
-        const above = (lvl !== 1);
-        const off = (lvl === 2) ? 7 : 26;
+        const above = (bi % 2 === 0);
+        const off = 16;
         const aBadge = b.plan === 'A' ? `<span style="background:#1e40af;color:#fff;font-size:8.5px;font-weight:800;padding:1px 5px;border-radius:5px;margin-right:4px">A안</span>` : '';
-        const grp = `${aBadge}<span style="font-size:11px;font-weight:800;color:#e6edf3">📦 ${b.label.replace(' 빌드','')}</span> <span style="font-size:9.5px;font-weight:700;color:#9aa8b8">${b.date}</span>`;
+        const grp = `<div style="text-align:left;line-height:1.2;white-space:nowrap">${aBadge}<span style="font-size:11px;font-weight:800;color:#e6edf3">📦 ${b.label.replace(' 빌드','')}</span><br><span style="font-size:9px;font-weight:700;color:#9aa8b8">${b.date}</span></div>`;
         const conn = `<div style="position:absolute;left:${lp(b.m)};${above?'bottom:50%':'top:50%'};height:${off}px;width:0;border-left:1px dashed ${ph.col};opacity:.5;z-index:2"></div>`;
         return `${conn}<div style="position:absolute;left:${lp(b.m)};top:50%;transform:translate(-50%,-50%);width:8px;height:8px;border-radius:50%;background:${ph.col};border:2px solid #0a1628;z-index:3"></div>
           <div style="position:absolute;left:${lp(b.m)};${above?`bottom:calc(50% + ${off}px)`:`top:calc(50% + ${off}px)`};transform:translateX(-7px);white-space:nowrap;z-index:4">${grp}</div>`;
       }).join('');
-      tasksHtml = `<div class="gd-task-row" style="height:92px;background:#171c2b;border-top:2px solid #475569;border-bottom:2px solid #475569">
+      tasksHtml = `<div class="gd-task-row" style="height:86px;background:#171c2b;border-top:2px solid #475569;border-bottom:2px solid #475569">
         <div class="gd-task-label" style="font-weight:800;color:#e6edf3;font-size:12px">📦 빌드 전달 시점</div>
         <div class="gd-task-track" style="position:relative">
           <div class="gd-track-bg"></div>
