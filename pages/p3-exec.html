@@ -768,7 +768,7 @@ body {
       <span style="font-size:20px;line-height:1">📊</span>
       <div>
         <div style="font-weight:800;color:var(--text1);font-size:15px;margin-bottom:2px">PCCU avg 40~100K = ★ FPS Top10 진입선(≈50K) 근거 — 멀티플레이어 슈터 장르 실측 벤치마크</div>
-        <div style="font-size:12.5px;color:var(--text3);line-height:1.5">기준: Steam FPS·Shooter·Multiplayer 복합 태그 활성 타이틀 연간 PCCU 순위 · <a href="https://steamdb.info/charts/?tagid=1663" target="_blank" style="color:#b45309;text-decoration:none">SteamDB FPS 차트 ↗</a> · <a href="https://steamcharts.com/" target="_blank" style="color:#b45309;text-decoration:none">SteamCharts ↗</a> 직접 실측 — FPS #10 ≈ R6 ~47K · #5 ≈ ~100~124K(Apex급) · <b>전부 30일 평균 CCU 기준(=Top10 목표 메트릭) · 2026-06</b> · <span style="color:#92400e;font-weight:700">진입선 30K≈R6 하위시즌 · 100K≈Apex 하위</span></div>
+        <div style="font-size:12.5px;color:var(--text3);line-height:1.5">기준: Steam FPS·Shooter·Multiplayer 복합 태그 활성 타이틀 연간 PCCU 순위 · <a href="https://steamdb.info/charts/?tagid=1663" target="_blank" style="color:#b45309;text-decoration:none">SteamDB FPS 차트 ↗</a> · <a href="https://steamcharts.com/" target="_blank" style="color:#b45309;text-decoration:none">SteamCharts ↗</a> 직접 실측 — FPS #10 ≈ R6 ~47K · #5 ≈ ~100~124K(Apex급) · <b>전부 30일 평균 CCU 기준(=Top10 목표 메트릭) · 2026-06</b></div>
       </div>
     </div>
     <div style="overflow-x:auto;margin-bottom:12px">
@@ -800,7 +800,7 @@ body {
           </td>
           <td style="padding:8px 12px;border-bottom:2px solid #fbbf24;text-align:center;font-weight:800;color:#d97706">35-70K</td>
           <td style="padding:8px 12px;border-bottom:2px solid #fbbf24;color:var(--text2)">
-            <strong>Destiny 2</strong> (~60K avg) &nbsp;·&nbsp; <strong>R6 Siege</strong> (~47K avg · Siege X 이벤트 ~108K) &nbsp;·&nbsp; <strong>BF6</strong> (~37K avg · 747K→−95%)
+            <strong>Destiny 2</strong> (~60K avg) &nbsp;·&nbsp; <strong>R6 Siege</strong> (~47K avg · Siege X 이벤트 ~108K) &nbsp;·&nbsp; <strong>BF6</strong> (~37K avg · 747K→−95%) <span style="color:#92400e;font-size:11px;font-weight:600">· 진입선 30K≈R6 하위시즌 · 100K≈Apex 하위</span>
           </td>
           <td style="padding:8px 12px;border-bottom:2px solid #fbbf24;text-align:center"><a href="https://steamcharts.com/app/1085660" target="_blank" style="color:#92400e;font-size:12.5px">Destiny</a> · <a href="https://steamcharts.com/app/359550" target="_blank" style="color:#92400e;font-size:12.5px">R6</a> · <a href="https://steamcharts.com/app/2807960" target="_blank" style="color:#92400e;font-size:12.5px">BF6</a></td>
         </tr>
@@ -1405,13 +1405,16 @@ const wp = (m0,m1) => (((m1-m0)/TM)*100).toFixed(2)+'%';
 /* ── Phase 데이터 ─── */
 const PHASES = [
   {
-    step:'빌드', name:'빌드 아웃', date:"각 단계 빌드 전달(-2W~3M)", col:'#475569',
+    step:'빌드', name:'빌드 아웃 스케쥴', date:"각 단계 빌드 전달", col:'#475569',
     build:[
-      {m:0,  label:'전사 빌드', date:"Jun'26"},
-      {m:2,  label:'FGT 빌드',  date:"Aug'26"},
-      {m:9,  label:'CLA 빌드',  date:"Mar'27"},
-      {m:11, label:'CBT 빌드',  date:"May'27"},
-      {m:12, label:'SNF 빌드',  date:"Jun'27"},
+      {m:0,  label:'전사테스트 빌드', date:"Jun'26"},
+      {m:2,  label:'FGT 1차 빌드', date:"Aug'26"},
+      {m:4,  label:'FGT 2차 빌드', date:"Oct'26"},
+      {m:9,  label:'CLA 빌드', date:"Mar'27"},
+      {m:11, label:'CBT 빌드', date:"May'27"},
+      {m:13, label:'SNF 빌드', date:"Jul'27"},
+      {m:17, label:'성능 테스트 빌드', date:"Nov'27", plan:'A'},
+      {m:19, label:'론칭 빌드', date:"Jan'28", plan:'A'},
     ]
   },
   {
@@ -1479,7 +1482,7 @@ const PHASES = [
     step:'폴리싱', name:'B안) 공개 보류 → 폴리싱 (재산정)', date:"Nov'27 ~ 지표 충족 시", col:'#3730a3',
     tasks:[
       {name:'공개 F2P EA 금지 — 클로즈드(CBT) 연장 폴리싱 (지표 끌어올리기)', m0:17.0,m1:24.5, s:"Nov'27",   e:"지표 도달 시"},
-      {name:'WL 캠페인 지속·재가속 (위시 F2P 150만 회복)',  m0:17.0,m1:23.0, s:"Nov'27",   e:"재산정"},
+      {name:'WL 캠페인 지속·재가속 (위시 F2P 150만 회복)',  m0:17.0,m1:24.5, s:"Nov'27",   e:"지표 도달 시"},
       {name:'🚀 공개 출시 — 지표 충족 시 (고정일 X · 2029 백스톱)', m0:25.0,m1:25.0, s:"지표충족", e:"",     launch:true},
     ]
   },
@@ -1561,19 +1564,23 @@ function buildGantt() {
     // Task 행들
     let tasksHtml;
     if (ph.build) {
+      const cLine = `<div style="position:absolute;left:10px;right:10px;top:50%;height:2px;transform:translateY(-50%);background:linear-gradient(90deg,transparent,${ph.col}cc 12%,${ph.col}cc 88%,transparent);z-index:1"></div>`;
       const markers = ph.build.map((b,bi) => {
-        const top = bi % 2 === 0 ? '6px' : '36px';
-        const tx = b.m < 0.5 ? 'translateX(0)' : (b.m > TM-0.5 ? 'translateX(-100%)' : 'translateX(-50%)');
-        return `<div style="position:absolute;left:${lp(b.m)};top:6px;bottom:6px;width:0;border-left:2px dashed ${ph.col};opacity:.45;z-index:1"></div>
-          <div style="position:absolute;left:${lp(b.m)};top:${top};transform:${tx};text-align:left;white-space:nowrap;z-index:3">
-            <span style="display:inline-block;background:${ph.col};color:#fff;font-size:10px;font-weight:800;padding:2px 7px;border-radius:10px">📦 ${b.label}</span>
-            <div style="font-size:9px;font-weight:700;color:#9aa8b8;margin-top:2px">${b.date}</div>
-          </div>`;
+        const lvl = bi % 4;
+        const above = (lvl===0 || lvl===2);
+        const off = (lvl===0 || lvl===1) ? 36 : 9;
+        const tx = b.m < 1 ? 'translateX(0)' : 'translateX(-50%)';
+        const aBadge = b.plan === 'A' ? `<span style="display:inline-block;background:#1e40af;color:#fff;font-size:8px;font-weight:800;padding:1px 5px;border-radius:5px;margin-right:3px">A안</span>` : '';
+        const grp = `<div style="white-space:nowrap">${aBadge}<span style="display:inline-block;vertical-align:middle;background:${ph.col};color:#fff;font-size:8.5px;font-weight:800;padding:2px 6px;border-radius:9px">📦 ${b.label}</span></div><div style="font-size:8.5px;font-weight:700;color:#9aa8b8;margin-top:1px">${b.date}</div>`;
+        const conn = `<div style="position:absolute;left:${lp(b.m)};${above?'bottom:50%':'top:50%'};height:${off}px;width:0;border-left:1px dashed ${ph.col};opacity:.5;z-index:2"></div>`;
+        return `${conn}<div style="position:absolute;left:${lp(b.m)};top:50%;transform:translate(-50%,-50%);width:8px;height:8px;border-radius:50%;background:${ph.col};border:2px solid #0a1628;z-index:3"></div>
+          <div style="position:absolute;left:${lp(b.m)};${above?`bottom:calc(50% + ${off}px)`:`top:calc(50% + ${off}px)`};transform:${tx};text-align:center;z-index:4">${grp}</div>`;
       }).join('');
-      tasksHtml = `<div class="gd-task-row" style="height:72px">
-        <div class="gd-task-label">빌드 전달 시점</div>
+      tasksHtml = `<div class="gd-task-row" style="height:152px">
+        <div class="gd-task-label" style="font-weight:800;color:#c9d1d9">빌드 전달 시점</div>
         <div class="gd-task-track" style="position:relative">
           <div class="gd-track-bg"></div>
+          ${cLine}
           ${markers}
         </div>
       </div>`;
@@ -1626,11 +1633,11 @@ function buildGantt() {
     html += `
     <div class="gd-phase" data-step="${ph.step}">
       <div class="gd-phase-header" style="background:${ph.col}22"
-           onclick="togglePhase('${ph.step}')">
+           ${ph.build ? '' : `onclick="togglePhase('${ph.step}')"`}>
         <div class="gd-phase-header-label" style="background:${ph.col}">
           <div style="display:flex;align-items:center;gap:6px;width:100%">
             <span class="gd-phase-name">${ph.name}</span>
-            <span class="gd-phase-arrow">${arrow}</span>
+            ${ph.build ? '' : `<span class="gd-phase-arrow">${arrow}</span>`}
           </div>
           <span class="gd-phase-date">${ph.date}</span>
         </div>
