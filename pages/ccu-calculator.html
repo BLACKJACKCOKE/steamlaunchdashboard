@@ -26,21 +26,21 @@ a { color:var(--accent); text-decoration:none; } a:hover { text-decoration:under
 
 /* ══ HEADER ══ */
 .top-header { position:sticky; top:0; z-index:200; background:rgba(255,255,255,.97); backdrop-filter:blur(10px); border-bottom:1px solid var(--border); padding:0 32px; display:flex; align-items:center; justify-content:space-between; height:56px; }
-.header-badge { background:#4f46e5; color:#fff; font-size:10px; font-weight:700; padding:3px 8px; border-radius:20px; letter-spacing:.5px; }
+.header-badge { background:#4f46e5; color:#fff; font-size:11px; font-weight:700; padding:3px 8px; border-radius:20px; letter-spacing:.5px; }
 .header-left { display:flex; align-items:center; gap:10px; }
 .header-main { font-size:13px; font-weight:800; color:var(--text-h); }
-.header-sub { font-size:10px; font-weight:500; color:var(--accent); letter-spacing:.3px; }
-.meta-live { display:flex; align-items:center; gap:6px; font-size:10px; color:var(--text-sub2); }
+.header-sub { font-size:11px; font-weight:500; color:var(--accent); letter-spacing:.3px; }
+.meta-live { display:flex; align-items:center; gap:6px; font-size:11px; color:var(--text-sub2); }
 .live-dot { width:6px; height:6px; border-radius:50%; background:var(--green); box-shadow:0 0 6px var(--green); animation:pulse 2s infinite; }
 @keyframes pulse { 0%,100%{opacity:1}50%{opacity:.5} }
 
 /* ══ PAGE-NAV ══ */
 .page-nav { position:sticky; top:56px; z-index:150; background:rgba(249,250,251,.97); backdrop-filter:blur(8px); border-bottom:1px solid var(--border); padding:0 32px; display:flex; align-items:stretch; height:44px; overflow-x:auto; white-space:nowrap; }
 .page-nav::-webkit-scrollbar { height:0; }
-.pnav-item { display:flex; align-items:center; gap:6px; padding:0 14px; font-size:12px; font-weight:600; color:var(--text-sub2); border-bottom:2px solid transparent; cursor:pointer; text-decoration:none; transition:all .2s; white-space:nowrap; }
+.pnav-item { display:flex; align-items:center; gap:6px; padding:0 14px; font-size:13px; font-weight:600; color:var(--text-sub2); border-bottom:2px solid transparent; cursor:pointer; text-decoration:none; transition:all .2s; white-space:nowrap; }
 .pnav-item:hover { color:var(--text-h); border-color:var(--border); }
 .pnav-item.active { color:var(--accent); border-color:var(--accent); background:rgba(79,70,229,.04); }
-.pnav-num { font-size:10px; font-weight:700; color:var(--accent); font-family:monospace; }
+.pnav-num { font-size:11px; font-weight:700; color:var(--accent); font-family:monospace; }
 .pnav-div { width:1px; background:var(--border); margin:10px 0; flex-shrink:0; }
 
 /* ══ CONTENT ══ */
@@ -51,16 +51,16 @@ a { color:var(--accent); text-decoration:none; } a:hover { text-decoration:under
 .section-header { display:flex; align-items:center; gap:12px; padding:14px 18px; background:var(--card-bg); border:1px solid var(--border); border-radius:var(--radius); cursor:pointer; transition:all .2s; user-select:none; }
 .section-header:hover { background:#e9ebf0; }
 .section-header.open { border-color:#c7d2fe; background:linear-gradient(90deg,#f0f4ff 0%,var(--card-bg) 100%); border-radius:var(--radius) var(--radius) 0 0; }
-.section-num { font-size:11px; font-weight:700; color:var(--accent); min-width:22px; font-family:monospace; }
+.section-num { font-size:12px; font-weight:700; color:var(--accent); min-width:22px; font-family:monospace; }
 .sec-title { font-size:15px; font-weight:700; color:var(--text-h); flex:1; }
-.sec-sub { font-size:11px; color:var(--text-sub2); }
-.sec-badge { font-size:10px; font-weight:700; padding:2px 8px; border-radius:4px; letter-spacing:.05em; white-space:nowrap; }
+.sec-sub { font-size:12px; color:var(--text-sub2); }
+.sec-badge { font-size:11px; font-weight:700; padding:2px 8px; border-radius:4px; letter-spacing:.05em; white-space:nowrap; }
 .badge-blue { background:#e0e7ff; color:var(--accent); border:1px solid #c7d2fe; }
 .badge-amber { background:var(--amber-bg); color:var(--amber); border:1px solid var(--amber-border); }
 .badge-green { background:var(--green-bg); color:var(--green); border:1px solid var(--green-border); }
 .badge-red { background:var(--red-bg); color:var(--red); border:1px solid var(--red-border); }
 .badge-purple { background:var(--purple-bg); color:var(--purple); border:1px solid var(--purple-border); }
-.chevron { font-size:11px; color:var(--text-src); transition:transform .25s; margin-left:4px; }
+.chevron { font-size:12px; color:var(--text-src); transition:transform .25s; margin-left:4px; }
 .section-header.open .chevron { transform:rotate(90deg); color:var(--accent); }
 .section-body { display:none; border:1px solid var(--border); border-top:none; border-radius:0 0 var(--radius) var(--radius); background:#fff; overflow:hidden; }
 .section-body.open { display:block; }
@@ -71,37 +71,37 @@ a { color:var(--accent); text-decoration:none; } a:hover { text-decoration:under
 .subsection-header { display:flex; align-items:center; gap:10px; padding:11px 20px; cursor:pointer; transition:background .2s; user-select:none; }
 .subsection-header:hover { background:var(--card-bg2); }
 .subsection-header.open { background:#f0f4ff; }
-.subsub-num { font-size:11px; color:var(--text-src); min-width:18px; font-weight:700; }
+.subsub-num { font-size:12px; color:var(--text-src); min-width:18px; font-weight:700; }
 .subsection-header.open .subsub-num { color:var(--accent); }
 .sub-title { font-size:13px; color:var(--text-sub1); flex:1; font-weight:500; }
 .subsection-header.open .sub-title { color:var(--text-h); }
-.sub-chevron { font-size:10px; color:var(--text-src); transition:transform .25s; }
+.sub-chevron { font-size:11px; color:var(--text-src); transition:transform .25s; }
 .subsection-header.open .sub-chevron { transform:rotate(90deg); color:var(--accent); }
 .subsection-body { display:none; padding:18px 20px 22px; border-top:1px solid var(--border); }
 .subsection-body.open { display:block; }
 
 /* ══ SUBSEC LABEL ══ */
-.subsec-label { font-size:10px; font-weight:700; color:var(--accent); text-transform:uppercase; letter-spacing:.12em; margin-bottom:10px; margin-top:4px; display:flex; align-items:center; gap:8px; }
+.subsec-label { font-size:11px; font-weight:700; color:var(--accent); text-transform:uppercase; letter-spacing:.12em; margin-bottom:10px; margin-top:4px; display:flex; align-items:center; gap:8px; }
 .subsec-label::after { content:''; flex:1; height:1px; background:linear-gradient(90deg,var(--border),transparent); }
 
 /* ══ TABLE ══ */
 .table-wrap { overflow-x:auto; margin-bottom:14px; border-radius:var(--radius); border:1px solid var(--border); }
-table { width:100%; border-collapse:collapse; font-size:12px; }
+table { width:100%; border-collapse:collapse; font-size:13px; }
 thead tr { background:#1a1a2e; color:#fff; }
-thead th { padding:9px 11px; text-align:left; font-weight:600; font-size:11px; white-space:nowrap; }
+thead th { padding:9px 11px; text-align:left; font-weight:600; font-size:12px; white-space:nowrap; }
 tbody tr { border-bottom:1px solid var(--border); }
 tbody tr:nth-child(even) { background:var(--card-bg2); }
 tbody tr:hover { background:#eff6ff; }
-tbody td { padding:8px 11px; vertical-align:top; line-height:1.5; color:var(--text-sub1); font-size:12px; }
+tbody td { padding:8px 11px; vertical-align:top; line-height:1.5; color:var(--text-sub1); font-size:13px; }
 tbody tr:last-child td { border-bottom:none; }
 .td-bold { font-weight:600; color:var(--text-h); }
-.td-mono { font-family:monospace; font-size:11px; }
+.td-mono { font-family:monospace; font-size:12px; }
 .td-green { color:var(--green); font-weight:600; } .td-amber { color:var(--amber); font-weight:600; }
 .td-red { color:var(--red); font-weight:600; } .td-blue { color:var(--accent); font-weight:600; }
-.cat-hdr td { background:#1a1a2e !important; color:#a5b4fc !important; font-weight:700; font-size:11px; letter-spacing:.5px; padding:7px 11px; }
+.cat-hdr td { background:#1a1a2e !important; color:#a5b4fc !important; font-weight:700; font-size:12px; letter-spacing:.5px; padding:7px 11px; }
 
 /* ══ PILLS ══ */
-.pill { display:inline-block; padding:2px 7px; border-radius:12px; font-size:10px; font-weight:700; white-space:nowrap; }
+.pill { display:inline-block; padding:2px 7px; border-radius:12px; font-size:11px; font-weight:700; white-space:nowrap; }
 .pill-green { background:var(--green-bg); color:var(--green); border:1px solid var(--green-border); }
 .pill-amber { background:var(--amber-bg); color:var(--amber); border:1px solid var(--amber-border); }
 .pill-red { background:var(--red-bg); color:var(--red); border:1px solid var(--red-border); }
@@ -118,20 +118,20 @@ tbody tr:last-child td { border-bottom:none; }
 .info-card.danger { background:var(--red-bg); border-color:var(--red-border); }
 .info-card.success { background:var(--green-bg); border-color:var(--green-border); }
 .info-card.teal { background:var(--teal-bg); border-color:var(--teal-border); }
-.card-title { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--accent); margin-bottom:7px; }
+.card-title { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--accent); margin-bottom:7px; }
 .card-title.warn { color:var(--amber); } .card-title.danger { color:var(--red); } .card-title.success { color:var(--green); } .card-title.teal { color:var(--teal); }
-.card-body { font-size:12px; color:var(--text-sub1); line-height:1.65; }
+.card-body { font-size:13px; color:var(--text-sub1); line-height:1.65; }
 .card-body strong { color:var(--text-h); }
 
 /* ══ STAT CARDS ══ */
 .stat-card { background:var(--card-bg); border:1px solid var(--border); border-radius:var(--radius); padding:13px 15px; border-left:4px solid var(--accent); }
 .stat-val { font-size:22px; font-weight:800; color:var(--accent); line-height:1; margin:4px 0; font-family:monospace; }
 .stat-val.green { color:var(--green); } .stat-val.amber { color:var(--amber); } .stat-val.red { color:var(--red); }
-.stat-label { font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:.05em; color:var(--text-sub2); }
-.stat-desc { font-size:11px; color:var(--text-sub2); margin-top:3px; }
+.stat-label { font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.05em; color:var(--text-sub2); }
+.stat-desc { font-size:12px; color:var(--text-sub2); margin-top:3px; }
 
 /* ══ CALLOUT ══ */
-.callout { background:var(--card-bg2); border-left:4px solid var(--accent); border-radius:0 var(--radius) var(--radius) 0; padding:11px 14px; margin:10px 0; font-size:12px; color:var(--text-sub1); }
+.callout { background:var(--card-bg2); border-left:4px solid var(--accent); border-radius:0 var(--radius) var(--radius) 0; padding:11px 14px; margin:10px 0; font-size:13px; color:var(--text-sub1); }
 .callout.warn { border-left-color:var(--amber); background:var(--amber-bg); }
 .callout.danger { border-left-color:var(--red); background:var(--red-bg); }
 .callout.success { border-left-color:var(--green); background:var(--green-bg); }
@@ -142,51 +142,51 @@ tbody tr:last-child td { border-bottom:none; }
 .tl-item { display:flex; gap:10px; padding:6px 0; }
 .tl-dot { width:7px; height:7px; border-radius:50%; background:var(--accent); flex-shrink:0; margin-top:5px; }
 .tl-dot.amber { background:var(--amber); } .tl-dot.green { background:var(--green); } .tl-dot.red { background:var(--red); }
-.tl-content { font-size:12px; color:var(--text-sub1); line-height:1.55; }
+.tl-content { font-size:13px; color:var(--text-sub1); line-height:1.55; }
 .tl-content strong { color:var(--text-h); }
 
 /* ══ SECTION INSIGHT ══ */
 .section-insight { background:linear-gradient(135deg,#f0f4ff 0%,#fafbff 100%); border:1px solid #c7d2fe; border-radius:var(--radius); padding:13px 16px; margin-bottom:14px; }
-.section-insight h3 { font-size:10px; font-weight:800; color:var(--accent); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:8px; }
+.section-insight h3 { font-size:11px; font-weight:800; color:var(--accent); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:8px; }
 .section-insight ul { list-style:none; display:flex; flex-wrap:wrap; gap:8px; }
-.section-insight li { background:#fff; border:1px solid #e0e7ff; border-radius:8px; padding:6px 12px; font-size:12px; color:var(--text-sub1); line-height:1.5; flex:1 1 240px; }
+.section-insight li { background:#fff; border:1px solid #e0e7ff; border-radius:8px; padding:6px 12px; font-size:13px; color:var(--text-sub1); line-height:1.5; flex:1 1 240px; }
 .section-insight li strong { color:var(--text-h); }
 
 /* ══ SRC LINE ══ */
-.src-line { font-size:10px; color:var(--text-src); margin-top:12px; padding-top:10px; border-top:1px solid var(--border); line-height:1.8; }
-.src-line a { color:var(--accent); text-decoration:underline; font-size:10px; }
+.src-line { font-size:11px; color:var(--text-src); margin-top:12px; padding-top:10px; border-top:1px solid var(--border); line-height:1.8; }
+.src-line a { color:var(--accent); text-decoration:underline; font-size:11px; }
 
 /* ══ TERM TOOLTIP ══ */
 .term { border-bottom:1px dotted var(--accent); cursor:help; }
-#tipbox { position:fixed; background:#1a1a2e; color:#e5e7eb; font-family:'Segoe UI','Apple SD Gothic Neo',sans-serif; font-size:11px; font-weight:400; line-height:1.6; letter-spacing:0; text-transform:none; padding:9px 12px; border-radius:8px; max-width:280px; opacity:0; visibility:hidden; transition:opacity .15s; z-index:1000; pointer-events:none; box-shadow:0 4px 16px rgba(0,0,0,.18); text-align:left; }
+#tipbox { position:fixed; background:#1a1a2e; color:#e5e7eb; font-family:'Segoe UI','Apple SD Gothic Neo',sans-serif; font-size:12px; font-weight:400; line-height:1.6; letter-spacing:0; text-transform:none; padding:9px 12px; border-radius:8px; max-width:280px; opacity:0; visibility:hidden; transition:opacity .15s; z-index:1000; pointer-events:none; box-shadow:0 4px 16px rgba(0,0,0,.18); text-align:left; }
 #tipbox.show { opacity:1; visibility:visible; }
 
 /* ══ CALC (scoped s7) ══ */
-.s7-src { font-size:10px; font-weight:700; color:var(--text-src); letter-spacing:.08em; text-transform:uppercase; margin-bottom:8px; }
+.s7-src { font-size:11px; font-weight:700; color:var(--text-src); letter-spacing:.08em; text-transform:uppercase; margin-bottom:8px; }
 .s7-formula { font-family:monospace; font-size:14px; font-weight:600; line-height:2.4; color:var(--text-h); }
 .s7-formula .fv { color:var(--accent); }
 .s7-formula .fo { color:var(--text-sub2); }
-.s7-fnote { font-size:11px; color:var(--text-sub2); margin-top:6px; padding-top:8px; border-top:1px solid var(--border); line-height:1.6; }
+.s7-fnote { font-size:12px; color:var(--text-sub2); margin-top:6px; padding-top:8px; border-top:1px solid var(--border); line-height:1.6; }
 .s7-calc-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin:14px 0; }
 @media(max-width:700px){ .s7-calc-grid { grid-template-columns:1fr 1fr; } }
 .s7-input { background:var(--card-bg2); border:1px solid var(--border); border-radius:8px; padding:10px 12px; transition:border-color .15s; }
 .s7-input:hover { border-color:#c7d2fe; }
-.s7-ilabel { display:flex; justify-content:space-between; align-items:center; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--text-src); margin-bottom:4px; }
+.s7-ilabel { display:flex; justify-content:space-between; align-items:center; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--text-src); margin-bottom:4px; }
 .s7-ilabel .iv { color:var(--accent); font-family:monospace; }
 .s7-ival { font-family:monospace; font-size:18px; font-weight:800; color:var(--text-h); margin-bottom:6px; line-height:1; }
 input.s7-range { width:100%; -webkit-appearance:none; appearance:none; height:4px; background:var(--border); border-radius:2px; outline:none; cursor:pointer; }
 input.s7-range::-webkit-slider-thumb { -webkit-appearance:none; width:13px; height:13px; border-radius:50%; background:var(--accent); cursor:pointer; transition:transform .1s; }
 input.s7-range::-webkit-slider-thumb:hover { transform:scale(1.25); }
 input.s7-range::-moz-range-thumb { width:13px; height:13px; border-radius:50%; background:var(--accent); border:none; }
-.s7-rlabels { display:flex; justify-content:space-between; font-size:9px; color:var(--text-src); font-family:monospace; margin-top:3px; }
+.s7-rlabels { display:flex; justify-content:space-between; font-size:10px; color:var(--text-src); font-family:monospace; margin-top:3px; }
 .s7-results { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:14px 0; }
 .s7-rcard { background:var(--card-bg); border:1px solid var(--border); border-radius:10px; padding:12px 14px; border-left:4px solid var(--border); }
 .s7-rcard.primary { border-left-color:var(--accent); background:var(--blue-bg); border-color:var(--blue-border); }
-.s7-rlabel { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:var(--text-sub2); margin-bottom:4px; font-family:monospace; }
+.s7-rlabel { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:var(--text-sub2); margin-bottom:4px; font-family:monospace; }
 .s7-rval { font-size:24px; font-weight:800; color:var(--text-h); font-family:monospace; line-height:1.1; }
 .s7-rcard.primary .s7-rval { color:var(--accent); }
-.s7-rsub { font-size:10px; color:var(--text-sub2); margin-top:3px; }
-.s7-status { border-radius:8px; padding:9px 13px; font-size:12px; font-weight:500; display:flex; align-items:center; gap:7px; margin-top:4px; }
+.s7-rsub { font-size:11px; color:var(--text-sub2); margin-top:3px; }
+.s7-status { border-radius:8px; padding:9px 13px; font-size:13px; font-weight:500; display:flex; align-items:center; gap:7px; margin-top:4px; }
 .s7-status.ok  { background:var(--green-bg); color:var(--green); border:1px solid var(--green-border); }
 .s7-status.warn{ background:var(--amber-bg); color:var(--amber); border:1px solid var(--amber-border); }
 .s7-status.bad { background:var(--red-bg); color:var(--red); border:1px solid var(--red-border); }
@@ -197,15 +197,15 @@ input.s7-range::-moz-range-thumb { width:13px; height:13px; border-radius:50%; b
 .threat-header { display:flex; align-items:center; gap:12px; padding:13px 16px; background:var(--card-bg); border-bottom:1px solid var(--border); }
 .threat-icon { font-size:20px; flex-shrink:0; }
 .threat-title { font-size:13px; font-weight:700; color:var(--text-h); }
-.threat-subtitle { font-size:11px; color:var(--text-sub2); margin-top:1px; }
+.threat-subtitle { font-size:12px; color:var(--text-sub2); margin-top:1px; }
 .threat-verdict { margin-left:auto; flex-shrink:0; }
 .threat-body { padding:14px 16px; background:#fff; }
 .kv-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin:10px 0; }
 .kv-item { background:var(--card-bg2); border-radius:8px; padding:9px 11px; border:1px solid var(--border); }
-.kv-label { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.07em; color:var(--text-src); margin-bottom:3px; }
+.kv-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.07em; color:var(--text-src); margin-bottom:3px; }
 .kv-val { font-size:14px; font-weight:800; font-family:monospace; color:var(--text-h); }
 .kv-val.red { color:var(--red); } .kv-val.amber { color:var(--amber); } .kv-val.green { color:var(--green); } .kv-val.blue { color:var(--accent); }
-.lesson-box { background:linear-gradient(135deg,#f0f4ff,#fafbff); border:1px solid #c7d2fe; border-radius:8px; padding:10px 13px; margin-top:10px; font-size:11px; color:var(--text-sub1); line-height:1.6; }
+.lesson-box { background:linear-gradient(135deg,#f0f4ff,#fafbff); border:1px solid #c7d2fe; border-radius:8px; padding:10px 13px; margin-top:10px; font-size:12px; color:var(--text-sub1); line-height:1.6; }
 .lesson-box strong { color:var(--accent); }
 
 @media(max-width:900px) {
@@ -457,7 +457,7 @@ input.s7-range::-moz-range-thumb { width:13px; height:13px; border-radius:50%; b
             <span style="color:var(--text-sub2);">÷</span>
             <span style="color:var(--accent);">N<sub style="font-size:.75em">Online</sub></span>
           </div>
-          <div style="font-size:11px;color:var(--text-sub2);margin-top:8px;padding-top:8px;border-top:1px solid var(--border);">
+          <div style="font-size:12px;color:var(--text-sub2);margin-top:8px;padding-top:8px;border-top:1px solid var(--border);">
             원문 예시: N<sub>Modes</sub>=10, T<sub>Match</sub>=10분, N<sub>Participants</sub>=8, N<sub>Skills</sub>=10 → 대기 1분 이내 위해 <strong style="color:var(--text-h);">N<sub>Online</sub> ≥ 8,000명</strong> 필요
           </div>
         </div>
@@ -558,7 +558,7 @@ input.s7-range::-moz-range-thumb { width:13px; height:13px; border-radius:50%; b
           <div class="info-card highlight">
             <div class="card-title">대기시간은 4개 변수의 곱에 비례한다</div>
             <div class="card-body">게임 모드 수, 경기 시간, 참여 인원, 스킬 버킷 수 중 <strong>어느 하나를 2배로 늘리면 동일 CCU에서 대기시간이 정확히 2배</strong>가 된다. 반대로 모드를 줄이거나 스킬 버킷을 통합하면 같은 인원으로 대기시간을 절반으로 단축할 수 있다.</div>
-            <div class="callout" style="margin-top:10px;font-size:11px;">원문 예시: N<sub>Modes</sub>=10, T<sub>Match</sub>=10분, N<sub>Players</sub>=8, N<sub>Skills</sub>=10 → 대기 1분 이내에 <strong>최소 8,000명</strong> 필요.</div>
+            <div class="callout" style="margin-top:10px;font-size:12px;">원문 예시: N<sub>Modes</sub>=10, T<sub>Match</sub>=10분, N<sub>Players</sub>=8, N<sub>Skills</sub>=10 → 대기 1분 이내에 <strong>최소 8,000명</strong> 필요.</div>
           </div>
           <div class="info-card">
             <div class="card-title">공식은 이론적 하한선이다</div>
@@ -589,7 +589,7 @@ input.s7-range::-moz-range-thumb { width:13px; height:13px; border-radius:50%; b
         <div class="grid3" style="margin-bottom:14px;">
           <div class="info-card success">
             <div class="card-title success">① IDEAL  ·  0~10초</div>
-            <div class="card-body" style="font-size:12px;">
+            <div class="card-body" style="font-size:13px;">
               <strong>조건:</strong> <span class="term" data-tip="Round Trip Time — 클라이언트와 서버 간 왕복 지연시간. 흔히 말하는 '핑'.">RTT</span> ≤ 50ms인 데이터센터만 탐색.<br>
               <strong>의미:</strong> 게임이 설계상 0~50ms에서는 지연감 없이 동일하게 동작하도록 설계됐을 때, 이 범위 안에서만 매치를 구성한다.<br>
               <strong>결과:</strong> 대부분의 플레이어는 여기서 바로 매칭된다. 10초 안에 매치가 없으면 EXPAND로 전환.
@@ -597,7 +597,7 @@ input.s7-range::-moz-range-thumb { width:13px; height:13px; border-radius:50%; b
           </div>
           <div class="info-card warn">
             <div class="card-title warn">② EXPAND  ·  10~20초</div>
-            <div class="card-body" style="font-size:12px;">
+            <div class="card-body" style="font-size:13px;">
               <strong>조건:</strong> RTT ≤ 100ms로 탐색 범위 확장.<br>
               <strong>의미:</strong> 50~100ms 구간은 게임플레이에 영향을 주기 시작하지만 여전히 허용 범위. IDEAL 탐색 실패 시 더 멀리 있는 서버까지 범위를 넓혀 매칭 가능성을 높인다.<br>
               <strong>결과:</strong> 한적한 지역·비수기 플레이어 대부분이 이 단계에서 매칭. 10초 후에도 없으면 WARMBODY.
@@ -605,7 +605,7 @@ input.s7-range::-moz-range-thumb { width:13px; height:13px; border-radius:50%; b
           </div>
           <div class="info-card danger">
             <div class="card-title danger">③ WARMBODY  ·  20초~</div>
-            <div class="card-body" style="font-size:12px;">
+            <div class="card-body" style="font-size:13px;">
               <strong>조건:</strong> 레이턴시 무관, 진행 중인 모든 매치에 자신을 "기증".<br>
               <strong>의미:</strong> 더 이상 좋은 매치를 기다리지 않는다. 인원이 부족한 진행 중 매치에 합류하거나, 10초 추가 후에도 실패하면 <strong>봇으로 대체</strong>한다. 매치 품질을 포기하는 대신 플레이어가 아무것도 못 하는 상황을 방지한다.
             </div>
@@ -675,7 +675,7 @@ input.s7-range::-moz-range-thumb { width:13px; height:13px; border-radius:50%; b
             <tbody>
               <tr class="cat-hdr"><td colspan="6">20개+ — 도시 단위 세분화</td></tr>
               <tr>
-                <td class="td-bold">Valorant<br><span style="font-size:10px;color:var(--text-sub2);font-weight:400;">5v5 · 매치 10명</span></td>
+                <td class="td-bold">Valorant<br><span style="font-size:11px;color:var(--text-sub2);font-weight:400;">5v5 · 매치 10명</span></td>
                 <td><span class="pill pill-green">Riot 자체 인프라</span></td>
                 <td class="td-mono td-blue">25</td>
                 <td><span class="pill pill-gray">도시</span></td>
@@ -683,7 +683,7 @@ input.s7-range::-moz-range-thumb { width:13px; height:13px; border-radius:50%; b
                 <td>NA 6(Oregon·N.Cal·N.Virginia·Texas·Illinois·Georgia) · LATAM 3 · BR 1 · EU 8(Frankfurt·Paris·Stockholm·Istanbul·London·Warsaw·Madrid·Bahrain) · KR 1 · AP 6(HK·Tokyo·Singapore·Sydney·Mumbai·Manila) — 계정 리전 6개, 리전 내 도시 선택</td>
               </tr>
               <tr>
-                <td class="td-bold">CS2<br><span style="font-size:10px;color:var(--text-sub2);font-weight:400;">5v5 · 매치 10명</span></td>
+                <td class="td-bold">CS2<br><span style="font-size:11px;color:var(--text-sub2);font-weight:400;">5v5 · 매치 10명</span></td>
                 <td><span class="pill pill-green">Valve 자체 서버</span></td>
                 <td class="td-mono td-blue">~20</td>
                 <td><span class="pill pill-gray">DC</span></td>
@@ -692,7 +692,7 @@ input.s7-range::-moz-range-thumb { width:13px; height:13px; border-radius:50%; b
               </tr>
               <tr class="cat-hdr"><td colspan="6">10~19개 — DC 단위 운영</td></tr>
               <tr>
-                <td class="td-bold">Rainbow Six Siege<br><span style="font-size:10px;color:var(--text-sub2);font-weight:400;">5v5 · 매치 10명</span></td>
+                <td class="td-bold">Rainbow Six Siege<br><span style="font-size:11px;color:var(--text-sub2);font-weight:400;">5v5 · 매치 10명</span></td>
                 <td><span class="pill pill-gray">Ubisoft 자체</span></td>
                 <td class="td-mono td-green">13</td>
                 <td><span class="pill pill-gray">DC</span></td>
@@ -700,7 +700,7 @@ input.s7-range::-moz-range-thumb { width:13px; height:13px; border-radius:50%; b
                 <td>NA(East US·West US·Central US) · SA(Brazil) · EU(WEU·EEU·Turkey) · Asia(Japan East·Asia East·Asia SE) · Africa·ME(UAE North·South Africa North)</td>
               </tr>
               <tr>
-                <td class="td-bold">Apex Legends<br><span style="font-size:10px;color:var(--text-sub2);font-weight:400;">배틀로얄 (3인 스쿼드) · 매치 60명</span></td>
+                <td class="td-bold">Apex Legends<br><span style="font-size:11px;color:var(--text-sub2);font-weight:400;">배틀로얄 (3인 스쿼드) · 매치 60명</span></td>
                 <td><span class="pill pill-amber">AWS</span></td>
                 <td class="td-mono td-green">10</td>
                 <td><span class="pill pill-gray">DC</span></td>
@@ -708,7 +708,7 @@ input.s7-range::-moz-range-thumb { width:13px; height:13px; border-radius:50%; b
                 <td>Virginia · Ohio · Oregon · Frankfurt · São Paulo · Tokyo · Bahrain · Sydney · Hong Kong · Singapore</td>
               </tr>
               <tr>
-                <td class="td-bold">Call of Duty: Warzone<br><span style="font-size:10px;color:var(--text-sub2);font-weight:400;">배틀로얄 · 매치 150명</span></td>
+                <td class="td-bold">Call of Duty: Warzone<br><span style="font-size:11px;color:var(--text-sub2);font-weight:400;">배틀로얄 · 매치 150명</span></td>
                 <td><span class="pill pill-gray">Activision 자체</span> <span class="pill pill-blue">Azure</span></td>
                 <td class="td-mono td-green">~10</td>
                 <td><span class="pill pill-gray">DC</span></td>
@@ -717,7 +717,7 @@ input.s7-range::-moz-range-thumb { width:13px; height:13px; border-radius:50%; b
               </tr>
               <tr class="cat-hdr"><td colspan="6">6~9개 — 리전 단위 운영</td></tr>
               <tr>
-                <td class="td-bold">Fortnite<br><span style="font-size:10px;color:var(--text-sub2);font-weight:400;">배틀로얄 · 매치 100명</span></td>
+                <td class="td-bold">Fortnite<br><span style="font-size:11px;color:var(--text-sub2);font-weight:400;">배틀로얄 · 매치 100명</span></td>
                 <td><span class="pill pill-amber">AWS</span></td>
                 <td class="td-mono td-green">8</td>
                 <td><span class="pill pill-gray">리전</span></td>
@@ -725,7 +725,7 @@ input.s7-range::-moz-range-thumb { width:13px; height:13px; border-radius:50%; b
                 <td>NA East · NA West · NA Central · Europe · Brazil · Asia · Oceania · Middle East — Epic 공식</td>
               </tr>
               <tr>
-                <td class="td-bold">이터널 리턴<br><span style="font-size:10px;color:var(--text-sub2);font-weight:400;">MOBA · 매치 24명</span></td>
+                <td class="td-bold">이터널 리턴<br><span style="font-size:11px;color:var(--text-sub2);font-weight:400;">MOBA · 매치 24명</span></td>
                 <td><span class="pill pill-amber">AWS</span></td>
                 <td class="td-mono td-green">6</td>
                 <td><span class="pill pill-gray">서버</span></td>
@@ -734,7 +734,7 @@ input.s7-range::-moz-range-thumb { width:13px; height:13px; border-radius:50%; b
               </tr>
               <tr class="cat-hdr"><td colspan="6">4~5개 — 광역 리전 단위</td></tr>
               <tr>
-                <td class="td-bold">PUBG<br><span style="font-size:10px;color:var(--text-sub2);font-weight:400;">배틀로얄 · 매치 100명</span></td>
+                <td class="td-bold">PUBG<br><span style="font-size:11px;color:var(--text-sub2);font-weight:400;">배틀로얄 · 매치 100명</span></td>
                 <td><span class="pill pill-amber">AWS</span></td>
                 <td class="td-mono td-amber">5</td>
                 <td><span class="pill pill-gray">리전</span></td>
@@ -742,7 +742,7 @@ input.s7-range::-moz-range-thumb { width:13px; height:13px; border-radius:50%; b
                 <td>AS · SEA · NA · SA · EU — 2024.10 업데이트 32.1에서 7개→4개 병합(NA+SA→AMER), SA 핑 170ms+ 문제로 2024.12 업데이트 33.1에서 NA/SA 재분리</td>
               </tr>
               <tr>
-                <td class="td-bold">Battlefield 2042<br><span style="font-size:10px;color:var(--text-sub2);font-weight:400;">팀 TDM · 매치 64~128명</span></td>
+                <td class="td-bold">Battlefield 2042<br><span style="font-size:11px;color:var(--text-sub2);font-weight:400;">팀 TDM · 매치 64~128명</span></td>
                 <td><span class="pill pill-gray">EA 자체</span> <span class="pill pill-amber">AWS</span></td>
                 <td class="td-mono td-amber">~5</td>
                 <td><span class="pill pill-gray">리전</span></td>
@@ -895,7 +895,7 @@ input.s7-range::-moz-range-thumb { width:13px; height:13px; border-radius:50%; b
 </div>
 
 <!-- FOOTER -->
-<div style="margin-top:48px;padding-top:16px;border-top:1px solid var(--border);font-size:10px;color:var(--text-src);font-family:monospace;line-height:2;display:flex;gap:16px;flex-wrap:wrap;align-items:center;">
+<div style="margin-top:48px;padding-top:16px;border-top:1px solid var(--border);font-size:11px;color:var(--text-src);font-family:monospace;line-height:2;display:flex;gap:16px;flex-wrap:wrap;align-items:center;">
   <span style="color:var(--accent);font-weight:700;">Project S — FPS 매치메이킹 CCU 볼륨</span>
   <span>·</span><span>5 SECTIONS · 출처 6개 통합</span>
   <span>·</span><span>최종 업데이트: 2026.06</span>
