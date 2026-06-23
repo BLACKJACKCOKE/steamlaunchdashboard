@@ -33,11 +33,11 @@ a { color:var(--accent); text-decoration:none; } a:hover { text-decoration:under
   border-bottom:1px solid var(--border);
   padding:0 32px; display:flex; align-items:center; justify-content:space-between; height:56px;
 }
-.header-badge { background:#4f46e5; color:#fff; font-size:11px; font-weight:700; padding:3px 8px; border-radius:20px; letter-spacing:.5px; }
+.header-badge { background:#4f46e5; color:#fff; font-size:12px; font-weight:700; padding:3px 8px; border-radius:20px; letter-spacing:.5px; }
 .header-left { display:flex; align-items:center; gap:10px; }
-.header-main { font-size:13px; font-weight:800; color:var(--text-h); }
-.header-sub  { font-size:11px; font-weight:500; color:var(--accent); }
-.meta-live   { display:flex; align-items:center; gap:6px; font-size:11px; color:var(--text-sub2); }
+.header-main { font-size:14px; font-weight:800; color:var(--text-h); }
+.header-sub  { font-size:12px; font-weight:500; color:var(--accent); }
+.meta-live   { display:flex; align-items:center; gap:6px; font-size:12px; color:var(--text-sub2); }
 .live-dot { width:6px; height:6px; border-radius:50%; background:var(--green); box-shadow:0 0 6px var(--green); animation:pulse 2s infinite; }
 @keyframes pulse { 0%,100%{opacity:1}50%{opacity:.5} }
 
@@ -50,10 +50,10 @@ a { color:var(--accent); text-decoration:none; } a:hover { text-decoration:under
   overflow-x:auto; white-space:nowrap;
 }
 .page-nav::-webkit-scrollbar { height:0; }
-.pnav-item { display:flex; align-items:center; gap:6px; padding:0 14px; font-size:13px; font-weight:600; color:var(--text-sub2); border-bottom:2px solid transparent; cursor:pointer; text-decoration:none; transition:all .2s; white-space:nowrap; }
+.pnav-item { display:flex; align-items:center; gap:6px; padding:0 14px; font-size:14px; font-weight:600; color:var(--text-sub2); border-bottom:2px solid transparent; cursor:pointer; text-decoration:none; transition:all .2s; white-space:nowrap; }
 .pnav-item:hover { color:var(--text-h); border-color:var(--border); }
 .pnav-item.active { color:var(--accent); border-color:var(--accent); background:rgba(79,70,229,.04); }
-.pnav-num { font-size:11px; font-weight:700; color:var(--accent); font-family:monospace; }
+.pnav-num { font-size:12px; font-weight:700; color:var(--accent); font-family:monospace; }
 .pnav-div { width:1px; background:var(--border); margin:10px 0; flex-shrink:0; }
 
 /* ══ CONTENT ══ */
@@ -64,17 +64,17 @@ a { color:var(--accent); text-decoration:none; } a:hover { text-decoration:under
 .section-header { display:flex; align-items:center; gap:12px; padding:14px 18px; background:var(--card-bg); border:1px solid var(--border); border-radius:var(--radius); cursor:pointer; transition:all .2s; user-select:none; }
 .section-header:hover { background:#e9ebf0; }
 .section-header.open { border-color:#c7d2fe; background:linear-gradient(90deg,#f0f4ff 0%,var(--card-bg) 100%); border-radius:var(--radius) var(--radius) 0 0; }
-.section-num { font-size:12px; font-weight:700; color:var(--accent); min-width:22px; font-family:monospace; }
+.section-num { font-size:13px; font-weight:700; color:var(--accent); min-width:22px; font-family:monospace; }
 .sec-title { font-size:15px; font-weight:700; color:var(--text-h); flex:1; }
-.sec-sub    { font-size:12px; color:var(--text-sub2); }
-.sec-badge  { font-size:11px; font-weight:700; padding:2px 8px; border-radius:4px; letter-spacing:.05em; white-space:nowrap; }
+.sec-sub    { font-size:13px; color:var(--text-sub2); }
+.sec-badge  { font-size:12px; font-weight:700; padding:2px 8px; border-radius:4px; letter-spacing:.05em; white-space:nowrap; }
 .badge-blue { background:#e0e7ff; color:var(--accent); border:1px solid #c7d2fe; }
 .badge-amber{ background:var(--amber-bg); color:var(--amber); border:1px solid var(--amber-border); }
 .badge-green{ background:var(--green-bg); color:var(--green); border:1px solid var(--green-border); }
 .badge-red  { background:var(--red-bg); color:var(--red); border:1px solid var(--red-border); }
 .badge-purple{ background:var(--purple-bg); color:var(--purple); border:1px solid var(--purple-border); }
 .badge-teal { background:var(--teal-bg); color:var(--teal); border:1px solid var(--teal-border); }
-.chevron { font-size:12px; color:var(--text-src); transition:transform .25s; margin-left:4px; }
+.chevron { font-size:13px; color:var(--text-src); transition:transform .25s; margin-left:4px; }
 .section-header.open .chevron { transform:rotate(90deg); color:var(--accent); }
 .section-body { display:none; border:1px solid var(--border); border-top:none; border-radius:0 0 var(--radius) var(--radius); background:#fff; overflow:hidden; }
 .section-body.open { display:block; }
@@ -85,32 +85,32 @@ a { color:var(--accent); text-decoration:none; } a:hover { text-decoration:under
 .subsection-header { display:flex; align-items:center; gap:10px; padding:11px 20px; cursor:pointer; transition:background .2s; user-select:none; }
 .subsection-header:hover { background:var(--card-bg2); }
 .subsection-header.open { background:#f0f4ff; }
-.subsub-num { font-size:12px; color:var(--text-src); min-width:18px; font-weight:700; }
+.subsub-num { font-size:13px; color:var(--text-src); min-width:18px; font-weight:700; }
 .subsection-header.open .subsub-num { color:var(--accent); }
-.sub-title { font-size:13px; color:var(--text-sub1); flex:1; font-weight:500; }
+.sub-title { font-size:14px; color:var(--text-sub1); flex:1; font-weight:500; }
 .subsection-header.open .sub-title { color:var(--text-h); }
-.sub-chevron { font-size:11px; color:var(--text-src); transition:transform .25s; }
+.sub-chevron { font-size:12px; color:var(--text-src); transition:transform .25s; }
 .subsection-header.open .sub-chevron { transform:rotate(90deg); color:var(--accent); }
 .subsection-body { display:none; padding:18px 20px 22px; border-top:1px solid var(--border); }
 .subsection-body.open { display:block; }
 
 /* ══ SUBSEC LABEL ══ */
-.subsec-label { font-size:11px; font-weight:700; color:var(--accent); text-transform:uppercase; letter-spacing:.12em; margin-bottom:10px; margin-top:4px; display:flex; align-items:center; gap:8px; }
+.subsec-label { font-size:12px; font-weight:700; color:var(--accent); text-transform:uppercase; letter-spacing:.12em; margin-bottom:10px; margin-top:4px; display:flex; align-items:center; gap:8px; }
 .subsec-label::after { content:''; flex:1; height:1px; background:linear-gradient(90deg,var(--border),transparent); }
 
 /* ══ TABLE ══ */
 .table-wrap { overflow-x:auto; margin-bottom:14px; border-radius:var(--radius); border:1px solid var(--border); }
-table { width:100%; border-collapse:collapse; font-size:13px; }
+table { width:100%; border-collapse:collapse; font-size:14px; }
 thead tr { background:#1a1a2e; color:#fff; }
-thead th { padding:9px 11px; text-align:left; font-weight:600; font-size:12px; white-space:nowrap; }
+thead th { padding:9px 11px; text-align:left; font-weight:600; font-size:13px; white-space:nowrap; }
 tbody tr { border-bottom:1px solid var(--border); transition:background .15s; }
 tbody tr:last-child td { border-bottom:none; }
-tbody td { padding:8px 11px; vertical-align:middle; line-height:1.5; color:var(--text-sub1); font-size:13px; }
+tbody td { padding:8px 11px; vertical-align:middle; line-height:1.5; color:var(--text-sub1); font-size:14px; }
 .td-bold { font-weight:600; color:var(--text-h); }
-.td-mono { font-family:monospace; font-size:12px; }
+.td-mono { font-family:monospace; font-size:13px; }
 .td-green { color:var(--green); font-weight:600; } .td-amber { color:var(--amber); font-weight:600; }
 .td-red { color:var(--red); font-weight:600; }   .td-blue { color:var(--accent); font-weight:600; }
-.cat-hdr td { background:#1a1a2e !important; color:#a5b4fc !important; font-weight:700; font-size:11px; letter-spacing:.8px; padding:7px 11px; text-transform:uppercase; }
+.cat-hdr td { background:#1a1a2e !important; color:#a5b4fc !important; font-weight:700; font-size:12px; letter-spacing:.8px; padding:7px 11px; text-transform:uppercase; }
 
 /* ══ F2P COMPARISON TABLE ══ */
 .f2p-table tbody tr.row-both { background:rgba(220,252,231,.15); }
@@ -124,10 +124,10 @@ tbody td { padding:8px 11px; vertical-align:middle; line-height:1.5; color:var(-
 .f2p-table tbody tr.tip-row { cursor:help; }
 
 /* Status icons in F2P table */
-.st-ok    { display:inline-flex; align-items:center; gap:3px; background:var(--green-bg); color:var(--green); border:1px solid var(--green-border); padding:2px 7px; border-radius:12px; font-size:11px; font-weight:700; white-space:nowrap; }
-.st-warn  { display:inline-flex; align-items:center; gap:3px; background:var(--amber-bg); color:var(--amber); border:1px solid var(--amber-border); padding:2px 7px; border-radius:12px; font-size:11px; font-weight:700; white-space:nowrap; }
-.st-no    { display:inline-flex; align-items:center; gap:3px; background:var(--red-bg); color:var(--red); border:1px solid var(--red-border); padding:2px 7px; border-radius:12px; font-size:11px; font-weight:700; white-space:nowrap; }
-.type-chip { display:inline-block; padding:2px 6px; border-radius:4px; font-size:11px; font-weight:700; }
+.st-ok    { display:inline-flex; align-items:center; gap:3px; background:var(--green-bg); color:var(--green); border:1px solid var(--green-border); padding:2px 7px; border-radius:12px; font-size:12px; font-weight:700; white-space:nowrap; }
+.st-warn  { display:inline-flex; align-items:center; gap:3px; background:var(--amber-bg); color:var(--amber); border:1px solid var(--amber-border); padding:2px 7px; border-radius:12px; font-size:12px; font-weight:700; white-space:nowrap; }
+.st-no    { display:inline-flex; align-items:center; gap:3px; background:var(--red-bg); color:var(--red); border:1px solid var(--red-border); padding:2px 7px; border-radius:12px; font-size:12px; font-weight:700; white-space:nowrap; }
+.type-chip { display:inline-block; padding:2px 6px; border-radius:4px; font-size:12px; font-weight:700; }
 .type-algo { background:#ede9fe; color:#6d28d9; }
 .type-cure { background:#e0e7ff; color:#4338ca; }
 .type-evt  { background:#d1fae5; color:#065f46; }
@@ -137,17 +137,17 @@ tbody td { padding:8px 11px; vertical-align:middle; line-height:1.5; color:var(-
 #g-tip {
   display:none; position:fixed; z-index:9999;
   background:#1a1a2e; color:#e2e8f0;
-  padding:12px 16px; border-radius:10px; font-size:13px;
+  padding:12px 16px; border-radius:10px; font-size:14px;
   max-width:380px; box-shadow:0 8px 32px rgba(0,0,0,.45);
   line-height:1.7; pointer-events:none;
   border-left:3px solid #4f46e5;
 }
-#g-tip .tip-title { font-weight:700; color:#a5b4fc; font-size:13px; margin-bottom:6px; display:block; }
-#g-tip .tip-body  { color:#cbd5e1; font-size:12px; }
-#g-tip .tip-tag   { display:inline-block; background:rgba(79,70,229,.25); color:#a5b4fc; font-size:11px; padding:1px 6px; border-radius:4px; margin-top:6px; }
+#g-tip .tip-title { font-weight:700; color:#a5b4fc; font-size:14px; margin-bottom:6px; display:block; }
+#g-tip .tip-body  { color:#cbd5e1; font-size:13px; }
+#g-tip .tip-tag   { display:inline-block; background:rgba(79,70,229,.25); color:#a5b4fc; font-size:12px; padding:1px 6px; border-radius:4px; margin-top:6px; }
 
 /* ══ PILLS ══ */
-.pill { display:inline-block; padding:2px 7px; border-radius:12px; font-size:11px; font-weight:700; white-space:nowrap; }
+.pill { display:inline-block; padding:2px 7px; border-radius:12px; font-size:12px; font-weight:700; white-space:nowrap; }
 .pill-green { background:var(--green-bg); color:var(--green); border:1px solid var(--green-border); }
 .pill-amber { background:var(--amber-bg); color:var(--amber); border:1px solid var(--amber-border); }
 .pill-red   { background:var(--red-bg); color:var(--red); border:1px solid var(--red-border); }
@@ -164,9 +164,9 @@ tbody td { padding:8px 11px; vertical-align:middle; line-height:1.5; color:var(-
 .info-card.danger  { background:var(--red-bg); border-color:var(--red-border); }
 .info-card.success { background:var(--green-bg); border-color:var(--green-border); }
 .info-card.teal    { background:var(--teal-bg); border-color:var(--teal-border); }
-.card-title { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--accent); margin-bottom:7px; }
+.card-title { font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--accent); margin-bottom:7px; }
 .card-title.warn { color:var(--amber); } .card-title.danger { color:var(--red); } .card-title.success { color:var(--green); } .card-title.teal { color:var(--teal); }
-.card-body { font-size:13px; color:var(--text-sub1); line-height:1.65; }
+.card-body { font-size:14px; color:var(--text-sub1); line-height:1.65; }
 .card-body strong { color:var(--text-h); }
 
 /* ══ NEWS CARD ══ */
@@ -177,21 +177,21 @@ tbody td { padding:8px 11px; vertical-align:middle; line-height:1.5; color:var(-
   display:flex; gap:14px; align-items:flex-start;
 }
 .news-icon { font-size:22px; flex-shrink:0; margin-top:2px; }
-.news-badge { display:inline-block; background:#ef4444; color:#fff; font-size:11px; font-weight:700; padding:1px 7px; border-radius:4px; margin-bottom:5px; }
-.news-title { font-size:13px; font-weight:700; color:var(--text-h); margin-bottom:4px; line-height:1.4; }
-.news-summary { font-size:13px; color:var(--text-sub1); line-height:1.65; }
-.news-meta { font-size:11px; color:var(--text-src); margin-top:6px; }
-.news-insight { background:#e0e7ff; border-radius:6px; padding:7px 10px; font-size:12px; color:var(--accent); margin-top:8px; font-weight:600; }
+.news-badge { display:inline-block; background:#ef4444; color:#fff; font-size:12px; font-weight:700; padding:1px 7px; border-radius:4px; margin-bottom:5px; }
+.news-title { font-size:14px; font-weight:700; color:var(--text-h); margin-bottom:4px; line-height:1.4; }
+.news-summary { font-size:14px; color:var(--text-sub1); line-height:1.65; }
+.news-meta { font-size:12px; color:var(--text-src); margin-top:6px; }
+.news-insight { background:#e0e7ff; border-radius:6px; padding:7px 10px; font-size:13px; color:var(--accent); margin-top:8px; font-weight:600; }
 
 /* ══ STAT CARDS ══ */
 .stat-card { background:var(--card-bg); border:1px solid var(--border); border-radius:var(--radius); padding:13px 15px; border-left:4px solid var(--accent); }
 .stat-val { font-size:22px; font-weight:800; color:var(--accent); line-height:1; margin:4px 0; font-family:monospace; }
 .stat-val.green { color:var(--green); } .stat-val.amber { color:var(--amber); }
-.stat-label { font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.05em; color:var(--text-sub2); }
-.stat-desc  { font-size:12px; color:var(--text-sub2); margin-top:3px; }
+.stat-label { font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:.05em; color:var(--text-sub2); }
+.stat-desc  { font-size:13px; color:var(--text-sub2); margin-top:3px; }
 
 /* ══ CALLOUT ══ */
-.callout { background:var(--card-bg2); border-left:4px solid var(--accent); border-radius:0 var(--radius) var(--radius) 0; padding:11px 14px; margin:10px 0; font-size:13px; color:var(--text-sub1); }
+.callout { background:var(--card-bg2); border-left:4px solid var(--accent); border-radius:0 var(--radius) var(--radius) 0; padding:11px 14px; margin:10px 0; font-size:14px; color:var(--text-sub1); }
 .callout.warn    { border-left-color:var(--amber); background:var(--amber-bg); }
 .callout.danger  { border-left-color:var(--red);   background:var(--red-bg); }
 .callout.success { border-left-color:var(--green);  background:var(--green-bg); }
@@ -202,33 +202,33 @@ tbody td { padding:8px 11px; vertical-align:middle; line-height:1.5; color:var(-
 .rs-bar-container { margin:12px 0; }
 .rs-row { display:flex; align-items:center; gap:12px; padding:8px 0; border-bottom:1px solid var(--border); }
 .rs-row:last-child { border-bottom:none; }
-.rs-range { font-family:monospace; font-size:12px; color:var(--text-sub2); min-width:130px; }
+.rs-range { font-family:monospace; font-size:13px; color:var(--text-sub2); min-width:130px; }
 .rs-bar-wrap { flex:1; height:20px; background:var(--border); border-radius:4px; overflow:hidden; position:relative; }
 .rs-bar-dev { height:100%; background:linear-gradient(90deg,#3730a3,var(--accent)); border-radius:4px; display:flex; align-items:center; padding-left:8px; }
 .rs-bar-dev.green { background:linear-gradient(90deg,#15803d,var(--green)); }
 .rs-bar-valve { position:absolute; right:0; top:0; height:100%; background:rgba(239,68,68,.2); display:flex; align-items:center; justify-content:flex-end; padding-right:6px; }
-.rs-dev-pct { font-size:11px; color:#fff; font-weight:700; font-family:monospace; }
-.rs-valve-pct { font-size:11px; color:var(--red); font-weight:600; font-family:monospace; }
-.rs-note { font-size:12px; color:var(--text-sub2); min-width:72px; text-align:right; }
+.rs-dev-pct { font-size:12px; color:#fff; font-weight:700; font-family:monospace; }
+.rs-valve-pct { font-size:12px; color:var(--red); font-weight:600; font-family:monospace; }
+.rs-note { font-size:13px; color:var(--text-sub2); min-width:72px; text-align:right; }
 
 /* ══ BAR ══ */
 .bar-wrap { display:flex; align-items:center; gap:8px; margin:3px 0; }
 .bar-bg   { flex:1; height:5px; background:var(--border); border-radius:3px; overflow:hidden; }
 .bar-fill { height:100%; border-radius:3px; transition:width .8s ease; }
 .bar-blue { background:linear-gradient(90deg,#6366f1,var(--accent)); }
-.bar-label { font-size:12px; color:var(--text-sub2); min-width:36px; text-align:right; font-family:monospace; }
+.bar-label { font-size:13px; color:var(--text-sub2); min-width:36px; text-align:right; font-family:monospace; }
 
 /* ══ TIMELINE ══ */
 .timeline { margin:8px 0; }
 .tl-item { display:flex; gap:10px; padding:6px 0; }
 .tl-dot { width:7px; height:7px; border-radius:50%; background:var(--accent); flex-shrink:0; margin-top:5px; }
 .tl-dot.amber { background:var(--amber); } .tl-dot.green { background:var(--green); } .tl-dot.red { background:var(--red); }
-.tl-content { font-size:13px; color:var(--text-sub1); line-height:1.55; }
+.tl-content { font-size:14px; color:var(--text-sub1); line-height:1.55; }
 .tl-content strong { color:var(--text-h); }
 
 /* ══ TAG CHIPS ══ */
 .tag-chips { display:flex; flex-wrap:wrap; gap:4px; margin:7px 0; }
-.tag-chip { display:inline-block; font-size:11px; font-weight:600; padding:2px 7px; border-radius:4px; font-family:monospace; }
+.tag-chip { display:inline-block; font-size:12px; font-weight:600; padding:2px 7px; border-radius:4px; font-family:monospace; }
 .chip-blue { background:#e0e7ff; color:var(--accent); border:1px solid #c7d2fe; }
 .chip-amber{ background:var(--amber-bg); color:var(--amber); border:1px solid var(--amber-border); }
 .chip-green{ background:var(--green-bg); color:var(--green); border:1px solid var(--green-border); }
@@ -236,22 +236,22 @@ tbody td { padding:8px 11px; vertical-align:middle; line-height:1.5; color:var(-
 .chip-purple{ background:var(--purple-bg); color:var(--purple); border:1px solid var(--purple-border); }
 
 /* ══ SRC LINE ══ */
-.src-line { font-size:11px; color:var(--text-src); margin-top:12px; padding-top:10px; border-top:1px solid var(--border); line-height:1.8; }
-.src-line a { color:var(--accent); text-decoration:underline; font-size:11px; }
+.src-line { font-size:12px; color:var(--text-src); margin-top:12px; padding-top:10px; border-top:1px solid var(--border); line-height:1.8; }
+.src-line a { color:var(--accent); text-decoration:underline; font-size:12px; }
 
 /* ══ COLLAPSIBLE ══ */
-.collapsible-btn { display:flex; align-items:center; gap:8px; background:var(--card-bg); border:1px solid var(--border); border-radius:8px; padding:10px 14px; font-size:13px; font-weight:600; color:var(--text-sub1); cursor:pointer; margin-top:14px; width:100%; text-align:left; transition:background .2s; }
+.collapsible-btn { display:flex; align-items:center; gap:8px; background:var(--card-bg); border:1px solid var(--border); border-radius:8px; padding:10px 14px; font-size:14px; font-weight:600; color:var(--text-sub1); cursor:pointer; margin-top:14px; width:100%; text-align:left; transition:background .2s; }
 .collapsible-btn:hover { background:#e0e7ff; color:var(--accent); }
-.collapsible-btn .arr { margin-left:auto; font-size:12px; transition:transform .2s; }
+.collapsible-btn .arr { margin-left:auto; font-size:13px; transition:transform .2s; }
 .collapsible-btn.open .arr { transform:rotate(180deg); }
 .collapsible-body { display:none; margin-top:8px; border:1px solid var(--border); border-radius:8px; padding:14px; background:var(--card-bg2); }
 .collapsible-body.open { display:block; }
 
 /* ══ SECTION INSIGHT ══ */
 .section-insight { background:linear-gradient(135deg,#f0f4ff 0%,#fafbff 100%); border:1px solid #c7d2fe; border-radius:var(--radius); padding:13px 16px; margin-bottom:14px; }
-.section-insight h3 { font-size:11px; font-weight:800; color:var(--accent); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:8px; }
+.section-insight h3 { font-size:12px; font-weight:800; color:var(--accent); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:8px; }
 .section-insight ul { list-style:none; display:flex; flex-wrap:wrap; gap:8px; }
-.section-insight li { background:#fff; border:1px solid #e0e7ff; border-radius:8px; padding:6px 12px; font-size:13px; color:var(--text-sub1); line-height:1.5; flex:1 1 220px; }
+.section-insight li { background:#fff; border:1px solid #e0e7ff; border-radius:8px; padding:6px 12px; font-size:14px; color:var(--text-sub1); line-height:1.5; flex:1 1 220px; }
 .section-insight li strong { color:var(--text-h); }
 
 /* ══ COOLDOWN GRID ══ */
@@ -261,15 +261,15 @@ tbody td { padding:8px 11px; vertical-align:middle; line-height:1.5; color:var(-
 .cd-item.success { border-left-color:var(--green); background:var(--green-bg); }
 .cd-val { font-size:18px; font-weight:800; color:var(--accent); font-family:monospace; line-height:1; margin:4px 0; }
 .cd-val.amber { color:var(--amber); } .cd-val.green { color:var(--green); }
-.cd-label { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--text-sub2); }
-.cd-desc { font-size:12px; color:var(--text-sub1); margin-top:4px; line-height:1.5; }
+.cd-label { font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--text-sub2); }
+.cd-desc { font-size:13px; color:var(--text-sub1); margin-top:4px; line-height:1.5; }
 .cd-desc strong { color:var(--text-h); }
 
 /* ══ STARS ══ */
-.stars-5{color:#f59e0b;font-size:13px;letter-spacing:-1px}
-.stars-4{color:#f59e0b;font-size:12px;letter-spacing:-1px}
-.stars-3{color:#d97706;font-size:12px;letter-spacing:-1px}
-.stars-2{color:#9ca3af;font-size:12px;letter-spacing:-1px}
+.stars-5{color:#f59e0b;font-size:14px;letter-spacing:-1px}
+.stars-4{color:#f59e0b;font-size:13px;letter-spacing:-1px}
+.stars-3{color:#d97706;font-size:13px;letter-spacing:-1px}
+.stars-2{color:#9ca3af;font-size:13px;letter-spacing:-1px}
 
 /* ══ EMBED ══ */
 .embed-frame { width:100%; border-radius:var(--radius); overflow:hidden; border:1px solid var(--border); margin:12px 0; background:#fff; }
@@ -277,7 +277,7 @@ tbody td { padding:8px 11px; vertical-align:middle; line-height:1.5; color:var(-
 
 /* ══ F2P LEGEND ══ */
 .f2p-legend { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:14px; padding:10px 14px; background:var(--card-bg); border-radius:var(--radius); border:1px solid var(--border); }
-.f2p-legend-item { display:flex; align-items:center; gap:6px; font-size:12px; color:var(--text-sub1); }
+.f2p-legend-item { display:flex; align-items:center; gap:6px; font-size:13px; color:var(--text-sub1); }
 .f2p-legend-dot { width:12px; height:12px; border-radius:3px; flex-shrink:0; }
 
 /* ══ TOOL TIP (cursor help indicator) ══ */
@@ -545,10 +545,10 @@ tbody td { padding:8px 11px; vertical-align:middle; line-height:1.5; color:var(-
           <div class="card-body"><strong>"Steam의 목표는 사람들이 재미있는 게임을 찾을 수 있도록 돕는 것"</strong> — 광고 판매 없음. 모든 노출은 알고리즘 또는 큐레이션 기반.</div>
         </div>
         <div style="margin:8px 0">
-          <div style="margin:7px 0;font-size:13px;color:var(--text-sub1)"><strong>플레이어 수 &amp; 구매량</strong><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill bar-blue" style="width:100%"></div></div><span class="bar-label td-blue">★★★★★</span></div></div>
-          <div style="margin:7px 0;font-size:13px;color:var(--text-sub1)"><strong>태그 정확성</strong><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill bar-blue" style="width:80%"></div></div><span class="bar-label td-blue">★★★★☆</span></div></div>
-          <div style="margin:7px 0;font-size:13px;color:var(--text-sub1)"><strong>위시리스트</strong><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill bar-blue" style="width:80%"></div></div><span class="bar-label td-blue">★★★★☆</span></div></div>
-          <div style="margin:7px 0;font-size:13px;color:var(--text-sub1)"><strong>리뷰 점수</strong><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill bar-blue" style="width:80%"></div></div><span class="bar-label td-blue">★★★★☆</span></div></div>
+          <div style="margin:7px 0;font-size:14px;color:var(--text-sub1)"><strong>플레이어 수 &amp; 구매량</strong><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill bar-blue" style="width:100%"></div></div><span class="bar-label td-blue">★★★★★</span></div></div>
+          <div style="margin:7px 0;font-size:14px;color:var(--text-sub1)"><strong>태그 정확성</strong><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill bar-blue" style="width:80%"></div></div><span class="bar-label td-blue">★★★★☆</span></div></div>
+          <div style="margin:7px 0;font-size:14px;color:var(--text-sub1)"><strong>위시리스트</strong><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill bar-blue" style="width:80%"></div></div><span class="bar-label td-blue">★★★★☆</span></div></div>
+          <div style="margin:7px 0;font-size:14px;color:var(--text-sub1)"><strong>리뷰 점수</strong><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill bar-blue" style="width:80%"></div></div><span class="bar-label td-blue">★★★★☆</span></div></div>
         </div>
         <div class="callout success"><strong>💡 3대 임계점 (론칭 첫 주):</strong> CTR 4%+ &nbsp;·&nbsp; 리뷰 긍정률 80%+ &nbsp;·&nbsp; WL 10,000+ → <strong>자기강화 노출 루프 작동</strong></div>
         <div class="src-line">📎 <a href="https://partner.steamgames.com/doc/marketing/visibility" target="_blank">Steamworks — Visibility on Steam</a></div>
@@ -568,7 +568,7 @@ tbody td { padding:8px 11px; vertical-align:middle; line-height:1.5; color:var(-
           <div class="f2p-legend-item"><div class="f2p-legend-dot" style="background:rgba(220,252,231,.8);border:1px solid #86efac"></div><span>Premium &amp; F2P 동등</span></div>
           <div class="f2p-legend-item"><div class="f2p-legend-dot" style="background:rgba(253,230,138,.5);border:1px solid #fde68a"></div><span>F2P 유리</span></div>
           <div class="f2p-legend-item"><div class="f2p-legend-dot" style="background:rgba(219,234,254,.5);border:1px solid #bfdbfe"></div><span>Premium 전용 or 조건 상이</span></div>
-          <div class="f2p-legend-item"><span style="font-size:12px;color:var(--text-sub2);">💡 각 행에 마우스를 올리면 상세 설명이 표시됩니다</span></div>
+          <div class="f2p-legend-item"><span style="font-size:13px;color:var(--text-sub2);">💡 각 행에 마우스를 올리면 상세 설명이 표시됩니다</span></div>
         </div>
 
         <div class="table-wrap">
@@ -678,21 +678,21 @@ tbody td { padding:8px 11px; vertical-align:middle; line-height:1.5; color:var(-
                 <td>론칭 초기 노출 종료 후 사용 가능. 최근 30일 내 공지 필요</td>
                 <td><span class="st-ok">✅</span></td><td><span class="st-ok">✅</span></td>
                 <td>기본 5회 (EA+정식 합산). 1회당 최대 30일 or 1M 노출</td>
-                <td><span style="color:#f59e0b;font-size:13px;letter-spacing:-1px">⭐⭐⭐⭐⭐</span></td>
+                <td><span style="color:#f59e0b;font-size:14px;letter-spacing:-1px">⭐⭐⭐⭐⭐</span></td>
               </tr>
               <tr class="tip-cursor" data-tip-title="Seasonal Sale (4대 계절 세일)" data-tip-body="Spring, Summer, Autumn, Winter 연 4회 진행되는 Steam 대형 세일. 출시 30일 이후 게임만 참가 가능. Premium: 20% 이상 할인 시 세일 특설 페이지 노출 + 위시리스터 할인 이메일 자동 발송. F2P: 기본 가격이 없어 할인 불가 (알고리즘 노출은 유지). ★ 4대 계절 세일은 30일 쿨다운 규칙이 면제되는 예외 구간으로, 다른 할인을 막 종료한 직후에도 참가 가능.">
                 <td class="td-bold">Seasonal Sale (4대 계절 세일)</td>
                 <td>출시 30일 이후 게임만 참가 가능</td>
                 <td><span class="st-ok">✅</span></td><td><span class="st-no">❌ (기본 무료)</span></td>
                 <td>4대 계절 세일은 30일 쿨다운 면제</td>
-                <td><span style="color:#f59e0b;font-size:13px;letter-spacing:-1px">⭐⭐⭐⭐⭐</span></td>
+                <td><span style="color:#f59e0b;font-size:14px;letter-spacing:-1px">⭐⭐⭐⭐⭐</span></td>
               </tr>
               <tr class="tip-cursor" data-tip-title="할인 위시리스트 이메일" data-tip-body="20% 이상 할인 적용 시 위시리스터에게 자동 발송되는 이메일. 세 가지 조건 동시 충족 필요: ① 20% 이상 할인 ② 최저가 패키지 포함 ③ 8시간 이상 적용. F2P는 기본 가격이 없어 불가. 쿨타임: 기본 1~2주 (대형 세일 기간 3~4주로 연장). 위시리스터 중 실제 수신 비율은 60~75%. 대형 세일 기간에는 경쟁 심화로 25개 한도 초과 시 미발송 가능.">
                 <td class="td-bold">할인 위시리스트 이메일</td>
                 <td>20% 이상 할인 + 최저가 패키지 포함 + 8시간 이상</td>
                 <td><span class="st-ok">✅</span></td><td><span class="st-no">❌</span></td>
                 <td>2주 쿨다운 (세일 기간 3~4주 연장)</td>
-                <td><span style="color:#f59e0b;font-size:13px;letter-spacing:-1px">⭐⭐⭐⭐⭐</span></td>
+                <td><span style="color:#f59e0b;font-size:14px;letter-spacing:-1px">⭐⭐⭐⭐⭐</span></td>
               </tr>
               <tr class="cat-hdr"><td colspan="6">★ 높은 우선순위 (⭐⭐⭐⭐)</td></tr>
               <tr class="tip-cursor" data-tip-title="Themed Fest (장르 페스트)" data-tip-body="특정 장르를 주제로 한 테마 페스트. Valve가 태그를 기반으로 자동 초대 이메일을 발송하며, 개발사가 이메일을 수락하고 등록하면 참가 완료. Premium 할인 게임이 메인 섹션에 배치되고, F2P는 별도 F2P 섹션에 배치됨 (노출 위치 차이). 이벤트 공식 트레일러 참가는 F2P 일반적으로 불가. 태그 정확도가 초대 여부를 결정하는 핵심 요소.">
@@ -700,14 +700,14 @@ tbody td { padding:8px 11px; vertical-align:middle; line-height:1.5; color:var(-
                 <td>태그 기반 Valve 자동 초대, 이메일 수락 후 등록</td>
                 <td><span class="st-ok">✅</span></td><td><span class="st-warn">✅ F2P 섹션</span></td>
                 <td>할인 쿨다운 30일 적용</td>
-                <td><span style="color:#f59e0b;font-size:13px;letter-spacing:-1px">⭐⭐⭐⭐</span></td>
+                <td><span style="color:#f59e0b;font-size:14px;letter-spacing:-1px">⭐⭐⭐⭐</span></td>
               </tr>
               <tr class="tip-cursor" data-tip-title="Events &amp; Announcements (이벤트·공지)" data-tip-body="개발사가 직접 작성·게시하는 이벤트 공지. 즉시 게시 가능하며 Steam 커뮤니티 허브, 스토어 페이지, 유저 라이브러리에 노출. 팔로워와 라이브러리 보유 유저에게 알림 발송. 'Major Update' 타입으로 설정 시 추가 가중치 적용. 무료·무제한이지만 과도한 발행 지양 (스팸으로 인식 우려). Update Visibility Round 활성화를 위한 필수 조건이기도 함.">
                 <td class="td-bold">Events &amp; Announcements</td>
                 <td>즉시 가능. 커뮤니티 허브/스토어 페이지/라이브러리에 노출</td>
                 <td><span class="st-ok">✅</span></td><td><span class="st-ok">✅</span></td>
                 <td>과도한 발행 지양</td>
-                <td><span style="color:#f59e0b;font-size:13px;letter-spacing:-1px">⭐⭐⭐⭐</span></td>
+                <td><span style="color:#f59e0b;font-size:14px;letter-spacing:-1px">⭐⭐⭐⭐</span></td>
               </tr>
               <tr class="cat-hdr"><td colspan="6">★ 중간 우선순위 (⭐⭐⭐)</td></tr>
               <tr class="tip-cursor" data-tip-title="Weeklong Deals" data-tip-body="7일간 진행되는 셀프서브 방식의 할인. 매주 월요일 오전 10시 Pacific 타임에 시작. 별도 Valve 승인 없이 개발사가 직접 설정 가능. 할인 간 30일 쿨다운 규칙이 적용되므로, Weeklong Deals 종료 후 30일 이내에 다른 할인 불가. F2P는 기본 가격이 없어 적용 불가.">
@@ -715,63 +715,63 @@ tbody td { padding:8px 11px; vertical-align:middle; line-height:1.5; color:var(-
                 <td>셀프서브. 매주 월요일 10AM Pacific 시작</td>
                 <td><span class="st-ok">✅</span></td><td><span class="st-no">❌</span></td>
                 <td>30일 쿨다운</td>
-                <td><span style="color:#d97706;font-size:12px;letter-spacing:-1px">⭐⭐⭐</span></td>
+                <td><span style="color:#d97706;font-size:13px;letter-spacing:-1px">⭐⭐⭐</span></td>
               </tr>
               <tr class="tip-cursor" data-tip-title="Custom Discount (사용자 지정 할인)" data-tip-body="개발사가 자유롭게 설정하는 맞춤 할인. 셀프서브 방식으로 다음 날부터 시작 가능. 할인율 10~95%, 기간 1~14일 내 자유 설정. 할인 간 30일 쿨다운 규칙 적용. 특정 이벤트, 업데이트, 기념일에 맞춰 유연하게 활용 가능. F2P는 기본 가격이 없어 적용 불가.">
                 <td class="td-bold">Custom Discount</td>
                 <td>셀프서브. 다음 날부터 시작 가능</td>
                 <td><span class="st-ok">✅</span></td><td><span class="st-no">❌</span></td>
                 <td>30일 쿨다운, 최대 14일</td>
-                <td><span style="color:#d97706;font-size:12px;letter-spacing:-1px">⭐⭐⭐</span></td>
+                <td><span style="color:#d97706;font-size:13px;letter-spacing:-1px">⭐⭐⭐</span></td>
               </tr>
               <tr class="tip-cursor" data-tip-title="Daily Deal" data-tip-body="Steam 홈페이지 전면에 노출되는 일일 특가. Valve가 직접 연락하는 초청 방식으로 자체 신청 불가. 수개월간 일관된 매출·성장 추세가 있는 게임에 Valve가 접촉. 노출 기간 7~14일. 가장 높은 트래픽 노출 효과를 제공하지만 Valve 관계 없이는 접근 불가. F2P 완전 불가.">
                 <td class="td-bold">Daily Deal</td>
                 <td>Valve 큐레이션 전용 (연락 받아야 함)</td>
                 <td><span class="st-ok">✅</span></td><td><span class="st-no">❌</span></td>
                 <td>7~14일 진행</td>
-                <td><span style="color:#d97706;font-size:12px;letter-spacing:-1px">⭐⭐⭐</span></td>
+                <td><span style="color:#d97706;font-size:13px;letter-spacing:-1px">⭐⭐⭐</span></td>
               </tr>
               <tr class="tip-cursor" data-tip-title="Midweek Deal" data-tip-body="월요일~목요일 72시간 진행되는 Valve 큐레이션 특가. Steam 홈페이지 상단에 노출. Valve 직접 초청 방식. 매출·판매 성과 기반으로 선별됨. Daily Deal과 동일하게 F2P 불가.">
                 <td class="td-bold">Midweek Deal</td>
                 <td>Valve 큐레이션 전용</td>
                 <td><span class="st-ok">✅</span></td><td><span class="st-no">❌</span></td>
                 <td>월~목 72시간</td>
-                <td><span style="color:#d97706;font-size:12px;letter-spacing:-1px">⭐⭐⭐</span></td>
+                <td><span style="color:#d97706;font-size:13px;letter-spacing:-1px">⭐⭐⭐</span></td>
               </tr>
               <tr class="tip-cursor" data-tip-title="Weekend Deal" data-tip-body="목요일~월요일 96시간 진행되는 Valve 큐레이션 특가. Steam 홈페이지에 노출. Valve 직접 초청 방식. Daily Deal·Midweek Deal과 동일한 기준으로 선별. F2P 완전 불가.">
                 <td class="td-bold">Weekend Deal</td>
                 <td>Valve 큐레이션 전용</td>
                 <td><span class="st-ok">✅</span></td><td><span class="st-no">❌</span></td>
                 <td>목~월 96시간</td>
-                <td><span style="color:#d97706;font-size:12px;letter-spacing:-1px">⭐⭐⭐</span></td>
+                <td><span style="color:#d97706;font-size:13px;letter-spacing:-1px">⭐⭐⭐</span></td>
               </tr>
               <tr class="tip-cursor" data-tip-title="Free Weekend" data-tip-body="유료 게임을 일정 기간 무료로 체험할 수 있도록 하는 프로모션. 리텐션 위기 시 신규 유입을 재자극하는 데 효과적. 별도 패키지를 만들어 한시적 무료 개방. 할인과 병행 시 구매 전환율 극대화. F2P는 항상 무료이므로 이 개념 자체가 적용되지 않음 (Valve 공식 명시).">
                 <td class="td-bold">Free Weekend</td>
                 <td>유료 게임의 한시적 무료 체험 전략</td>
                 <td><span class="st-ok">✅</span></td><td><span class="st-no">❌ (이미 무료)</span></td>
                 <td>할인과 병행 권장</td>
-                <td><span style="color:#d97706;font-size:12px;letter-spacing:-1px">⭐⭐⭐</span></td>
+                <td><span style="color:#d97706;font-size:13px;letter-spacing:-1px">⭐⭐⭐</span></td>
               </tr>
               <tr class="tip-cursor" data-tip-title="Steam Trading Cards" data-tip-body="Steam 커뮤니티 마켓에서 거래 가능한 트레이딩 카드. 판매+플레이 임계치(비공개)에 자동으로 도달하면 시스템이 카드를 활성화. Valve 심사 2~3일 소요. F2P의 경우 인앱결제가 필수 ($9 USD당 카드 1장 부여 기준). 뱃지, 이모티콘, 프로필 배경 등 Steam 이코노미와 연동됨.">
                 <td class="td-bold">Steam Trading Cards</td>
                 <td>판매+플레이 임계치 도달 시 자동 언락 (1일 수회 체크)</td>
                 <td><span class="st-ok">✅</span></td><td><span class="st-warn">✅ ($9/카드)</span></td>
                 <td>Valve 심사 2~3일</td>
-                <td><span style="color:#d97706;font-size:12px;letter-spacing:-1px">⭐⭐⭐</span></td>
+                <td><span style="color:#d97706;font-size:13px;letter-spacing:-1px">⭐⭐⭐</span></td>
               </tr>
               <tr class="tip-cursor" data-tip-title="Curator Connect" data-tip-body="Steam 큐레이터(게임 리뷰어, 콘텐츠 크리에이터)에게 키를 배포하고 추천을 요청하는 시스템. Coming Soon 이후 언제든 시작 가능. Steamworks에서 'Generate CD Keys' 권한이 필요. 최대 100개 큐레이터, 큐레이터당 최대 5카피 배포 가능. 큐레이터가 리뷰를 게시하면 팔로워들의 Steam 스토어에 추천 배너로 표시됨.">
                 <td class="td-bold">Curator Connect</td>
                 <td>Coming Soon 이후, "Generate CD Keys" 권한 필요</td>
                 <td><span class="st-ok">✅</span></td><td><span class="st-ok">✅</span></td>
                 <td>최대 100 큐레이터, 1개당 5카피</td>
-                <td><span style="color:#d97706;font-size:12px;letter-spacing:-1px">⭐⭐⭐</span></td>
+                <td><span style="color:#d97706;font-size:13px;letter-spacing:-1px">⭐⭐⭐</span></td>
               </tr>
               <tr class="tip-cursor" data-tip-title="UTM Analytics" data-tip-body="외부 링크에 UTM 파라미터를 추가해 트래픽 소스를 추적하는 분석 도구. Steam 스토어 페이지 URL에 utm_source, utm_medium, utm_campaign 파라미터를 붙여서 어떤 채널(SNS, 유튜브, 기사 등)에서 트래픽이 유입됐는지 파악 가능. Steamworks Marketing 섹션에서 결과 확인 가능. 무제한 사용 가능.">
                 <td class="td-bold">UTM Analytics</td>
                 <td>외부 링크에 UTM 파라미터 추가</td>
                 <td><span class="st-ok">✅</span></td><td><span class="st-ok">✅</span></td>
                 <td>무제한</td>
-                <td><span style="color:#d97706;font-size:12px;letter-spacing:-1px">⭐⭐⭐</span></td>
+                <td><span style="color:#d97706;font-size:13px;letter-spacing:-1px">⭐⭐⭐</span></td>
               </tr>
               <tr class="cat-hdr"><td colspan="6">★ 보조 도구 (⭐⭐)</td></tr>
               <tr class="tip-cursor" data-tip-title="Artwork Override (아트워크 교체)" data-tip-body="이벤트나 업데이트 기간 동안 게임의 캡슐 이미지(스토어 썸네일)를 한시적으로 다른 이미지로 교체하는 기능. 이벤트 종료 후 자동으로 원래 이미지로 복원됨. 사전 예약 설정이 가능해 이벤트 시작 시점에 자동 교체 가능. 시즌 이벤트, 콜라보레이션, 업데이트 홍보에 활용.">
@@ -779,21 +779,21 @@ tbody td { padding:8px 11px; vertical-align:middle; line-height:1.5; color:var(-
                 <td>이벤트/업데이트 기간 한시적 적용. 자동 복원</td>
                 <td><span class="st-ok">✅</span></td><td><span class="st-ok">✅</span></td>
                 <td>사전 예약 가능</td>
-                <td><span style="color:#9ca3af;font-size:12px;letter-spacing:-1px">⭐⭐</span></td>
+                <td><span style="color:#9ca3af;font-size:13px;letter-spacing:-1px">⭐⭐</span></td>
               </tr>
               <tr class="tip-cursor" data-tip-title="Rich Presence" data-tip-body="Steam 친구 목록에서 유저가 현재 게임의 어떤 상태인지 실시간으로 표시하는 기능. 예: '메인 캠페인 3/5 완료', '랭크 매치 진행 중', '레벨 47'. Steamworks SDK 연동이 필요하며 개발 리소스가 소요됨. 친구들에게 게임 활동을 자연스럽게 노출하는 소셜 바이럴 효과가 있음.">
                 <td class="td-bold">Rich Presence</td>
                 <td>SDK 연동 필요</td>
                 <td><span class="st-ok">✅</span></td><td><span class="st-ok">✅</span></td>
                 <td>개발 리소스 필요</td>
-                <td><span style="color:#9ca3af;font-size:12px;letter-spacing:-1px">⭐⭐</span></td>
+                <td><span style="color:#9ca3af;font-size:13px;letter-spacing:-1px">⭐⭐</span></td>
               </tr>
               <tr class="tip-cursor" data-tip-title="Profile Features (Trading Cards/Badges/Emoticons)" data-tip-body="트레이딩 카드, 뱃지, 이모티콘, 프로필 배경 등 Steam 유저 프로필을 꾸밀 수 있는 아이템. 판매+플레이 임계치 자동 달성 시 활성화 (임계치는 비공개). F2P의 경우 인앱결제가 발생해야 프로필 피처 활성화 가능. Valve 심사가 필요하며, Steam 이코노미에 게임의 존재감을 높이는 장기적 효과가 있음.">
                 <td class="td-bold">Profile Features (Cards/Badges/Emoticons)</td>
                 <td>판매+플레이 임계치 자동 달성 시 (임계치 비공개)</td>
                 <td><span class="st-ok">✅</span></td><td><span class="st-warn">✅ (인앱결제 필수)</span></td>
                 <td>Valve 심사 필요</td>
-                <td><span style="color:#9ca3af;font-size:12px;letter-spacing:-1px">⭐⭐</span></td>
+                <td><span style="color:#9ca3af;font-size:13px;letter-spacing:-1px">⭐⭐</span></td>
               </tr>
             </tbody>
           </table>
@@ -969,7 +969,7 @@ tbody td { padding:8px 11px; vertical-align:middle; line-height:1.5; color:var(-
         <!-- Valve internal benchmark (추정) -->
         <div class="callout" style="margin-bottom:14px">
           <div style="font-weight:800;margin-bottom:6px;color:var(--text-h)">Valve internal benchmark (추정 — 공개 X)</div>
-          <ul style="font-size:13px;color:var(--text-sub1);line-height:1.7;list-style:disc;padding-left:18px">
+          <ul style="font-size:14px;color:var(--text-sub1);line-height:1.7;list-style:disc;padding-left:18px">
             <li><strong>Wishlist 누적</strong>: 50만~수백만 (genre·scale 별 가변)</li>
             <li><strong>Demo quality</strong>: 평점 80%+ · Steam Next Fest 통과 필수</li>
             <li><strong>Publisher track record</strong>: 신뢰 publisher (Pocketpair · Devolver · Annapurna 등)</li>
@@ -981,7 +981,7 @@ tbody td { padding:8px 11px; vertical-align:middle; line-height:1.5; color:var(-
 
         <!-- 검증 사례 (Windrose 중심) -->
         <div class="callout success" style="margin-bottom:14px">
-          <div style="font-weight:800;margin-bottom:8px;color:var(--opt-b-dark);font-size:13px">📊 2026 검증 사례</div>
+          <div style="font-weight:800;margin-bottom:8px;color:var(--opt-b-dark);font-size:14px">📊 2026 검증 사례</div>
           <div class="table-wrap">
             <table>
               <thead><tr><th>게임</th><th>일자</th><th>결과</th></tr></thead>
@@ -1013,8 +1013,8 @@ tbody td { padding:8px 11px; vertical-align:middle; line-height:1.5; color:var(-
 
         <!-- Risk -->
         <div class="callout warn" style="margin-bottom:14px">
-          <div style="font-weight:800;margin-bottom:6px;color:var(--amber);font-size:13px">🚦 Risk</div>
-          <ul style="font-size:13px;color:var(--text-sub1);line-height:1.7;list-style:disc;padding-left:18px">
+          <div style="font-weight:800;margin-bottom:6px;color:var(--amber);font-size:14px">🚦 Risk</div>
+          <ul style="font-size:14px;color:var(--text-sub1);line-height:1.7;list-style:disc;padding-left:18px">
             <li>❌ <strong>Valve 큐레이션 거절</strong> → 우회 불가 (구매 옵션 없음)</li>
             <li>⚠️ <strong>T-6 협상 누락</strong> → launch 시점 takeover 사실상 불가 (P3 §06 timeline 참조)</li>
             <li>⚠️ <strong>Demo quality 미달</strong> → Steam Next Fest 통과 못 하면 benchmark 탈락</li>
@@ -1023,8 +1023,8 @@ tbody td { padding:8px 11px; vertical-align:middle; line-height:1.5; color:var(-
 
         <!-- Project S 즉시 적용 -->
         <div class="callout" style="background:#f0f4ff;border:1px solid #c7d2fe;margin-bottom:8px">
-          <div style="font-weight:800;margin-bottom:8px;color:var(--accent);font-size:13px">🎯 Project S 즉시 적용 우선순위</div>
-          <ol style="font-size:13px;color:var(--text-sub1);line-height:1.8;padding-left:20px">
+          <div style="font-weight:800;margin-bottom:8px;color:var(--accent);font-size:14px">🎯 Project S 즉시 적용 우선순위</div>
+          <ol style="font-size:14px;color:var(--text-sub1);line-height:1.8;padding-left:20px">
             <li><strong>launch 6개월 전 Valve 사전 협상 시작</strong> → P3 §06 timeline 역산</li>
             <li><strong>Steam Next Fest 일정 조율</strong> (T-9) — 데모 quality benchmark 통과</li>
             <li><strong>일본 launch 시 Pocketpair Publishing 또는 동급 specialized publisher partnership</strong> 검토 (Windrose 패턴)</li>
@@ -1361,24 +1361,24 @@ tbody td { padding:8px 11px; vertical-align:middle; line-height:1.5; color:var(-
           <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
             <span style="font-size:18px;">✅</span>
             <div>
-              <div style="font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--green);">성공 사례</div>
+              <div style="font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--green);">성공 사례</div>
               <div style="font-size:14px; font-weight:800; color:var(--text-h);">CS2 — "밸브의 최소 개입, 커뮤니티 최대 자율" 모델</div>
             </div>
           </div>
-          <div style="font-size:13px; color:var(--text-sub1); line-height:1.75; margin-bottom:10px;">
+          <div style="font-size:14px; color:var(--text-sub1); line-height:1.75; margin-bottom:10px;">
             CS2는 Valve가 직접 리그를 운영하지 않고, <strong>Third-Party TO(PGL, ESL 등)에 Major 라이선스를 부여</strong>하는 모델을 채택했다. 이 덕분에 연간 수백 개의 토너먼트가 자생적으로 운영되며, Valve의 운영 비용은 최소화된다. <strong>2025년 4월 역대 최고 동접 1.86M</strong>을 기록했으며, 이는 e-sports 생태계의 건강성이 곧 게임의 건강성임을 증명한다.
           </div>
           <div style="display:flex; flex-wrap:wrap; gap:8px;">
-            <div style="background:#fff; border:1px solid var(--green-border); border-radius:8px; padding:8px 14px; font-size:13px; flex:1; min-width:200px;">
-              <div style="font-size:11px; color:var(--green); font-weight:700; text-transform:uppercase; letter-spacing:.08em; margin-bottom:4px;">핵심 성공 요인</div>
+            <div style="background:#fff; border:1px solid var(--green-border); border-radius:8px; padding:8px 14px; font-size:14px; flex:1; min-width:200px;">
+              <div style="font-size:12px; color:var(--green); font-weight:700; text-transform:uppercase; letter-spacing:.08em; margin-bottom:4px;">핵심 성공 요인</div>
               <div style="color:var(--text-sub1);">직접 운영 비용 Zero · 커뮤니티 자생 생태계 · Major 라이선스 수익 구조</div>
             </div>
-            <div style="background:#fff; border:1px solid var(--green-border); border-radius:8px; padding:8px 14px; font-size:13px; flex:1; min-width:200px;">
-              <div style="font-size:11px; color:var(--green); font-weight:700; text-transform:uppercase; letter-spacing:.08em; margin-bottom:4px;">Project S 교훈</div>
+            <div style="background:#fff; border:1px solid var(--green-border); border-radius:8px; padding:8px 14px; font-size:14px; flex:1; min-width:200px;">
+              <div style="font-size:12px; color:var(--green); font-weight:700; text-transform:uppercase; letter-spacing:.08em; margin-bottom:4px;">Project S 교훈</div>
               <div style="color:var(--text-sub1);">자사 리그 직영 전에 <strong>TO 파트너십 → 라이선스 부여</strong> 단계적 접근 권장</div>
             </div>
           </div>
-          <div style="font-size:11px; color:var(--text-src); margin-top:8px;">출처: SteamDB · SteamCharts · Esports Charts 크로스체크 완료</div>
+          <div style="font-size:12px; color:var(--text-src); margin-top:8px;">출처: SteamDB · SteamCharts · Esports Charts 크로스체크 완료</div>
         </div>
 
         <!-- 실패 사례 1: OWL -->
@@ -1386,24 +1386,24 @@ tbody td { padding:8px 11px; vertical-align:middle; line-height:1.5; color:var(-
           <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
             <span style="font-size:18px;">❌</span>
             <div>
-              <div style="font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--red);">실패 사례 ①</div>
+              <div style="font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--red);">실패 사례 ①</div>
               <div style="font-size:14px; font-weight:800; color:var(--text-h);">Overwatch League — "$20M 프랜차이즈 슬롯의 몰락"</div>
             </div>
           </div>
-          <div style="font-size:13px; color:var(--text-sub1); line-height:1.75; margin-bottom:10px;">
+          <div style="font-size:14px; color:var(--text-sub1); line-height:1.75; margin-bottom:10px;">
             OWL은 팀당 <strong>$20M 이상의 슬롯 비용</strong>을 받고 프랜차이즈 리그를 구성했으나, <strong>YouTube 독점 스트리밍 계약</strong>으로 시청자 접근성이 하락하고, 팀들에 약속된 수익 분배가 이행되지 않아 <strong>2023년 사실상 폐지</strong>되었다. OW2 Steam 동접은 2025년 7월 <strong>24K까지 추락</strong>했다.
           </div>
           <div style="display:flex; flex-wrap:wrap; gap:8px;">
-            <div style="background:#fff; border:1px solid var(--red-border); border-radius:8px; padding:8px 14px; font-size:13px; flex:1; min-width:200px;">
-              <div style="font-size:11px; color:var(--red); font-weight:700; text-transform:uppercase; letter-spacing:.08em; margin-bottom:4px;">핵심 실패 요인</div>
+            <div style="background:#fff; border:1px solid var(--red-border); border-radius:8px; padding:8px 14px; font-size:14px; flex:1; min-width:200px;">
+              <div style="font-size:12px; color:var(--red); font-weight:700; text-transform:uppercase; letter-spacing:.08em; margin-bottom:4px;">핵심 실패 요인</div>
               <div style="color:var(--text-sub1);">독점 스트리밍으로 접근성 차단 · 수익 분배 불이행 · 과도한 초기 투자 회수 실패</div>
             </div>
-            <div style="background:#fff; border:1px solid var(--red-border); border-radius:8px; padding:8px 14px; font-size:13px; flex:1; min-width:200px;">
-              <div style="font-size:11px; color:var(--red); font-weight:700; text-transform:uppercase; letter-spacing:.08em; margin-bottom:4px;">Project S 교훈</div>
+            <div style="background:#fff; border:1px solid var(--red-border); border-radius:8px; padding:8px 14px; font-size:14px; flex:1; min-width:200px;">
+              <div style="font-size:12px; color:var(--red); font-weight:700; text-transform:uppercase; letter-spacing:.08em; margin-bottom:4px;">Project S 교훈</div>
               <div style="color:var(--text-sub1);"><strong>플랫폼 독점 스트리밍 계약 금지.</strong> Twitch·YouTube 동시 오픈 정책 + 팀 수익 분배 계약 명문화 필수</div>
             </div>
           </div>
-          <div style="font-size:11px; color:var(--text-src); margin-top:8px;">출처: Esports Charts · Esports Insider 크로스체크 완료</div>
+          <div style="font-size:12px; color:var(--text-src); margin-top:8px;">출처: Esports Charts · Esports Insider 크로스체크 완료</div>
         </div>
 
         <!-- 실패 사례 2: Spectre Divide -->
@@ -1411,24 +1411,24 @@ tbody td { padding:8px 11px; vertical-align:middle; line-height:1.5; color:var(-
           <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
             <span style="font-size:18px;">❌</span>
             <div>
-              <div style="font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--red);">실패 사례 ②</div>
+              <div style="font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--red);">실패 사례 ②</div>
               <div style="font-size:14px; font-weight:800; color:var(--text-h);">Spectre Divide — "$65M 투자, 2주 만에 사망"</div>
             </div>
           </div>
-          <div style="font-size:13px; color:var(--text-sub1); line-height:1.75; margin-bottom:10px;">
+          <div style="font-size:14px; color:var(--text-sub1); line-height:1.75; margin-bottom:10px;">
             Shroud 등 인플루언서 마케팅 + e-sports 지향 설계에 <strong>$65M을 투자</strong>했으나, Peak 동접 30K → <strong>2주 내 5.8K → 최종 서비스 종료.</strong> 게임 자체의 <strong>펀(fun factor)과 차별화 없이 e-sports를 먼저 추진</strong>한 것이 실패의 핵심 원인이다.
           </div>
           <div style="display:flex; flex-wrap:wrap; gap:8px;">
-            <div style="background:#fff; border:1px solid var(--red-border); border-radius:8px; padding:8px 14px; font-size:13px; flex:1; min-width:200px;">
-              <div style="font-size:11px; color:var(--red); font-weight:700; text-transform:uppercase; letter-spacing:.08em; margin-bottom:4px;">핵심 실패 요인</div>
+            <div style="background:#fff; border:1px solid var(--red-border); border-radius:8px; padding:8px 14px; font-size:14px; flex:1; min-width:200px;">
+              <div style="font-size:12px; color:var(--red); font-weight:700; text-transform:uppercase; letter-spacing:.08em; margin-bottom:4px;">핵심 실패 요인</div>
               <div style="color:var(--text-sub1);">게임 품질 미확보 상태의 e-sports 선행 투자 · 인플루언서 마케팅 의존 · 차별화 부재</div>
             </div>
-            <div style="background:#fff; border:1px solid var(--red-border); border-radius:8px; padding:8px 14px; font-size:13px; flex:1; min-width:200px;">
-              <div style="font-size:11px; color:var(--red); font-weight:700; text-transform:uppercase; letter-spacing:.08em; margin-bottom:4px;">Project S 교훈</div>
+            <div style="background:#fff; border:1px solid var(--red-border); border-radius:8px; padding:8px 14px; font-size:14px; flex:1; min-width:200px;">
+              <div style="font-size:12px; color:var(--red); font-weight:700; text-transform:uppercase; letter-spacing:.08em; margin-bottom:4px;">Project S 교훈</div>
               <div style="color:var(--text-sub1);"><strong>DAU 안정화 이후 e-sports 진입.</strong> e-sports는 좋은 게임의 "결과"이지, 좋은 게임을 만드는 "원인"이 아님</div>
             </div>
           </div>
-          <div style="font-size:11px; color:var(--text-src); margin-top:8px;">출처: Forbes · GameSpot · SteamDB 크로스체크 완료</div>
+          <div style="font-size:12px; color:var(--text-src); margin-top:8px;">출처: Forbes · GameSpot · SteamDB 크로스체크 완료</div>
         </div>
 
         <!-- 전략 -->
@@ -1840,7 +1840,7 @@ tbody td { padding:8px 11px; vertical-align:middle; line-height:1.5; color:var(-
 <!-- /SEC 07 -->
 
 <!-- FOOTER -->
-<div style="margin-top:48px;padding-top:14px;border-top:1px solid var(--border);font-size:11px;color:var(--text-src);font-family:monospace;line-height:2;display:flex;gap:16px;flex-wrap:wrap;align-items:center">
+<div style="margin-top:48px;padding-top:14px;border-top:1px solid var(--border);font-size:12px;color:var(--text-src);font-family:monospace;line-height:2;display:flex;gap:16px;flex-wrap:wrap;align-items:center">
   <span style="color:var(--accent);font-weight:700;">Project S Steam Launch Dashboard v5.0</span>
   <span>·</span><span>스팀 정책 &amp; 리스크</span>
   <span>·</span><span>최종 업데이트: 2026.04</span>

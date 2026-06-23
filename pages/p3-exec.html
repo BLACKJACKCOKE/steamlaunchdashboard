@@ -45,7 +45,7 @@ body {
   background: linear-gradient(160deg, #f0f5ff 0%, #f8fafc 40%, #f0fdf8 100%);
   background-attachment: fixed;
   color: var(--text1);
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.55;
 }
 
@@ -63,9 +63,9 @@ body {
   justify-content: space-between;
   position: sticky; top: 0; z-index: 100;
 }
-.rpt-badge { background: var(--blue); color: #fff; font-size: 10px; font-weight: 800; padding: 3px 10px; border-radius: 20px; letter-spacing: 1.5px; text-transform: uppercase; }
+.rpt-badge { background: var(--blue); color: #fff; font-size: 12px; font-weight: 800; padding: 3px 10px; border-radius: 20px; letter-spacing: 1.5px; text-transform: uppercase; }
 .rpt-title { font-size: 17px; font-weight: 700; margin-left: 14px; }
-.rpt-meta  { font-size: 11px; color: #94a3b8; }
+.rpt-meta  { font-size: 13px; color: #94a3b8; }
 .rpt-header-left { display: flex; align-items: center; gap: 0; }
 
 /* ── 섹션 탭 내비 ── */
@@ -82,7 +82,7 @@ body {
 .sec-nav a {
   display: flex; align-items: center; gap: 7px;
   padding: 0 20px;
-  font-size: 12.5px; font-weight: 700; color: var(--text2);
+  font-size: 14.5px; font-weight: 700; color: var(--text2);
   text-decoration: none;
   border-bottom: 3px solid transparent;
   transition: all .15s;
@@ -100,11 +100,11 @@ body {
 .section:last-child { border-bottom: none; }
 
 .sec-eyebrow {
-  font-size: 10px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase;
+  font-size: 12px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase;
   color: var(--text3); margin-bottom: 6px;
 }
 .sec-h2 { font-size: 22px; font-weight: 800; color: var(--text1); margin-bottom: 6px; letter-spacing: -.3px; }
-.sec-desc { font-size: 13px; color: var(--text2); margin-bottom: 32px; line-height: 1.6; }
+.sec-desc { font-size: 15px; color: var(--text2); margin-bottom: 32px; line-height: 1.6; }
 
 /* ── 카드 ── */
 .card {
@@ -140,9 +140,9 @@ body {
   position: absolute; top: 0; left: 0; right: 0; height: 4px;
   background: var(--accent-color, var(--blue));
 }
-.stat-label { font-size: 10px; font-weight: 800; color: var(--text3); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 8px; }
+.stat-label { font-size: 12px; font-weight: 800; color: var(--text3); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 8px; }
 .stat-value { font-size: 20px; font-weight: 900; color: var(--text1); line-height: 1; margin-bottom: 4px; }
-.stat-sub   { font-size: 11.5px; color: var(--text2); }
+.stat-sub   { font-size: 13.5px; color: var(--text2); }
 
 /* ── 경로 요약 3-카드 ── */
 .path-card {
@@ -152,10 +152,10 @@ body {
   padding: 20px 22px;
   display: flex; flex-direction: column; gap: 10px;
 }
-.path-label { font-size: 10px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; }
-.path-body  { font-size: 13px; font-weight: 600; color: var(--text1); line-height: 1.55; }
+.path-label { font-size: 12px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; }
+.path-body  { font-size: 15px; font-weight: 600; color: var(--text1); line-height: 1.55; }
 .path-footer{ display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 1px solid var(--border); }
-.path-gap   { font-size: 11.5px; color: var(--text2); }
+.path-gap   { font-size: 13.5px; color: var(--text2); }
 .path-date  { font-size: 14px; font-weight: 800; }
 
 /* ── GANTT ── */
@@ -198,7 +198,7 @@ body {
   border-right: 1px solid #30363d;
 }
 .gd-ruler-year-lbl {
-  font-size: 9px; font-weight: 700;
+  font-size: 10px; font-weight: 700;
   padding: 4px 8px 2px;
 }
 .gd-ruler-months {
@@ -218,7 +218,7 @@ body {
 }
 .gd-ruler-snf-lbl {
   position: absolute; top: 4px;
-  font-size: 8px; font-weight: 800; color: #d29922;
+  font-size: 9px; font-weight: 800; color: #d29922;
   transform: translateX(-50%);
   white-space: nowrap;
 }
@@ -228,7 +228,7 @@ body {
 }
 .gd-ruler-now-lbl {
   position: absolute; bottom: 4px;
-  font-size: 8px; font-weight: 800; color: #f85149;
+  font-size: 9px; font-weight: 800; color: #f85149;
   transform: translateX(-50%);
 }
 /* Phase 블록 */
@@ -247,7 +247,7 @@ body {
   border-right: 1px solid rgba(255,255,255,.12);
 }
 .gd-phase-badge {
-  font-size: 9px; font-weight: 800;
+  font-size: 10px; font-weight: 800;
   padding: 2px 8px; border-radius: 10px;
   background: rgba(255,255,255,.2); color: #fff;
   white-space: nowrap;
@@ -257,10 +257,10 @@ body {
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .gd-phase-date {
-  font-size: 9px; color: rgba(255,255,255,.65); white-space: nowrap;
+  font-size: 10px; color: rgba(255,255,255,.65); white-space: nowrap;
 }
 .gd-phase-arrow {
-  font-size: 10px; color: rgba(255,255,255,.6);
+  font-size: 11px; color: rgba(255,255,255,.6);
   margin-left: 6px; transition: transform .2s;
 }
 .gd-phase-header-track {
@@ -301,7 +301,7 @@ body {
 .gd-task-label {
   width: 180px; min-width: 180px;
   padding: 8px 12px;
-  font-size: 11px; color: #c9d1d9;
+  font-size: 12px; color: #c9d1d9;
   border-right: 1px solid #21262d;
   line-height: 1.5;
   display: flex; align-items: center;
@@ -337,7 +337,7 @@ body {
   position: absolute;
   right: 100%; margin-right: 12px;
   top: 50%; transform: translateY(-50%);
-  font-size: 9px; font-weight: 600; white-space: nowrap;
+  font-size: 11px; font-weight: 600; white-space: nowrap;
   opacity: .85;
 }
 .gd-bar-lbl-end {
@@ -345,14 +345,14 @@ body {
   position: absolute;
   left: 100%; margin-left: 12px;
   top: 50%; transform: translateY(-50%);
-  font-size: 9px; font-weight: 600; white-space: nowrap;
+  font-size: 11px; font-weight: 600; white-space: nowrap;
   opacity: .85;
 }
 .gd-bar-lbl-mid {
   /* 바 너비가 충분할 때 내부에도 날짜 범위 표시 */
   position: absolute; top: 50%; transform: translateY(-50%);
   left: 0; right: 0; text-align: center;
-  font-size: 8.5px; font-weight: 700; color: rgba(255,255,255,.9);
+  font-size: 10.5px; font-weight: 700; color: rgba(255,255,255,.9);
   white-space: nowrap; overflow: hidden;
 }
 /* LAUNCH 마커 */
@@ -365,7 +365,7 @@ body {
 }
 .gd-launch-lbl {
   position: absolute; top: -18px; left: 50%; transform: translateX(-50%);
-  font-size: 9.5px; font-weight: 700; white-space: nowrap;
+  font-size: 11.5px; font-weight: 700; white-space: nowrap;
 }
 /* SNF/현재 수직선 */
 .gd-vline {
@@ -377,7 +377,7 @@ body {
   display: flex; flex-wrap: wrap; gap: 10px 20px;
   padding: 14px 16px;
   background: #112040; border-top: 1px solid #30363d;
-  font-size: 11px; color: #8b949e;
+  font-size: 13px; color: #8b949e;
   justify-content: center;
 }
 .gd-leg-item { display: flex; align-items: center; gap: 6px; }
@@ -397,15 +397,15 @@ body {
 }
 .tier-head { padding: 8px 8px 7px; }
 .tier-emoji { font-size: 17px; line-height: 1; margin-bottom: 3px; }
-.tier-name  { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .5px; line-height: 1.3; }
-.tier-stat  { font-size: 13px; font-weight: 900; line-height: 1.3; margin-top: 5px; }
+.tier-name  { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .5px; line-height: 1.3; }
+.tier-stat  { font-size: 15px; font-weight: 900; line-height: 1.3; margin-top: 5px; }
 .tier-body  { padding: 10px 8px; }
-.tier-pccu  { font-size: 13px; color: var(--text2); line-height: 1.55; }
+.tier-pccu  { font-size: 15px; color: var(--text2); line-height: 1.55; }
 .tier-pccu strong { font-size: 17px; }
 
 /* WL 목표 테이블 */
-.wl-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
-.wl-table th { background: #f8fafc; padding: 9px 12px; text-align: center; font-weight: 700; font-size: 11px; border-bottom: 2px solid var(--border); color: var(--text2); white-space: nowrap; }
+.wl-table { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+.wl-table th { background: #f8fafc; padding: 9px 12px; text-align: center; font-weight: 700; font-size: 13px; border-bottom: 2px solid var(--border); color: var(--text2); white-space: nowrap; }
 .wl-table th:first-child { text-align: left; }
 .wl-table td { padding: 9px 12px; border-bottom: 1px solid var(--border); text-align: center; }
 .wl-table td:first-child { text-align: left; font-weight: 600; }
@@ -423,23 +423,23 @@ body {
   border-bottom: 1px solid var(--border);
 }
 .phase-todo-head.open { background: #f8fafc; }
-.phase-badge { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; color: #fff; flex-shrink: 0; }
+.phase-badge { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; color: #fff; flex-shrink: 0; }
 .phase-todo-title { font-size: 14px; font-weight: 700; color: var(--text1); flex: 1; }
-.phase-todo-date  { font-size: 11.5px; color: var(--text2); font-weight: 600; }
-.phase-todo-chevron { font-size: 12px; color: var(--text3); transition: transform .2s; }
+.phase-todo-date  { font-size: 13.5px; color: var(--text2); font-weight: 600; }
+.phase-todo-chevron { font-size: 14px; color: var(--text3); transition: transform .2s; }
 .phase-todo-head.open .phase-todo-chevron { transform: rotate(90deg); }
 .phase-todo-body { display: none; padding: 16px 18px; background: var(--white); }
 .phase-todo-body.open { display: block; }
-.todo-item { display: flex; align-items: flex-start; gap: 10px; padding: 7px 0; border-bottom: 1px solid #f1f5f9; font-size: 12.5px; color: var(--text2); }
+.todo-item { display: flex; align-items: flex-start; gap: 10px; padding: 7px 0; border-bottom: 1px solid #f1f5f9; font-size: 14.5px; color: var(--text2); }
 .todo-item:last-child { border-bottom: none; }
 .todo-item input[type=checkbox] { margin-top: 2px; width: 14px; height: 14px; flex-shrink: 0; accent-color: var(--blue); cursor: pointer; }
-.todo-priority { font-size: 10px; font-weight: 800; padding: 2px 7px; border-radius: 12px; flex-shrink: 0; }
+.todo-priority { font-size: 12px; font-weight: 800; padding: 2px 7px; border-radius: 12px; flex-shrink: 0; }
 .pri-high   { background: #fee2e2; color: #b91c1c; }
 .pri-medium { background: #fef3c7; color: #92400e; }
 .pri-low    { background: #dcfce7; color: #15803d; }
 
 /* ── 공통 유틸 ── */
-.tag { display: inline-flex; align-items: center; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 10px; }
+.tag { display: inline-flex; align-items: center; font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 10px; }
 .tag-p   { background: #dbeafe; color: #1e40af; }
 .tag-f2p { background: #d1fae5; color: #065f46; }
 
@@ -572,6 +572,7 @@ body {
 .card:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(79,70,229,.12); }
 .phase-todo { transition: box-shadow .2s; }
 .phase-todo:hover { box-shadow: 0 4px 16px rgba(79,70,229,.1); }
+#benchTbl td,#benchTbl th{white-space:nowrap}#benchTbl .gsub{white-space:normal;display:block;margin-top:3px}
 </style>
 </head>
 <body>
@@ -651,7 +652,7 @@ body {
   <!-- ── GANTT 차트 ── -->
   <div class="mt24">
     <div class="gantt-label">2026–2028 론칭 로드맵 — 단계별 마일스톤
-      <span style="font-size:12px;font-weight:600;color:#4b5563;margin-left:12px;text-transform:none;letter-spacing:0">
+      <span style="font-size:13.5px;font-weight:600;color:#4b5563;margin-left:12px;text-transform:none;letter-spacing:0">
         (Phase 헤더 클릭 → 접기/펼치기)
       </span>
     </div>
@@ -666,40 +667,40 @@ body {
 <!-- SNF 분기 결정 기준 — 섹션 외부 독립 카드 (계층 분리) -->
 <div style="background:#fff7ed;border-top:3px solid #f59e0b;border-bottom:3px solid #f59e0b;padding:28px 40px;margin:0">
   <div style="max-width:1600px;margin:0 auto">
-    <div style="font-size:12px;font-weight:800;color:#92400e;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px">⚡ SNF Oct 2027 종료 후 2주 이내 — 경로 분기 결정 기준</div>
+    <div style="font-size:13.5px;font-weight:800;color:#92400e;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px">⚡ SNF Oct 2027 종료 후 2주 이내 — 경로 분기 결정 기준</div>
     <div class="g3">
 
       <div style="background:#fff;border:2px solid #1e40af;border-radius:10px;padding:20px 22px">
-        <div style="font-size:13px;font-weight:800;color:#1e40af;letter-spacing:.5px;margin-bottom:12px">A안 ◼ 직행 론칭 경로 선택 — 더 빠른 LAUNCH</div>
-        <ul style="font-size:13px;color:var(--text1);line-height:1.8;padding-left:18px;margin-bottom:14px">
+        <div style="font-size:14.5px;font-weight:800;color:#1e40af;letter-spacing:.5px;margin-bottom:12px">A안 ◼ 직행 론칭 경로 선택 — 더 빠른 LAUNCH</div>
+        <ul style="font-size:14.5px;color:var(--text1);line-height:1.8;padding-left:18px;margin-bottom:14px">
           <li>SNF WL 목표 <strong>달성·초과</strong></li>
           <li>Demo D7 리텐션 <strong>15%+</strong>(top5)</li>
           <li>빌드 완성도 <strong>90%+</strong> 필수</li>
           <li>CBT 서버 부하 검증 완료</li>
         </ul>
-        <div style="font-size:12px;font-weight:700;color:#1e40af;background:#dbeafe;padding:8px 12px;border-radius:6px">🚀 정식 LAUNCH 목표: <strong>Mar'28</strong> (SNF 후 4~5개월)</div>
+        <div style="font-size:13.5px;font-weight:700;color:#1e40af;background:#dbeafe;padding:8px 12px;border-radius:6px">🚀 정식 LAUNCH 목표: <strong>Mar'28</strong> (SNF 후 4~5개월)</div>
       </div>
 
       <div style="background:#fff;border:2px solid #3730a3;border-radius:10px;padding:20px 22px">
-        <div style="font-size:13px;font-weight:800;color:#3730a3;letter-spacing:.5px;margin-bottom:12px">B안 ◼ 공개 보류 → 폴리싱 선택 — 지표 게이팅</div>
-        <ul style="font-size:13px;color:var(--text1);line-height:1.8;padding-left:18px;margin-bottom:14px">
+        <div style="font-size:14.5px;font-weight:800;color:#3730a3;letter-spacing:.5px;margin-bottom:12px">B안 ◼ 공개 보류 → 폴리싱 선택 — 지표 게이팅</div>
+        <ul style="font-size:14.5px;color:var(--text1);line-height:1.8;padding-left:18px;margin-bottom:14px">
           <li>SNF WL 목표의 <strong>70~100% 달성</strong></li>
           <li>Demo D7 리텐션 <strong>12~15%</strong>(top10)</li>
           <li>빌드 완성도 <strong>80%</strong> 수준</li>
           <li><strong>공개 F2P EA 금지</strong> → 클로즈드(CBT) 폴리싱</li>
         </ul>
-        <div style="font-size:12px;font-weight:700;color:#3730a3;background:#eef2ff;padding:8px 12px;border-radius:6px">🚀 공개 출시: <strong>지표 도달 시</strong> (일정 재산정 · 2029 백스톱)</div>
+        <div style="font-size:13.5px;font-weight:700;color:#3730a3;background:#eef2ff;padding:8px 12px;border-radius:6px">🚀 공개 출시: <strong>지표 도달 시</strong> (일정 재산정 · 2029 백스톱)</div>
       </div>
 
       <div style="background:#fff;border:2px solid #dc2626;border-radius:10px;padding:20px 22px">
-        <div style="font-size:13px;font-weight:800;color:#dc2626;letter-spacing:.5px;margin-bottom:12px">🔴 재검토 조건</div>
-        <ul style="font-size:13px;color:var(--text1);line-height:1.8;padding-left:18px;margin-bottom:14px">
+        <div style="font-size:14.5px;font-weight:800;color:#dc2626;letter-spacing:.5px;margin-bottom:12px">🔴 재검토 조건</div>
+        <ul style="font-size:14.5px;color:var(--text1);line-height:1.8;padding-left:18px;margin-bottom:14px">
           <li>보수 목표 <strong>미달</strong> (생존선/미달 구간)</li>
           <li>BM 전환 또는 출시 전략 재검토</li>
           <li>다음 SNF 회차 재참가 평가</li>
           <li>WL 증분 50% 미만 → 전략 전환</li>
         </ul>
-        <div style="font-size:12px;font-weight:700;color:#dc2626;background:#fee2e2;padding:8px 12px;border-radius:6px">⚠️ A안·B안 모두 배제 → 론칭 전략 재수립</div>
+        <div style="font-size:13.5px;font-weight:700;color:#dc2626;background:#fee2e2;padding:8px 12px;border-radius:6px">⚠️ A안·B안 모두 배제 → 론칭 전략 재수립</div>
       </div>
 
     </div>
@@ -775,18 +776,18 @@ body {
     <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:12px">
       <span style="font-size:20px;line-height:1">📊</span>
       <div>
-        <div style="font-weight:800;color:var(--text1);font-size:13.5px;margin-bottom:2px">PCCU avg 40~100K = ★ FPS Top10 진입선(≈50K) 근거 — 멀티플레이어 슈터 장르 실측 벤치마크</div>
-        <div style="font-size:11px;color:var(--text3);line-height:1.5">기준: Steam FPS·Shooter·Multiplayer 복합 태그 활성 타이틀 연간 PCCU 순위 · <a href="https://steamdb.info/charts/?tagid=1663" target="_blank" style="color:#b45309;text-decoration:none">SteamDB FPS 차트 ↗</a> · <a href="https://steamcharts.com/" target="_blank" style="color:#b45309;text-decoration:none">SteamCharts ↗</a> 직접 실측 — FPS #10 ≈ R6 ~47K · #5 ≈ ~100~124K(Apex급) · <b>전부 30일 평균 CCU 기준(=Top10 목표 메트릭) · 2026-06</b></div>
+        <div style="font-weight:800;color:var(--text1);font-size:15px;margin-bottom:2px">PCCU avg 40~100K = ★ FPS Top10 진입선(≈50K) 근거 — 멀티플레이어 슈터 장르 실측 벤치마크</div>
+        <div style="font-size:12.5px;color:var(--text3);line-height:1.5">기준: Steam FPS·Shooter·Multiplayer 복합 태그 활성 타이틀 연간 PCCU 순위 · <a href="https://steamdb.info/charts/?tagid=1663" target="_blank" style="color:#b45309;text-decoration:none">SteamDB FPS 차트 ↗</a> · <a href="https://steamcharts.com/" target="_blank" style="color:#b45309;text-decoration:none">SteamCharts ↗</a> 직접 실측 — FPS #10 ≈ R6 ~47K · #5 ≈ ~100~124K(Apex급) · <b>전부 30일 평균 CCU 기준(=Top10 목표 메트릭) · 2026-06</b></div>
       </div>
     </div>
     <div style="overflow-x:auto;margin-bottom:12px">
-    <table style="width:100%;border-collapse:collapse;font-size:11.5px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;min-width:600px">
+    <table id="benchTbl" style="width:100%;border-collapse:collapse;font-size:13px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;min-width:780px">
       <thead>
         <tr style="background:#1e293b">
           <th style="padding:8px 12px;text-align:left;font-weight:800;color:#fff;border-bottom:2px solid #334155;white-space:nowrap;width:110px">순위 구간</th>
           <th style="padding:8px 12px;text-align:center;font-weight:800;color:#fff;border-bottom:2px solid #334155;width:80px">30일 평균 CCU</th>
           <th style="padding:8px 12px;text-align:left;font-weight:800;color:#fff;border-bottom:2px solid #334155">대표 게임 (SteamCharts 실측)</th>
-          <th style="padding:8px 12px;text-align:center;font-weight:800;color:#fff;border-bottom:2px solid #334155;width:90px">출처</th>
+          <th style="padding:8px 12px;text-align:center;font-weight:800;color:#fff;border-bottom:2px solid #334155;width:130px">출처</th>
         </tr>
       </thead>
       <tbody>
@@ -794,47 +795,47 @@ body {
           <td style="padding:8px 12px;border-bottom:1px solid #e2e8f0;font-weight:800;color:#166534">Top 1-3</td>
           <td style="padding:8px 12px;border-bottom:1px solid #e2e8f0;text-align:center;font-weight:800;color:#166534">200K+</td>
           <td style="padding:8px 12px;border-bottom:1px solid #e2e8f0;color:var(--text2)"><strong>CS2</strong> (~760K avg) &nbsp;·&nbsp; <strong>PUBG</strong> (~314K avg)</td>
-          <td style="padding:8px 12px;border-bottom:1px solid #e2e8f0;text-align:center"><a href="https://steamcharts.com/app/730" target="_blank" style="color:#0369a1;font-size:11px">CS2</a> · <a href="https://steamcharts.com/app/578080" target="_blank" style="color:#0369a1;font-size:11px">PUBG</a></td>
+          <td style="padding:8px 12px;border-bottom:1px solid #e2e8f0;text-align:center"><a href="https://steamcharts.com/app/730" target="_blank" style="color:#0369a1;font-size:12.5px">CS2</a> · <a href="https://steamcharts.com/app/578080" target="_blank" style="color:#0369a1;font-size:12.5px">PUBG</a></td>
         </tr>
         <tr>
           <td style="padding:8px 12px;border-bottom:1px solid #e2e8f0;font-weight:800;color:#1d4ed8">Top 4-7</td>
           <td style="padding:8px 12px;border-bottom:1px solid #e2e8f0;text-align:center;font-weight:800;color:#1d4ed8">70-200K</td>
           <td style="padding:8px 12px;border-bottom:1px solid #e2e8f0;color:var(--text2)"><strong>Apex</strong> (~124K avg) &nbsp;·&nbsp; <strong>Delta Force</strong> (~80K avg · 피크 198K) &nbsp;·&nbsp; <strong>Marvel Rivals</strong> (~70K avg)</td>
-          <td style="padding:8px 12px;border-bottom:1px solid #e2e8f0;text-align:center"><a href="https://steamcharts.com/app/1172470" target="_blank" style="color:#0369a1;font-size:11px">Apex</a> · <a href="https://steamcharts.com/app/2507950" target="_blank" style="color:#0369a1;font-size:11px">Delta</a> · <a href="https://steamcharts.com/app/2767030" target="_blank" style="color:#0369a1;font-size:11px">Marvel</a></td>
+          <td style="padding:8px 12px;border-bottom:1px solid #e2e8f0;text-align:center"><a href="https://steamcharts.com/app/1172470" target="_blank" style="color:#0369a1;font-size:12.5px">Apex</a> · <a href="https://steamcharts.com/app/2507950" target="_blank" style="color:#0369a1;font-size:12.5px">Delta</a> · <a href="https://steamcharts.com/app/2767030" target="_blank" style="color:#0369a1;font-size:12.5px">Marvel</a></td>
         </tr>
         <tr style="background:#fffbeb;outline:2px solid #f59e0b;outline-offset:-1px">
           <td style="padding:9px 12px;border-bottom:2px solid #fbbf24;font-weight:800">
-            <span style="background:#f59e0b;color:#fff;padding:2px 7px;border-radius:12px;font-size:11px;font-weight:800">🛡️ Top 8-20</span>
-            <div style="font-size:10px;color:#92400e;margin-top:3px;font-weight:700">← Conservative 목표</div>
+            <span style="background:#f59e0b;color:#fff;padding:2px 7px;border-radius:12px;font-size:12.5px;font-weight:800">🛡️ Top 8-20</span>
+            <div style="font-size:11.5px;color:#92400e;margin-top:3px;font-weight:700">← 보수 목표</div>
           </td>
-          <td style="padding:9px 12px;border-bottom:2px solid #fbbf24;text-align:center;font-weight:800;color:#d97706;font-size:13px">30-70K</td>
+          <td style="padding:9px 12px;border-bottom:2px solid #fbbf24;text-align:center;font-weight:800;color:#d97706;font-size:14.5px">30-70K</td>
           <td style="padding:9px 12px;border-bottom:2px solid #fbbf24;color:var(--text2)">
             <strong>Destiny 2</strong> (~60K avg) &nbsp;·&nbsp; <strong>R6 Siege</strong> (~47K avg · Siege X 이벤트 ~108K) &nbsp;·&nbsp; <strong>BF6</strong> (~37K avg · 747K→−95%)<br>
-            <span style="font-size:10.5px;color:#92400e">진입선 30K avg ≈ R6 Siege 하위 시즌 수준 · 100K avg ≈ Apex 하위 수준</span>
+            <span class="gsub" style="font-size:12px;color:#92400e">진입선 30K avg ≈ R6 Siege 하위 시즌 수준 · 100K avg ≈ Apex 하위 수준</span>
           </td>
-          <td style="padding:9px 12px;border-bottom:2px solid #fbbf24;text-align:center"><a href="https://steamcharts.com/app/1085660" target="_blank" style="color:#92400e;font-size:11px">Destiny</a> · <a href="https://steamcharts.com/app/359550" target="_blank" style="color:#92400e;font-size:11px">R6</a> · <a href="https://steamcharts.com/app/2807960" target="_blank" style="color:#92400e;font-size:11px">BF6</a></td>
+          <td style="padding:9px 12px;border-bottom:2px solid #fbbf24;text-align:center"><a href="https://steamcharts.com/app/1085660" target="_blank" style="color:#92400e;font-size:12.5px">Destiny</a> · <a href="https://steamcharts.com/app/359550" target="_blank" style="color:#92400e;font-size:12.5px">R6</a> · <a href="https://steamcharts.com/app/2807960" target="_blank" style="color:#92400e;font-size:12.5px">BF6</a></td>
         </tr>
         <tr>
           <td style="padding:8px 12px;border-bottom:1px solid #e2e8f0;font-weight:800;color:var(--text3)">Top 21-40</td>
           <td style="padding:8px 12px;border-bottom:1px solid #e2e8f0;text-align:center;font-weight:700;color:var(--text3)">10-30K</td>
           <td style="padding:8px 12px;border-bottom:1px solid #e2e8f0;color:var(--text3)">
             <strong>Hunt: Showdown 1896</strong> (~17K avg 30d 2026)
-            <span style="color:#dc2626;font-size:10.5px"> · ⚠️ 60K는 Aug 2024 1회성 peak</span>
+            <span style="color:#dc2626;font-size:12px"> · ⚠️ 60K는 Aug 2024 1회성 peak</span>
           </td>
-          <td style="padding:8px 12px;border-bottom:1px solid #e2e8f0;text-align:center"><a href="https://steamcharts.com/app/594650" target="_blank" style="color:#0369a1;font-size:11px">Hunt<br>SteamCharts</a></td>
+          <td style="padding:8px 12px;border-bottom:1px solid #e2e8f0;text-align:center"><a href="https://steamcharts.com/app/594650" target="_blank" style="color:#0369a1;font-size:12.5px">Hunt<br>SteamCharts</a></td>
         </tr>
         <tr style="background:#f8fafc">
           <td style="padding:8px 12px;font-weight:800;color:#94a3b8">Top 41+</td>
           <td style="padding:8px 12px;text-align:center;font-weight:700;color:#94a3b8">1-10K</td>
           <td style="padding:8px 12px;color:#94a3b8">Hell Let Loose &nbsp;·&nbsp; Squad &nbsp;·&nbsp; Battlebit Remastered</td>
-          <td style="padding:8px 12px;text-align:center"><a href="https://steamcharts.com/top" target="_blank" style="color:#64748b;font-size:11px">SteamCharts</a></td>
+          <td style="padding:8px 12px;text-align:center"><a href="https://steamcharts.com/top" target="_blank" style="color:#64748b;font-size:12.5px">SteamCharts</a></td>
         </tr>
       </tbody>
     </table>
     </div>
     <div style="background:#fffbeb;border:1px solid #fbbf24;border-radius:7px;padding:10px 14px">
-      <div style="font-weight:800;color:#d97706;font-size:12px;margin-bottom:4px">🎯 결론</div>
-      <div style="font-size:11.5px;color:var(--text2);line-height:1.7">
+      <div style="font-weight:800;color:#d97706;font-size:13.5px;margin-bottom:4px">🎯 결론</div>
+      <div style="font-size:13px;color:var(--text2);line-height:1.7">
         <strong>진입선 30K avg</strong> = R6 Siege 하위 시즌 수준 → 멀티플레이어 슈터 <strong>Top 15-20 포지션</strong> &nbsp;·&nbsp;
         <strong>상한 ~120K avg</strong> = Apex 수준 → <strong>Top 4-7 포지션</strong><br>
         → Conservative 30-100K avg는 슈터 장르 <strong>Top 4-20 전 구간</strong>을 커버. "Top 20 진입"은 하한선 기준의 보수적 표현.
@@ -845,9 +846,9 @@ body {
   <style>
     #src-detail summary::-webkit-details-marker{display:none}
     #src-detail summary{padding:12px 18px;cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;flex-wrap:wrap;user-select:none}
-    .src-toggle-arrow{display:inline-block;transition:transform .2s;font-size:12px;color:var(--text3)}
+    .src-toggle-arrow{display:inline-block;transition:transform .2s;font-size:13.5px;color:var(--text3)}
     .src-toggle-text{font-size:0;color:var(--text3)}
-    .src-toggle-text::before{content:'펼치기';font-size:11px}
+    .src-toggle-text::before{content:'펼치기';font-size:12.5px}
     #src-detail[open] .src-toggle-arrow{transform:rotate(180deg)}
     #src-detail[open] .src-toggle-text::before{content:'접기'}
     .src-cards{display:none;grid-template-columns:repeat(4,1fr);gap:12px;padding:0 18px 16px}
@@ -855,12 +856,12 @@ body {
   </style>
   <details style="margin-top:10px;background:#f8fafc;border:1px solid var(--border);border-radius:8px;overflow:hidden" id="src-detail">
     <summary>
-      <span style="font-size:11px;font-weight:800;color:var(--text3);letter-spacing:1.5px;text-transform:uppercase;white-space:nowrap">📚 데이터 근거 — 4개 출처 교차검증</span>
+      <span style="font-size:12.5px;font-weight:800;color:var(--text3);letter-spacing:1.5px;text-transform:uppercase;white-space:nowrap">📚 데이터 근거 — 4개 출처 교차검증</span>
       <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">
-        <span style="font-size:10.5px;font-weight:700;background:#e0f2fe;color:#0369a1;padding:3px 9px;border-radius:20px;white-space:nowrap">GameDiscoverCo 2024–25</span>
-        <span style="font-size:10.5px;font-weight:700;background:#f0fdf4;color:#166534;padding:3px 9px;border-radius:20px;white-space:nowrap">SteamSpy</span>
-        <span style="font-size:10.5px;font-weight:700;background:#fef3c7;color:#92400e;padding:3px 9px;border-radius:20px;white-space:nowrap">Steam Charts 역산</span>
-        <span style="font-size:10.5px;font-weight:700;background:#ede9fe;color:#5b21b6;padding:3px 9px;border-radius:20px;white-space:nowrap">Newzoo Shooter 리포트</span>
+        <span style="font-size:12px;font-weight:700;background:#e0f2fe;color:#0369a1;padding:3px 9px;border-radius:20px;white-space:nowrap">GameDiscoverCo 2024–25</span>
+        <span style="font-size:12px;font-weight:700;background:#f0fdf4;color:#166534;padding:3px 9px;border-radius:20px;white-space:nowrap">SteamSpy</span>
+        <span style="font-size:12px;font-weight:700;background:#fef3c7;color:#92400e;padding:3px 9px;border-radius:20px;white-space:nowrap">Steam Charts 역산</span>
+        <span style="font-size:12px;font-weight:700;background:#ede9fe;color:#5b21b6;padding:3px 9px;border-radius:20px;white-space:nowrap">Newzoo Shooter 리포트</span>
       </div>
       <div style="margin-left:auto;display:flex;align-items:center;gap:4px;white-space:nowrap">
         <span class="src-toggle-arrow">▼</span>
@@ -871,34 +872,34 @@ body {
       <!-- GameDiscoverCo -->
       <div style="background:#fff;border:1px solid #bae6fd;border-radius:8px;padding:12px 13px;display:flex;flex-direction:column;gap:8px">
         <div style="display:flex;align-items:center;justify-content:space-between;gap:6px">
-          <span style="font-size:10.5px;font-weight:700;background:#e0f2fe;color:#0369a1;padding:2px 8px;border-radius:20px">GameDiscoverCo 2024–25</span>
-          <a href="https://newsletter.gamediscover.co/" target="_blank" style="font-size:10.5px;color:#0369a1;text-decoration:none;white-space:nowrap;opacity:.8">↗ 바로가기</a>
+          <span style="font-size:12px;font-weight:700;background:#e0f2fe;color:#0369a1;padding:2px 8px;border-radius:20px">GameDiscoverCo 2024–25</span>
+          <a href="https://newsletter.gamediscover.co/" target="_blank" style="font-size:12px;color:#0369a1;text-decoration:none;white-space:nowrap;opacity:.8">↗ 바로가기</a>
         </div>
-        <div style="font-size:12px;color:var(--text2);line-height:1.65">Simon Carless가 운영하는 Steam 전문 분석 뉴스레터. 매주 실제 런칭 타이틀의 WL 전환율·CCU 추이를 추적 발행하며, 본 5-Tier 분포의 <strong>핵심 통계 기반</strong>. Shooter 장르 100개 코호트의 1년 후 생존율 데이터 직접 인용.</div>
+        <div style="font-size:13.5px;color:var(--text2);line-height:1.65">Simon Carless가 운영하는 Steam 전문 분석 뉴스레터. 매주 실제 런칭 타이틀의 WL 전환율·CCU 추이를 추적 발행하며, 본 5-Tier 분포의 <strong>핵심 통계 기반</strong>. Shooter 장르 100개 코호트의 1년 후 생존율 데이터 직접 인용.</div>
       </div>
       <!-- SteamSpy -->
       <div style="background:#fff;border:1px solid #bbf7d0;border-radius:8px;padding:12px 13px;display:flex;flex-direction:column;gap:8px">
         <div style="display:flex;align-items:center;justify-content:space-between;gap:6px">
-          <span style="font-size:10.5px;font-weight:700;background:#f0fdf4;color:#166534;padding:2px 8px;border-radius:20px">SteamSpy</span>
-          <a href="https://steamspy.com/" target="_blank" style="font-size:10.5px;color:#166534;text-decoration:none;white-space:nowrap;opacity:.8">↗ 바로가기</a>
+          <span style="font-size:12px;font-weight:700;background:#f0fdf4;color:#166534;padding:2px 8px;border-radius:20px">SteamSpy</span>
+          <a href="https://steamspy.com/" target="_blank" style="font-size:12px;color:#166534;text-decoration:none;white-space:nowrap;opacity:.8">↗ 바로가기</a>
         </div>
-        <div style="font-size:12px;color:var(--text2);line-height:1.65">Steam 공개 API 기반 소유권·플레이어 수 추정 도구. 장르별 게임 집합의 소유자 수 분포를 집계해 <strong>Tier 경계값(5K / 30K / 100K / 300K)</strong> 산정의 크로스체크 근거로 활용. 개별 타이틀 정밀도는 낮으나 코호트 분포 경향성 파악에 유효.</div>
+        <div style="font-size:13.5px;color:var(--text2);line-height:1.65">Steam 공개 API 기반 소유권·플레이어 수 추정 도구. 장르별 게임 집합의 소유자 수 분포를 집계해 <strong>Tier 경계값(5K / 30K / 100K / 300K)</strong> 산정의 크로스체크 근거로 활용. 개별 타이틀 정밀도는 낮으나 코호트 분포 경향성 파악에 유효.</div>
       </div>
       <!-- Steam Charts -->
       <div style="background:#fff;border:1px solid #fde68a;border-radius:8px;padding:12px 13px;display:flex;flex-direction:column;gap:8px">
         <div style="display:flex;align-items:center;justify-content:space-between;gap:6px">
-          <span style="font-size:10.5px;font-weight:700;background:#fef3c7;color:#92400e;padding:2px 8px;border-radius:20px">Steam Charts 역산</span>
-          <a href="https://steamcharts.com/" target="_blank" style="font-size:10.5px;color:#92400e;text-decoration:none;white-space:nowrap;opacity:.8">↗ 바로가기</a>
+          <span style="font-size:12px;font-weight:700;background:#fef3c7;color:#92400e;padding:2px 8px;border-radius:20px">Steam Charts 역산</span>
+          <a href="https://steamcharts.com/" target="_blank" style="font-size:12px;color:#92400e;text-decoration:none;white-space:nowrap;opacity:.8">↗ 바로가기</a>
         </div>
-        <div style="font-size:12px;color:var(--text2);line-height:1.65">Steam Charts의 공개 PCCU 데이터를 기준으로 각 타이틀의 런칭 시점 WL 대비 PCCU 비율을 <strong>개별 역산</strong>. HD2·BF6·Concord 등 벤치마크 타이틀의 실측 전환율(6~55%)을 도출해 장르 평균 6~15% 구간 검증에 사용.</div>
+        <div style="font-size:13.5px;color:var(--text2);line-height:1.65">Steam Charts의 공개 PCCU 데이터를 기준으로 각 타이틀의 런칭 시점 WL 대비 PCCU 비율을 <strong>개별 역산</strong>. HD2·BF6·Concord 등 벤치마크 타이틀의 실측 전환율(6~55%)을 도출해 장르 평균 6~15% 구간 검증에 사용.</div>
       </div>
       <!-- Newzoo -->
       <div style="background:#fff;border:1px solid #ddd6fe;border-radius:8px;padding:12px 13px;display:flex;flex-direction:column;gap:8px">
         <div style="display:flex;align-items:center;justify-content:space-between;gap:6px">
-          <span style="font-size:10.5px;font-weight:700;background:#ede9fe;color:#5b21b6;padding:2px 8px;border-radius:20px">Newzoo Shooter 리포트</span>
-          <a href="https://newzoo.com/resources/rankings/top-25-public-game-companies-by-game-revenues" target="_blank" style="font-size:10.5px;color:#5b21b6;text-decoration:none;white-space:nowrap;opacity:.8">↗ 바로가기</a>
+          <span style="font-size:12px;font-weight:700;background:#ede9fe;color:#5b21b6;padding:2px 8px;border-radius:20px">Newzoo Shooter 리포트</span>
+          <a href="https://newzoo.com/resources/rankings/top-25-public-game-companies-by-game-revenues" target="_blank" style="font-size:12px;color:#5b21b6;text-decoration:none;white-space:nowrap;opacity:.8">↗ 바로가기</a>
         </div>
-        <div style="font-size:12px;color:var(--text2);line-height:1.65">글로벌 게임 시장 조사 기관 Newzoo의 FPS·TPS 장르 연간 리포트. <strong>시장 전체 성과 분포</strong>(상위 1% / 5% / 15% 구간)의 매크로 기준선을 제공해 GameDiscoverCo 미시 데이터와의 정합성을 검증. 5-Tier 비율(1/4/10/27/58%) 확정의 최종 근거.</div>
+        <div style="font-size:13.5px;color:var(--text2);line-height:1.65">글로벌 게임 시장 조사 기관 Newzoo의 FPS·TPS 장르 연간 리포트. <strong>시장 전체 성과 분포</strong>(상위 1% / 5% / 15% 구간)의 매크로 기준선을 제공해 GameDiscoverCo 미시 데이터와의 정합성을 검증. 5-Tier 비율(1/4/10/27/58%) 확정의 최종 근거.</div>
       </div>
     </div>
   </details>
@@ -924,7 +925,7 @@ body {
           <tr class="hl"><td>🚀 Launch 직전</td><td><strong>2.8M+</strong></td><td><strong>1.5M+</strong></td></tr>
         </tbody>
       </table>
-      <div style="font-size:11px;color:var(--text2);line-height:1.55;margin-top:6px">
+      <div style="font-size:12.5px;color:var(--text2);line-height:1.55;margin-top:6px">
         ⚖️ <strong>Premium &gt; F2P 근거</strong>: 같은 Launch+1개월 <strong>FPS Top10(peak ~280K · Day30 50K, sustain ~18%)</strong> 목표 시,
         WL→플레이어 전환이 <strong>F2P ~18~20%</strong>(가격장벽 0 · <a href="https://alineaanalytics.substack.com/p/wishlist-to-buyer-conversions-for" target="_blank" style="color:#2563eb;text-decoration:none">Alinea ↗</a>)
         vs <strong>Premium ~10~12%</strong>(<a href="https://newsletter.gamediscover.co/p/the-state-of-steam-wishlist-conversions" target="_blank" style="color:#2563eb;text-decoration:none">GameDiscoverCo ↗</a>)이므로
@@ -954,17 +955,17 @@ body {
 
   <!-- WL→PCCU 전환 벤치마크 -->
   <div class="mt16 card">
-    <div class="card-h">WL→PCCU% 업계 실측 벤치마크 <span style="font-size:11px;font-weight:600;color:#6b7280;margin-left:8px">내림차순 정렬 · ✅ 양쪽 검증 / ⚠️ WL 추정 · PCCU = 출시 후 최고 동시접속 기준</span></div>
+    <div class="card-h">WL→PCCU% 업계 실측 벤치마크 <span style="font-size:12.5px;font-weight:600;color:#6b7280;margin-left:8px">내림차순 정렬 · ✅ 양쪽 검증 / ⚠️ WL 추정 · PCCU = 출시 후 최고 동시접속 기준</span></div>
     <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:12px">
 
       <!-- 1위: Marvel Rivals ~50% -->
       <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:12px;background:#f8fafc;border-radius:8px">
-        <div style="font-size:12px;font-weight:700;color:#d97706;margin-bottom:3px">⚠️ WL 출시 직전 미확인</div>
+        <div style="font-size:13.5px;font-weight:700;color:#d97706;margin-bottom:3px">⚠️ WL 출시 직전 미확인</div>
         <div style="font-size:14px;font-weight:800;color:var(--text1);margin-bottom:6px">Marvel Rivals</div>
         <div style="font-size:20px;font-weight:800;color:#16a34a">~50%</div>
-        <div style="font-size:11.5px;color:var(--text3)">644K ÷ 1M+(Jun'24) WL</div>
-        <div style="font-size:11px;color:var(--text3)">F2P · S1 피크 Jan'25</div>
-        <div style="margin-top:7px;width:100%;text-align:left;font-size:10px;line-height:1.8">
+        <div style="font-size:13px;color:var(--text3)">644K ÷ 1M+(Jun'24) WL</div>
+        <div style="font-size:12.5px;color:var(--text3)">F2P · S1 피크 Jan'25</div>
+        <div style="margin-top:7px;width:100%;text-align:left;font-size:11.5px;line-height:1.8">
           <div style="padding:2px 6px;background:#e2e8f0;border-radius:4px;margin-bottom:2px">
             <span style="color:#475569;font-weight:700">PCCU:</span> <a href="https://gameworldobserver.com/2025/01/13/marvel-rivals-record-644k-ccu-steam-season-1" target="_blank" style="color:#4f46e5;text-decoration:none">GWO 644K ✅</a>
           </div>
@@ -976,12 +977,12 @@ body {
 
       <!-- 2위: BF6 28% -->
       <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:12px;background:#f0fdf4;border:1px solid #86efac;border-radius:8px">
-        <div style="font-size:12px;font-weight:700;color:#16a34a;margin-bottom:3px">✅ 양쪽 검증</div>
+        <div style="font-size:13.5px;font-weight:700;color:#16a34a;margin-bottom:3px">✅ 양쪽 검증</div>
         <div style="font-size:14px;font-weight:800;color:var(--text1);margin-bottom:6px">BF6</div>
         <div style="font-size:20px;font-weight:800;color:#3b82f6">28%</div>
-        <div style="font-size:11.5px;color:var(--text3)">747K ÷ 2.7M WL</div>
-        <div style="font-size:11px;color:var(--text3)">AAA · Oct'25 출시</div>
-        <div style="margin-top:7px;width:100%;text-align:left;font-size:10px;line-height:1.8">
+        <div style="font-size:13px;color:var(--text3)">747K ÷ 2.7M WL</div>
+        <div style="font-size:12.5px;color:var(--text3)">AAA · Oct'25 출시</div>
+        <div style="margin-top:7px;width:100%;text-align:left;font-size:11.5px;line-height:1.8">
           <div style="padding:2px 6px;background:#dcfce7;border-radius:4px;margin-bottom:2px">
             <span style="color:#166534;font-weight:700">PCCU:</span> <a href="https://steamcharts.com/app/2807960" target="_blank" style="color:#166534;text-decoration:none">Steam Charts 747K ✅</a>
           </div>
@@ -993,12 +994,12 @@ body {
 
       <!-- 3위: Concord 17% -->
       <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:12px;background:#fef2f2;border:1px solid #fca5a5;border-radius:8px">
-        <div style="font-size:12px;font-weight:700;color:#16a34a;margin-bottom:3px">✅ 양쪽 검증</div>
+        <div style="font-size:13.5px;font-weight:700;color:#16a34a;margin-bottom:3px">✅ 양쪽 검증</div>
         <div style="font-size:14px;font-weight:800;color:var(--text1);margin-bottom:6px">Concord</div>
         <div style="font-size:20px;font-weight:800;color:#dc2626">17%</div>
-        <div style="font-size:11.5px;color:var(--text3)">697 ÷ 4,129 WL</div>
-        <div style="font-size:11px;color:var(--text3)">2주 만에 종료 · Aug'24</div>
-        <div style="margin-top:7px;width:100%;text-align:left;font-size:10px;line-height:1.8">
+        <div style="font-size:13px;color:var(--text3)">697 ÷ 4,129 WL</div>
+        <div style="font-size:12.5px;color:var(--text3)">2주 만에 종료 · Aug'24</div>
+        <div style="margin-top:7px;width:100%;text-align:left;font-size:11.5px;line-height:1.8">
           <div style="padding:2px 6px;background:#fee2e2;border-radius:4px;margin-bottom:2px">
             <span style="color:#b91c1c;font-weight:700">PCCU:</span> <a href="https://gameworldobserver.com/2024/08/26/concord-697-peak-ccu-steam-sony-live-service-flop" target="_blank" style="color:#b91c1c;text-decoration:none">GWO 697 ✅</a>
           </div>
@@ -1010,12 +1011,12 @@ body {
 
       <!-- 4위: Delta Force ~12% (HD2 대체) -->
       <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:12px;background:#f8fafc;border-radius:8px">
-        <div style="font-size:12px;font-weight:700;color:#d97706;margin-bottom:3px">⚠️ WL 출시 직전 미확인</div>
+        <div style="font-size:13.5px;font-weight:700;color:#d97706;margin-bottom:3px">⚠️ WL 출시 직전 미확인</div>
         <div style="font-size:14px;font-weight:800;color:var(--text1);margin-bottom:6px">Delta Force</div>
         <div style="font-size:20px;font-weight:800;color:#16a34a">~12%</div>
-        <div style="font-size:11.5px;color:var(--text3)">119K ÷ 1M+(Aug'24) WL</div>
-        <div style="font-size:11px;color:var(--text3)">F2P · Dec'24 출시</div>
-        <div style="margin-top:7px;width:100%;text-align:left;font-size:10px;line-height:1.8">
+        <div style="font-size:13px;color:var(--text3)">119K ÷ 1M+(Aug'24) WL</div>
+        <div style="font-size:12.5px;color:var(--text3)">F2P · Dec'24 출시</div>
+        <div style="margin-top:7px;width:100%;text-align:left;font-size:11.5px;line-height:1.8">
           <div style="padding:2px 6px;background:#e2e8f0;border-radius:4px;margin-bottom:2px">
             <span style="color:#475569;font-weight:700">PCCU:</span> <a href="https://gameworldobserver.com/2024/12/06/delta-force-over-100k-ccu-on-steam-mixed-reviews" target="_blank" style="color:#4f46e5;text-decoration:none">GWO 119K ✅</a>
           </div>
@@ -1027,12 +1028,12 @@ body {
 
       <!-- 5위: Gray Zone Warfare ~7% (Space Marine 2 대체) -->
       <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:12px;background:#f8fafc;border-radius:8px">
-        <div style="font-size:12px;font-weight:700;color:#d97706;margin-bottom:3px">⚠️ WL 공식 200K+추정</div>
+        <div style="font-size:13.5px;font-weight:700;color:#d97706;margin-bottom:3px">⚠️ WL 공식 200K+추정</div>
         <div style="font-size:14px;font-weight:800;color:var(--text1);margin-bottom:6px">Gray Zone Warfare</div>
         <div style="font-size:20px;font-weight:800;color:#16a34a">~7%</div>
-        <div style="font-size:11.5px;color:var(--text3)">72K ÷ ~1M WL</div>
-        <div style="font-size:11px;color:var(--text3)">유료 익스트랙션 · Apr'24 EA</div>
-        <div style="margin-top:7px;width:100%;text-align:left;font-size:10px;line-height:1.8">
+        <div style="font-size:13px;color:var(--text3)">72K ÷ ~1M WL</div>
+        <div style="font-size:12.5px;color:var(--text3)">유료 익스트랙션 · Apr'24 EA</div>
+        <div style="margin-top:7px;width:100%;text-align:left;font-size:11.5px;line-height:1.8">
           <div style="padding:2px 6px;background:#e2e8f0;border-radius:4px;margin-bottom:2px">
             <span style="color:#475569;font-weight:700">PCCU:</span> <a href="https://steamcharts.com/app/2479810" target="_blank" style="color:#4f46e5;text-decoration:none">Steam Charts 72K ✅</a>
           </div>
@@ -1044,18 +1045,18 @@ body {
 
       <!-- 6위: Shooter 장르 평균 6~15% -->
       <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:12px;background:#f0f4ff;border:1.5px solid #c7d2fe;border-radius:8px">
-        <div style="font-size:12px;font-weight:700;color:#d97706;margin-bottom:3px">⚠️ WL→Sales 기반 추정</div>
+        <div style="font-size:13.5px;font-weight:700;color:#d97706;margin-bottom:3px">⚠️ WL→Sales 기반 추정</div>
         <div style="font-size:14px;font-weight:800;color:#4f46e5;margin-bottom:6px">Shooter 장르 평균</div>
         <div style="font-size:20px;font-weight:900;color:#4f46e5">6~15%</div>
-        <div style="font-size:11.5px;color:#6366f1;margin-top:4px;font-weight:600">Mid-tier AA 기준</div>
-        <div style="font-size:10.5px;color:#818cf8;margin-top:6px;line-height:1.5;text-align:left">
+        <div style="font-size:13px;color:#6366f1;margin-top:4px;font-weight:600">Mid-tier AA 기준</div>
+        <div style="font-size:12px;color:#818cf8;margin-top:6px;line-height:1.5;text-align:left">
           • 바이럴 제외 중앙값: ~10%<br>
           • WL 100K+ 코호트: 8~15%<br>
           • F2P: 25~55% (설치 기준)<br>
           <span style="color:#4f46e5;font-weight:700">★ 보수 기준선: 10%</span>
         </div>
-        <div style="font-size:10px;color:#d97706;margin-top:4px;line-height:1.4">GDCo = WL→Sales 측정<br>WL→PCCU는 추론값</div>
-        <div style="margin-top:7px;width:100%;text-align:left;font-size:10px;line-height:1.8">
+        <div style="font-size:11.5px;color:#d97706;margin-top:4px;line-height:1.4">GDCo = WL→Sales 측정<br>WL→PCCU는 추론값</div>
+        <div style="margin-top:7px;width:100%;text-align:left;font-size:11.5px;line-height:1.8">
           <div style="padding:2px 6px;background:#e0e7ff;border-radius:4px;margin-bottom:2px">
             <span style="color:#3730a3;font-weight:700">WL→Sales:</span> <a href="https://newsletter.gamediscover.co/p/the-state-of-steam-wishlist-conversions" target="_blank" style="color:#3730a3;text-decoration:none">GameDiscoverCo ⚠️</a>
           </div>
@@ -1079,12 +1080,12 @@ body {
 
   <!-- ── 공통 스타일 헬퍼 ── -->
   <style>
-  .todo-section { font-size:12px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.8px;margin:14px 0 6px;padding-bottom:4px;border-bottom:1px solid #f3f4f6; }
-  .todo-kpi { display:inline-flex;align-items:center;gap:6px;background:#f0f9ff;border:1px solid #bae6fd;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;color:#0369a1;margin-top:8px;margin-right:6px; }
-  .todo-warn { margin-top:10px;padding:10px 14px;background:#fef9c3;border:1px solid #fde68a;border-radius:6px;font-size:13.5px; }
+  .todo-section { font-size:13.5px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.8px;margin:14px 0 6px;padding-bottom:4px;border-bottom:1px solid #f3f4f6; }
+  .todo-kpi { display:inline-flex;align-items:center;gap:6px;background:#f0f9ff;border:1px solid #bae6fd;border-radius:8px;padding:8px 14px;font-size:14.5px;font-weight:600;color:#0369a1;margin-top:8px;margin-right:6px; }
+  .todo-warn { margin-top:10px;padding:10px 14px;background:#fef9c3;border:1px solid #fde68a;border-radius:6px;font-size:15px; }
   .todo-gate { display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px; }
-  .todo-go   { padding:10px 12px;background:#f0fdf4;border:1px solid #86efac;border-radius:6px;font-size:13px; }
-  .todo-hold { padding:10px 12px;background:#fff7ed;border:1px solid #fdba74;border-radius:6px;font-size:13px; }
+  .todo-go   { padding:10px 12px;background:#f0fdf4;border:1px solid #86efac;border-radius:6px;font-size:14.5px; }
+  .todo-hold { padding:10px 12px;background:#fff7ed;border:1px solid #fdba74;border-radius:6px;font-size:14.5px; }
   .todo-gate strong { display:block;margin-bottom:3px; }
   </style>
 
@@ -1098,7 +1099,7 @@ body {
     </div>
     <div class="phase-todo-body">
 
-      <div class="todo-section">🏢 Steamworks 계정 셋업 + Deposit <span style="font-size:11px;background:#dcfce7;color:#15803d;border:1px solid #86efac;padding:1px 7px;border-radius:6px;font-weight:700;margin-left:6px">Jul 1주~4주</span></div>
+      <div class="todo-section">🏢 Steamworks 계정 셋업 + Deposit <span style="font-size:12.5px;background:#dcfce7;color:#15803d;border:1px solid #86efac;padding:1px 7px;border-radius:6px;font-weight:700;margin-left:6px">Jul 1주~4주</span></div>
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">긴급</span>Steamworks 파트너 계정 생성 — partner.steamgames.com 접속, NDA + SDA(Steam Distribution Agreement) 서명</div>
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">긴급</span>앱 deposit $100 납부 — 납부 후 <strong>30일 대기</strong> 발생, 론칭 일정에서 역산 필수</div>
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">긴급</span>세금정보 제출 (한국 법인 → W-8BEN-E) — 검토 2~7 영업일, 추가 서류 이메일 확인 필수</div>
@@ -1106,11 +1107,11 @@ body {
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>App ID 발급 (게임 본체) — DLC·대형 업데이트는 동일 App ID 사용</div>
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>팀 멤버 권한 설정 — "Publish App Changes" + "Manage Pricing" 2개 권한 필수</div>
 
-      <div class="todo-section">🎮 전사테스트 진행 <span style="font-size:11px;background:#e0e7ff;color:#4338ca;padding:1px 7px;border-radius:6px;font-weight:700;margin-left:6px">Jul 2주~3주</span></div>
+      <div class="todo-section">🎮 전사테스트 진행 <span style="font-size:12.5px;background:#e0e7ff;color:#4338ca;padding:1px 7px;border-radius:6px;font-weight:700;margin-left:6px">Jul 2주~3주</span></div>
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>전사테스트 실시 — 내부 전원 대상, 참여율 50%+ (250명+), 설문 제출률 75%+ (180명+)</div>
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>경쟁작 포지셔닝 분석 — Arena Shooter 29개 타이틀 vs 우리 차별점 정리</div>
 
-      <div class="todo-section">🎯 서브장르·핵심 메커닉 확정 <span style="font-size:11px;background:#fee2e2;color:#b91c1c;padding:1px 7px;border-radius:6px;font-weight:700;margin-left:6px">Jul 3주~4주</span></div>
+      <div class="todo-section">🎯 서브장르·핵심 메커닉 확정 <span style="font-size:12.5px;background:#fee2e2;color:#b91c1c;padding:1px 7px;border-radius:6px;font-weight:700;margin-left:6px">Jul 3주~4주</span></div>
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>서브 장르 공식 확정 — 전사테스트 결과 기반, 경영진 승인 완료</div>
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>핵심 메커닉(Core Loop) 문서화 — "왜 우리 게임인가" 1장 요약본 작성</div>
 
@@ -1131,11 +1132,11 @@ body {
     </div>
     <div class="phase-todo-body">
 
-      <div class="todo-section">📋 FGT 설계서 완성 <span style="font-size:11px;background:#e0e7ff;color:#4338ca;padding:1px 7px;border-radius:6px;font-weight:700;margin-left:6px">Aug</span></div>
+      <div class="todo-section">📋 FGT 설계서 완성 <span style="font-size:12.5px;background:#e0e7ff;color:#4338ca;padding:1px 7px;border-radius:6px;font-weight:700;margin-left:6px">Aug</span></div>
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>FGT 1차 설계서 완성 — 타겟 유저 프로파일 확정 + 핵심 검증 질문 리스트 + 30명 선발 기준 + NDA 양식</div>
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>FGT 2차 설계서 완성 — 1차 결과 반영 후 개선 항목 추가 + 60명 세그먼트별 선발 계획</div>
 
-      <div class="todo-section">💼 BM 방향 결정 <span style="font-size:11px;background:#fee2e2;color:#b91c1c;padding:1px 7px;border-radius:6px;font-weight:700;margin-left:6px">Aug 1주~3주</span></div>
+      <div class="todo-section">💼 BM 방향 결정 <span style="font-size:12.5px;background:#fee2e2;color:#b91c1c;padding:1px 7px;border-radius:6px;font-weight:700;margin-left:6px">Aug 1주~3주</span></div>
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>BM 방향 결정 — Premium($29.99+) vs F2P(IAP 중심) 내부 합의 + 가격대·인앱결제 수용도 조사 설계</div>
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>경쟁작 BM 분석 — 유사 장르 상위 10개 타이틀 BM 구조 비교 (가격대·수익 구조·리뷰 반응)</div>
 
@@ -1162,17 +1163,17 @@ body {
         <div class="todo-hold"><strong>⏸ HOLD 기준</strong>핵심 메커닉 체감 미흡 → 추가 개발 후 FGT 3차 or CS 연기 검토</div>
       </div>
 
-      <div style="margin-top:14px;padding:14px 16px;background:#f0f9ff;border:1px solid #bae6fd;border-radius:8px;font-size:13px;color:#0369a1;line-height:1.75">
+      <div style="margin-top:14px;padding:14px 16px;background:#f0f9ff;border:1px solid #bae6fd;border-radius:8px;font-size:14.5px;color:#0369a1;line-height:1.75">
         <strong>📌 용어 안내 — NPS (Net Promoter Score)</strong><br>
         "이 게임을 친구에게 추천하겠습니까?" 단일 질문, 0~10점 응답.<br>
         9~10점(추천자%) − 0~6점(비추천자%) = NPS. <strong>범위: −100 ~ +100</strong><br><br>
 
         <strong>📊 계산 예시</strong> — FGT 30명 참가, 응답 결과:<br>
-        <div style="margin:8px 0 4px;padding:10px 14px;background:#fff;border:1px solid #bae6fd;border-radius:6px;font-family:monospace;font-size:12.5px;line-height:1.8">
+        <div style="margin:8px 0 4px;padding:10px 14px;background:#fff;border:1px solid #bae6fd;border-radius:6px;font-family:monospace;font-size:14px;line-height:1.8">
           9~10점: 18명 → 추천자 60%<br>
           7~8점: 8명 &nbsp;→ 중립 (계산 제외)<br>
           0~6점: 4명 &nbsp;→ 비추천자 13%<br>
-          <strong style="color:#0284c7">NPS = 60% − 13% = <span style="font-size:13px">+47</span></strong>
+          <strong style="color:#0284c7">NPS = 60% − 13% = <span style="font-size:14.5px">+47</span></strong>
         </div>
 
         <strong>기준선:</strong> 50+ = 매우 긍정적 · 30~50 = 양호 · 30 미만 = 개선 필요<br>
@@ -1246,7 +1247,7 @@ body {
       <div class="todo-kpi">💬 긍정 반응: 65%+</div>
 
       <div class="todo-gate">
-        <div class="todo-go"><strong>✅ GO 기준</strong>D+7 리텐션 25%+ <span style="font-size:10px;color:var(--text3)">(CLA=선발 1천명 좁은 코호트라 데모·본 런칭보다 높음)</span> / 크리티컬 버그 0건 → CBT 진행</div>
+        <div class="todo-go"><strong>✅ GO 기준</strong>D+7 리텐션 25%+ <span style="font-size:11.5px;color:var(--text3)">(CLA=선발 1천명 좁은 코호트라 데모·본 런칭보다 높음)</span> / 크리티컬 버그 0건 → CBT 진행</div>
         <div class="todo-hold"><strong>⏸ HOLD 기준</strong>리텐션 미달 → 소규모 CLA 재진행 (500명 추가) 후 재판단</div>
       </div>
     </div>
@@ -1281,7 +1282,7 @@ body {
       <div class="todo-kpi">📺 CBT 기간 스트리밍 동시 시청 10,000+</div>
 
       <div class="todo-gate">
-        <div class="todo-go"><strong>✅ GO 기준</strong>D+7 리텐션 20%+ <span style="font-size:10px;color:var(--text3)">(CBT=베타키 1만명 클로즈드 코호트)</span> / 긍정 65%+ / 서버 안정 → SNF Demo 준비 완료</div>
+        <div class="todo-go"><strong>✅ GO 기준</strong>D+7 리텐션 20%+ <span style="font-size:11.5px;color:var(--text3)">(CBT=베타키 1만명 클로즈드 코호트)</span> / 긍정 65%+ / 서버 안정 → SNF Demo 준비 완료</div>
         <div class="todo-hold"><strong>⏸ HOLD 기준</strong>리텐션 미달 → SNF 포기 후 다음 SNF 회차(2028.06) 재검토</div>
       </div>
     </div>
@@ -1321,7 +1322,7 @@ body {
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>경영진 승인 회의 개최 → A안 또는 B안 공식 결정</div>
 
       <div class="todo-kpi">🎯 보수 목표: P 900K+ / F2P 500K+</div>
-      <div class="todo-kpi">📊 Demo D7 15%+(top5) + 빌드 90%+ → A안(직행 공개 출시) / 12~15%(top10) + 빌드 80% → B안(공개 보류·폴리싱) <span style="font-size:10px;color:var(--text3)">(데모=공개 코호트라 클로즈드 베타 CLA 25%·CBT 20%보다 낮은 15% 수준 — 본 런칭에 근접. 코호트가 넓어질수록 D7 자연 하락)</span></div>
+      <div class="todo-kpi">📊 Demo D7 15%+(top5) + 빌드 90%+ → A안(직행 공개 출시) / 12~15%(top10) + 빌드 80% → B안(공개 보류·폴리싱) <span style="font-size:11.5px;color:var(--text3)">(데모=공개 코호트라 클로즈드 베타 CLA 25%·CBT 20%보다 낮은 15% 수준 — 본 런칭에 근접. 코호트가 넓어질수록 D7 자연 하락)</span></div>
 
       <div class="todo-gate">
         <div class="todo-go"><strong>✅ A안(직행) 선택 기준</strong>WL 목표 달성·초과 + Demo D7 15%+(top5) + 빌드 90%+ + 서버 검증 완료</div>
@@ -1535,8 +1536,8 @@ function buildGantt() {
     const col = rm.snf ? '#d29922' : '';
     const st  = col ? ` style="color:${col};font-weight:800"` : '';
     return `<div class="${cls}"${st} style="flex-direction:column;gap:1px${col?';color:'+col+';font-weight:800':''}">
-      <span style="font-size:11px;opacity:.7;line-height:1">${rm.yr}</span>
-      <span style="font-size:12.5px;line-height:1;font-weight:${rm.q?700:400}">${rm.mo}</span>
+      <span style="font-size:12.5px;opacity:.7;line-height:1">${rm.yr}</span>
+      <span style="font-size:14px;line-height:1;font-weight:${rm.q?700:400}">${rm.mo}</span>
     </div>`;
   }).join('');
 
@@ -1636,14 +1637,14 @@ function buildGantt() {
   // ── 범례 ───────────────────────────────────────────────────────────
   // A안/B안 배타 관계 안내 배너
   html += `<div style="background:#1e2a3a;border-top:1px solid #30363d;padding:10px 16px;
-    font-size:12.5px;color:#93c5fd;display:flex;align-items:center;gap:8px">
+    font-size:14px;color:#93c5fd;display:flex;align-items:center;gap:8px">
     <span style="font-size:14px">⚡</span>
     <strong>SNF 결과에 따라 A안 또는 B안 중 하나만 선택</strong>
     <span style="color:#4b5563;margin:0 4px">—</span>
     <span style="color:#60a5fa">A안 직행 론칭 경로 선택 시 B안 배제</span>
     <span style="color:#4b5563">|</span>
     <span style="color:#818cf8">B안 공개 보류·폴리싱 선택 시 A안 배제</span>
-    <span style="color:#4b5563;margin-left:auto;font-size:11px">SNF Oct'27 종료 후 2주 이내 결정</span>
+    <span style="color:#4b5563;margin-left:auto;font-size:12.5px">SNF Oct'27 종료 후 2주 이내 결정</span>
   </div>`;
 
   html += `<div class="gd-legend">
