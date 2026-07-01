@@ -1211,7 +1211,7 @@ body {
 
       <div class="todo-section">🧪 FGT 1차 (Sep~Oct'26)</div>
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>외부 플레이어 30명+ 선발 — NDA 서명, 서브장르 경험자 우선, 지역 다양성 확보</div>
-      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>핵심 KPI 측정 — 재플레이 의향 7.0+ / NPS 40+ / D+1 리텐션 40%+</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>핵심 KPI 측정 — 재플레이 의향 7.0+ / NPS 40+</div>
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>정성 피드백 수집 — 직접 인터뷰 최소 10명, 매치메이킹·밸런스·UI 집중</div>
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>크리티컬 버그 리스트 작성 + 우선순위별 패치 계획 수립</div>
 
@@ -1347,7 +1347,7 @@ body {
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>SNF D+1 이메일 버튼 클릭 PM 캘린더 사전 등록 (절대 필수)</div>
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-low">일반</span>CBT 기간 WL 증분 +50K+ 목표 모니터링</div>
 
-      <div class="todo-kpi">🎯 WL 목표: 누적 위시 ~400K+ (CBT 단계)</div>
+      <div class="todo-kpi">🎯 WL 목표: 누적 위시 500K+ (CBT 완료)</div>
       <div class="todo-kpi">📺 CBT 기간 스트리밍 동시 시청 10,000+</div>
 
       <div class="todo-gate">
@@ -1507,6 +1507,7 @@ const PHASES = [
   },
   {
     step:'P0', name:'전사테스트', date:"Jul~Aug'26", col:'#1f6feb',
+    kpi:['참여율 50%+|사내 250명+ 참여', '설문 제출률 75%+|180명+ 응답', '서브장르·핵심 메커닉 확정|경영진 승인(정성)'],
     tasks:[
       {name:'Steamworks 계정 셋업 + deposit',  m0:1.0,  m1:2.0,  s:"Jul 1주",  e:"Jul 4주"},
       {name:'전사테스트 진행',                  m0:1.75, m1:2.25, s:"Jul 4주",  e:"Aug 1주"},
@@ -1515,6 +1516,7 @@ const PHASES = [
   },
   {
     step:'P1', name:'FGT 1차·2차', date:"Aug~Dec'26", col:'#0e7490',
+    kpi:['★NPS 50+|재미·재플레이 의향(베타 상위권 신호)', 'BM(Premium/F2P) 확정|2차 FGT 구매의향 기반'],
     tasks:[
       {name:'FGT 설계서 완성 (1차+2차)',       m0:2.0, m1:3.0,  s:"Aug",     e:"Aug 4주"},
       {name:'BM 방향 결정 (Premium / F2P)',    m0:2.0, m1:2.75, s:"Aug 1주",  e:"Aug 3주"},
@@ -1526,6 +1528,7 @@ const PHASES = [
   },
   {
     step:'P2', name:'스팀페이지 오픈·WL 수집', date:"Jan~Mar'27", col:'#0d9488',
+    kpi:['★WL 4주 25K+ / 8주 50K+|Coming Soon 수집 속도', 'Discord 2,000명+|커뮤니티 형성'],
     tasks:[
       {name:'Steam Coming Soon 페이지 오픈',  m0:7.0, m1:7.5,  s:"Jan'27",   e:"Jan'27"},
       {name:'WL 수집 — 4주 25K+ / 8주 50K+', m0:7.0, m1:10.0, s:"Jan'27",   e:"Mar'27"},
@@ -1535,6 +1538,7 @@ const PHASES = [
   },
   {
     step:'P3', name:'CLA', date:"Apr~Jun'27", col:'#7c3aed',
+    kpi:['★D+7 리텐션 25%+|선발 1,000명 좁은 코호트 → 데모·본런칭보다 높게 설정', '크리티컬 버그 0건|CBT 진행 관문'],
     tasks:[
       {name:'Steam Playtest 1,000명+',         m0:10.0,m1:12.0, s:"Apr'27",   e:"Jun'27"},
       {name:'D+7 리텐션 25%+ / 크리티컬 0건', m0:10.0,m1:13.0, s:"Apr'27",   e:"Jun'27"},
@@ -1543,6 +1547,7 @@ const PHASES = [
   },
   {
     step:'P4', name:'CBT', date:"Jun~Sep'27", col:'#6d28d9',
+    kpi:['★D+7 리텐션 20%+|베타키 1만명 클로즈드 코호트(대중 근접)', '긍정 65%+ · 서버 안정|대규모 부하 검증', 'WL 누적 500K+|SNF 직전 850K 경로'],
     tasks:[
       {name:'CBT 10,000명+ / 스트리밍 NDA 해제',m0:13.0,m1:15.0,s:"Jun'27",   e:"Aug'27"},
       {name:'SNF Demo 빌드 완성·확인',           m0:14.0,m1:16.0,s:"Jul'27",   e:"Sep'27"},
@@ -1551,6 +1556,7 @@ const PHASES = [
   },
   {
     step:'SNF', name:'Steam Next Fest', date:"Oct'27", col:'#b45309',
+    kpi:['★Demo D+7 15%+|공개 코호트 → CLA·CBT보다 낮음(코호트 넓을수록 D7 자연 하락, 본런칭에 근접)', 'WL → 1.3M|SNF 증폭 목표', 'WL 증분·경로 분기|D+14 내 A/B 결정'],
     tasks:[
       {name:'★ SNF 7일간 — D+1 WL 이메일 수동 클릭 필수!', m0:16.0,m1:16.5,s:"Oct'27",  e:"Oct'27"},
       {name:'Curator Connect 전체 배포 + SNS 동시 발행',    m0:16.0,m1:16.3,s:"D+1",     e:"D+2"},
@@ -1560,6 +1566,7 @@ const PHASES = [
   },
   {
     step:'직행', name:'A안) 직행 론칭 경로', date:"Nov'27~Mar'28", col:'#1e40af',
+    kpi:['빌드 완성도 90%+|직행 GO 관문', '서버 피크 120%+ 검증|론칭 부하 대응', '🚀 정식 LAUNCH|Mar 2028 · Season 1 동시'],
     tasks:[
       {name:'직행 GO 승인·빌드 완성도 90%+ 확인',m0:17.0,m1:18.5,s:"Nov'27",   e:"Jan'28"},
       {name:'서버 부하 최종 검증 (피크 120%+)',  m0:18.5,m1:20.5,s:"Jan'28",   e:"Mar'28"},
@@ -1568,6 +1575,7 @@ const PHASES = [
   },
   {
     step:'폴리싱', name:'B안) 공개 보류 → 폴리싱 (재산정)', date:"Nov'27 ~ 지표 충족 시", col:'#dc2626',
+    kpi:['WL 1.3M 재가속|공개 F2P EA 금지 → 폴리싱', '지표 충족 시 공개|고정일 X · 2029 백스톱'],
     tasks:[
       {name:'공개 F2P EA 금지 — CBT 연장 폴리싱 (지표 끌어올리기)', m0:17.0,m1:24.5, s:"Nov'27",   e:"지표 도달 시"},
       {name:'WL 캠페인 지속·재가속 (누적 위시 1.3M)',  m0:17.0,m1:24.5, s:"Nov'27",   e:"지표 도달 시"},
@@ -1704,6 +1712,29 @@ function buildGantt() {
     }).join('');
     }
 
+    // ── KPI 확인 행 (일정 아닌 KPI 표시 · 각 Phase 최하단) ──
+    let kpiHtml = '';
+    if (ph.kpi && ph.kpi.length) {
+      const kpiTag = {P0:'전사테스트',P1:'FGT',P2:'WL 수집',P3:'CLA',P4:'CBT',SNF:'SNF','직행':'A안 직행','폴리싱':'B안 폴리싱'}[ph.step] || ph.step;
+      const chips = ph.kpi.map(k => {
+        const hi = k.charAt(0) === '\u2605';
+        const raw = hi ? k.slice(1) : k;
+        const parts = raw.split('|');
+        const main = parts[0], note = parts[1] || '';
+        const bg = hi ? '#3a2e12' : '#141a24';
+        const bd = hi ? '#d29922' : '#30363d';
+        const cl = hi ? '#f0c674' : '#c9d1d9';
+        return `<span style="display:inline-flex;flex-direction:column;gap:2px;background:${bg};border:1px solid ${bd};border-radius:8px;padding:6px 11px">
+          <span style="font-size:13px;font-weight:800;color:${cl};line-height:1.25">${main}</span>
+          ${note?`<span style="font-size:11px;font-weight:600;color:#8b98a5;line-height:1.3">${note}</span>`:''}
+        </span>`;
+      }).join('');
+      kpiHtml = `<div class="gd-task-row" style="background:#0c1119;border-top:1px dashed ${ph.col}88">
+        <div class="gd-task-label" style="font-weight:800;color:${ph.col}">\ud83c\udfaf ${kpiTag} KPI</div>
+        <div class="gd-task-track" style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:9px 6px">${chips}</div>
+      </div>`;
+    }
+
     // EA/직행 헤더 트랙에 LAUNCH 시점 아이콘 추가
     let launchIcon = '';
     if (ph.step === '폴리싱') {
@@ -1731,6 +1762,7 @@ function buildGantt() {
       ${headerHtml}
       <div class="gd-tasks" id="tasks-${ph.step}" style="display:${isOpen?'block':'none'}">
         ${tasksHtml}
+        ${kpiHtml}
       </div>
     </div>`;
   });
