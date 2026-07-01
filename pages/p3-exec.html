@@ -1178,7 +1178,7 @@ body {
 
       <div class="todo-section">🎮 전사테스트 진행 <span style="font-size:12.5px;background:#e0e7ff;color:#4338ca;padding:1px 7px;border-radius:6px;font-weight:700;margin-left:6px">Jul 4주~Aug 1주</span></div>
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>전사테스트 실시 — 내부 전원 대상, 참여율 50%+ (250명+), 설문율 50%+ (125명+)</div>
-      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>경쟁작 포지셔닝 분석 — Arena Shooter 29개 타이틀 vs 우리 차별점 정리</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>차별화 방안 정리 — Arena Shooter 대비 우리 차별점 및 포지셔닝 확정</div>
 
       <div class="todo-section">🎯 서브장르·핵심 메커닉 확정 <span style="font-size:12.5px;background:#fee2e2;color:#b91c1c;padding:1px 7px;border-radius:6px;font-weight:700;margin-left:6px">Aug</span></div>
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>서브 장르 공식 확정 — 전사테스트 결과 기반, 경영진 승인 완료</div>
@@ -1207,8 +1207,8 @@ body {
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>FGT 2차 설계서 완성 — 1차 결과 반영 후 개선 항목 추가 + 60명 세그먼트별 선발 계획</div>
 
       <div class="todo-section">💼 BM 방향 결정 <span style="font-size:12.5px;background:#fee2e2;color:#b91c1c;padding:1px 7px;border-radius:6px;font-weight:700;margin-left:6px">Aug 1주~3주</span></div>
-      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>BM 방향 결정 — Premium($29.99+) vs F2P(IAP 중심) 내부 합의 + 가격대·인앱결제 수용도 조사 설계</div>
-      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>경쟁작 BM 분석 — 유사 장르 상위 10개 타이틀 BM 구조 비교 (가격대·수익 구조·리뷰 반응)</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>BM 방향 결정 — Premium vs F2P vs Hybrid 내부 합의 + 가격대·상품 구성 수용도 조사 설계</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>경쟁작 BM 분석 — 벤치마크 타이틀 5개+ BM 구조 비교 (가격대·수익 구조·리뷰 반응)</div>
 
       <div class="todo-section">🧪 FGT 1차 (Sep~Oct'26)</div>
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>외부 플레이어 30명+ 선발 — NDA 서명, 서브장르 경험자 우선, 지역 다양성 확보</div>
@@ -1220,7 +1220,7 @@ body {
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>60명+ 세그먼트별 선발 — 하드코어/캐주얼/스트리머 비율 설정</div>
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>1차 피드백 반영 빌드 사용 — 주요 개선사항 3개 이상 적용 확인</div>
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>BM Premium/F2P 최종 확정 — 2차 FGT 결과 기반 구매 의향 조사 포함</div>
-      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>가격 정책 수립 — $29.99 / $39.99 / F2P+시즌패스 옵션 중 결정</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>가격 정책 수립 — Premium vs F2P vs Hybrid 옵션 중 결정</div>
 
       <div class="todo-section">📦 스토어 사전 준비 (Nov~Dec'26)</div>
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>스토어 에셋 제작 착수 — 헤더 캡슐(460×215) · 소형 캡슐(231×87) · 메인 캡슐(616×353)</div>
@@ -1507,7 +1507,7 @@ const PHASES = [
   },
   {
     step:'P0', name:'전사테스트', date:"Jul~Aug'26", col:'#1f6feb',
-    kpi:['참여율 50%+|250명+ 참여', '설문율 50%+|125명+ 답변', '★전체 평점 80%+|내부 평가', '핵심 메커닉 확정|서브장르 방향성'],
+    kpi:['참여율 50%+|250명+ 참여', '설문율 50%+|125명+ 답변', '★전체 평점 80%+|내부 평가', '★핵심 메커닉 확정|서브장르 방향성'],
     tasks:[
       {name:'Steamworks 계정 셋업 + deposit',  m0:1.0,  m1:2.0,  s:"Jul 1주",  e:"Jul 4주"},
       {name:'전사테스트 진행',                  m0:1.75, m1:2.25, s:"Jul 4주",  e:"Aug 1주"},
@@ -1516,7 +1516,7 @@ const PHASES = [
   },
   {
     step:'P1', name:'FGT 1차·2차', date:"Aug~Dec'26", col:'#0e7490',
-    kpi:['★전체 평점 80%+|재미 신호', 'NPS 50+|추천 지수', 'BM 확정 · 태그 전략 확정|', '선발 1차 30명/2차 60명|외부 유저'],
+    kpi:['★전체 평점 80%+|재미 신호', '★NPS 50+|추천 지수', 'BM 확정 · 태그 전략 확정|', '선발 1차 30명/2차 60명|외부 유저'],
     tasks:[
       {name:'FGT 설계서 완성 (1차+2차)',       m0:2.0, m1:3.0,  s:"Aug",     e:"Aug 4주"},
       {name:'BM 방향 결정 (Premium / F2P)',    m0:2.0, m1:2.75, s:"Aug 1주",  e:"Aug 3주"},
@@ -1528,7 +1528,7 @@ const PHASES = [
   },
   {
     step:'P2', name:'스팀페이지 오픈·WL 수집', date:"Jan~Mar'27", col:'#0d9488',
-    kpi:['★오픈+4주 WL 50K+|수집 속도', '오픈+8주 WL 100K+|가속', '오픈+8주 커뮤니티 5,000명+|Discord 등'],
+    kpi:['★오픈+4주 WL 50K+|수집 속도', '★오픈+8주 WL 100K+|가속', '오픈+8주 커뮤니티 5,000명+|Discord 등'],
     tasks:[
       {name:'Steam Coming Soon 페이지 오픈',  m0:7.0, m1:7.5,  s:"Jan'27",   e:"Jan'27"},
       {name:'WL 수집 — 4주 50K+ / 8주 100K+', m0:7.0, m1:10.0, s:"Jan'27",   e:"Mar'27"},
@@ -1538,7 +1538,7 @@ const PHASES = [
   },
   {
     step:'P3', name:'CLA', date:"Apr~Jun'27", col:'#7c3aed',
-    kpi:['★D1 50%+ / D7 25%+|선발 1,000명 좁은 코호트라 높게', '설문 긍정률 75%+|C단계=스팀 리뷰 미개방', '매치메이킹 성공 90%+ / 대기 60초↓|', 'CLA 종료 후 WL 250K+|'],
+    kpi:['★D1 50%+ / D7 25%+|선발 1,000명 좁은 코호트라 높게', '★설문 긍정률 75%+|C단계=스팀 리뷰 미개방', '매치메이킹 성공 90%+ / 대기 60초↓|', 'CLA 종료 후 WL 250K+|'],
     tasks:[
       {name:'Steam Playtest 1,000명+',         m0:10.0,m1:12.0, s:"Apr'27",   e:"Jun'27"},
       {name:'D1 리텐션 50%+ / D7 25%+', m0:10.0,m1:13.0, s:"Apr'27",   e:"Jun'27"},
@@ -1547,7 +1547,7 @@ const PHASES = [
   },
   {
     step:'P4', name:'CBT', date:"Jun~Sep'27", col:'#6d28d9',
-    kpi:['★D1 45%+ / D7 20%+|베타키 1만 클로즈드 코호트', '설문 긍정률 80%+|C단계=스팀 리뷰 미개방', '매치메이킹 성공 90%+ / 대기 60초↓ 유지|', 'CBT 종료 후 WL 500K+|', '스트리밍 동시시청 10K+|'],
+    kpi:['★D1 45%+ / D7 20%+|베타키 1만 클로즈드 코호트', '★설문 긍정률 80%+|C단계=스팀 리뷰 미개방', '매치메이킹 성공 90%+ / 대기 60초↓ 유지|', 'CBT 종료 후 WL 500K+|', '스트리밍 동시시청 10K+|'],
     tasks:[
       {name:'CBT 10,000명+ / 스트리밍 NDA 해제',m0:13.0,m1:15.0,s:"Jun'27",   e:"Aug'27"},
       {name:'SNF Demo 빌드 완성·확인',           m0:14.0,m1:16.0,s:"Jul'27",   e:"Sep'27"},
@@ -1556,7 +1556,7 @@ const PHASES = [
   },
   {
     step:'SNF', name:'Steam Next Fest', date:"Oct'27", col:'#b45309',
-    kpi:['★D1 40%+ / D7 15%+|전체 공개 데모(대중 코호트)', '긍정 리뷰 80%+|데모 스토어페이지 리뷰 개방', '매치메이킹 성공 95%+ / 대기 60초↓|', 'SNF 종료 후 WL 1.3M+|증폭 목표', 'SNF 참여자 85K+ / PCCU 10K+|SNF 직전 WL 목표 850K의 10%', '크리티컬 이슈 0건|'],
+    kpi:['★D1 40%+ / D7 15%+|전체 공개 데모(대중 코호트)', '★긍정 리뷰 80%+|데모 스토어페이지 리뷰 개방', '매치메이킹 성공 95%+ / 대기 60초↓|', 'SNF 종료 후 WL 1.3M+|증폭 목표', 'SNF 참여자 85K+ / PCCU 10K+|SNF 직전 WL 목표 850K의 10%', '크리티컬 이슈 0건|'],
     tasks:[
       {name:'★ SNF 7일간 — D+1 WL 이메일 수동 클릭 필수!', m0:16.0,m1:16.5,s:"Oct'27",  e:"Oct'27"},
       {name:'Curator Connect 전체 배포 + SNS 동시 발행',    m0:16.0,m1:16.3,s:"D+1",     e:"D+2"},
