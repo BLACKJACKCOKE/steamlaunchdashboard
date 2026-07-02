@@ -102,11 +102,44 @@ a.inline{color:var(--accent);text-decoration:none}a.inline:hover{text-decoration
 <tbody><tr><td>계측 데이터·플레이테스트·접속 로그·커뮤니티·A/B 테스트</td><td>대시보드·세그먼트 분석으로 무엇을 고칠지 판단</td><td>패치·이벤트·밸런스 반영 후 다시 측정(반복 루프)</td></tr></tbody></table>
 </section>
 <!-- ⑤ 인프라 -->
-<section class="sec" id="s5"></section>
+<section class="sec" id="s5">
+<div class="sn">데이터를 성립시키는 인프라</div>
+<div class="stt">퍼블리셔가 대신 운영하던 스택을, 이제 회사가 소유한다</div>
+<div class="ss">백엔드 가동성은 곧 매출 연속성이다. 라이브 운영은 DLC와 근본적으로 다르며, 별도의 인프라를 요구한다. Payday 3와 Marathon의 붕괴(②)가 이 부재의 대가를 보여준다.</div>
+<ul class="chk">
+  <li><b>서버 확장</b> — 동시접속 급증에도 끊기지 않는 동적 확장</li>
+  <li><b>매치메이킹</b> — 대기·불균형은 곧 이탈</li>
+  <li><b>상시 업데이트 파이프라인</b> — 전체 패치 없이 서버측으로 이벤트·경제 조정</li>
+  <li><b>24시간 모니터링·장애 대응</b> — 문제를 조기에 발견·복구</li>
+</ul>
+</section>
 <!-- ⑥ 사서 쓰기 vs 직접 -->
-<section class="sec" id="s6"></section>
+<section class="sec" id="s6">
+<div class="sn">부담이 아니라 지렛대</div>
+<div class="stt">전부 직접 만들 필요는 없다 — 인프라·도구는 사서 쓰고, 데이터·유저 관계만 회사가 소유</div>
+<div class="ss">업계 다수가 백엔드를 직접 구축하지 않는다. 인프라를 지렛대로 삼으면 자체 퍼블리싱 전환의 부담이 낮아진다.</div>
+<table class="cmp"><thead><tr><th>선택</th><th>장점</th><th>적합</th></tr></thead><tbody>
+  <tr><td>직접 구축</td><td>완전한 통제·맞춤</td><td>대규모·고유 요구</td></tr>
+  <tr><td><b>사서 쓰기(권장 다수)</b></td><td>빠른 구축·비용 효율·전담 지원</td><td>운영 소유는 원하되 스택 전부는 부담일 때</td></tr>
+  <tr><td>혼합</td><td>핵심 데이터는 내부, 범용은 외부</td><td>데이터·유저 관계 소유 + 효율</td></tr>
+</tbody></table>
+<div class="statwall" style="margin-top:14px">
+  <div class="stat"><div class="v">48% · 6%</div><div class="l">외부 기술을 주로 채택 48% vs 자체 구축 6% — 63%는 외부 기술로 개발비 절감을 기대(154개 스튜디오 조사)</div><a class="src" href="https://www.metaplay.io/blog/backend-tech-build-or-buy-industry-opinions" target="_blank" rel="noopener">↗ Metaplay</a></div>
+</div>
+</section>
 <!-- ⑦ Project S -->
-<section class="sec" id="s7"></section>
+<section class="sec" id="s7">
+<div class="sn">Project S 적용</div>
+<div class="stt">자체 퍼블리싱 도약을 실제로 성립시키기 위한 준비</div>
+<div class="ss">아래는 산업 근거에서 도출한 준비 항목이다. 세부 수치·일정 등 미확정 정보는 포함하지 않는다.</div>
+<ul class="chk">
+  <li>론칭 전에 데이터 인프라(계측 이벤트 정의·대시보드)를 미리 준비한다.</li>
+  <li>인프라·도구의 직접 구축 vs 사서 쓰기를 결정한다(데이터·유저 관계는 회사가 소유).</li>
+  <li>테스트를 우선순위화한다 — 늦은 테스트는 검증이 아니라 시연에 그친다.</li>
+  <li>무엇을 데이터로 확인하고 개선할지 운영 지표를 사전에 정의한다.</li>
+</ul>
+<p class="note">시장 규모 참고: 라이브 서비스/GaaS 시장 추정치는 조사기관별로 약 60~130억 달러(2025~26)로 상이하며, 전체 게임 시장은 약 1,880~2,050억 달러(Newzoo)로 추정된다. 상위 퍼블리셔 매출의 다수가 라이브 서비스에서 나온다(Midia). 정의(GaaS 시장 vs 라이브 서비스 매출 비중 vs 전체 시장)가 다르므로 단일 절대값으로 단정하지 않는다.</p>
+</section>
 
 <script>
 new Chart(document.getElementById('attritionChart'), {

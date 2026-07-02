@@ -30,3 +30,9 @@ test('value + data sections cite whale range and fortnite source', () => {
   assert.match(html, /pocketgamer\.biz\/chart-of-the-week-half-of-in-game-revenue/);
   assert.match(html, /datanami\.com\/2018\/07\/31\/inside-fortnites-massive-data-analytics-pipeline/);
 });
+
+test('build-vs-buy section uses Metaplay public figures + market reframed', () => {
+  assert.match(html, /metaplay\.io\/blog\/backend-tech-build-or-buy-industry-opinions/);
+  assert.match(html, /48%/); assert.match(html, /6%/);
+  assert.match(html, /정의/);
+});
