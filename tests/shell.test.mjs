@@ -49,5 +49,5 @@ test('shell.js listens for hashchange', () => {
 
 test('shell.js registers the liveops strategic page route', () => {
   assert.match(source, /liveops:\s*\{[^}]*pages\/liveops\.html/);
-  assert.match(source, /Live Service 진단·성공조건/);
+  assert.match(source, /\[참고\] Live Service 진단 2026/);
 });
