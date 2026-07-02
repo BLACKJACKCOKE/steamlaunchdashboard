@@ -44,7 +44,7 @@ test('build-vs-buy section uses Metaplay public figures + market reframed', () =
 });
 
 test('page is insights-faithful: report-focused, no company/team framing', () => {
-  assert.match(html, /\[참고\] Live Service 진단 2026/);
+  assert.match(html, /\[참고\] 2026 Live Service 진단/);
   assert.doesNotMatch(html, /자체 퍼블리싱|종합 게임 컴퍼니|개발 스튜디오|Project S|가치 내재화/);
   assert.match(html, /📄 리포트/);
   assert.match(html, /산업 리포트 3종 종합/);
