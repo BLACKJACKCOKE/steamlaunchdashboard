@@ -194,7 +194,7 @@
   <div class="header-right">
     <div class="rate-box">
       <label for="rateInput">💱 환율 (₩/$)</label>
-      <input id="rateInput" class="rate-input" type="number" value="1450" min="500" max="3000" step="10"/>
+      <input id="rateInput" class="rate-input" type="number" value="1500" min="500" max="3000" step="10"/>
       <button class="rate-btn" onclick="applyRate()">적용</button>
     </div>
     <nav>
@@ -222,7 +222,7 @@
       <li>💡 <strong>Steam이 PC/콘솔 다운로드 42.2% 독점</strong>. 다운로드당 수익은 모바일 대비 ~6배로 ARPU 우위 압도적</li>
     </ul>
   </div>
-  <span class="rate-note" id="rateNote1">💱 현재 환율: 1$ = 1,450원 기준 환산</span>
+  <span class="rate-note" id="rateNote1">💱 현재 환율: 1$ = 1,500원 기준 환산</span>
 
   <div class="kpi-row">
     <div class="kpi-card">
@@ -320,7 +320,7 @@
       <li>🎮 <strong>콘솔은 2024년 -3.9% 역성장 후 반등</strong>. 2025F +4.2%로 회복세나 PC 대비 성장률 열위 고착화</li>
     </ul>
   </div>
-  <span class="rate-note" id="rateNote2">💱 현재 환율: 1$ = 1,450원 기준 환산</span>
+  <span class="rate-note" id="rateNote2">💱 현재 환율: 1$ = 1,500원 기준 환산</span>
 
   <div class="chart-card reveal">
     <div class="chart-card-title">⭐ PC vs 콘솔 소프트웨어 매출 비교 — 2028년 역전 시나리오</div>
@@ -381,7 +381,7 @@
       <li>🎯 <strong>중국은 PC 유저 235M 최대 볼륨이나 ARPU $55로 낮고 판호 규제 리스크</strong> 존재 — 판호 리스크 헷지 통한 진입 필수 (장기 예비 시장)</li>
     </ul>
   </div>
-  <span class="rate-note" id="rateNote3">💱 현재 환율: 1$ = 1,450원 기준 환산</span>
+  <span class="rate-note" id="rateNote3">💱 현재 환율: 1$ = 1,500원 기준 환산</span>
 
   <div class="bubble-grid reveal">
     <div class="chart-card" style="margin-bottom:0;">
@@ -448,7 +448,7 @@
       <li>⚡ <strong>콘솔 인게임 결제는 ▼-6.3% 역성장</strong>. PC 인게임 결제 +10.6%와 대비 — BM 설계 시 플랫폼별 수익 구조 분리 필수</li>
     </ul>
   </div>
-  <span class="rate-note" id="rateNote4">💱 현재 환율: 1$ = 1,450원 기준 환산</span>
+  <span class="rate-note" id="rateNote4">💱 현재 환율: 1$ = 1,500원 기준 환산</span>
 
   <div class="chart-2col reveal">
     <div class="chart-card" style="margin-bottom:0;">
@@ -720,7 +720,7 @@
     </div>
   </div>
   <div style="text-align:right;">
-    <div style="font-size:13px;">기준일: 2026-04-15 &nbsp;|&nbsp; 환율: <span id="footerRate">1,450</span>원/$</div>
+    <div style="font-size:13px;">기준일: 2026-04-15 &nbsp;|&nbsp; 환율: <span id="footerRate">1,500</span>원/$</div>
     <div style="font-size:13px;margin-top:4px;">Internal Use Only — Publishing Team</div>
   </div>
 </footer>
@@ -728,7 +728,7 @@
 
 <script>
 /* ═══ 전역 환율 ═══ */
-let RATE = 1450;
+let RATE = 1500;
 function formatKRW(usdB) {
   const won = usdB * RATE * 1e9;
   const jo  = Math.floor(won / 1e12);
