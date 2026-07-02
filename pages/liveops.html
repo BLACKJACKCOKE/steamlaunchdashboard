@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1.0" name="viewport"/>
+<title>자체 퍼블리싱 LiveOps — 종합 게임 컴퍼니 도약</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+<link rel="stylesheet" href="../assets/theme.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text-h);line-height:1.65}
+.sec{padding:44px 40px;max-width:1180px;margin:0 auto}
+.sec+.sec{border-top:1px solid var(--border)}
+.sn{font-size:11px;font-weight:700;letter-spacing:2px;color:var(--accent);text-transform:uppercase;margin-bottom:4px}
+.stt{font-size:21px;font-weight:800;margin-bottom:6px;letter-spacing:-.01em}
+.ss{font-size:13px;color:var(--text-sub2);margin-bottom:22px}
+.hero{background:linear-gradient(135deg,#4f46e5,#4338ca);color:#fff;border-radius:var(--radius);padding:34px 32px}
+.hero h1{font-size:26px;font-weight:800;line-height:1.35;letter-spacing:-.02em}
+.hero .subs{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
+.hero .subs div{flex:1 1 240px;background:rgba(255,255,255,.12);border-radius:10px;padding:12px 14px;font-size:13px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.statwall{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.stat{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;box-shadow:var(--shadow)}
+.stat .v{font-size:24px;font-weight:800;line-height:1.1}
+.stat .l{font-size:12px;color:var(--text-sub1);margin-top:4px}
+.stat a.src{font-size:11px;color:var(--accent);text-decoration:none;display:inline-block;margin-top:6px}
+.stat a.src:hover{text-decoration:underline}
+.why{list-style:none;display:flex;flex-direction:column;gap:8px;margin-top:14px}
+.why li{background:var(--card-bg2);border-left:3px solid var(--red);border-radius:0 8px 8px 0;padding:9px 13px;font-size:13px;color:var(--text-sub1)}
+.attr{background:var(--card-bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:18px}
+.chart-wrap{position:relative;height:300px}
+.col{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:18px}
+.col h4{font-size:14px;font-weight:800;margin-bottom:10px}
+.col.ext{border-top:4px solid var(--red)}
+.col.own{border-top:4px solid var(--green)}
+table.cmp{width:100%;border-collapse:collapse;font-size:13px}
+table.cmp th,table.cmp td{border:1px solid var(--border);padding:8px 10px;text-align:left}
+table.cmp th{background:var(--card-bg);font-weight:700}
+.chk{list-style:none;display:flex;flex-direction:column;gap:8px}
+.chk li{background:var(--card-bg2);border:1px solid var(--border);border-radius:8px;padding:10px 14px;font-size:13px}
+.note{font-size:11px;color:var(--text-src);margin-top:8px}
+a.inline{color:var(--accent);text-decoration:none}a.inline:hover{text-decoration:underline}
+</style>
+</head>
+<body class="embed" data-page="liveops">
+
+<!-- ① 결론 -->
+<section class="sec" id="s1"><div class="hero"></div></section>
+<!-- ② 냉혹한 진단 -->
+<section class="sec" id="s2"></section>
+<!-- ③ 가치 귀속 -->
+<section class="sec" id="s3"></section>
+<!-- ④ 데이터 -->
+<section class="sec" id="s4"></section>
+<!-- ⑤ 인프라 -->
+<section class="sec" id="s5"></section>
+<!-- ⑥ 사서 쓰기 vs 직접 -->
+<section class="sec" id="s6"></section>
+<!-- ⑦ Project S -->
+<section class="sec" id="s7"></section>
+
+<script src="../assets/embed.js"></script>
+</body>
+</html>
