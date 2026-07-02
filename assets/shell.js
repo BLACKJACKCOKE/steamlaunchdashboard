@@ -8,7 +8,7 @@
 
   const ROUTES = {
     p0:       { title: 'Flywheel',                     src: 'pages/p0.html',       internal: true,  num: 'P0' },
-    liveops:  { title: '[참고] Live Service 진단 2026',       src: 'pages/liveops.html',  internal: true,  num: 'REF' },
+    liveops:  { title: '[참고] 2026 Live Service 진단',       src: 'pages/liveops.html',  internal: true,  num: 'REF' },
     p1:       { title: '글로벌 게임 마켓',              src: 'pages/p1.html',       internal: true,  num: 'P1' },
     p2:       { title: '스팀 마켓',                     src: 'pages/p2.html',       internal: true,  num: 'P2' },
     p3:       { title: '마일스톤',                      src: 'pages/p3-exec.html',  internal: true,  num: 'P3' },
