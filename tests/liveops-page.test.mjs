@@ -43,3 +43,9 @@ test('page is insights-faithful: report-focused, no company/team framing', () =>
   assert.match(html, /📄 리포트/);
   assert.match(html, /산업 리포트 3종 종합/);
 });
+
+test('the three source reports are cited with IQPC deep links', () => {
+  assert.match(html, /iqpc\.com\/events-live-service-gaming-summit\/downloads\/state-of-live-service-gaming-2026-industry-report/);
+  assert.match(html, /iqpc\.com\/events-live-service-gaming-summit\/downloads\/industry-report-whats-next-for-live-service-gaming/);
+  assert.match(html, /iqpc\.com\/events-live-service-gaming-summit\/downloads\/main-report-live-service-games-key-post-launch-strategies/);
+});
