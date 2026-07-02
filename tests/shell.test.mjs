@@ -46,3 +46,8 @@ test('shell.js broadcasts via postMessage with same-origin target', () => {
 test('shell.js listens for hashchange', () => {
   assert.match(source, /hashchange/);
 });
+
+test('shell.js registers the liveops strategic page route', () => {
+  assert.match(source, /liveops:\s*\{[^}]*pages\/liveops\.html/);
+  assert.match(source, /자체 퍼블리싱 LiveOps/);
+});
