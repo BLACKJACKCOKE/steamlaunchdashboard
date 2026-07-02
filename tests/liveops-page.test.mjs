@@ -36,3 +36,10 @@ test('build-vs-buy section uses Metaplay public figures + market reframed', () =
   assert.match(html, /48%/); assert.match(html, /6%/);
   assert.match(html, /정의/);
 });
+
+test('page is insights-faithful: report-focused, no company/team framing', () => {
+  assert.match(html, /Live Service 진단·성공조건/);
+  assert.doesNotMatch(html, /자체 퍼블리싱|종합 게임 컴퍼니|개발 스튜디오|Project S|가치 내재화/);
+  assert.match(html, /📄 리포트/);
+  assert.match(html, /산업 리포트 3종 종합/);
+});
