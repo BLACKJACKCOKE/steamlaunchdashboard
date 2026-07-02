@@ -8,7 +8,13 @@ test('liveops.html follows embed conventions', () => {
   assert.match(html, /data-page="liveops"/);
   assert.match(html, /assets\/theme\.css/);
   assert.match(html, /assets\/embed\.js/);
-  assert.match(html, /chart\.js@4\.4\.4/);
+});
+
+test('page uses honorific (존댓말) tone and emphasizes the 5 success conditions', () => {
+  assert.match(html, /성공을 가르는 5가지 조건/);
+  assert.match(html, /여전히 유효합니다/);
+  assert.match(html, /갈립니다/);
+  assert.doesNotMatch(html, /attritionChart/); // 개념 그래프 제거됨
 });
 
 test('diagnosis section cites verified primary sources with deep links', () => {
