@@ -596,7 +596,7 @@ body {
 <section class="section" id="s1">
   <div class="sec-eyebrow">Section 01</div>
   <h2 class="sec-h2">일정 &amp; 마일스톤</h2>
-  <p class="sec-desc">전사테스트 → FGT → 스팀페이지 오픈 → CLA → CBT → ★ SNF Oct 2027 공통 경로 이후, 지표 성과에 따라 <strong>직행 공개 출시</strong> 또는 <strong>공개 보류·폴리싱(재산정)</strong> 경로로 분기합니다. (완전 F2P 유력 — 공개=스파이크 1회이므로 약한 지표로 공개하지 않음)</p>
+  <p class="sec-desc">전사테스트 → FGT → 스팀페이지 오픈 → CLA → CBT → ★ SNF Oct 2027 공통 경로 이후, 지표 성과에 따라 <strong>직행 공개 출시</strong> 또는 <strong>공개 보류·폴리싱(재산정)</strong> 경로로 분기합니다. (F2P BM 유력 — 공개=스파이크 1회이므로 지표 미검증 시 론칭 홀딩)</p>
 
   <!-- 현황 스탯 카드 4개 -->
   <div class="g4 mb8">
@@ -1701,7 +1701,7 @@ function buildGantt() {
         const above = (bi % 2 === 0);
         const off = 13;
         const aBadge = b.plan === 'A' ? `<span style="background:#1e40af;color:#fff;font-size:8.5px;font-weight:800;padding:1px 5px;border-radius:5px;margin-right:4px">A안</span>` : '';
-        const grp = `<span style="white-space:nowrap">${aBadge}<span style="font-size:clamp(9px,1.15vw,16px);font-weight:800;color:#e6edf3">📦 ${b.label.replace(' 빌드','')}</span> <span style="font-size:clamp(8px,0.95vw,12px);font-weight:700;color:#9aa8b8">${b.date}</span></span>`;
+        const grp = `<span style="white-space:nowrap">${aBadge}<span style="font-size:clamp(9px,1.0vw,12px);font-weight:700;color:#e6edf3">📦 ${b.label.replace(' 빌드','')}</span> <span style="font-size:clamp(8px,0.8vw,11px);font-weight:700;color:#9aa8b8">${b.date}</span></span>`;
         const conn = `<div style="position:absolute;left:${lp(b.m)};${above?'bottom:50%':'top:50%'};height:${off}px;width:0;border-left:1px dashed ${ph.col};opacity:.5;z-index:2"></div>`;
         return `${conn}<div style="position:absolute;left:${lp(b.m)};top:50%;transform:translate(-50%,-50%);width:8px;height:8px;border-radius:50%;background:${ph.col};border:2px solid #0a1628;z-index:3"></div>
           <div style="position:absolute;left:${lp(b.m)};${above?`bottom:calc(50% + ${off}px)`:`top:calc(50% + ${off}px)`};transform:translateX(-7px);white-space:nowrap;z-index:4">${grp}</div>`;
