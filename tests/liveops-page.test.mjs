@@ -49,3 +49,15 @@ test('the three source reports are cited with IQPC deep links', () => {
   assert.match(html, /iqpc\.com\/events-live-service-gaming-summit\/downloads\/industry-report-whats-next-for-live-service-gaming/);
   assert.match(html, /iqpc\.com\/events-live-service-gaming-summit\/downloads\/main-report-live-service-games-key-post-launch-strategies/);
 });
+
+test('recent 2025-26 cases are cited with deep links (fact-checked)', () => {
+  assert.match(html, /kotaku\.com\/highguard-shutting-down/);         // Highguard
+  assert.match(html, /thegamer\.com\/2025-live-service-games-player-analysis/); // 19종 이탈
+  assert.match(html, /gamerant\.com\/games-shut-down-2026-list/);      // 52종 종료
+  assert.match(html, /marvel\.com\/articles\/games\/marvel-rivals/);   // Marvel Rivals 성공
+});
+
+test('data-driven operation is emphasized as the foundation', () => {
+  assert.match(html, /관통하는 단 하나의 전제/);
+  assert.match(html, /핵심 전제/);
+});
