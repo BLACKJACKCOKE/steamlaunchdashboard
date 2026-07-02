@@ -96,7 +96,7 @@ body {
 .sec-nav-divider { width: 1px; background: var(--border); margin: 12px 4px; }
 
 /* ── 섹션 구조 ── */
-.section { padding: 44px 0; border-bottom: 1px solid var(--border); }
+.section { padding: 30px 0; border-bottom: 1px solid var(--border); }
 .section:last-child { border-bottom: none; }
 
 .sec-eyebrow {
@@ -104,17 +104,17 @@ body {
   color: var(--text3); margin-bottom: 6px;
 }
 .sec-h2 { font-size: 22px; font-weight: 800; color: var(--text1); margin-bottom: 6px; letter-spacing: -.3px; }
-.sec-desc { font-size: 15px; color: var(--text2); margin-bottom: 32px; line-height: 1.6; }
+.sec-desc { font-size: 14px; color: var(--text2); margin-bottom: 18px; line-height: 1.55; }
 
 /* ── 카드 ── */
 .card {
   background: var(--white);
   border: 1px solid var(--border);
   border-radius: var(--r);
-  padding: 24px 28px;
+  padding: 18px 22px;
   box-shadow: var(--shadow);
 }
-.card-h { font-size: 15px; font-weight: 800; color: var(--text2); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
+.card-h { font-size: 14.5px; font-weight: 800; color: var(--text2); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 11px; }
 
 /* ── 그리드 ── */
 .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
@@ -401,7 +401,7 @@ body {
 .tier-stat  { font-size: 15px; font-weight: 900; line-height: 1.3; margin-top: 5px; }
 .tier-body  { padding: 10px 8px; }
 .tier-pccu  { font-size: 15px; color: var(--text2); line-height: 1.55; }
-.tier-pccu strong { font-size: 17px; }
+.tier-pccu strong { font-size: 16px; }
 
 /* WL 목표 테이블 */
 .wl-table { width: 100%; border-collapse: collapse; font-size: 14.5px; }
@@ -416,9 +416,9 @@ body {
    SECTION 3 — To-Do / 체크리스트
    ══════════════════════════════════════════════════════════ */
 
-.phase-todo { border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; margin-bottom: 12px; }
+.phase-todo { border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; margin-bottom: 8px; }
 .phase-todo-head {
-  padding: 14px 18px; display: flex; align-items: center; gap: 12px;
+  padding: 11px 18px; display: flex; align-items: center; gap: 12px;
   cursor: pointer; background: var(--white);
   border-bottom: 1px solid var(--border);
 }
@@ -428,9 +428,9 @@ body {
 .phase-todo-date  { font-size: 13.5px; color: var(--text2); font-weight: 600; }
 .phase-todo-chevron { font-size: 14px; color: var(--text3); transition: transform .2s; }
 .phase-todo-head.open .phase-todo-chevron { transform: rotate(90deg); }
-.phase-todo-body { display: none; padding: 16px 18px; background: var(--white); }
+.phase-todo-body { display: none; padding: 12px 18px 14px; background: var(--white); }
 .phase-todo-body.open { display: block; }
-.todo-item { display: flex; align-items: flex-start; gap: 10px; padding: 7px 0; border-bottom: 1px solid #f1f5f9; font-size: 14.5px; color: var(--text2); }
+.todo-item { display: flex; align-items: flex-start; gap: 10px; padding: 5px 0; border-bottom: 1px solid #f1f5f9; font-size: 14px; color: var(--text2); }
 .todo-item:last-child { border-bottom: none; }
 .todo-item input[type=checkbox] { margin-top: 2px; width: 14px; height: 14px; flex-shrink: 0; accent-color: var(--blue); cursor: pointer; }
 .todo-priority { font-size: 12px; font-weight: 800; padding: 2px 7px; border-radius: 12px; flex-shrink: 0; }
@@ -445,7 +445,7 @@ body {
 
 .divider { height: 1px; background: var(--border); margin: 28px 0; }
 .mt16 { margin-top: 16px; }
-.mt24 { margin-top: 24px; }
+.mt24 { margin-top: 18px; }
 .mb8  { margin-bottom: 8px; }
 
 /* ── 인쇄 ── */
@@ -638,14 +638,14 @@ body {
 </section>
 
 <!-- SNF 분기 결정 기준 — 섹션 외부 독립 카드 (계층 분리) -->
-<div style="background:#fff7ed;border-top:3px solid #f59e0b;border-bottom:3px solid #f59e0b;padding:28px 40px;margin:0">
+<div style="background:#fffaf2;border-top:2px solid #f59e0b;border-bottom:2px solid #f59e0b;padding:20px 40px;margin:0">
   <div style="max-width:1600px;margin:0 auto">
     <div style="font-size:13.5px;font-weight:800;color:#92400e;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px">⚡ SNF Oct 2027 종료 후 2주 이내 — 경로 분기 결정 기준</div>
     <div class="g3">
 
-      <div style="background:#fff;border:2px solid #1e40af;border-radius:10px;padding:20px 22px">
+      <div style="background:#fff;border:2px solid #1e40af;border-radius:10px;padding:15px 18px">
         <div style="font-size:14.5px;font-weight:800;color:#1e40af;letter-spacing:.5px;margin-bottom:12px">A안 ◼ 직행 론칭 경로 선택 — 더 빠른 LAUNCH</div>
-        <ul style="font-size:14.5px;color:var(--text1);line-height:1.8;padding-left:18px;margin-bottom:14px">
+        <ul style="font-size:14.5px;color:var(--text1);line-height:1.6;padding-left:18px;margin-bottom:10px">
           <li>SNF WL 목표 <strong>달성·초과</strong></li>
           <li>Demo D7 리텐션 <strong>15%+</strong>(도전 목표)</li>
           <li>빌드 완성도 <strong>90%+</strong> 필수</li>
@@ -654,9 +654,9 @@ body {
         <div style="font-size:13.5px;font-weight:700;color:#1e40af;background:#dbeafe;padding:8px 12px;border-radius:6px">🚀 정식 LAUNCH 목표: <strong>Mar'28</strong> (SNF 후 4~5개월)</div>
       </div>
 
-      <div style="background:#fff;border:2px solid #dc2626;border-radius:10px;padding:20px 22px">
+      <div style="background:#fff;border:2px solid #dc2626;border-radius:10px;padding:15px 18px">
         <div style="font-size:14.5px;font-weight:800;color:#dc2626;letter-spacing:.5px;margin-bottom:12px">B안 ◼ 공개 보류 → 폴리싱 선택 — 지표 충족 시 출시</div>
-        <ul style="font-size:14.5px;color:var(--text1);line-height:1.8;padding-left:18px;margin-bottom:14px">
+        <ul style="font-size:14.5px;color:var(--text1);line-height:1.6;padding-left:18px;margin-bottom:10px">
           <li>SNF WL 목표의 <strong>70~100% 달성</strong></li>
           <li>Demo D7 리텐션 <strong>12~15%</strong>(론칭 목표)</li>
           <li>빌드 완성도 <strong>80%</strong> 수준</li>
@@ -665,9 +665,9 @@ body {
         <div style="font-size:13.5px;font-weight:700;color:#dc2626;background:#eef2ff;padding:8px 12px;border-radius:6px">🚀 공개 출시: <strong>지표 도달 시</strong> (일정 재산정 · 2029 백스톱)</div>
       </div>
 
-      <div style="background:#fff;border:2px solid #7c3aed;border-radius:10px;padding:20px 22px">
+      <div style="background:#fff;border:2px solid #7c3aed;border-radius:10px;padding:15px 18px">
         <div style="font-size:14.5px;font-weight:800;color:#7c3aed;letter-spacing:.5px;margin-bottom:12px">🟣 재검토 조건</div>
-        <ul style="font-size:14.5px;color:var(--text1);line-height:1.8;padding-left:18px;margin-bottom:14px">
+        <ul style="font-size:14.5px;color:var(--text1);line-height:1.6;padding-left:18px;margin-bottom:10px">
           <li>론칭 목표 <strong>미달</strong> (생존선/미달 구간)</li>
           <li>BM 전환 또는 출시 전략 재검토</li>
           <li>SNF는 게임당 1회 제한 — 신규 타이틀·게임성 전환 시에만 재참가 가능</li>
@@ -874,25 +874,25 @@ body {
     <div style="display:flex;align-items:stretch;gap:5px;margin-top:14px">
       <div style="flex:1;background:#f8fafc;border:1px solid #e5e7eb;border-radius:10px;padding:13px 11px;text-align:center;display:flex;flex-direction:column;gap:4px">
         <div style="font-size:11px;font-weight:800;letter-spacing:.06em;color:#2563eb">STAGE 1 · 수요</div>
-        <div style="font-size:21px;font-weight:800;color:var(--text1)">위시리스트 1.3M</div>
+        <div style="font-size:18px;font-weight:800;color:var(--text1)">위시리스트 1.3M</div>
         <div style="font-size:11.5px;color:var(--text3);line-height:1.45">SNF 직전 0.85M → 〔SNF 증폭〕 → 론칭 1.3M</div>
       </div>
       <div style="align-self:center;font-size:17px;font-weight:800;color:#94a3b8">→</div>
       <div style="flex:1;background:#f8fafc;border:1px solid #e5e7eb;border-radius:10px;padding:13px 11px;text-align:center;display:flex;flex-direction:column;gap:4px">
         <div style="font-size:11px;font-weight:800;letter-spacing:.06em;color:#2563eb">STAGE 2 · 데뷔</div>
-        <div style="font-size:21px;font-weight:800;color:var(--text1)">Peak CCU 150K</div>
+        <div style="font-size:18px;font-weight:800;color:var(--text1)">Peak CCU 150K</div>
         <div style="font-size:11.5px;color:var(--text3);line-height:1.45"><strong style="color:var(--text2)">FPS Top 5-7</strong> · 72h 스파이크로 피쳐링 점화</div>
       </div>
       <div style="align-self:center;font-size:17px;font-weight:800;color:#94a3b8">→</div>
       <div style="flex:1;background:#eff6ff;border:1.5px solid #2563eb;border-radius:10px;padding:13px 11px;text-align:center;display:flex;flex-direction:column;gap:4px">
         <div style="font-size:11px;font-weight:800;letter-spacing:.06em;color:#2563eb">STAGE 3 · 안착 ★</div>
-        <div style="font-size:21px;font-weight:800;color:#2563eb">avg. CCU 50K</div>
+        <div style="font-size:18px;font-weight:800;color:#2563eb">avg. CCU 50K</div>
         <div style="font-size:11.5px;color:var(--text3);line-height:1.45"><strong style="color:var(--text2)">FPS Top10</strong> · +1개월 · sustain 33%</div>
       </div>
       <div style="align-self:center;font-size:17px;font-weight:800;color:#94a3b8">→</div>
       <div style="flex:1;background:#f8fafc;border:1px solid #e5e7eb;border-radius:10px;padding:13px 11px;text-align:center;display:flex;flex-direction:column;gap:4px">
         <div style="font-size:11px;font-weight:800;letter-spacing:.06em;color:#7c3aed">STAGE 4 · 확장</div>
-        <div style="font-size:21px;font-weight:800;color:var(--text1)">avg. CCU 80K+</div>
+        <div style="font-size:18px;font-weight:800;color:var(--text1)">avg. CCU 80K+</div>
         <div style="font-size:11.5px;color:var(--text3);line-height:1.45"><strong style="color:var(--text2)">FPS Top5</strong> · LiveOps·콘솔·e-sports</div>
       </div>
     </div>
@@ -1137,8 +1137,8 @@ body {
 
   <!-- ── 공통 스타일 헬퍼 ── -->
   <style>
-  .todo-section { font-size:13.5px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.8px;margin:14px 0 6px;padding-bottom:4px;border-bottom:1px solid #f3f4f6; }
-  .todo-kpi { display:inline-flex;align-items:center;gap:6px;background:#f0f9ff;border:1px solid #bae6fd;border-radius:8px;padding:8px 14px;font-size:14.5px;font-weight:600;color:#0369a1;margin-top:8px;margin-right:6px; }
+  .todo-section { font-size:13px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.8px;margin:11px 0 5px;padding-bottom:4px;border-bottom:1px solid #f3f4f6; }
+  .todo-kpi { display:inline-flex;align-items:center;gap:6px;background:#f0f9ff;border:1px solid #bae6fd;border-radius:8px;padding:6px 12px;font-size:13.5px;font-weight:600;color:#0369a1;margin-top:6px;margin-right:6px; }
   .todo-warn { margin-top:10px;padding:10px 14px;background:#fef9c3;border:1px solid #fde68a;border-radius:6px;font-size:15px; }
   .todo-gate { display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px; }
   .todo-go   { padding:10px 12px;background:#f0fdf4;border:1px solid #86efac;border-radius:6px;font-size:14.5px; }
@@ -1196,7 +1196,7 @@ body {
 
       <div class="todo-section">💼 BM 방향 결정 <span style="font-size:12.5px;background:#fee2e2;color:#b91c1c;padding:1px 7px;border-radius:6px;font-weight:700;margin-left:6px">Aug 1주~3주</span></div>
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>BM 방향 결정 — Premium vs F2P vs Hybrid 내부 합의 + 가격대·상품 구성 수용도 조사 설계</div>
-      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>비확률형 직접구매 + 만료 없는 배틀패스 구조 확정 — 7권역 확률형 규제(한국 3배배상·PEGI16) 우회 + 신뢰 기반 LTV (규제 회피 아닌 구조적 이점)</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>비확률형 직접구매 + 패스 구조(시즌제(FOMO형) or 상시형 or 절충형) 정립 — 7권역 확률형 규제(한국 3배배상·PEGI16) 우회 + 신뢰 기반 LTV (규제 회피 아닌 구조적 이점)</div>
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>경쟁작 BM 분석 — 벤치마크 타이틀 5개+ BM 구조 비교 (가격대·수익 구조·리뷰 반응)</div>
 
       <div class="todo-section">🧪 FGT 1차 (Sep~Oct'26)</div>
@@ -1488,7 +1488,7 @@ body {
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span><strong>매칭 floor 실시간 모니터링</strong> — 세그먼트별(지역×모드×스킬) 5~15K CCU 하한 방어, 미달 시 풀 통합 (Concord 피크 697 → 14일 종료)</div>
 
       <div class="todo-section">💰 신뢰 기반 수익화 <span style="font-size:12.5px;background:#fee2e2;color:#b91c1c;padding:1px 7px;border-radius:6px;font-weight:700;margin-left:6px">지속</span></div>
-      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span><strong>만료 없는 배틀패스</strong> + 매 업데이트 상업 비트(Warbond식) — anti-FOMO로 자발적 지출↑ (Helldivers 2·Marvel Rivals 검증)</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span><strong>P1 확정 패스 구조 일관 운영</strong> + 매 업데이트 상업 비트(Warbond식) — anti-FOMO(만료 없음)가 자발적 지출↑ 권장안 (Helldivers 2·Marvel Rivals 검증)</div>
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span><strong>대량 밸런스 너프 금지</strong> — 점진·데이터 기반 조정 (Marvel Rivals S2 11히어로 동시 너프 역풍 = 기존 유저 이탈 비용 &gt; 신규 획득 비용)</div>
 
       <div class="todo-section">🎯 리텐션 게이트 <span style="font-size:12.5px;background:#dcfce7;color:#15803d;border:1px solid #86efac;padding:1px 7px;border-radius:6px;font-weight:700;margin-left:6px">D+30~D+90</span></div>
