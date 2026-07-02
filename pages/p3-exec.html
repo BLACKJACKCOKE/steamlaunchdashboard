@@ -1161,8 +1161,7 @@ body {
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">긴급</span>앱 deposit $100 납부 — 납부 후 <strong>30일 대기</strong> 발생, 론칭 일정에서 역산 필수</div>
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">긴급</span>세금정보 제출 (한국 법인 → W-8BEN-E) — 검토 2~7 영업일, 추가 서류 이메일 확인 필수</div>
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">긴급</span>USD 수취 은행계좌 연동 (SWIFT 코드 필요)</div>
-      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>App ID 발급 (게임 본체) — DLC·대형 업데이트는 동일 App ID 사용</div>
-      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>팀 멤버 권한 설정 — "Publish App Changes" + "Manage Pricing" 2개 권한 필수</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>App ID 발급 (게임 본체) — DLC·대형 업데이트는 동일 App ID 사용 · 팀 권한("Publish App Changes"+"Manage Pricing") 설정</div>
 
       <div class="todo-section">🎮 전사테스트 진행 <span style="font-size:12.5px;background:#e0e7ff;color:#4338ca;padding:1px 7px;border-radius:6px;font-weight:700;margin-left:6px">Jul 4주~Aug 1주</span></div>
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>전사테스트 실시 — 내부 전원 대상, 참여율 50%+ (250명+), 설문율 50%+ (125명+)</div>
@@ -1193,9 +1192,11 @@ body {
       <div class="todo-section">📋 FGT 설계서 완성 <span style="font-size:12.5px;background:#e0e7ff;color:#4338ca;padding:1px 7px;border-radius:6px;font-weight:700;margin-left:6px">Aug</span></div>
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>FGT 1차 설계서 완성 — 타겟 유저 프로파일 확정 + 핵심 검증 질문 리스트 + 30명 선발 기준 + NDA 양식</div>
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>FGT 2차 설계서 완성 — 1차 결과 반영 후 개선 항목 추가 + 60명 세그먼트별 선발 계획</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>온보딩 다층 설계·검증 — hard-core→casual 진입 경로(튜토리얼 난이도 분기 등)로 Factions DNA 진입장벽 대응, FGT 신규유저 D1/D7로 측정</div>
 
       <div class="todo-section">💼 BM 방향 결정 <span style="font-size:12.5px;background:#fee2e2;color:#b91c1c;padding:1px 7px;border-radius:6px;font-weight:700;margin-left:6px">Aug 1주~3주</span></div>
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>BM 방향 결정 — Premium vs F2P vs Hybrid 내부 합의 + 가격대·상품 구성 수용도 조사 설계</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>비확률형 직접구매 + 만료 없는 배틀패스 구조 확정 — 7권역 확률형 규제(한국 3배배상·PEGI16) 우회 + 신뢰 기반 LTV (규제 회피 아닌 구조적 이점)</div>
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>경쟁작 BM 분석 — 벤치마크 타이틀 5개+ BM 구조 비교 (가격대·수익 구조·리뷰 반응)</div>
 
       <div class="todo-section">🧪 FGT 1차 (Sep~Oct'26)</div>
@@ -1269,7 +1270,6 @@ body {
       <div class="todo-section">🎮 SNF 사전 준비</div>
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>SNF Oct 2027 참가 자격 확인 — Coming Soon 페이지 있어야 신청 가능</div>
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>SNF 등록 신청 준비 — 신청 기간 놓치지 않도록 Valve 발표 모니터링</div>
-      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-low">일반</span>SNF Demo 범위 사전 기획 — 어느 모드/맵을 공개할지 내부 결정</div>
 
       <div class="todo-section">✅ 핵심 KPI (통과 기준)</div>
       <div class="todo-kpi">📈 오픈+4주 WL 50K+</div>
@@ -1325,6 +1325,8 @@ body {
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>서버 인프라 확장 — CBT 피크 2배 용량 확보, 오토스케일 설정</div>
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>CS 체계 구축 — 인게임 신고 시스템 + Discord CS 채널 + 응답 SLA 48h↓</div>
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>안티치트 시스템 적용 (EAC / BattleEye 중 선택)</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>telemetry·데이터 파이프라인 구축 — player behavior tracking(매칭 스킬분포·자원 제작패턴·클랜 이탈신호) → 론칭 후 daily 라이브옵스의 전제</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>Season 1 런칭 콘텐츠 확정 + Season 2·3 파이프라인 착수 — 론칭 후 콘텐츠 공백 방지(제작을 론칭 후로 미루지 않음)</div>
 
       <div class="todo-section">🧪 CBT 실행 (Jun~Sep'27)</div>
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>D+1 리텐션 45%+ / D+7 리텐션 20%+ / 서버 다운타임 4h↓</div>
@@ -1405,6 +1407,7 @@ body {
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>LAUNCH 트레일러 제작 — 정식 1.0 출시, Season 1 동시 시작 강조</div>
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>Valve Publisher Manager 협상 시작 — LAUNCH 4개월 전 컨택</div>
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>CS·모더레이션 풀 체계 구축 — LAUNCH 규모 대비 인력 확보</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>PSN 비의존 · Steam-first 멀티플랫폼 확정 — 플랫폼 정책 리스크 외부화(Helldivers 2 PSN 강제 → 21만 부정리뷰 폭발 교훈)</div>
 
       <div class="todo-section">🖥️ 서버 부하 최종 검증 (Dec'27~Jan'28)</div>
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>SNF Demo 참가자 + Discord 공개 모집으로 서버 부하 테스트 실시</div>
@@ -1457,6 +1460,51 @@ body {
       <div class="todo-gate">
         <div class="todo-go"><strong>✅ 공개 출시 GO</strong>A안 게이트(WL·Demo D7·빌드 90%+·서버 검증) 충족 + 누적 위시 1.3M 유지</div>
         <div class="todo-hold"><strong>⏸ 계속 폴리싱</strong>지표 미달 지속 → 공개 보류 유지 · 2029 백스톱까지 재산정</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ P5 라이브 서비스 운영 (론칭 후 · A/B안 공통) ═══ -->
+  <div class="phase-todo">
+    <div class="phase-todo-head" onclick="toggleTodo(this)">
+      <div class="phase-badge" style="background:#16a34a">P5</div>
+      <div class="phase-todo-title">라이브 서비스 운영 — 론칭 후 리텐션 durability (A·B안 공통)</div>
+      <div class="phase-todo-date">D+0 ~ D+90 → 지속</div>
+      <span class="phase-todo-chevron">▶</span>
+    </div>
+    <div class="phase-todo-body">
+
+      <div class="todo-warn">
+        🚨 <strong>라이브 서비스의 진짜 승부처:</strong> 2026 상반기 GaaS 52종 종료 · 2025 런칭 19종 중 80~99% 이탈. 성공은 <strong>런칭 규모가 아니라 리텐션 durability</strong>. 론칭까지 잘해도 이 단계 실패 = 서비스 종료.
+      </div>
+
+      <div class="todo-section">📡 사전 공개 로드맵 <span style="font-size:12.5px;background:#dcfce7;color:#15803d;border:1px solid #86efac;padding:1px 7px;border-radius:6px;font-weight:700;margin-left:6px">D-30~D+0</span></div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>delivery 가능한 <strong>최소 cadence만</strong> 공개 로드맵 발표 — "분기 신규 모드/맵 + 월 1회 밸런싱 + 계절 이벤트" 수준. <strong>과장 금지</strong> (약속 파기가 최악의 신뢰 붕괴 · TLoU Online 취소 교훈)</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>Season 1 런칭 콘텐츠 + Season 2·3 buffer를 <strong>CBT 단계에 미리 확보</strong> — 론칭 후 제작 착수 = 콘텐츠 공백 = "게임 죽음" 인식</div>
+
+      <div class="todo-section">🔁 데이터·운영 루프 <span style="font-size:12.5px;background:#e0e7ff;color:#4338ca;padding:1px 7px;border-radius:6px;font-weight:700;margin-left:6px">D+0~D+30</span></div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">🚨 긴급</span>첫 1개월 <strong>daily 라이브옵스</strong> — telemetry→대시보드→핫픽스 루프 <strong>2주 이내</strong>, 메타 변화 즉시 대응</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>환불 사유 top-5 즉시 수정 · CS 24h on-call · 부정 리뷰 48h 이내 공식 답변</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span><strong>매칭 floor 실시간 모니터링</strong> — 세그먼트별(지역×모드×스킬) 5~15K CCU 하한 방어, 미달 시 풀 통합 (Concord 피크 697 → 14일 종료)</div>
+
+      <div class="todo-section">💰 신뢰 기반 수익화 <span style="font-size:12.5px;background:#fee2e2;color:#b91c1c;padding:1px 7px;border-radius:6px;font-weight:700;margin-left:6px">지속</span></div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span><strong>만료 없는 배틀패스</strong> + 매 업데이트 상업 비트(Warbond식) — anti-FOMO로 자발적 지출↑ (Helldivers 2·Marvel Rivals 검증)</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span><strong>대량 밸런스 너프 금지</strong> — 점진·데이터 기반 조정 (Marvel Rivals S2 11히어로 동시 너프 역풍 = 기존 유저 이탈 비용 &gt; 신규 획득 비용)</div>
+
+      <div class="todo-section">🎯 리텐션 게이트 <span style="font-size:12.5px;background:#dcfce7;color:#15803d;border:1px solid #86efac;padding:1px 7px;border-radius:6px;font-weight:700;margin-left:6px">D+30~D+90</span></div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span>첫 major update <strong>D+30 배포</strong> (Steam 30일 가격 lockout 해제 후)</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-high">필수</span><strong>D30 avg 50K+ 유지 = Top10 안착 검증</strong> — launch peak가 아니라 이것이 진짜 KPI (Marathon 출시주 88K → 7주 −83% 붕괴 · $765M 손상)</div>
+      <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>클랜 형성률 30%+ · 클랜 커스터마이즈(태그·로고·주간 미션)로 커뮤니티 소유감 (UGC 5년 복리 동접 +90%)</div>
+
+      <div class="todo-section">✅ 핵심 KPI (통과 기준)</div>
+      <div class="todo-kpi">📈 D30 avg 50K+ (Top10 안착) · D90 리텐션 durability</div>
+      <div class="todo-kpi">🔁 핫픽스 루프 2주 이내 · 첫 달 daily 대응</div>
+      <div class="todo-kpi">💰 BP 갱신율 · ARPU (신뢰 신호 동반 · 과금 밀도 역풍 회피)</div>
+      <div class="todo-kpi">🎯 세그먼트 매칭 floor 방어 · 클랜 형성 30%+</div>
+
+      <div class="todo-gate">
+        <div class="todo-go"><strong>✅ 서비스 안착</strong>D30 50K+ 유지 · 로드맵 cadence 준수 · 신뢰 기반 과금 정착</div>
+        <div class="todo-hold"><strong>⏸ 위기 대응</strong>D30 이탈 가속·콘텐츠 공백 → 로드맵 재조정 + 커뮤니티 직접 소통 + 핵심 루프 재점검</div>
       </div>
     </div>
   </div>
