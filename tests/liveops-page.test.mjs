@@ -25,3 +25,8 @@ test('page does not contain removed/unverifiable stats', () => {
   assert.doesNotMatch(html, /\$?321\s*B|3,?210억/);
   assert.doesNotMatch(html, /1만\s*명|10,?500명/);
 });
+
+test('value + data sections cite whale range and fortnite source', () => {
+  assert.match(html, /pocketgamer\.biz\/chart-of-the-week-half-of-in-game-revenue/);
+  assert.match(html, /datanami\.com\/2018\/07\/31\/inside-fortnites-massive-data-analytics-pipeline/);
+});
