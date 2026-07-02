@@ -4,8 +4,6 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1.0" name="viewport"/>
 <title>Live Service 진단·성공조건</title>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
 <link rel="stylesheet" href="../assets/theme.css">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -32,8 +30,6 @@ body{background:var(--bg);color:var(--text-h);line-height:1.65}
 .tag{display:inline-block;margin-top:6px;font-size:10px;font-weight:700;padding:2px 7px;border-radius:14px;background:#eef2f7;color:var(--text-sub2)}
 .call{background:var(--card-bg2);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:11px 15px;font-size:13px;color:var(--text-sub1);margin-top:12px}
 .call b{color:var(--text-h)}
-.attr{background:var(--card-bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:6px}
-.chart-wrap{position:relative;height:300px}
 .note{font-size:11px;color:var(--text-src);margin-top:8px}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .col{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px}
@@ -58,7 +54,14 @@ table.cmp th{background:var(--card-bg);font-weight:700}
 a.inline{color:var(--accent);text-decoration:none}a.inline:hover{text-decoration:underline}
 .srcline{font-size:11px;color:var(--text-src);margin-top:10px}
 .srcline a{color:var(--accent);text-decoration:none}.srcline a:hover{text-decoration:underline}
-@media(max-width:900px){.kr,.dt{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}}
+/* ① 성공조건 5카드 */
+.flow-arrow{text-align:center;color:var(--accent);font-weight:800;font-size:20px;margin:10px 0 12px;letter-spacing:2px}
+.conds{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.cond{background:linear-gradient(135deg,#eef2ff,#f8faff);border:1px solid #c7d2fe;border-radius:12px;padding:14px 12px;text-align:center}
+.cond .no{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;font-size:12px;font-weight:800;margin-bottom:8px}
+.cond .nm{font-size:13px;font-weight:800;color:var(--text-h);margin-bottom:3px}
+.cond .ds{font-size:11px;color:var(--text-sub2);line-height:1.4}
+@media(max-width:900px){.kr,.dt,.conds{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}}
 </style>
 </head>
 <body class="embed" data-page="liveops">
@@ -69,80 +72,86 @@ a.inline{color:var(--accent);text-decoration:none}a.inline:hover{text-decoration
   <div class="stt">Live Service 진단·성공조건 — 무엇이 성패를 가르는가</div>
   <div class="ss">산업 리포트 3종 종합 (State of the Industry 2026 · What's Next for Live Service · Post-Launch Strategies) — 시장은 왜 어렵고, 성공한 게임은 무엇을 다르게 했는가</div>
   <div class="si">
-    <h3>🔑 핵심 인사이트</h3>
+    <h3>🔑 핵심 진단</h3>
     <ul>
-      <li>✅ <strong>라이브 서비스 모델은 여전히 유효하다</strong> — 산업의 큰 축이고, 스튜디오 95%가 운영 중, 66%가 장기 성공에 필수라고 본다.</li>
-      <li>⚠️ <strong>그러나 성공은 소수에 집중된다</strong> — 높은 수익에는 높은 리스크. 주요 실패 요인은 자금 부족보다 <strong>출시 후 운영 준비성 부족</strong>에 있다.</li>
-      <li>💡 <strong>성공 조건은 5가지</strong> — ① 데이터 기반 운영 ② 인프라 ③ 콘텐츠 주기 ④ 공정 수익화 ⑤ 커뮤니티.</li>
+      <li>✅ <strong>라이브 서비스 모델은 여전히 유효합니다</strong> — 산업의 큰 축이고, 스튜디오 95%가 운영 중이며 66%가 장기 성공에 필수라고 봅니다.</li>
+      <li>⚠️ <strong>그러나 성공은 소수에 집중됩니다</strong> — 높은 수익에는 높은 리스크가 따르며, 주요 실패 요인은 자금 부족보다 <strong>출시 후 운영 준비성 부족</strong>에 있습니다.</li>
     </ul>
   </div>
-  <div class="call" style="border-left-color:var(--purple);margin-top:2px"><b>⭐ 이 다섯 조건을 관통하는 단 하나의 전제는 「데이터 기반 운영」이다.</b> 콘텐츠·밸런스·수익화·커뮤니티 결정이 모두 <b>감이 아니라 실측 데이터</b>에서 나올 때만 나머지 조건이 성립한다. 데이터로 <b>측정 → 결정 → 개선</b>하는 팀이 살아남는다.</div>
+  <div class="flow-arrow">↓ 그렇다면 무엇이 성공을 가르는가</div>
+  <div class="sn" style="text-align:center;color:var(--green)">✅ 성공을 가르는 5가지 조건</div>
+  <div class="conds">
+    <div class="cond"><div class="no">1</div><div class="nm">데이터 기반 운영</div><div class="ds">감이 아니라 실측 데이터로</div></div>
+    <div class="cond"><div class="no">2</div><div class="nm">인프라</div><div class="ds">백엔드·서버·매칭 안정성</div></div>
+    <div class="cond"><div class="no">3</div><div class="nm">콘텐츠 주기</div><div class="ds">멈추지 않는 업데이트</div></div>
+    <div class="cond"><div class="no">4</div><div class="nm">공정 수익화</div><div class="ds">신뢰를 지키는 과금</div></div>
+    <div class="cond"><div class="no">5</div><div class="nm">커뮤니티</div><div class="ds">제품 피드백 인프라</div></div>
+  </div>
+  <div class="call" style="border-left-color:var(--purple);margin-top:16px"><b>⭐ 이 다섯 조건을 관통하는 단 하나의 전제는 「데이터 기반 운영」입니다.</b> 콘텐츠·밸런스·수익화·커뮤니티 결정이 모두 <b>감이 아니라 실측 데이터</b>에서 나올 때만 나머지 조건이 성립합니다. 데이터로 <b>측정 → 결정 → 개선</b>하는 팀이 살아남습니다.</div>
 </section>
 
 <!-- ② DIAGNOSIS 01 -->
 <section class="sec" id="s2">
   <div class="sn">Diagnosis 01</div>
-  <div class="stt">성장하는 시장, 그러나 신규 진입은 더 어려워졌다</div>
-  <div class="ss">시장은 커지지만 유저의 시간과 지갑은 소수의 대형·구작 타이틀에 쏠린다</div>
+  <div class="stt">성장하는 시장, 그러나 신규 진입은 더 어려워졌습니다</div>
+  <div class="ss">시장은 커지지만 유저의 시간과 지갑은 소수의 대형·구작 타이틀에 쏠립니다</div>
   <div class="si">
     <h3>🔑 핵심 인사이트</h3>
     <ul>
-      <li>📊 유저 시간이 <strong>구작에 고착</strong> — 6년 넘은 게임이 플레이타임의 61%를 차지(2024). 신규작이 비집고 들어갈 틈이 좁다.</li>
-      <li>⚠️ 시장은 성장하나 <strong>포화·경쟁 심화</strong> — 유사 모델 범람, 유저 확보비 상승으로 진입 난도가 계속 오른다.</li>
-      <li>💡 그래서 승부처는 규모가 아니라 <strong>운영 효율과 니치 집중</strong>이다.</li>
+      <li>📊 유저 시간이 <strong>구작에 고착</strong>되어 있습니다 — 6년 넘은 게임이 플레이타임의 61%를 차지합니다(2024). 신규작이 비집고 들어갈 틈이 좁습니다.</li>
+      <li>⚠️ 시장은 성장하나 <strong>포화·경쟁이 심화</strong>됩니다 — 유사 모델 범람과 유저 확보비 상승으로 진입 난도가 계속 오릅니다.</li>
+      <li>💡 그래서 승부처는 규모가 아니라 <strong>운영 효율과 니치 집중</strong>입니다.</li>
     </ul>
   </div>
   <div class="kr">
+    <div class="kp"><div class="kl">라이브서비스/GaaS 시장 규모</div><div class="kv">약 $60~130억</div><div class="ks">라이브 서비스 시장 자체 추정 (2025~26, 조사기관별 상이)</div><span class="tag">📄 Grand View·Mordor 등 종합</span></div>
     <div class="kp"><div class="kl">구작 플레이타임 점유</div><div class="kv">61%</div><div class="ks">6년+ 된 게임의 플레이타임 비중 (2024, 이후 55%로 수정)</div><a class="src" href="https://gameworldobserver.com/2024/04/03/newzoo-pc-console-market-report-revenue-playtime-growth" target="_blank" rel="noopener">↗ Newzoo 원자료</a></div>
-    <div class="kp"><div class="kl">전체 게임시장 규모</div><div class="kv">~$1,900–2,050억</div><div class="ks">2025~26 추정 (조사기관별 상이)</div><span class="tag">📄 시장조사 종합</span></div>
-    <div class="kp"><div class="kl">라이브 서비스 운영 스튜디오</div><div class="kv">95%</div><div class="ks">라이브 서비스를 개발·운영 중</div><span class="tag">📄 Post-Launch Strategies p.2</span></div>
+    <div class="kp"><div class="kl">라이브 서비스 운영 스튜디오</div><div class="kv">95%</div><div class="ks">라이브 서비스를 개발·운영 중입니다</div><span class="tag">📄 Post-Launch Strategies p.2</span></div>
     <div class="kp"><div class="kl">장기 성공에 필수 인식</div><div class="kv">66%</div><div class="ks">라이브 서비스가 장기 성공에 필수라고 응답</div><span class="tag">📄 Post-Launch Strategies p.2</span></div>
   </div>
-  <div class="note">시장 규모는 정의(라이브서비스/GaaS 시장 vs 라이브서비스 매출 비중 vs 전체 게임시장)에 따라 값이 크게 달라 절대값 대신 범위로 표기. 라이브서비스/GaaS 시장 자체 추정은 조사기관별 약 60~130억 달러(2025~26).</div>
+  <div class="note">위 시장 규모는 <b>라이브서비스/GaaS 시장 자체</b> 추정치입니다(정의·방법론에 따라 조사기관별 편차 큼). 참고로 <b>전체 게임시장</b>은 약 $1,880~2,050억(Newzoo, 2025~26)으로, 라이브서비스는 그 일부입니다. 정의(라이브서비스 시장 vs 매출 비중 vs 전체 시장)가 다르므로 절대값을 단정하지 않습니다.</div>
 </section>
 
 <!-- ③ DIAGNOSIS 02 -->
 <section class="sec" id="s3">
   <div class="sn">Diagnosis 02</div>
-  <div class="stt">실패는 자금보다 운영 준비성에서 갈린다</div>
-  <div class="ss">최근 대형 라이브 서비스의 붕괴는 투자 부족이 아니라 준비되지 않은 출시·운영에서 비롯됐다</div>
+  <div class="stt">실패는 자금보다 운영 준비성에서 갈립니다</div>
+  <div class="ss">최근 대형 라이브 서비스의 붕괴는 투자 부족이 아니라 준비되지 않은 출시·운영에서 비롯됐습니다</div>
   <div class="si">
     <h3>🔑 핵심 인사이트</h3>
     <ul>
-      <li>🧭 실패의 공통 원인은 <strong>빈약한 콘텐츠 파이프라인·불명확한 가치·출시 후 운영 준비성 부족</strong>이다(리포트 진단).</li>
-      <li>📉 출시 하이프는 성공의 지표가 아니다 — 성패는 <strong>출시 후 몇 주의 잔존율</strong>에서 갈린다.</li>
-      <li>💰 운영 실패는 결국 <strong>재무 손실</strong>로 실현된다 — 리텐션 붕괴가 인수 goodwill 손상차손이 된 사례(Bungie).</li>
+      <li>🧭 실패의 공통 원인은 <strong>빈약한 콘텐츠 파이프라인·불명확한 가치·출시 후 운영 준비성 부족</strong>입니다(리포트 진단).</li>
+      <li>📉 출시 하이프는 성공의 지표가 아닙니다 — 성패는 <strong>출시 후 몇 주의 잔존율</strong>에서 갈립니다.</li>
+      <li>💰 운영 실패는 결국 <strong>재무 손실</strong>로 실현됩니다 — 리텐션 붕괴가 인수 goodwill 손상차손으로 이어진 사례입니다(Bungie).</li>
     </ul>
   </div>
-  <div class="attr"><div class="chart-wrap"><canvas id="attritionChart"></canvas></div>
-    <div class="note">출시 시점 최고 동시접속을 100으로 정규화한 잔존 추이(개념 비교). 원자료: SteamDB.</div></div>
-  <div class="call">💡 <b>핵심:</b> 두 사례 모두 출시 몇 주 만에 동시접속이 급락했다. 초기 접속자 수가 아니라 <b>4~8주 리텐션</b>이 생존을 결정한다.</div>
-  <div class="kr" style="margin-top:16px">
+  <div class="kr">
     <div class="kp r"><div class="kl">Concord 최고 동시접속</div><div class="kv">697명</div><div class="ks">무료 경쟁 시장에 유료로 출시·개발 8년, 늦은 테스트와 시장 오판 → 2024년 10월 종료</div><a class="src" href="https://steamdb.info/app/2443720/charts/" target="_blank" rel="noopener">↗ SteamDB</a></div>
     <div class="kp r"><div class="kl">Payday 3 첫 30일</div><div class="kv">−90%</div><div class="ks">출시 서버·매칭 실패로 동시접속 급락(피크 77,938 → 약 8,444)</div><a class="src" href="https://steamdb.info/app/1272080/charts/" target="_blank" rel="noopener">↗ SteamDB</a></div>
     <div class="kp r"><div class="kl">Bungie 인수 손상차손</div><div class="kv">~7.65억$</div><div class="ks">Destiny 2·Marathon 부진 → 소니가 누적 반영한 goodwill 손상(2026-05)</div><a class="src" href="https://www.forbes.com/sites/paultassi/2026/05/08/sony-backs-marathon-even-after-765-million-in-bungie-impairment-losses/" target="_blank" rel="noopener">↗ Forbes</a></div>
     <div class="kp r"><div class="kl">Marathon 붕괴</div><div class="kv">88,337 → &lt;15%</div><div class="ks">출시 최고 동시접속(2026-03-06)이 몇 주 만에 피크의 15% 미만으로</div><a class="src" href="https://steamdb.info/app/3065800/charts/" target="_blank" rel="noopener">↗ SteamDB</a></div>
   </div>
+  <div class="call">💡 <b>핵심:</b> 위 사례 모두 출시 몇 주 만에 동시접속이 급락했습니다. 초기 접속자 수가 아니라 <b>4~8주 리텐션</b>이 생존을 결정합니다.</div>
   <div class="sn" style="margin-top:18px">최근 신호 (2025~2026)</div>
   <div class="kr k3">
-    <div class="kp r"><div class="kl">Highguard</div><div class="kv">2백만+ → 45일</div><div class="ks">누적 2백만+ 플레이·초기 동접 ~10만인데도 출시 45일 만에 종료(2026-01-26→03-12). 초기 유입은 성공이 아니었다</div><a class="src" href="https://kotaku.com/highguard-shutting-down-less-than-50-days-after-launch-2000675453" target="_blank" rel="noopener">↗ Kotaku</a></div>
-    <div class="kp r"><div class="kl">2025년 라이브서비스 19종</div><div class="kv">15종 80%+ 이탈</div><div class="ks">Steam 기준 19종 중 15종이 80%+·11종이 90%+ 이용자 이탈 — 유입을 잔존으로 전환하는 난도 급등</div><a class="src" href="https://www.thegamer.com/2025-live-service-games-player-analysis/" target="_blank" rel="noopener">↗ TheGamer</a></div>
+    <div class="kp r"><div class="kl">Highguard</div><div class="kv">2백만+ → 45일</div><div class="ks">누적 2백만+ 플레이·초기 동접 ~10만인데도 출시 45일 만에 종료(2026-01-26→03-12). 초기 유입은 성공이 아니었습니다</div><a class="src" href="https://kotaku.com/highguard-shutting-down-less-than-50-days-after-launch-2000675453" target="_blank" rel="noopener">↗ Kotaku</a></div>
+    <div class="kp r"><div class="kl">2025년 라이브서비스 19종</div><div class="kv">15종 80%+ 이탈</div><div class="ks">Steam 기준 19종 중 15종이 80%+·11종이 90%+ 이용자 이탈 — 유입을 잔존으로 전환하는 난도가 급등했습니다</div><a class="src" href="https://www.thegamer.com/2025-live-service-games-player-analysis/" target="_blank" rel="noopener">↗ TheGamer</a></div>
     <div class="kp r"><div class="kl">2026 상반기 종료</div><div class="kv">약 52종</div><div class="ks">주요 매체 집계상 약 52개 게임·온라인 서비스 종료(전체·플랫폼·기능 종료 혼재)</div><a class="src" href="https://gamerant.com/games-shut-down-2026-list-highguard-anthem/" target="_blank" rel="noopener">↗ GameRant</a></div>
   </div>
-  <div class="call">💡 <b>패턴:</b> Suicide Squad처럼 강력한 IP도, Concord처럼 큰 예산도, Highguard처럼 큰 초기 유입도 <b>운영 준비성</b>이 없으면 무너진다. 초기 유입은 관심이고, 잔존이 사업성이다.</div>
+  <div class="call">💡 <b>패턴:</b> Suicide Squad처럼 강력한 IP도, Concord처럼 큰 예산도, Highguard처럼 큰 초기 유입도 <b>운영 준비성</b>이 없으면 무너집니다. 초기 유입은 관심이고, 잔존이 사업성입니다.</div>
 </section>
 
 <!-- ④ SUCCESS 01 — DATA (핵심 전제) -->
 <section class="sec" id="s4" style="background:linear-gradient(180deg,#faf5ff,transparent 220px)">
   <div class="sn" style="color:var(--purple)">Success Condition 01 · 핵심 전제</div>
-  <div class="stt">감이 아니라 데이터로 운영한다 — 나머지 조건을 성립시키는 토대</div>
-  <div class="ss">"의사결정은 가정이 아니라 실제 플레이어 데이터에 근거해야 한다." 리포트의 결론은 명확하다 — <b>데이터는 라이브 운영 의사결정의 근간(backbone)</b>이며, 경쟁 우위는 데이터를 <b>모으는 것</b>이 아니라 <b>운영 흐름에 통합</b>하는 능력에서 나온다.</div>
+  <div class="stt">감이 아니라 데이터로 운영해야 합니다 — 나머지 조건을 성립시키는 토대</div>
+  <div class="ss">"의사결정은 가정이 아니라 실제 플레이어 데이터에 근거해야 한다." 리포트의 결론은 명확합니다 — <b>데이터는 라이브 운영 의사결정의 근간(backbone)</b>이며, 경쟁 우위는 데이터를 <b>모으는 것</b>이 아니라 <b>운영 흐름에 통합</b>하는 능력에서 나옵니다.</div>
   <div class="si" style="background:linear-gradient(135deg,#f5f3ff,#fafaff);border-color:#ddd6fe">
     <h3 style="color:var(--purple)">🔑 왜 데이터가 먼저인가</h3>
     <ul>
-      <li>📊 <strong>모든 결정의 근간</strong> — 콘텐츠·밸런스·수익화·커뮤니티 판단이 전부 데이터에서 나온다. 데이터 없는 운영은 감에 의존한 도박이다.</li>
-      <li>🛰️ <strong>자체 계측(텔레메트리)이 전략의 핵심</strong> — 플랫폼이 주는 데이터로는 부족해, 어디서·언제·왜 이탈하는지 직접 계측해야 한다.</li>
-      <li>🔁 <strong>측정 → 결정 → 개선 루프</strong>를 빠르게 도는 팀이 살아남는다. 유지율을 조금만 높여도 생애가치(LTV)·매출이 크게 오른다.</li>
+      <li>📊 <strong>모든 결정의 근간</strong> — 콘텐츠·밸런스·수익화·커뮤니티 판단이 전부 데이터에서 나옵니다. 데이터 없는 운영은 감에 의존한 도박입니다.</li>
+      <li>🛰️ <strong>자체 계측(텔레메트리)이 전략의 핵심</strong> — 플랫폼이 주는 데이터로는 부족하므로, 어디서·언제·왜 이탈하는지 직접 계측해야 합니다.</li>
+      <li>🔁 <strong>측정 → 결정 → 개선 루프</strong>를 빠르게 돌리는 팀이 살아남습니다. 유지율을 조금만 높여도 생애가치(LTV)·매출이 크게 오릅니다.</li>
     </ul>
   </div>
   <div class="sn" style="margin-top:4px">① 수집·활용하는 데이터 5종</div>
@@ -153,17 +162,17 @@ a.inline{color:var(--accent);text-decoration:none}a.inline:hover{text-decoration
     <div class="c"><div class="t">커뮤니티</div><div class="d">감성·독성·관계, 커뮤니티 건강</div></div>
     <div class="c"><div class="t">A/B 테스트</div><div class="d">기능·오퍼를 리스크 없이 검증</div></div>
   </div>
-  <div class="sn" style="margin-top:4px">② 데이터가 운영 결정을 이끈다</div>
+  <div class="sn" style="margin-top:4px">② 데이터가 운영 결정을 이끕니다</div>
   <div class="loop"><span class="st">측정</span><span class="ar">→</span><span class="st">세그먼트 분석</span><span class="ar">→</span><span class="st">결정(패치·이벤트·오퍼)</span><span class="ar">→</span><span class="st">A/B 검증</span><span class="ar">→</span><span class="st">학습</span><span class="ar">↺</span></div>
-  <div class="call" style="border-left-color:var(--purple)">💡 <b>핵심:</b> 성공팀은 세그먼트별 행동·지출을 분석해 콘텐츠·오퍼·밸런스를 맞춤한다. <b>같은 데이터를 얼마나 빠르게 결정으로 바꾸는가</b>가 경쟁력이다.</div>
-  <div class="sn" style="margin-top:16px">③ AI·자동화가 데이터 운영을 가속한다</div>
+  <div class="call" style="border-left-color:var(--purple)">💡 <b>핵심:</b> 성공팀은 세그먼트별 행동·지출을 분석해 콘텐츠·오퍼·밸런스를 맞춤합니다. <b>같은 데이터를 얼마나 빠르게 결정으로 바꾸는가</b>가 경쟁력입니다.</div>
+  <div class="sn" style="margin-top:16px">③ AI·자동화가 데이터 운영을 가속합니다</div>
   <div class="dt" style="grid-template-columns:repeat(4,1fr)">
     <div class="c"><div class="t">QA·봇 테스트 자동화</div><div class="d">반복 테스트 비용↓, 출시 리스크↓</div></div>
     <div class="c"><div class="t">텔레메트리 요약</div><div class="d">대규모 데이터 해석 속도↑</div></div>
     <div class="c"><div class="t">밸런싱 보조</div><div class="d">경제·난이도 튜닝 데이터 기반</div></div>
     <div class="c"><div class="t">이상탐지(anti-cheat)</div><div class="d">치팅·사기·경제 남용 방지</div></div>
   </div>
-  <div class="note">리포트 공통 진단 — AI의 가치는 프론트 콘텐츠 생성보다 <b>백엔드·운영·QA</b>에서 먼저 발생한다.</div>
+  <div class="note">리포트 공통 진단 — AI의 가치는 프론트 콘텐츠 생성보다 <b>백엔드·운영·QA</b>에서 먼저 발생합니다.</div>
   <div class="kr k3" style="margin-top:14px">
     <div class="kp g"><div class="kl">Fortnite 데이터 처리</div><div class="kv">9,200만/분</div><div class="ks">분당 이벤트(약 540억/일, 2018) — 데이터가 곧 운영 역량이 된 사례</div><a class="src" href="https://www.datanami.com/2018/07/31/inside-fortnites-massive-data-analytics-pipeline/" target="_blank" rel="noopener">↗ Datanami</a></div>
     <div class="kp"><div class="kl">데이터팀 최대 난제</div><div class="kv">데이터 활용도</div><div class="ks">수집보다 "쓸 수 있게 만드는 것"이 병목이라는 응답</div><span class="tag">📄 Post-Launch Strategies p.4</span></div>
@@ -174,14 +183,14 @@ a.inline{color:var(--accent);text-decoration:none}a.inline:hover{text-decoration
 <!-- ⑤ SUCCESS 02 — INFRA -->
 <section class="sec" id="s5">
   <div class="sn">Success Condition 02</div>
-  <div class="stt">인프라는 지원 기능이 아니라 제품이다</div>
-  <div class="ss">"백엔드 가동성은 곧 매출 연속성" — 라이브 운영은 DLC와 근본적으로 다르며 별도의 인프라를 요구한다</div>
+  <div class="stt">인프라는 지원 기능이 아니라 제품입니다</div>
+  <div class="ss">"백엔드 가동성은 곧 매출 연속성" — 라이브 운영은 DLC와 근본적으로 다르며 별도의 인프라를 요구합니다</div>
   <div class="si">
     <h3>🔑 핵심 인사이트</h3>
     <ul>
-      <li>🖥️ 로그인·매치메이킹·지연·업데이트 실패는 <strong>곧 이탈과 매출 손실</strong>이다(Payday 3·Marathon).</li>
-      <li>🧱 라이브 운영은 새로운 인프라·도구·인력을 요구 — 개발과 <strong>별개의 난이도</strong>다.</li>
-      <li>🛒 대다수 스튜디오는 백엔드를 <strong>직접 구축하지 않고 외부 솔루션을 활용한다</strong> — 핵심 데이터만 내부 소유.</li>
+      <li>🖥️ 로그인·매치메이킹·지연·업데이트 실패는 <strong>곧 이탈과 매출 손실</strong>입니다(Payday 3·Marathon).</li>
+      <li>🧱 라이브 운영은 새로운 인프라·도구·인력을 요구하므로 개발과 <strong>별개의 난이도</strong>입니다.</li>
+      <li>🛒 대다수 스튜디오는 백엔드를 <strong>직접 구축하지 않고 외부 솔루션을 활용</strong>하며, 핵심 데이터만 내부에서 소유합니다.</li>
     </ul>
   </div>
   <div class="stack">
@@ -205,31 +214,31 @@ a.inline{color:var(--accent);text-decoration:none}a.inline:hover{text-decoration
 
 <!-- ⑥ SUCCESS 03 — CONTENT/COMMUNITY/MONETIZATION -->
 <section class="sec" id="s6">
-  <div class="sn">Success Condition 03</div>
-  <div class="stt">콘텐츠 주기 · 커뮤니티 · 공정한 수익화</div>
-  <div class="ss">지속 운영의 세 축 — 멈추지 않는 콘텐츠, 제품 입력으로서의 커뮤니티, 신뢰를 지키는 수익화</div>
+  <div class="sn">Success Condition 03·04·05</div>
+  <div class="stt">콘텐츠 주기 · 공정한 수익화 · 커뮤니티</div>
+  <div class="ss">지속 운영의 세 축 — 멈추지 않는 콘텐츠, 신뢰를 지키는 수익화, 제품 입력으로서의 커뮤니티</div>
   <div class="si">
     <h3>🔑 핵심 인사이트</h3>
     <ul>
-      <li>🔄 <strong>콘텐츠 공급이 중단되면 잔존율·매출 지속성이 급격히 약화된다</strong> — 지속 가능한 업데이트 주기가 생존 조건.</li>
-      <li>💬 <strong>커뮤니티는 마케팅 채널이 아니라 제품 피드백 인프라</strong>다.</li>
-      <li>🤝 <strong>공정한 수익화가 리텐션의 기반</strong> — 경쟁 우위 판매형 과금(pay-to-win)은 신뢰와 유지율을 함께 무너뜨린다.</li>
+      <li>🔄 <strong>콘텐츠 공급이 중단되면 잔존율·매출 지속성이 급격히 약화됩니다</strong> — 지속 가능한 업데이트 주기가 생존 조건입니다.</li>
+      <li>💬 <strong>커뮤니티는 마케팅 채널이 아니라 제품 피드백 인프라</strong>입니다.</li>
+      <li>🤝 <strong>공정한 수익화가 리텐션의 기반</strong>입니다 — 경쟁 우위 판매형 과금(pay-to-win)은 신뢰와 유지율을 함께 무너뜨립니다.</li>
     </ul>
   </div>
   <div class="grid2">
     <div class="col win"><h4>🟢 신뢰를 지키는 수익화</h4><ul class="lst">
-      <li><b>비 pay-to-win·코스메틱 중심</b> — Fortnite·League of Legends는 결제가 경쟁 우위를 주지 않아 커뮤니티 신뢰 유지</li>
-      <li><b>공정한 배틀패스</b> — Helldivers 2는 유료·무료 보상이 대등하고 결제 강요가 없음</li>
-      <li><b>투명성·획득 경로</b> — 확률·가격 명확, 결제 안 해도 의미 있는 진행</li>
+      <li><b>비 pay-to-win·코스메틱 중심</b> — Fortnite·League of Legends는 결제가 경쟁 우위를 주지 않아 커뮤니티 신뢰를 유지합니다</li>
+      <li><b>공정한 배틀패스</b> — Helldivers 2는 유료·무료 보상이 대등하고 결제 강요가 없습니다</li>
+      <li><b>투명성·획득 경로</b> — 확률·가격이 명확하고, 결제하지 않아도 의미 있는 진행이 가능합니다</li>
     </ul></div>
     <div class="col lose"><h4>🔴 신뢰를 깨는 수익화</h4><ul class="lst">
-      <li><b>과도·침투적 과금</b> — 반복 과금 밀도가 임계를 넘으면 반발·이탈</li>
-      <li><b>진행을 볼모로</b> — 결제를 강요받는 느낌은 장기 리텐션을 갉아먹음</li>
-      <li><b>경쟁 우위 판매</b> — pay-to-win은 커뮤니티 신뢰를 직접 훼손</li>
+      <li><b>과도·침투적 과금</b> — 반복 과금 밀도가 임계를 넘으면 반발·이탈로 이어집니다</li>
+      <li><b>진행을 볼모로</b> — 결제를 강요받는 느낌은 장기 리텐션을 갉아먹습니다</li>
+      <li><b>경쟁 우위 판매</b> — pay-to-win은 커뮤니티 신뢰를 직접 훼손합니다</li>
     </ul></div>
   </div>
   <div class="kr k3" style="margin-top:16px">
-    <div class="kp"><div class="kl">매출 편중</div><div class="kv">극소수 → ~50%</div><div class="ks">결제 상위 극소수(0.15~수 %)가 매출의 절반가량 (비율은 출처별 상이)</div><a class="src" href="https://www.pocketgamer.biz/chart-of-the-week-half-of-in-game-revenue-generated-by-just-015-of-players/" target="_blank" rel="noopener">↗ PocketGamer/Swrve</a></div>
+    <div class="kp"><div class="kl">매출 편중</div><div class="kv">극소수 → ~50%</div><div class="ks">결제 상위 극소수(0.15~수 %)가 매출의 절반가량을 만듭니다 (비율은 출처별 상이)</div><a class="src" href="https://www.pocketgamer.biz/chart-of-the-week-half-of-in-game-revenue-generated-by-just-015-of-players/" target="_blank" rel="noopener">↗ PocketGamer/Swrve</a></div>
     <div class="kp"><div class="kl">콘텐츠 주기 기대</div><div class="kv">격주~월간</div><div class="ks">제작팀 다수가 원하는 업데이트 주기</div><span class="tag">📄 Post-Launch Strategies p.5</span></div>
     <div class="kp"><div class="kl">커뮤니티는 제품 입력</div><div class="kv">50%+</div><div class="ks">지난 10년 인기 게임 디자인 변경의 50% 이상이 유저 피드백에서 비롯 — 커뮤니티는 마케팅이 아닌 제품 피드백 인프라</div><span class="tag">📄 Post-Launch Strategies p.8</span></div>
   </div>
@@ -238,50 +247,32 @@ a.inline{color:var(--accent);text-decoration:none}a.inline:hover{text-decoration
 <!-- ⑦ PATTERN SUMMARY -->
 <section class="sec" id="s7">
   <div class="sn">Summary</div>
-  <div class="stt">성공 vs 실패 — 무엇이 달랐나</div>
-  <div class="ss">같은 라이브 서비스라도 다섯 조건의 준비 여부가 결과를 갈랐다</div>
+  <div class="stt">성공 vs 실패 — 무엇이 달랐는가</div>
+  <div class="ss">같은 라이브 서비스라도 다섯 조건의 준비 여부가 결과를 갈랐습니다</div>
   <table class="cmp"><thead><tr><th>조건</th><th>🟢 갖춘 성공작</th><th>🔴 놓친 실패작</th></tr></thead><tbody>
     <tr><td><b>데이터 기반 운영</b></td><td>Fortnite · League of Legends</td><td>Concord (늦은 테스트·검증 부재)</td></tr>
     <tr><td><b>인프라 안정성</b></td><td>Fortnite · Destiny 2</td><td>Payday 3 (서버·매칭 실패)</td></tr>
     <tr><td><b>콘텐츠 주기</b></td><td>Fortnite · Apex Legends</td><td>Marathon (초기 붕괴 후 이탈 가속)</td></tr>
     <tr><td><b>공정 수익화</b></td><td>League of Legends · Helldivers 2</td><td>반복·침투 과금 사례들</td></tr>
-    <tr><td><b>명확한 가치·니치</b></td><td>Supercell(소규모 자율팀) · Genshin Impact</td><td>Suicide Squad (IP만으론 실패)</td></tr>
+    <tr><td><b>명확한 가치·니치</b></td><td>Supercell(소규모 자율팀) · Genshin Impact</td><td>Suicide Squad (IP만으로는 실패)</td></tr>
   </tbody></table>
   <div class="grid2" style="margin-top:14px">
     <div class="col win"><h4>🟢 최근 성공 신호 (2025~26)</h4><ul class="lst">
-      <li><b>Helldivers 2</b> — 만료 없는 Warbond + 무료 대형 업데이트로 이용자 압박을 낮추고 신뢰형 반복 매출을 확보 <a class="inline" href="https://www.playstation.com/en-is/games/helldivers-2/latest-news-and-updates/" target="_blank" rel="noopener">↗ PlayStation</a></li>
-      <li><b>Marvel Rivals</b> — 출시 33영웅 전원 무료·약 6주마다 신규 영웅·데이터 기반 밸런싱으로 초기 유지율 방어 <a class="inline" href="https://www.marvel.com/articles/games/marvel-rivals-launches-season-0-dooms-rise-with-33-heroes-all-unlocked-and-free-to-play" target="_blank" rel="noopener">↗ Marvel</a></li>
+      <li><b>Helldivers 2</b> — 만료 없는 Warbond와 무료 대형 업데이트로 이용자 압박을 낮추고 신뢰형 반복 매출을 확보했습니다 <a class="inline" href="https://www.playstation.com/en-is/games/helldivers-2/latest-news-and-updates/" target="_blank" rel="noopener">↗ PlayStation</a></li>
+      <li><b>Marvel Rivals</b> — 출시 33영웅 전원 무료·약 6주마다 신규 영웅·데이터 기반 밸런싱으로 초기 유지율을 방어했습니다 <a class="inline" href="https://www.marvel.com/articles/games/marvel-rivals-launches-season-0-dooms-rise-with-33-heroes-all-unlocked-and-free-to-play" target="_blank" rel="noopener">↗ Marvel</a></li>
     </ul></div>
     <div class="col lose" style="border-top-color:var(--amber)"><h4>🟡 운영 조정 리스크</h4><ul class="lst">
-      <li><b>Marvel Rivals 시즌 2</b> — 대량 너프 이후 이용자 감소·반발 보도. 실패가 아니라 <b>운영 조정 리스크</b> 사례다 — 밸런스는 데이터와 이용자 애착을 함께 고려해야 한다 <a class="inline" href="https://timesofindia.indiatimes.com/sports/esports/news/marvel-rivals-player-count-drops-by-over-50-amid-season-2-backlash-will-season-2-5-save-it/articleshow/120905320.cms" target="_blank" rel="noopener">↗ Times of India</a></li>
+      <li><b>Marvel Rivals 시즌 2</b> — 대량 너프 이후 이용자 감소·반발이 보도됐습니다. 실패가 아니라 <b>운영 조정 리스크</b> 사례이며, 밸런스는 데이터와 이용자 애착을 함께 고려해야 합니다 <a class="inline" href="https://timesofindia.indiatimes.com/sports/esports/news/marvel-rivals-player-count-drops-by-over-50-amid-season-2-backlash-will-season-2-5-save-it/articleshow/120905320.cms" target="_blank" rel="noopener">↗ Times of India</a></li>
     </ul></div>
   </div>
-  <div class="call" style="margin-top:16px">💡 <b>결론:</b> 라이브 서비스의 성패는 "할지 말지"가 아니라 <b>이 다섯 조건을 데이터 기반으로 성립시킬 수 있는가</b>에 달렸다. 초기 유입은 관심이고, 잔존이 사업성이다.</div>
+  <div class="call" style="margin-top:16px">💡 <b>결론:</b> 라이브 서비스의 성패는 "할지 말지"가 아니라 <b>이 다섯 조건을 데이터 기반으로 성립시킬 수 있는가</b>에 달려 있습니다. 초기 유입은 관심이고, 잔존이 사업성입니다.</div>
   <div class="srcline">📄 출처: 산업 리포트 3종 종합 (발행 IQPC · Live Service Gaming Summit) —
     <a href="https://www.iqpc.com/events-live-service-gaming-summit/downloads/state-of-live-service-gaming-2026-industry-report" target="_blank" rel="noopener"><i>State of Live Service Gaming 2026</i> ↗</a> ·
     <a href="https://www.iqpc.com/events-live-service-gaming-summit/downloads/industry-report-whats-next-for-live-service-gaming" target="_blank" rel="noopener"><i>What's Next for Live Service Gaming?</i> ↗</a> ·
     <a href="https://www.iqpc.com/events-live-service-gaming-summit/downloads/main-report-live-service-games-key-post-launch-strategies" target="_blank" rel="noopener"><i>Live Service Games: Key Post-launch Strategies</i> ↗</a>.
-    정량 수치 중 공개 1차 확인 항목은 각 카드의 <b>↗ 링크</b>, 리포트 설문 기반은 <b>📄 리포트</b> 표기.</div>
+    정량 수치 중 공개 1차 확인 항목은 각 카드의 <b>↗ 링크</b>로, 리포트 설문 기반은 <b>📄 리포트</b> 표기로 구분했습니다.</div>
 </section>
 
-<script>
-new Chart(document.getElementById('attritionChart'), {
-  type: 'line',
-  data: {
-    labels: ['출시','1주','2주','3주','4주','5주','6주','7주'],
-    datasets: [
-      { label: 'Payday 3 (잔존 %)', data: [100,55,35,22,10,9,8,8], borderColor: getComputedStyle(document.documentElement).getPropertyValue('--chart-1').trim(), tension:.35, fill:false },
-      { label: 'Marathon (잔존 %)', data: [100,60,42,30,22,17,15,14], borderColor: getComputedStyle(document.documentElement).getPropertyValue('--chart-5').trim(), tension:.35, fill:false }
-    ]
-  },
-  options: {
-    responsive:true, maintainAspectRatio:false,
-    plugins:{ legend:{position:'bottom'}, datalabels:{display:false},
-      title:{display:true, text:'출시 후 동시접속 잔존율(출시 피크=100)'} },
-    scales:{ y:{ min:0, max:100, ticks:{callback:v=>v+'%'} } }
-  }
-});
-</script>
 <script src="../assets/embed.js"></script>
 </body>
 </html>
