@@ -53,7 +53,7 @@ a { color:var(--accent); text-decoration:none; } a:hover { text-decoration:under
 .pnav-item { display:flex; align-items:center; gap:6px; padding:0 14px; font-size:14px; font-weight:600; color:var(--text-sub2); border-bottom:2px solid transparent; cursor:pointer; text-decoration:none; transition:all .2s; white-space:nowrap; }
 .pnav-item:hover { color:var(--text-h); border-color:var(--border); }
 .pnav-item.active { color:var(--accent); border-color:var(--accent); background:rgba(79,70,229,.04); }
-.pnav-num { font-size:12px; font-weight:700; color:var(--accent); font-family:monospace; }
+.pnav-num { font-size:12px; font-weight:700; color:var(--accent); font-family:Pretendard,'Apple SD Gothic Neo','Segoe UI',system-ui,sans-serif;font-variant-numeric:tabular-nums; }
 .pnav-div { width:1px; background:var(--border); margin:10px 0; flex-shrink:0; }
 
 /* ══ CONTENT ══ */
@@ -64,7 +64,7 @@ a { color:var(--accent); text-decoration:none; } a:hover { text-decoration:under
 .section-header { display:flex; align-items:center; gap:12px; padding:14px 18px; background:var(--card-bg); border:1px solid var(--border); border-radius:var(--radius); cursor:pointer; transition:all .2s; user-select:none; }
 .section-header:hover { background:#e9ebf0; }
 .section-header.open { border-color:#c7d2fe; background:linear-gradient(90deg,#f0f4ff 0%,var(--card-bg) 100%); border-radius:var(--radius) var(--radius) 0 0; }
-.section-num { font-size:13px; font-weight:700; color:var(--accent); min-width:22px; font-family:monospace; }
+.section-num { font-size:13px; font-weight:700; color:var(--accent); min-width:22px; font-family:Pretendard,'Apple SD Gothic Neo','Segoe UI',system-ui,sans-serif;font-variant-numeric:tabular-nums; }
 .sec-title { font-size:15px; font-weight:700; color:var(--text-h); flex:1; }
 .sec-sub    { font-size:13px; color:var(--text-sub2); }
 .sec-badge  { font-size:12px; font-weight:700; padding:2px 8px; border-radius:4px; letter-spacing:.05em; white-space:nowrap; }
@@ -107,7 +107,7 @@ tbody tr { border-bottom:1px solid var(--border); transition:background .15s; }
 tbody tr:last-child td { border-bottom:none; }
 tbody td { padding:8px 11px; vertical-align:middle; line-height:1.5; color:var(--text-sub1); font-size:14px; }
 .td-bold { font-weight:600; color:var(--text-h); }
-.td-mono { font-family:monospace; font-size:13px; }
+.td-mono { font-family:Pretendard,'Apple SD Gothic Neo','Segoe UI',system-ui,sans-serif;font-variant-numeric:tabular-nums; font-size:13px; }
 .td-green { color:var(--green); font-weight:600; } .td-amber { color:var(--amber); font-weight:600; }
 .td-red { color:var(--red); font-weight:600; }   .td-blue { color:var(--accent); font-weight:600; }
 .cat-hdr td { background:#1a1a2e !important; color:#a5b4fc !important; font-weight:700; font-size:12px; letter-spacing:.8px; padding:7px 11px; text-transform:uppercase; }
@@ -185,7 +185,7 @@ tbody td { padding:8px 11px; vertical-align:middle; line-height:1.5; color:var(-
 
 /* ══ STAT CARDS ══ */
 .stat-card { background:var(--card-bg); border:1px solid var(--border); border-radius:var(--radius); padding:13px 15px; border-left:4px solid var(--accent); }
-.stat-val { font-size:22px; font-weight:800; color:var(--accent); line-height:1; margin:4px 0; font-family:monospace; }
+.stat-val { font-size:22px; font-weight:800; color:var(--accent); line-height:1; margin:4px 0; font-family:Pretendard,'Apple SD Gothic Neo','Segoe UI',system-ui,sans-serif;font-variant-numeric:tabular-nums; }
 .stat-val.green { color:var(--green); } .stat-val.amber { color:var(--amber); }
 .stat-label { font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:.05em; color:var(--text-sub2); }
 .stat-desc  { font-size:13px; color:var(--text-sub2); margin-top:3px; }
@@ -202,13 +202,13 @@ tbody td { padding:8px 11px; vertical-align:middle; line-height:1.5; color:var(-
 .rs-bar-container { margin:12px 0; }
 .rs-row { display:flex; align-items:center; gap:12px; padding:8px 0; border-bottom:1px solid var(--border); }
 .rs-row:last-child { border-bottom:none; }
-.rs-range { font-family:monospace; font-size:13px; color:var(--text-sub2); min-width:130px; }
+.rs-range { font-family:Pretendard,'Apple SD Gothic Neo','Segoe UI',system-ui,sans-serif;font-variant-numeric:tabular-nums; font-size:13px; color:var(--text-sub2); min-width:130px; }
 .rs-bar-wrap { flex:1; height:20px; background:var(--border); border-radius:4px; overflow:hidden; position:relative; }
 .rs-bar-dev { height:100%; background:linear-gradient(90deg,#3730a3,var(--accent)); border-radius:4px; display:flex; align-items:center; padding-left:8px; }
 .rs-bar-dev.green { background:linear-gradient(90deg,#15803d,var(--green)); }
 .rs-bar-valve { position:absolute; right:0; top:0; height:100%; background:rgba(239,68,68,.2); display:flex; align-items:center; justify-content:flex-end; padding-right:6px; }
-.rs-dev-pct { font-size:12px; color:#fff; font-weight:700; font-family:monospace; }
-.rs-valve-pct { font-size:12px; color:var(--red); font-weight:600; font-family:monospace; }
+.rs-dev-pct { font-size:12px; color:#fff; font-weight:700; font-family:Pretendard,'Apple SD Gothic Neo','Segoe UI',system-ui,sans-serif;font-variant-numeric:tabular-nums; }
+.rs-valve-pct { font-size:12px; color:var(--red); font-weight:600; font-family:Pretendard,'Apple SD Gothic Neo','Segoe UI',system-ui,sans-serif;font-variant-numeric:tabular-nums; }
 .rs-note { font-size:13px; color:var(--text-sub2); min-width:72px; text-align:right; }
 
 /* ══ BAR ══ */
@@ -216,7 +216,7 @@ tbody td { padding:8px 11px; vertical-align:middle; line-height:1.5; color:var(-
 .bar-bg   { flex:1; height:5px; background:var(--border); border-radius:3px; overflow:hidden; }
 .bar-fill { height:100%; border-radius:3px; transition:width .8s ease; }
 .bar-blue { background:linear-gradient(90deg,#6366f1,var(--accent)); }
-.bar-label { font-size:13px; color:var(--text-sub2); min-width:36px; text-align:right; font-family:monospace; }
+.bar-label { font-size:13px; color:var(--text-sub2); min-width:36px; text-align:right; font-family:Pretendard,'Apple SD Gothic Neo','Segoe UI',system-ui,sans-serif;font-variant-numeric:tabular-nums; }
 
 /* ══ TIMELINE ══ */
 .timeline { margin:8px 0; }
@@ -228,7 +228,7 @@ tbody td { padding:8px 11px; vertical-align:middle; line-height:1.5; color:var(-
 
 /* ══ TAG CHIPS ══ */
 .tag-chips { display:flex; flex-wrap:wrap; gap:4px; margin:7px 0; }
-.tag-chip { display:inline-block; font-size:12px; font-weight:600; padding:2px 7px; border-radius:4px; font-family:monospace; }
+.tag-chip { display:inline-block; font-size:12px; font-weight:600; padding:2px 7px; border-radius:4px; font-family:Pretendard,'Apple SD Gothic Neo','Segoe UI',system-ui,sans-serif;font-variant-numeric:tabular-nums; }
 .chip-blue { background:#e0e7ff; color:var(--accent); border:1px solid #c7d2fe; }
 .chip-amber{ background:var(--amber-bg); color:var(--amber); border:1px solid var(--amber-border); }
 .chip-green{ background:var(--green-bg); color:var(--green); border:1px solid var(--green-border); }
@@ -259,7 +259,7 @@ tbody td { padding:8px 11px; vertical-align:middle; line-height:1.5; color:var(-
 .cd-item { background:var(--card-bg); border:1px solid var(--border); border-radius:var(--radius); padding:12px 14px; border-left:4px solid var(--accent); }
 .cd-item.warn { border-left-color:var(--amber); background:var(--amber-bg); }
 .cd-item.success { border-left-color:var(--green); background:var(--green-bg); }
-.cd-val { font-size:18px; font-weight:800; color:var(--accent); font-family:monospace; line-height:1; margin:4px 0; }
+.cd-val { font-size:18px; font-weight:800; color:var(--accent); font-family:Pretendard,'Apple SD Gothic Neo','Segoe UI',system-ui,sans-serif;font-variant-numeric:tabular-nums; line-height:1; margin:4px 0; }
 .cd-val.amber { color:var(--amber); } .cd-val.green { color:var(--green); }
 .cd-label { font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--text-sub2); }
 .cd-desc { font-size:13px; color:var(--text-sub1); margin-top:4px; line-height:1.5; }
@@ -1840,7 +1840,7 @@ tbody td { padding:8px 11px; vertical-align:middle; line-height:1.5; color:var(-
 <!-- /SEC 07 -->
 
 <!-- FOOTER -->
-<div style="margin-top:48px;padding-top:14px;border-top:1px solid var(--border);font-size:12px;color:var(--text-src);font-family:monospace;line-height:2;display:flex;gap:16px;flex-wrap:wrap;align-items:center">
+<div style="margin-top:48px;padding-top:14px;border-top:1px solid var(--border);font-size:12px;color:var(--text-src);font-family:Pretendard,'Apple SD Gothic Neo','Segoe UI',system-ui,sans-serif;font-variant-numeric:tabular-nums;line-height:2;display:flex;gap:16px;flex-wrap:wrap;align-items:center">
   <span style="color:var(--accent);font-weight:700;">Project S Steam Launch Dashboard v5.0</span>
   <span>·</span><span>스팀 정책 &amp; 리스크</span>
   <span>·</span><span>최종 업데이트: 2026.04</span>
