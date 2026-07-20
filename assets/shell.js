@@ -46,6 +46,31 @@
     return ROUTES[key] ? key : DEFAULT_ROUTE;
   }
 
+  // 외부 iframe 페이지는 이 저장소에서 내용을 수정할 수 없다. 작성 시점 이후 전략이 바뀐
+  // 페이지는 셸에서 고지 배너를 덧붙여 현행 입장과의 차이를 표시한다 (원문은 이력으로 보존).
+  const ROUTE_NOTICES = {
+    p5: '이 페이지는 <b>2026.04 시점 검토안</b>입니다. 당시 권고(패키지 B2P · 익스트랙션/협동 PvE)는 현행 입장과 다릅니다 — <b>현행 = F2P 진입 + 프리미엄 하이브리드 · 순수 PvP</b> (P6 및 본 보고서 기준). 페인 포인트 데이터 자체는 유효합니다.',
+    p6: '확률형 아이템은 <b>V1(사전 제외)로 확정</b>되었습니다. 본 페이지의 V2·V3(루트박스 포함 안)는 <b>의사결정 이력으로 보존</b>된 것이며 현행 방침이 아닙니다.',
+    p7: '경쟁작 캘린더는 <b>2025~2027만 수록</b>되어 있습니다. 론칭 목표 시점(2028.03) 구간은 <b>미수록</b> — 2028 라인업 대부분이 미발표이므로 gamescom 2026 이후 갱신 예정입니다.',
+  };
+
+  function renderNotice(key) {
+    const wrap = document.querySelector('.frame-wrap');
+    if (!wrap) return;
+    let el = document.getElementById('route-notice');
+    const msg = ROUTE_NOTICES[key];
+    if (!msg) { if (el) el.remove(); return; }
+    if (!el) {
+      el = document.createElement('div');
+      el.id = 'route-notice';
+      el.setAttribute('role', 'note');
+      el.style.cssText = 'padding:9px 14px;background:#fffbeb;border-bottom:1px solid #fde68a;' +
+        'font-size:12.5px;line-height:1.5;color:#92400e;flex:0 0 auto';
+      wrap.insertBefore(el, wrap.firstChild);
+    }
+    el.innerHTML = '⚠️ ' + msg;
+  }
+
   function applyRoute(key) {
     const route = ROUTES[key];
     const frame = document.getElementById('page-frame');
@@ -53,6 +78,7 @@
       frame.dataset.src = route.src;
       frame.src = route.src;
     }
+    renderNotice(key);
     document.getElementById('hdr-text').textContent = route.title;
     document.querySelectorAll('.nav-item').forEach((el) => {
       el.classList.toggle('active', el.dataset.route === key);
