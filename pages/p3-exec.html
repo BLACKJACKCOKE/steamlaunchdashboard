@@ -367,6 +367,13 @@ body {
   position: absolute; top: -18px; left: 50%; transform: translateX(-50%);
   font-size: 11.5px; font-weight: 700; white-space: nowrap;
 }
+/* 고정일 없음 — 차트 밖으로 이어지는 미확정 구간 (B안). 특정 월로 오독되지 않도록 핀 대신 파선 화살표 */
+.gd-indef-bar {
+  position: absolute; top: 50%; transform: translateY(-50%); height: 22px;
+  border: 1.5px dashed currentColor; border-radius: 4px; background: transparent;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10.5px; font-weight: 700; white-space: nowrap; opacity: .95; z-index: 5;
+}
 /* SNF/현재 수직선 */
 .gd-vline {
   position: absolute; top: 0; bottom: 0; width: 1px; z-index: 4;
@@ -1372,7 +1379,7 @@ body {
       <div class="todo-kpi">📈 D1 리텐션 40%+ / D7 리텐션 15%+ <span style="font-size:11.5px;color:var(--text3)">(전체 공개 데모=대중 코호트, 본런칭 근접)</span></div>
       <div class="todo-kpi">⭐ 긍정 리뷰 80%+ <span style="font-size:11.5px;color:var(--text3)">(SNF 데모=스토어페이지 리뷰 개방)</span></div>
       <div class="todo-kpi">🎯 매치메이킹 성공률 95%+ / 평균 대기 60초 미만</div>
-      <div class="todo-kpi">🛡️ SNF 종료 후 누적 WL 1.3M+</div>
+      <div class="todo-kpi">🛡️ SNF 진입 시 누적 WL 850K+ <span style="font-size:11.5px;color:var(--text3)">(론칭 직전 목표 1.3M+ — SNF 기간 증폭분 포함)</span></div>
       <div class="todo-kpi">👥 SNF 참여자 85K+ / PCCU 10K+ <span style="font-size:11.5px;color:var(--text3)">(SNF 직전 WL 목표 850K의 10%)</span></div>
       <div class="todo-kpi">🐞 크리티컬 이슈 0건</div>
       <div style="margin-top:10px;padding:9px 13px;background:#fffbeb;border:1px solid #fde68a;border-radius:6px;font-size:13px;color:#92400e">경로 분기(A안 직행 / B안 폴리싱) 결정 기준은 상단 <b>⚡ 경로 분기 결정 기준</b> 카드 참조.</div>
@@ -1581,7 +1588,7 @@ const PHASES = [
   },
   {
     step:'SNF', name:'Steam Next Fest', date:"Oct'27", col:'#b45309',
-    kpi:['★D1 40%+ / D7 15%+|전체 공개 데모(대중 코호트)', '★긍정 리뷰 80%+|데모 스토어페이지 리뷰 개방', '매치메이킹 성공 95%+ / 대기 60초↓|', 'SNF 종료 후 WL 1.3M+|증폭 목표', 'SNF 참여자 85K+ / PCCU 10K+|SNF 직전 WL 목표 850K의 10%', '크리티컬 이슈 0건|'],
+    kpi:['★D1 40%+ / D7 15%+|전체 공개 데모(대중 코호트)', '★긍정 리뷰 80%+|데모 스토어페이지 리뷰 개방', '매치메이킹 성공 95%+ / 대기 60초↓|', 'SNF 진입 시 WL 850K+|론칭 직전 1.3M+ 궤도', 'SNF 참여자 85K+ / PCCU 10K+|SNF 직전 WL 목표 850K의 10%', '크리티컬 이슈 0건|'],
     tasks:[
       {name:'★ SNF 7일간 — D+1 WL 이메일 수동 클릭 필수!', m0:16.0,m1:16.5,s:"Oct'27",  e:"Oct'27"},
       {name:'Curator Connect 전체 배포 + SNS 동시 발행',    m0:16.0,m1:16.3,s:"D+1",     e:"D+2"},
@@ -1604,7 +1611,7 @@ const PHASES = [
     tasks:[
       {name:'공개 F2P EA 금지 — CBT 연장 폴리싱 (지표 끌어올리기)', m0:17.0,m1:24.5, s:"Nov'27",   e:"지표 도달 시"},
       {name:'WL 캠페인 지속·재가속 (누적 위시 1.3M)',  m0:17.0,m1:24.5, s:"Nov'27",   e:"지표 도달 시"},
-      {name:'🚀 공개 출시 — 지표 충족 시 (고정일 X · 2029 백스톱)', m0:25.0,m1:25.0, s:"지표충족", e:"",     launch:true},
+      {name:'공개 출시 — 지표 충족 시 (고정일 X · 2029 백스톱)', m0:17.0,m1:26.0, s:"지표 충족 시 공개 · 고정일 없음 · 2029 백스톱", e:"",     indef:true},
     ]
   },
 ];
@@ -1705,6 +1712,16 @@ function buildGantt() {
       </div>`;
     } else {
     tasksHtml = ph.tasks.map((t, ti) => {
+      // 고정일이 없는 항목 — 로켓 핀을 찍으면 특정 월 출시로 오독되므로 차트 밖으로 이어지는 파선 화살표로 표기
+      if (t.indef) {
+        return `<div class="gd-task-row">
+          <div class="gd-task-label launch-lbl">${t.name}</div>
+          <div class="gd-task-track">
+            <div class="gd-track-bg"></div>
+            <div class="gd-indef-bar" style="left:${lp(t.m0)};width:${((TM-t.m0)/TM*100).toFixed(2)}%;color:${ph.col}">${t.s} →</div>
+          </div>
+        </div>`;
+      }
       if (t.launch) {
         return `<div class="gd-task-row">
           <div class="gd-task-label launch-lbl">${t.name}</div>
@@ -1763,9 +1780,12 @@ function buildGantt() {
     // EA/직행 헤더 트랙에 LAUNCH 시점 아이콘 추가
     let launchIcon = '';
     if (ph.step === '폴리싱') {
-      const eaLaunchPct = lp(25);
-      launchIcon = `<div style="position:absolute;left:${eaLaunchPct};top:50%;transform:translate(-50%,-50%);
-        font-size:18px;filter:drop-shadow(0 0 6px rgba(220,38,38,.8));z-index:5" title="공개 출시 (지표 충족 시 · 재산정)">🚀</div>`;
+      // B안은 고정 출시일이 없다 — 특정 월에 로켓 핀을 찍으면 "그 달 출시"로 오독되므로
+      // 차트 밖으로 이어지는 파선 화살표로 표기한다 (2029 백스톱은 차트 범위 밖).
+      launchIcon = `<div style="position:absolute;left:${lp(24.2)};right:2px;top:50%;transform:translateY(-50%);
+        border-top:2px dashed rgba(220,38,38,.85);z-index:4" title="고정일 없음 — 지표 충족 시 공개 (2029 백스톱)"></div>
+        <div style="position:absolute;left:${lp(25.9)};top:50%;transform:translate(-50%,-50%);
+        font-size:16px;font-weight:900;color:#dc2626;filter:drop-shadow(0 0 5px rgba(220,38,38,.7));z-index:5" title="고정일 없음 — 지표 충족 시 공개 (2029 백스톱)">→</div>`;
     } else if (ph.step === '직행') {
       const drLaunchPct = lp(21);
       launchIcon = `<div style="position:absolute;left:${drLaunchPct};top:50%;transform:translate(-50%,-50%);
