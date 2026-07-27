@@ -580,6 +580,8 @@ body {
 .phase-todo { transition: box-shadow .2s; }
 .phase-todo:hover { box-shadow: 0 4px 16px rgba(79,70,229,.1); }
 #benchTbl td,#benchTbl th{white-space:nowrap}#benchTbl .gsub{white-space:normal;display:block;margin-top:3px}
+
+.gthumb{display:inline-block;width:28px;height:28px;border-radius:4px;background-size:cover;background-position:center;vertical-align:middle;margin-right:7px;border:1px solid rgba(148,163,184,.4);flex:0 0 auto}
 </style>
 </head>
 <body>
@@ -966,7 +968,7 @@ body {
       <div style="flex:1;background:#f8fafc;border:1px solid #e5e7eb;border-radius:10px;padding:13px 11px;text-align:center;display:flex;flex-direction:column;gap:4px">
         <div style="font-size:11px;font-weight:800;letter-spacing:.06em;color:#2563eb">STAGE 2 · 데뷔</div>
         <div style="font-size:18px;font-weight:800;color:var(--text1)">Peak CCU 150K</div>
-        <div style="font-size:11.5px;color:var(--text3);line-height:1.45"><strong style="color:var(--text2)">FPS Top 5-7</strong> · 72h 스파이크로 피쳐링 점화</div>
+        <div style="font-size:11.5px;color:var(--text3);line-height:1.45"><strong style="color:var(--text2)">FPS Top 5</strong> · 72h 스파이크로 피쳐링 점화</div>
       </div>
       <div style="align-self:center;font-size:17px;font-weight:800;color:#94a3b8">→</div>
       <div style="flex:1;background:#eff6ff;border:1.5px solid #2563eb;border-radius:10px;padding:13px 11px;text-align:center;display:flex;flex-direction:column;gap:4px">
@@ -1027,7 +1029,7 @@ body {
           <tr style="height:1px"><td>🔴 미달</td><td>&lt;1.0M</td><td>&lt;130K</td><td>&lt;35K</td></tr>
         </tbody>
       </table>
-      <div style="font-size:12.5px;color:var(--text2);line-height:1.55;margin-top:6px"><div>⚙️ <strong>72h 피크 150K → sustain ~33%</strong>(Delta F2P −66%) → <strong>Day30 50K = Top10 안착</strong>. 피크는 New&amp;Trending·Top Sellers·화제·매칭 <strong>4 플라이휠</strong>을 켜는 점화 플러그(sustain 전환의 전제) · 150K = FPS peak 대비 <strong>Top 5-7 데뷔</strong>.</div></div>
+      <div style="font-size:12.5px;color:var(--text2);line-height:1.55;margin-top:6px"><div>⚙️ <strong>72h 피크 150K → sustain ~33%</strong>(Delta F2P −66%) → <strong>Day30 50K = Top10 안착</strong>. 피크는 New&amp;Trending·Top Sellers·화제·매칭 <strong>4 플라이휠</strong>을 켜는 점화 플러그(sustain 전환의 전제) · 150K = FPS peak 대비 <strong>Top 5 데뷔</strong>.</div></div>
     </div>
   </div>
 
@@ -1035,7 +1037,7 @@ body {
   <details class="mt24" id="p72-detail" style="background:#f8fafc;border:1px solid var(--border);border-radius:8px;overflow:hidden">
     <summary>
       <span style="font-size:12.5px;font-weight:800;color:var(--text3);letter-spacing:1.5px;text-transform:uppercase;white-space:nowrap">📊 72h 피크 근거 — 경쟁 포지셔닝 & 4 플라이휠</span>
-      <span style="font-size:12px;font-weight:600;color:#6b7280">Project S 150K = FPS Top 5-7 데뷔 · 72h 스파이크가 4 플라이휠을 점화</span>
+      <span style="font-size:12px;font-weight:600;color:#6b7280">Project S 150K = FPS Top 5 데뷔 · 72h 스파이크가 4 플라이휠을 점화</span>
       <div style="margin-left:auto;display:flex;align-items:center;gap:4px;white-space:nowrap">
         <span class="src-toggle-arrow">▼</span>
         <span class="src-toggle-text"></span>
@@ -1045,20 +1047,20 @@ body {
     <div class="card" style="display:flex;flex-direction:column">
       <div class="card-h">론칭 72h Top-rank 매핑 (2026 현재 최고 동접 기준)</div>
       <table class="wl-table" style="flex:1;height:100%">
-        <thead><tr><th>순위</th><th>게임</th><th>현재 peak (26.06)</th></tr></thead>
-        <tbody>
-          <tr><td>1</td><td>CS2</td><td>~1.35M <span style="color:#9aa8b8;font-size:11px">별도 리그</span></td></tr>
-          <tr><td>2</td><td>PUBG</td><td>~720K</td></tr>
-          <tr><td>3</td><td>Apex Legends</td><td>~287K</td></tr>
-          <tr class="hl"><td>★</td><td><strong>Project S</strong></td><td><strong>목표 150K · Top 5-7 데뷔</strong></td></tr>
-          <tr><td>4</td><td>Delta Force</td><td>~137K</td></tr>
-          <tr><td>5</td><td>R6 Siege</td><td>~108K <span style="color:#9aa8b8;font-size:11px">Siege X</span></td></tr>
-          <tr><td>6</td><td>ARC Raiders</td><td>~100K</td></tr>
-          <tr><td>7</td><td>Marvel Rivals</td><td>~88K</td></tr>
-          <tr><td>8</td><td>BF6</td><td>~80K <span style="color:#9aa8b8;font-size:11px">감쇠</span></td></tr>
+        <thead><tr><th>순위</th><th>게임</th><th>현재 peak (26.07)</th></tr></thead>
+                <tbody>
+          <tr><td>1</td><td><span class="gthumb" style="background-image:url('https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/730/162664aa5da85f418105350c5d67ca565f6c3713/header.jpg?t=1784564069')"></span>CS2</td><td><a href="https://steamcharts.com/app/730" target="_blank" style="color:inherit;text-decoration:none">~1.45M</a> <span style="color:#9aa8b8;font-size:11px">별도 리그</span></td></tr>
+          <tr><td>2</td><td><span class="gthumb" style="background-image:url('https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/578080/841ea38bc58cabb70aef65365cf50bc2d79329d9/header.jpg?t=1781659328')"></span>PUBG</td><td><a href="https://steamcharts.com/app/578080" target="_blank" style="color:inherit;text-decoration:none">~792K</a></td></tr>
+          <tr><td>3</td><td><span class="gthumb" style="background-image:url('https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1172470/d526c56eae3339c03aa8dd45f4b06026d2c2c08c/header.jpg?t=1784581218')"></span>Apex Legends</td><td><a href="https://steamcharts.com/app/1172470" target="_blank" style="color:inherit;text-decoration:none">~214K</a> <span style="color:#9aa8b8;font-size:11px">Steam 한정</span></td></tr>
+          <tr><td>4</td><td><span class="gthumb" style="background-image:url('https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2767030/86f180fb2b17adae577bd1d175ca8096c9f91769/header.jpg?t=1783674088')"></span>Marvel Rivals</td><td><a href="https://steamcharts.com/app/2767030" target="_blank" style="color:inherit;text-decoration:none">~197K</a> <span style="color:#9aa8b8;font-size:11px">신시즌 반등</span></td></tr>
+          <tr class="hl"><td>★</td><td><strong>Project S</strong></td><td><strong>목표 150K · Top 5 데뷔</strong></td></tr>
+          <tr><td>5</td><td><span class="gthumb" style="background-image:url('https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2507950/4b5008bef24e2e06a51eeeeef7709813fafefdbf/header_alt_assets_12.jpg?t=1783653262')"></span>Delta Force</td><td><a href="https://steamcharts.com/app/2507950" target="_blank" style="color:inherit;text-decoration:none">~150K</a></td></tr>
+          <tr><td>6</td><td><span class="gthumb" style="background-image:url('https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2807960/c12d12ce3c7d217398d3fcad77427bfc9d57c570/header.jpg?t=1784839791')"></span>BF6</td><td><a href="https://steamcharts.com/app/2807960" target="_blank" style="color:inherit;text-decoration:none">~84K</a> <span style="color:#9aa8b8;font-size:11px">Steam 한정</span></td></tr>
+          <tr><td>7</td><td><span class="gthumb" style="background-image:url('https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/359550/159d232dac26cee77cf57e32ec0545ac91c09dbc/header_alt_assets_24.jpg?t=1784137517')"></span>R6 Siege</td><td><a href="https://steamcharts.com/app/359550" target="_blank" style="color:inherit;text-decoration:none">~76K</a> <span style="color:#9aa8b8;font-size:11px">Steam 한정·Siege X</span></td></tr>
+          <tr><td>8</td><td><span class="gthumb" style="background-image:url('https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1808500/982cca1f1f19a646301b6051e82562d29092d63e/header_alt_assets_5.jpg?t=1784099728')"></span>ARC Raiders</td><td><a href="https://steamcharts.com/app/1808500" target="_blank" style="color:inherit;text-decoration:none">~50K</a> <span style="color:#9aa8b8;font-size:11px">감쇠</span></td></tr>
         </tbody>
       </table>
-      <div style="font-size:12px;color:var(--text2);line-height:1.55;margin-top:6px">2026-06 현재 최고 동접 기준 · 론칭 스파이크는 sustained보다 over-rank → Day30 50K로 Top10 안착. <span style="color:#9aa8b8">(ATH는 상단 벤치마크 표 참조 — BF6 747K·ARC 482K 등 론칭 스파이크)</span> 출처 <a href="https://steamdb.info/charts/?tagid=1663" target="_blank" style="color:#2563eb;text-decoration:none">SteamDB FPS ↗</a> · <a href="https://steamcharts.com/top" target="_blank" style="color:#2563eb;text-decoration:none">SteamCharts ↗</a></div>
+      <div style="font-size:12px;color:var(--text2);line-height:1.55;margin-top:6px">2026-07 현재 최고 동접 기준(직전 30일 peak · Steam 클라이언트 한정 — Apex·BF6·R6·Delta Force·Marvel Rivals는 콘솔·타 런처 미포함이라 실동접 상회) · 론칭 스파이크는 sustained보다 over-rank → Day30 50K로 Top10 안착. <span style="color:#9aa8b8">(ATH는 상단 벤치마크 표 참조 — BF6 747K·ARC 482K 등 론칭 스파이크)</span> 출처 <a href="https://steamdb.info/charts/?tagid=1663" target="_blank" style="color:#2563eb;text-decoration:none">SteamDB FPS ↗</a> · <a href="https://steamcharts.com/top" target="_blank" style="color:#2563eb;text-decoration:none">SteamCharts ↗</a></div>
     </div>
     <div class="card" style="display:flex;flex-direction:column">
       <div class="card-h">왜 72h 피크를 극대화하는가 — 4 플라이휠</div>
@@ -1497,7 +1499,7 @@ body {
       <div class="todo-item"><input type="checkbox"><span class="todo-priority pri-medium">중간</span>부정 리뷰 48h 이내 공식 답변 처리</div>
 
       <div class="todo-kpi">🎯 WL Launch 직전 목표: 누적 위시 1.3M+</div>
-      <div class="todo-kpi">📊 Launch 72h peak 목표 ~150K = <b>FPS Top 5-7 데뷔</b> · Day30 avg ~50K = <b>Top10 안착</b> (sustain ~33% · 런치 D7 15% · Delta F2P 실측)</div>
+      <div class="todo-kpi">📊 Launch 72h peak 목표 ~150K = <b>FPS Top 5 데뷔</b> · Day30 avg ~50K = <b>Top10 안착</b> (sustain ~33% · 런치 D7 15% · Delta F2P 실측)</div>
 
       <div class="todo-gate">
         <div class="todo-go"><strong>✅ LAUNCH 성공 기준</strong>Week1 리뷰 Very Positive 80%+ / PCCU 목표 달성 / 서버 안정</div>
