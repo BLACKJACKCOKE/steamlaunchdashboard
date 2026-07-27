@@ -11,7 +11,22 @@ WORKREQ(`2nd Brain/04_EMPLOYED/projects/project-s/보고/project-s-zerobase/_WOR
 - **스토어 에셋 제작은 불변** — L1221~22가 "Dec'26 스팀페이지 오픈 7영업일 전 Valve 제출"로 **불변 P2에 앵커**돼 있어 이동 X (요청서 "P2 이후 그대로"와 정합). ← "전수 확인"이 이걸 잡음.
 - 렌더 검증 완료(간트 막대 = 날짜 정렬 · P2 이후 불변 육안 확인). ⚠️ 잔여 플래그: FGT 2차(Dec~Jan)·BM최종(Jan~Feb)이 P2 스팀페이지(Dec~Mar)와 겹침 — 요청서 주의 #3이 "그대로 병행" 허용한 부분.
 
-## 🔜 다음 — 레퍼런스 타이틀 "게임 리소스 항상 사용" (신규 요청 · 스코핑 완료, 미착수)
+## ✅ 파일럿 완료 — p3-exec 슈터 경쟁 지형 카드 그리드 (커밋 `007a36f` · push·배포)
+
+FPS 경쟁작 9종 카드(CS2·PUBG·Apex·Marvel Rivals·Delta Force·R6·Destiny2·BF6·Hunt) 삽입 — 벤치마크 박스 헤더 뒤/`benchTbl` 앞. 각 카드 = Steam 실아트 + 30d avg CCU(벤치마크 표와 수치 일관) + family + 카드클릭→SteamCharts. 9/9 실아트 렌더 검증(BF6 "아트 준비중" 회피 확인).
+
+### ★★ 핵심 교훈 (확산 시 반드시 적용) — 아트 URL은 정본 header_image 만
+- **plain 경로 `cdn.cloudflare.steamstatic.com/steam/apps/<id>/header.jpg` 는 신작에 1441B 빈 이미지를 200으로 서빙**(BF6 실측 — 정확히 사용자가 지적한 "아트 준비중" 원인). "200 OK"만으로 판단 금지.
+- **반드시 appdetails 정본**: `https://store.steampowered.com/api/appdetails?appids=<id>&filters=basic` → `data.header_image`(해시 경로 URL). **바이트 크기 >5KB 검증**해야 실아트 보장. (스크립트 예시는 커밋 히스토리 `/tmp/bf_art.json` 생성 로직 참조 — appdetails fetch + urlopen len 체크.)
+- appid 매핑: game-market-dashboard `universe/{fps,rpg,simulation}.json` 재사용. 없는 신작(Marvel Rivals 2767030·Delta Force 2507950·BF6 2807960 등)은 appdetails 로 name 확인 후 사용.
+- CSP `img-src 'self' data: https:` → hotlink 허용. background-image 방식(JS 불요).
+
+### 확산 대상 (미착수 · 나머지 4페이지 + p3-exec 다른 섹션)
+p2(63)·p1(19)·p4(12)·liveops(5) 의 레퍼런스 게임 리스트/표 섹션. list/table 성격은 **테이블형(썸네일·이미지2)**, 소수 히어로 비교는 **카드형**. 위 정본-아트 방식 동일 적용.
+
+---
+
+## 🔜 (원 스코핑) 레퍼런스 타이틀 "게임 리소스 항상 사용" — 요청 원문
 
 ### 요청 (Ryan 2026-07-27)
 > "레퍼런스 타이틀 관련해서 **항상 게임 리소스를 서치해서 사용**해 줘. 아래 두 방식 중 **상황에 따라 더 적합한 것**으로 진행."
